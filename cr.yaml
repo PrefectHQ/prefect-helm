@@ -2,4 +2,5 @@
 # Set to true for GPG signing
 sign: true
 # UID of the GPG key to use
-key: Colin Wilson
+key: george@prefect.io
+charts_dir: helm
