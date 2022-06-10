@@ -6,7 +6,7 @@ on:
       - "*\\.*\\.*"  # only run on version tags
       # testing
     branches:
-      - initial-chart
+      - initial-charts
 
 jobs:
   release:
