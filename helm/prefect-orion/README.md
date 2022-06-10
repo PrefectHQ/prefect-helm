@@ -2,7 +2,7 @@
 
 ![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
-This helm chart deploys a Prefect Orion API and UI on Kubernetes
+This helm chart deploys a Prefect Orion API and orchestration engine as well as Prefect UI on Kubernetes
 
 ## Usage
 
