@@ -4,7 +4,10 @@ on:
   push:
     tags:
       - "*\\.*\\.*"  # only run on version tags
+    branches:
+      - initial-chart
 
+jobs:
 jobs:
   release:
     runs-on: ubuntu-latest
