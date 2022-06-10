@@ -2,8 +2,10 @@ name: Release Charts
 
 on:
   push:
-    tags:
-      - "*\\.*\\.*"  # only run on version tags
+      branches:
+        - "main"
+    # tags:
+      # - "*\\.*\\.*"  # only run on version tags
       # testing
 
 jobs:
@@ -41,7 +43,8 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.4.0
         with:
-          config: cr.yaml
+          # config: cr.yaml
+          charts_dir: helm
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           # CR_SKIP_EXISTING: true
