@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "*\\.*\\.*"  # only run on version tags
+      # testing
     branches:
       - initial-chart
 
