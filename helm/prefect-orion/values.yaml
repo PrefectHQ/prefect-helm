@@ -22,7 +22,9 @@ api:
   debug_enabled: false
 
   autoscaling:
+    # -- Enable autoscaling
     enabled: false
+    # -- Minimum autoscaling replica count
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
