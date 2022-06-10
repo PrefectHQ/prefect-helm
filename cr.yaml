@@ -1,0 +1,6 @@
+# cr.yaml
+# Set to true for GPG signing
+sign: true
+# UID of the GPG key to use
+key: george@prefect.io
+charts_dir: helm

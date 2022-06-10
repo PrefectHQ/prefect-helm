@@ -1,3 +1,9 @@
 # Prefect Helm Charts
 
-All prefect helm charts can be found in this repo under the charts directory
+## Usage
+
+### TL;DR
+``` bash 
+$ helm repo add bitnami https://charts.bitnami.com/bitnami
+$ helm search repo bitnami
+$ helm install my-release bitnami/<chart>
