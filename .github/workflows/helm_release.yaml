@@ -2,8 +2,8 @@ name: Release Charts
 
 on:
   push:
-    branches:
-      - orion-agent
+    tags:
+      - "*\\.*\\.*"  # only run on version tags
 
 jobs:
   release:
