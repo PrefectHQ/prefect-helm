@@ -2,10 +2,8 @@ name: Release Charts
 
 on:
   push:
-      branches:
-        - "main"
-    # tags:
-      # - "*\\.*\\.*"  # only run on version tags
+    tags:
+      - "*\\.*\\.*"  # only run on version tags
       # testing
 
 jobs:
