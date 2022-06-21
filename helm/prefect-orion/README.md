@@ -15,7 +15,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 1. Let you local Helm manager know about the repository.
 
     ```
-    $ helm repo add prefecthq https://prefecthq.github.io/prefect-recipes
+    $ helm repo add prefecthq https://prefecthq.github.io/prefect-helm
     ```
 
 2. Sync versions available in the repo to your local cache.
@@ -70,7 +70,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 
 ## Source Code
 
-* <https://github.com/PrefectHQ/prefect-recipes>
+* <https://github.com/PrefectHQ/prefect-helm>
 
 ## Requirements
 

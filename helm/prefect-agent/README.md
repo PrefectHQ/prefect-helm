@@ -14,7 +14,7 @@ Prefect orion application bundle
 
 ## Source Code
 
-* <https://github.com/PrefectHQ/prefect-recipes>
+* <https://github.com/PrefectHQ/prefect-helm>
 
 ## Requirements
 
