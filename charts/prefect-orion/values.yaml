@@ -1,15 +1,4 @@
-<<<<<<< HEAD:charts/prefect-orion/values.yaml
 prefectVersionTag: 2.0b7-python3.8
-||||||| 8ee27d4:charts/prefect-orion/values.yaml
-prefectVersionTag: 2.0b6-python3.8
-=======
-prefectVersionTag: 2.0b5-python3.8
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-annotations: {}
-
->>>>>>> d4609c973cb3e34d844c1b651268cbef2f3906e2:helm/prefect-orion/values.yaml
 
 api:
   enabled: true
@@ -23,13 +12,7 @@ api:
     name: prefecthq/prefect
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-<<<<<<< HEAD:charts/prefect-orion/values.yaml
     tag: 2.0b7-python3.8
-||||||| 8ee27d4:charts/prefect-orion/values.yaml
-    tag: 2.0b6-python3.8
-=======
-    tag: 2.0b5-python3.8
->>>>>>> d4609c973cb3e34d844c1b651268cbef2f3906e2:helm/prefect-orion/values.yaml
 
   debug_enabled: false
 
