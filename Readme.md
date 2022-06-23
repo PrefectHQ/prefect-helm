@@ -3,7 +3,7 @@
 ## Usage
 
 ### TL;DR
-``` bash 
+``` bash
 $ helm repo add prefect https://prefecthq.github.io/prefect-helm
 $ helm search repo prefect
 $ helm install my-release prefecthq/<chart>
@@ -11,8 +11,8 @@ $ helm install my-release prefecthq/<chart>
 
 ### Installing released versions
 
-The Helm chart is automatically versioned and released alongside Server.
-For each Github Release of Server there is a corresponding version of the Helm chart.
+Charts are manually versioned depending on chart changes.
+
 The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_repository/) deployed to the web courtesy of Github Pages.
 
 1. Let you local Helm manager know about the repository.
@@ -114,9 +114,7 @@ Development versions of the Helm chart will always be available directly from th
 
     helm upgrade \
         $NAME \
-        prefecthq/prefect-orion \
-        --set agent.enabled=true \
-        --set jobs.createTenant.enabled=true
+        prefecthq/prefect-orion
     ```
 
 #### Important notes about upgrading
