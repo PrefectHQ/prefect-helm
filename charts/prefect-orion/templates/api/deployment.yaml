@@ -20,7 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "orion.selectorLabels" . | nindent 8 }}
-    spec: 
+    spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}

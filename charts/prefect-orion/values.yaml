@@ -1,9 +1,4 @@
-prefectVersionTag: 2.0b5-python3.8
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-annotations: {}
-
+prefectVersionTag: 2.0b7-python3.8
 
 api:
   enabled: true
@@ -17,7 +12,7 @@ api:
     name: prefecthq/prefect
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: 2.0b5-python3.8
+    tag: 2.0b7-python3.8
 
   debug_enabled: false
 
@@ -65,8 +60,8 @@ postgresql:
     # password sets the password to be used if
     # `existingSecret` is not set. This is the password for
     # `username` and will be set within the secret at
-    # the key `postgresql-password`. This argument is only relevant 
-    # when using the Postgres database included in the chart. 
+    # the key `postgresql-password`. This argument is only relevant
+    # when using the Postgres database included in the chart.
     # For an external postgres connection, you must create
     # and use `existingSecret` instead of `postgresqlPassword`.
     password: "HEREWEGO"
