@@ -14,13 +14,13 @@ spec:
     spec:
       containers:
       - name: api
-        image: prefecthq/prefect:2.0b2-python3.8
+        image: prefecthq/prefect:2.0b6-python3.8
         command: ["prefect", "orion", "start", "--host", "0.0.0.0", "--log-level", "WARNING"]
         imagePullPolicy: "IfNotPresent"
         ports:
         - containerPort: 4200
       - name: agent
-        image: prefecthq/prefect:2.0b2-python3.8
+        image: prefecthq/prefect:2.0b6-python3.8
         command: ["prefect", "agent", "start", "kubernetes"]
         imagePullPolicy: "IfNotPresent"
         env:
