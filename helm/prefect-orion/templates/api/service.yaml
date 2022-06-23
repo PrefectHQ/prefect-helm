@@ -9,5 +9,8 @@ spec:
   ports:
     - port: {{ .Values.api.service.port }}
       protocol: TCP
+{{ if (and (eq .Values.api.service.type "NodePort") (not (empty .Values.api.service.nodePort))) }}
+      nodePort: {{ .Values.api.service.nodePort }}
+{{ end }}
   selector:
     {{- include "orion.selectorLabels" . | nindent 4 }}
