@@ -71,7 +71,7 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
-  env-unrap: 
+  env-unrap:
     Converts a nested dictionary with keys `prefix` and `map`
     into a list of environment variable definitions, where each
     variable name is an uppercased concatenation of keys in the map
@@ -97,7 +97,7 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
-  orion.postgres-hostname: 
+  orion.postgres-hostname:
     Generate the hostname of the postgresql service
     If a subchart is used, evaluate using its fullname function
       as {subchart.fullname}-{namespace}
@@ -113,7 +113,7 @@ Create the name of the service account to use
 {{- end -}}
 {{- end -}}
 
-{{/* 
+{{/*
   orion.postgres-connstr:
     Generates the connection string for the postgresql service
 */}}
@@ -143,7 +143,7 @@ Create the name of the service account to use
 {{/*
   orion.postgres-secret-ref:
     Generates a reference to the postgreqsql connection-string password
-    secret. 
+    secret.
 */}}
 {{- define "orion.postgres-secret-ref" -}}
 secretKeyRef:
@@ -154,8 +154,8 @@ secretKeyRef:
 {{/*
   orion.envConfig:
     Define environment variables for prefect config.
-    Includes a constant set of common variables as well as 
-    generated environment variables from .Values.prefectConfig 
+    Includes a constant set of common variables as well as
+    generated environment variables from .Values.prefectConfig
     using "env-unwrap"
 */}}
 {{- define "orion.envConfig" -}}

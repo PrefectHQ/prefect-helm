@@ -37,7 +37,7 @@ spec:
             value: {{ .Values.agent.apiUrl }}
           {{- else }}
           - name: PREFECT_API_URL
-            value: 
+            value:
           {{- end }}
           resources:
             {{- toYaml .Values.agent.resources | nindent 12 }}

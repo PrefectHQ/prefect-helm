@@ -60,8 +60,8 @@ postgresql:
     # password sets the password to be used if
     # `existingSecret` is not set. This is the password for
     # `username` and will be set within the secret at
-    # the key `postgresql-password`. This argument is only relevant 
-    # when using the Postgres database included in the chart. 
+    # the key `postgresql-password`. This argument is only relevant
+    # when using the Postgres database included in the chart.
     # For an external postgres connection, you must create
     # and use `existingSecret` instead of `postgresqlPassword`.
     password: "HEREWEGO"

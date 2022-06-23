@@ -74,7 +74,7 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-  env-unrap: 
+  env-unrap:
     Converts a nested dictionary with keys `prefix` and `map`
     into a list of environment variable definitions, where each
     variable name is an uppercased concatenation of keys in the map
@@ -102,8 +102,8 @@ Create the name of the service account to use
 {{/*
   prefect-agent.envConfig:
     Define environment variables for prefect config.
-    Includes a constant set of common variables as well as 
-    generated environment variables from .Values.prefectConfig 
+    Includes a constant set of common variables as well as
+    generated environment variables from .Values.prefectConfig
     using "env-unwrap"
 */}}
 {{- define "prefect-agent.envConfig" -}}
