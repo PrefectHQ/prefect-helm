@@ -14,13 +14,25 @@ spec:
     spec:
       containers:
       - name: api
+<<<<<<< HEAD:charts/prefect-orion/manifest.yml
         image: prefecthq/prefect:2.0b7-python3.8
+||||||| 8ee27d4:charts/prefect-orion/manifest.yml
+        image: prefecthq/prefect:2.0b6-python3.8
+=======
+        image: prefecthq/prefect:2.0b2-python3.8
+>>>>>>> d4609c973cb3e34d844c1b651268cbef2f3906e2:helm/prefect-orion/manifest.yml
         command: ["prefect", "orion", "start", "--host", "0.0.0.0", "--log-level", "WARNING"]
         imagePullPolicy: "IfNotPresent"
         ports:
         - containerPort: 4200
       - name: agent
+<<<<<<< HEAD:charts/prefect-orion/manifest.yml
         image: prefecthq/prefect:2.0b7-python3.8
+||||||| 8ee27d4:charts/prefect-orion/manifest.yml
+        image: prefecthq/prefect:2.0b6-python3.8
+=======
+        image: prefecthq/prefect:2.0b2-python3.8
+>>>>>>> d4609c973cb3e34d844c1b651268cbef2f3906e2:helm/prefect-orion/manifest.yml
         command: ["prefect", "agent", "start", "kubernetes"]
         imagePullPolicy: "IfNotPresent"
         env:
