@@ -2,7 +2,7 @@
 
 ![Version: 2022.6.22](https://img.shields.io/badge/Version-2022.6.22-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
-Prefect orion application bundle
+Helm chart to deploy the Prefect Agent.
 
 **Homepage:** <https://github.com/PrefectHQ>
 
