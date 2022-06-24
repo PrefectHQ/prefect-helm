@@ -135,4 +135,4 @@ cd prefect-helm
 
 ## Options:
 
-See comments in `values.yaml`.
+See comments in [values.yaml](https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-orion/values.yaml).
