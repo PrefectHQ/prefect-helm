@@ -100,6 +100,33 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
+  prefect-agent.prefectApiUrl:
+    Define API URL for workspace or for
+*/}}
+{{- define "prefect-agent.prefectApiUrl" -}}
+{{- if ne .Values.agent.prefectApiUrl  "beta.prefect.io" }}
+{{- .Values.agent.prefectApiUrl }}
+{{- else }}
+{{- printf "https://%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloudAccountId  .Values.agent.prefectWorkspaceId -}}
+{{- end }}
+{{- end }}
+
+{{/*
+  prefect-agent.postgres-secret-ref:
+    Generates a reference to the postgreqsql connection-string password
+    secret.
+*/}}
+{{- define "prefect-agent.api-key-secret-ref" -}}
+{{- if .Values.agent.prefectApiUrl  "beta.prefect.io" }}
+secretKeyRef:
+  name: {{ required "Name api secret"  .Values.agent.prefectApiKey.secretName }}
+  key: {{ .Values.agent.prefectApiKey.SecretKey }}
+{{- end -}}
+{{- end -}}
+
+
+
+{{/*
   prefect-agent.envConfig:
     Define environment variables for prefect config.
     Includes a constant set of common variables as well as
@@ -109,9 +136,13 @@ Create the name of the service account to use
 {{- define "prefect-agent.envConfig" -}}
 - name: PREFECT_DEBUG_MODE
   value: {{ .Values.agent.debug_enabled | quote }}
-- name: PREFECT_ORION_DATABASE_CONNECTION_URL
+- name: PREFECT_API_URL
+  value: {{- include "prefect-agent.prefectApiUrl" . -}}
+{{- if (include "prefect-agent.api-key-secret-ref" . ) -}}
+- name: PREFECT_API_KEY
   valueFrom:
-    {{- include "prefect-agent.postgres-secret-ref" . | nindent 4 }}
+    {{- include "prefect-agent.api-key-secret-ref" . | nindent 4 }}
+{{- end -}}
 {{- $args := (dict "prefix" "PREFECT_SERVER" "map" .Values.prefectConfig) -}}
 {{- include "env-unwrap" $args -}}
 {{- end }}

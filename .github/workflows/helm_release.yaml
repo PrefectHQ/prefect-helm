@@ -44,7 +44,8 @@ jobs:
         uses: helm/chart-releaser-action@v1.4.0
         with:
           charts_dir: helm
-          key: george@prefect.io
+          skip_existing: true
+          # key: george@prefect.io
           # sign: true
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

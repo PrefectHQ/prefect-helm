@@ -32,8 +32,10 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", {{ .Values.agent.workQueueName }}]
           env:
-          - name: PREFECT_API_URL
-            value: {{ .Values.agent.apiUrl }}
+            {{- (include "prefect-agent.envConfig" .) | nindent 12 }}
+            {{- with .Values.agent.env }}
+              {{- toYaml . | nindent 12 }}
+            {{- end }}
           resources:
             {{- toYaml .Values.agent.resources | nindent 12 }}
       {{- with .Values.agent.nodeSelector }}
