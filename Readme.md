@@ -7,7 +7,7 @@
 $ helm repo add prefect https://prefecthq.github.io/prefect-helm
 $ helm search repo prefect
 $ helm install my-release prefecthq/<chart>
-
+```
 
 ### Installing released versions
 
@@ -68,8 +68,14 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 Development versions of the Helm chart will always be available directly from this Github repository.
 
 1. Clone repository
+```bash
+git clone https://github.com/PrefectHQ/prefect-helm.git
+```
 
 2. Change to this directory
+```bash
+cd prefect-helm
+```
 
 3. Download the postgresql dependency if you are not using an existing database
 
