@@ -105,9 +105,9 @@ Create the name of the service account to use
 */}}
 {{- define "prefect-agent.prefectApiUrl" -}}
 {{- if ne .Values.agent.prefectApiUrl  "beta.prefect.io" }}
-{{- .Values.agent.prefectApiUrl }}
+{{- .Values.agent.prefectApiUrl | quote }}
 {{- else }}
-{{- printf "https://%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloudAccountId  .Values.agent.prefectWorkspaceId -}}
+{{- printf "https://%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceId | quote }}
 {{- end }}
 {{- end }}
 
@@ -116,11 +116,11 @@ Create the name of the service account to use
     Generates a reference to the postgreqsql connection-string password
     secret.
 */}}
-{{- define "prefect-agent.api-key-secret-ref" -}}
-{{- if .Values.agent.prefectApiUrl  "beta.prefect.io" }}
+{{- define "prefect-agent.api-key-secret-ref" }}
+{{- if eq .Values.agent.prefectApiUrl "beta.prefect.io" -}}
 secretKeyRef:
-  name: {{ required "Name api secret"  .Values.agent.prefectApiKey.secretName }}
-  key: {{ .Values.agent.prefectApiKey.SecretKey }}
+  name: {{ .Values.agent.prefectApiKey.secretName }}
+  key: {{ .Values.agent.prefectApiKey.secretKey }}
 {{- end -}}
 {{- end -}}
 
@@ -137,11 +137,10 @@ secretKeyRef:
 - name: PREFECT_DEBUG_MODE
   value: {{ .Values.agent.debug_enabled | quote }}
 - name: PREFECT_API_URL
-  value: {{- include "prefect-agent.prefectApiUrl" . -}}
-{{- if (include "prefect-agent.api-key-secret-ref" . ) -}}
+  value: {{  include "prefect-agent.prefectApiUrl" . }}
+{{- if (include "prefect-agent.api-key-secret-ref" . ) }}
 - name: PREFECT_API_KEY
-  valueFrom:
-    {{- include "prefect-agent.api-key-secret-ref" . | nindent 4 }}
+  valueFrom: {{- include "prefect-agent.api-key-secret-ref" . | nindent 4 -}}
 {{- end -}}
 {{- $args := (dict "prefix" "PREFECT_SERVER" "map" .Values.prefectConfig) -}}
 {{- include "env-unwrap" $args -}}

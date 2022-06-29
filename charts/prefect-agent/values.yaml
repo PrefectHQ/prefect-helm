@@ -5,20 +5,23 @@ agent:
   # Default values for Orion Agent.
 
   # -- URL for Prefect API
-  apiUrl: beta.prefect.io
+  prefectApiUrl: beta.prefect.io
   # -- Name of the prefect cloud workque to subscribe your agent to
-  workQueueName: kubernetes
+  workQueueId: prod
+
+  debug_enabled: true
 
   # --  Prefect account ID
-  prefectCloudAccount:
+  prefectCloud:
+    accountId: null
+    workspaceId: null
 
   # -- Prefect cloud API key
   prefectApiKey:
     # -- Name of secret containing the prefect API key, required if existingSecret set.
-    secretName: null
+    secretName: prefect-config
     # -- Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set
-    secretKey: null
-
+    secretKey: api-key
 
 
   image:
@@ -34,7 +37,7 @@ agent:
     # The name of the service account to use.
     # If not set and create is true, a name is generated using the fullname template
     name: ""
-  env: {}
+
   podAnnotations: {}
 
   podSecurityContext: {}
@@ -42,7 +45,6 @@ agent:
   securityContext: {}
 
   replicaCount: 1
-
 
   resources: {}
 

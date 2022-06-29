@@ -21,22 +21,22 @@ Prefect orion application bundle
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | agent.affinity | object | `{}` |  |
-| agent.apiUrl | string | `"beta.prefect.io"` | URL for Prefect API |
 | agent.autoscaling.enabled | bool | `false` |  |
 | agent.autoscaling.maxReplicas | int | `10` |  |
 | agent.autoscaling.minReplicas | int | `1` |  |
 | agent.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| agent.env | object | `{}` |  |
+| agent.debug_enabled | bool | `true` |  |
 | agent.image.name | string | `"prefecthq/prefect"` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | agent.image.tag | string | `"2.0b7-python3.8"` |  |
 | agent.nodeSelector | object | `{}` |  |
 | agent.podAnnotations | object | `{}` |  |
 | agent.podSecurityContext | object | `{}` |  |
-| agent.prefectApiKey | object | `{"secretKey":null,"secretName":null}` | Prefect cloud API key |
-| agent.prefectApiKey.secretKey | string | `nil` | Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set |
-| agent.prefectApiKey.secretName | string | `nil` | Name of secret containing the prefect API key, required if existingSecret set. |
-| agent.prefectCloudAccount | string | `nil` | Prefect account ID |
+| agent.prefectApiKey | object | `{"secretKey":"api-key","secretName":"prefect-config"}` | Prefect cloud API key |
+| agent.prefectApiKey.secretKey | string | `"api-key"` | Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set |
+| agent.prefectApiKey.secretName | string | `"prefect-config"` | Name of secret containing the prefect API key, required if existingSecret set. |
+| agent.prefectApiUrl | string | `"beta.prefect.io"` | URL for Prefect API |
+| agent.prefectCloud | object | `{"accountId":null,"workspaceId":null}` | Prefect account ID |
 | agent.replicaCount | int | `1` |  |
 | agent.resources | object | `{}` |  |
 | agent.securityContext | object | `{}` |  |
@@ -44,7 +44,7 @@ Prefect orion application bundle
 | agent.serviceAccount.create | bool | `true` |  |
 | agent.serviceAccount.name | string | `""` |  |
 | agent.tolerations | list | `[]` |  |
-| agent.workQueueName | string | `"kubernetes"` | Name of the prefect cloud workque to subscribe your agent to |
+| agent.workQueueId | string | `"prod"` | Name of the prefect cloud workque to subscribe your agent to |
 | annotations | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |

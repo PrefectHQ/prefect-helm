@@ -48,7 +48,6 @@ Prefect orion application bundle
 | api.tolerations | list | `[]` |  |
 | postgresql.auth.database | string | `"orion"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
-| postgresql.auth.password | string | `"HEREWEGO"` |  |
 | postgresql.auth.username | string | `"prefect"` |  |
 | postgresql.containerPorts.postgresql | int | `5432` |  |
 | postgresql.externalHostname | string | `""` |  |
