@@ -35,7 +35,7 @@ Prefect orion application bundle
 | agent.prefectApiKey | object | `{"secretKey":"api-key","secretName":"prefect-config"}` | Prefect cloud API key |
 | agent.prefectApiKey.secretKey | string | `"api-key"` | Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set |
 | agent.prefectApiKey.secretName | string | `"prefect-config"` | Name of secret containing the prefect API key, required if existingSecret set. |
-| agent.prefectApiUrl | string | `"beta.prefect.io"` | URL for Prefect API |
+| agent.prefectApiUrl | string | `"https://api-beta.prefect.io"` | URL for Prefect API |
 | agent.prefectCloud | object | `{"accountId":null,"workspaceId":null}` | Prefect account ID |
 | agent.replicaCount | int | `1` |  |
 | agent.resources | object | `{}` |  |
@@ -44,7 +44,7 @@ Prefect orion application bundle
 | agent.serviceAccount.create | bool | `true` |  |
 | agent.serviceAccount.name | string | `""` |  |
 | agent.tolerations | list | `[]` |  |
-| agent.workQueueId | string | `"prod"` | Name of the prefect cloud workque to subscribe your agent to |
+| agent.workQueueName | string | `"prod"` | Name of the prefect cloud workque to subscribe your agent to |
 | annotations | object | `{}` |  |
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |

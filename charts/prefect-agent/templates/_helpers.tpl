@@ -104,10 +104,10 @@ Create the name of the service account to use
     Define API URL for workspace or for
 */}}
 {{- define "prefect-agent.prefectApiUrl" -}}
-{{- if ne .Values.agent.prefectApiUrl  "beta.prefect.io" }}
+{{- if ne .Values.agent.prefectApiUrl  "api-beta.prefect.io" }}
 {{- .Values.agent.prefectApiUrl | quote }}
 {{- else }}
-{{- printf "https://%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceId | quote }}
+{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceId | quote }}
 {{- end }}
 {{- end }}
 
@@ -117,7 +117,7 @@ Create the name of the service account to use
     secret.
 */}}
 {{- define "prefect-agent.api-key-secret-ref" }}
-{{- if eq .Values.agent.prefectApiUrl "beta.prefect.io" -}}
+{{- if eq .Values.agent.prefectApiUrl "api-beta.prefect.io" -}}
 secretKeyRef:
   name: {{ .Values.agent.prefectApiKey.secretName }}
   key: {{ .Values.agent.prefectApiKey.secretKey }}

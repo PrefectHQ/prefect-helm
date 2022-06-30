@@ -34,7 +34,7 @@ spec:
           {{- end }}
           image: "{{ .Values.agent.image.name }}:{{ .Values.agent.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
-          command: ["prefect", "agent", "start", {{ .Values.agent.workQueueId }}]
+          command: ["prefect", "agent", "start", {{ .Values.agent.workQueueName }}]
           env:
             {{- (include "prefect-agent.envConfig" .) | nindent 12 }}
             {{- with .Values.agent.env }}
