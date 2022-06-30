@@ -1,6 +1,6 @@
 # prefect-orion
 
-![Version: 2022.6.23](https://img.shields.io/badge/Version-2022.6.23-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 2022.6.30](https://img.shields.io/badge/Version-2022.6.30-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Prefect orion application bundle
 
@@ -48,7 +48,6 @@ Prefect orion application bundle
 | api.tolerations | list | `[]` |  |
 | postgresql.auth.database | string | `"orion"` |  |
 | postgresql.auth.existingSecret | string | `nil` |  |
-| postgresql.auth.password | string | `"HEREWEGO"` |  |
 | postgresql.auth.username | string | `"prefect"` |  |
 | postgresql.containerPorts.postgresql | int | `5432` |  |
 | postgresql.externalHostname | string | `""` |  |

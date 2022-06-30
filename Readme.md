@@ -51,7 +51,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
     # The path to your config that overrides values in `values.yaml`
     CONFIG_PATH=path/to/your/config.yaml
     # The chart version to install
-    VERSION=2022.06.22
+    VERSION=2022.06.30
 
     helm install \
         --namespace $NAMESPACE \
@@ -99,7 +99,7 @@ Development versions of the Helm chart will always be available directly from th
     # Set this name to the name of your last Helm release
     NAME=prefect-orion
     # Choose a version to upgrade to or omit the flag to use the latest version
-    VERSION=2022.06.22
+    VERSION=2022.06.30
 
     helm upgrade $NAME prefecthq/prefect-orion --version $VERSION
     ```
