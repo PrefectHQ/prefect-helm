@@ -9,7 +9,7 @@
 $ helm repo add prefect https://prefecthq.github.io/prefect-helm
 $ helm search repo prefect
 $ helm install my-release prefecthq/<chart>
-
+```
 
 ### Installing released versions
 
@@ -43,6 +43,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
     ```
 
     Setting some typical flags for customization
+
     ```shell
     # The kubernetes namespace to install into, can be anything or excluded to install in the default namespace
     NAMESPACE=prefect-orion
@@ -61,9 +62,9 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
         prefecthq/prefect-server
     ```
 
-    _If chart installation fails, `--debug` can provide more information_
+ If chart installation fails, `--debug` can provide more information_
 
-    See [Helm install docs](https://helm.sh/docs/helm/helm_install/) for all options.
+ See [Helm install docs](https://helm.sh/docs/helm/helm_install/) for all options.
 
 ### Installing development versions
 

@@ -60,7 +60,7 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-#  "https://api-beta.prefect.io/api/accounts/{{ .Values.agent.prefectCloudAccountId }}/workspaces/{{ .Values.agent.prefectWorkspaceId }}"
+#  "https://api-beta.prefect.io/api/accounts/{{ .Values.agent.prefectCloudAccountId }}/workspaces/{{ .Values.agent.prefectworkspaceName }}"
 
 {{/*
 Create the name of the service account to use
@@ -107,7 +107,7 @@ Create the name of the service account to use
 {{- if ne .Values.agent.prefectApiUrl  "api-beta.prefect.io" }}
 {{- .Values.agent.prefectApiUrl | quote }}
 {{- else }}
-{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceId | quote }}
+{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceName | quote }}
 {{- end }}
 {{- end }}
 
