@@ -34,9 +34,10 @@ Prefect orion application bundle
 | agent.podSecurityContext | object | `{}` |  |
 | agent.prefectApiKey | object | `{"secretKey":"api-key","secretName":"prefect-config"}` | Prefect cloud API key |
 | agent.prefectApiKey.secretKey | string | `"api-key"` | Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set |
-| agent.prefectApiKey.secretName | string | `"prefect-config"` | Name of secret containing the prefect API key, required if existingSecret set. |
+| agent.prefectApiKey.secretName | string | `"prefect-config"` | Name of secret containing the prefect API key. |
 | agent.prefectApiUrl | string | `"https://api-beta.prefect.io"` | URL for Prefect API |
-| agent.prefectCloud | object | `{"accountId":null,"workspaceId":null}` | Prefect account ID |
+| agent.prefectCloud.accountId | string | `nil` | Prefect Cloud Account ID |
+| agent.prefectCloud.workspaceName | string | `nil` | Prefect Cloud Workspace Name |
 | agent.replicaCount | int | `1` |  |
 | agent.resources | object | `{}` |  |
 | agent.securityContext | object | `{}` |  |

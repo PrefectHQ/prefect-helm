@@ -11,14 +11,15 @@ agent:
 
   debug_enabled: true
 
-  # --  Prefect account ID
   prefectCloud:
+    # -- Prefect Cloud Account ID
     accountId: null
-    workspaceId: null
+    # -- Prefect Cloud Workspace Name
+    workspaceName: null
 
   # -- Prefect cloud API key
   prefectApiKey:
-    # -- Name of secret containing the prefect API key, required if existingSecret set.
+    # -- Name of secret containing the prefect API key.
     secretName: prefect-config
     # -- Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set
     secretKey: api-key
