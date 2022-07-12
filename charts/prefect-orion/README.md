@@ -16,11 +16,24 @@ Prefect orion application bundle
 
 * <https://github.com/PrefectHQ/prefect-helm>
 
-## Requirements
+## Database 
+
+Prefect-orion supports two databases SQLite and PostgreSQL. 
+We recommend using a PostgreSQL which is enabled by default in this helm chart:
 
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | postgresql | ~11.6.2 |
+
+
+However, you can still use install prefect-orion using SQLite database, you need to override these values:  
+
+```
+postgresql:
+    enabled: false
+    useSubChart: false
+```
+
 
 ## Values
 
