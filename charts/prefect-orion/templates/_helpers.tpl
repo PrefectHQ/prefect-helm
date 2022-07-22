@@ -161,9 +161,11 @@ secretKeyRef:
 {{- define "orion.envConfig" -}}
 - name: PREFECT_DEBUG_MODE
   value: {{ .Values.api.debug_enabled | quote }}
+{{- if .Values.postgresql.enabled }}
 - name: PREFECT_ORION_DATABASE_CONNECTION_URL
   valueFrom:
     {{- include "orion.postgres-secret-ref" . | nindent 4 }}
+{{- end }}    
 {{- $args := (dict "prefix" "PREFECT_SERVER" "map" .Values.prefectConfig) -}}
 {{- include "env-unwrap" $args -}}
 {{- end }}
