@@ -2,11 +2,11 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: flow-runner-role-binding
-  namespace: default
+  namespace: {{ .Release.Namespace | quote }}
 subjects:
 - kind: ServiceAccount
   name: default
-  namespace: default
+  namespace: {{ .Release.Namespace | quote }}
 roleRef:
   kind: Role
   name: flow-runner

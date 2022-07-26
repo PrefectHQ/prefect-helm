@@ -36,7 +36,7 @@ spec:
           imagePullPolicy: {{ .Values.api.image.pullPolicy }}
           command: ["prefect", "orion", "start", "--host", "0.0.0.0", "--log-level", "WARNING"]
           ports:
-          - containerPort: 4200
+          - containerPort: {{ .Values.api.service.port }}
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}
           env:
