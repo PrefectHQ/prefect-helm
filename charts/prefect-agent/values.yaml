@@ -5,7 +5,7 @@ agent:
   # Default values for Orion Agent.
 
   # -- URL for Prefect API
-  prefectApiUrl: https://api-beta.prefect.io
+  prefectApiUrl: https://api.prefect.cloud
   # -- Name of the prefect cloud workque to subscribe your agent to
   workQueueName: prod
 
