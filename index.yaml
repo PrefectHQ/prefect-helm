@@ -33,6 +33,24 @@ entries:
     urls:
     - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-agent-2022.6.22/prefect-agent-2022.6.22.tgz
     version: 2022.6.22
+  - apiVersion: v2
+    appVersion: latest
+    created: "2022-07-29T15:34:47.026303415Z"
+    description: Prefect orion application bundle
+    digest: 591c9cba3da901e0df3f5c9e2de29a326bd3efe7b4cb3b570d2af8f85cf30385
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiedick
+    name: prefect-agent
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-agent-0.2.5/prefect-agent-0.2.5.tgz
+    version: 0.2.5
   prefect-orion:
   - apiVersion: v2
     appVersion: latest
@@ -97,4 +115,27 @@ entries:
     urls:
     - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-orion-2022.6.10/prefect-orion-2022.6.10.tgz
     version: 2022.6.10
-generated: "2022-06-30T18:00:15.751124752Z"
+  - apiVersion: v2
+    appVersion: latest
+    created: "2022-07-29T15:34:47.172921012Z"
+    dependencies:
+    - condition: postgresql.useSubChart
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.6.2
+    description: Prefect orion application bundle
+    digest: 9ee1b3e5ef6b27282e584b57362df6d3fbff072b2aed3d488f47d3cba1442269
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiedick
+    name: prefect-orion
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-orion-0.2.5/prefect-orion-0.2.5.tgz
+    version: 0.2.5
+generated: "2022-07-29T15:34:47.172942412Z"
