@@ -9,7 +9,6 @@ repos:
         files: (README\.md\.gotmpl|(Chart|requirements|values)\.yaml)$
     repo: https://github.com/norwoodj/helm-docs
     rev: v1.3.0
-repos:
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.17
     hooks:
