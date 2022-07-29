@@ -45,26 +45,6 @@ spec:
                 secretKeyRef:
                   name: {{- .Values.agent.prefectApiKey.secretName }}
                   key:  {{- .Values.agent.prefectApiKey.secretKey }}
-            - name: POD_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
-            {{- with .Values.extraEnv }}
-            {{- toYaml . | nindent 10 }}
-            {{- end }}
-            {{- with .Values.http_proxy }}
-            - name: HTTP_PROXY
-              value: {{ . }}
-            {{- end }}
-            {{- with .Values.https_proxy }}
-            - name: HTTPS_PROXY
-              value: {{ . }}
-            {{- end }}
-            {{- with .Values.no_proxy }}
-            - name: NO_PROXY
-              value: {{ . }}
-            {{- end }}
-
           {{- with .Values.agent.resources -}}
           resources:
             {{- toYaml .Values.agent.resources | nindent 12 }}
