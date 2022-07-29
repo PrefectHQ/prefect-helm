@@ -72,4 +72,3 @@ Create the name of the service account to use
 {{- printf "%s/api/accounts/%s/workspaces/%s" .Values.config.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceName | quote }}
 {{- end }}
 {{- end }}
-

@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       annotations:
-        {{- if .Values.annotations }} 
+        {{- if .Values.annotations }}
         {{ toYaml .Values.annotations }}
         {{- end }}
       labels:
