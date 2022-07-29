@@ -11,6 +11,7 @@ Prefect orion application bundle
 | Name | Email | Url |
 | ---- | ------ | --- |
 | gabcoyne | <george@prefect.io> |  |
+| jamiedick | <jamie@prefect.io> |  |
 
 ## Source Code
 

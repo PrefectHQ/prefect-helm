@@ -8,5 +8,7 @@ appVersion: "latest"
 maintainers:
   - name: gabcoyne
     email: george@prefect.io
+  - name: jamiedick
+    email: jamie@prefect.io
 sources:
   - https://github.com/PrefectHQ/prefect-helm
