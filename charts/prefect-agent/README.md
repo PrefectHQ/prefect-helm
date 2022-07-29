@@ -29,7 +29,7 @@ Prefect orion application bundle
 | agent.debug_enabled | bool | `true` |  |
 | agent.image.name | string | `"prefecthq/prefect"` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| agent.image.tag | string | `"2.0b7-python3.8"` |  |
+| agent.image.tag | string | `"latest-python3.9"` |  |
 | agent.nodeSelector | object | `{}` |  |
 | agent.podAnnotations | object | `{}` |  |
 | agent.podSecurityContext | object | `{}` |  |
@@ -51,7 +51,7 @@ Prefect orion application bundle
 | fullnameOverride | string | `""` |  |
 | imagePullSecrets | list | `[]` |  |
 | nameOverride | string | `""` |  |
-| prefectVersionTag | string | `"2.0b7-python3.8"` |  |
+| prefectVersionTag | string | `"2.0-python3.8"` |  |
 | serviceAccount.enabled | bool | `true` |  |
 
 ----------------------------------------------
