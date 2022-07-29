@@ -50,17 +50,6 @@ app.kubernetes.io/name: {{ include "prefect-agent.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "prefect-agent.apiUrl" -}}
-{{- if not .Values.serviceAccount.create }}
-{{- default (include "prefect-agent.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-#  "https://api.prefect.cloud/api/accounts/{{ .Values.agent.prefectCloudAccountId }}/workspaces/{{ .Values.agent.prefectworkspaceName }}"
 
 {{/*
 Create the name of the service account to use
