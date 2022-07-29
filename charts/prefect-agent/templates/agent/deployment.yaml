@@ -1,7 +1,7 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "prefect-agent.fullname" . }}-agent
+  name: {{ include "prefect-agent.fullname" . }}
   labels:
     {{- include "prefect-agent.labels" . | nindent 4 }}
 spec:
