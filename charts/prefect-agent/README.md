@@ -22,23 +22,21 @@ Prefect orion application bundle
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | agent.affinity | object | `{}` |  |
+| agent.apiKeySecret | object | `{"key":"api-key","name":"prefect-cloud-api-key"}` | Prefect cloud API key |
 | agent.autoscaling.enabled | bool | `false` |  |
 | agent.autoscaling.maxReplicas | int | `10` |  |
 | agent.autoscaling.minReplicas | int | `1` |  |
 | agent.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| agent.debug_enabled | bool | `true` |  |
+| agent.debugEnabled | bool | `true` |  |
 | agent.image.name | string | `"prefecthq/prefect"` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
 | agent.image.tag | string | `"2-latest"` |  |
 | agent.nodeSelector | object | `{}` |  |
 | agent.podAnnotations | object | `{}` |  |
 | agent.podSecurityContext | object | `{}` |  |
-| agent.prefectApiKey | object | `{"secretKey":"api-key","secretName":"prefect-cloud-api-key"}` | Prefect cloud API key |
-| agent.prefectApiKey.secretKey | string | `"api-key"` | Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set |
-| agent.prefectApiKey.secretName | string | `"prefect-cloud-api-key"` | Name of secret containing the prefect API key. |
 | agent.prefectApiUrl | string | `"https://api.prefect.cloud"` | URL for Prefect API |
-| agent.prefectCloud.accountId | string | `nil` | Prefect Cloud Account ID |
-| agent.prefectCloud.workspaceName | string | `nil` | Prefect Cloud Workspace Name |
+| agent.prefectCloud.accountId | string | `nil` |  |
+| agent.prefectCloud.workspaceName | string | `nil` |  |
 | agent.replicaCount | int | `1` |  |
 | agent.resources | object | `{}` |  |
 | agent.securityContext | object | `{}` |  |

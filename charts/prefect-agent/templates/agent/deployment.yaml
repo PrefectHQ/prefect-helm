@@ -43,8 +43,8 @@ spec:
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{- .Values.agent.prefectApiKey.secretName }}
-                  key:  {{- .Values.agent.prefectApiKey.secretKey }}
+                  name: {{- .Values.agent.apiKeySecret.name }}
+                  key:  {{- .Values.agent.apiKeySecret.key }}
           {{- with .Values.agent.resources -}}
           resources:
             {{- toYaml .Values.agent.resources | nindent 12 }}
