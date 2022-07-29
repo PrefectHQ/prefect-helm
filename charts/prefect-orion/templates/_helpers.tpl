@@ -85,7 +85,7 @@ Create the name of the service account to use
 {{- $key := upper $key -}}
 {{/* Create an environment variable if this is a leaf */}}
 {{- if ne (typeOf $val | toString) "map[string]interface {}" }}
-- name: {{ printf "%s__%s" $prefix $key }}
+- name: {{ printf "%s_%s" $prefix $key }}
   value: {{ $val | quote }}
 {{/* Otherwise, recurse into each child key with an updated prefix */}}
 {{- else -}}
@@ -166,6 +166,6 @@ secretKeyRef:
   valueFrom:
     {{- include "orion.postgres-secret-ref" . | nindent 4 }}
 {{- end }}    
-{{- $args := (dict "prefix" "PREFECT_SERVER" "map" .Values.prefectConfig) -}}
+{{- $args := (dict "prefix" "PREFECT_ORION" "map" .Values.prefectConfig) -}}
 {{- include "env-unwrap" $args -}}
 {{- end }}
