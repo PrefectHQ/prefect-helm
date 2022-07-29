@@ -69,6 +69,6 @@ Create the name of the service account to use
 {{- if ne .Values.config.prefectApiUrl  "api.prefect.cloud" }}
 {{- .Values.config.prefectApiUrl | quote }}
 {{- else }}
-{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.config.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceName | quote }}
+{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.config.prefectApiUrl .Values.config.prefectCloud.accountId .Values.config.prefectCloud.workspaceName | quote }}
 {{- end }}
 {{- end }}
