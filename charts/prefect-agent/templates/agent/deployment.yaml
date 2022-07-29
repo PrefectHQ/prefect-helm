@@ -11,10 +11,7 @@ spec:
       {{- include "prefect-agent.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      annotations:
-        {{- if .Values.annotations }}
-        {{ toYaml .Values.annotations }}
-        {{- end }}
+      annotations: {{ toYaml .Values.annotations | nindent 8 }}
       labels:
         {{- include "prefect-agent.selectorLabels" . | nindent 8 }}
         {{- if .Values.podLabels }}
