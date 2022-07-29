@@ -19,7 +19,7 @@ agent:
   # -- Prefect cloud API key
   prefectApiKey:
     # -- Name of secret containing the prefect API key.
-    secretName: prefect-config
+    secretName: prefect-cloud-api-key
     # -- Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set
     secretKey: api-key
 
