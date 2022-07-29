@@ -1,6 +1,6 @@
 # prefect-agent
 
-![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Prefect orion application bundle
 
@@ -29,13 +29,13 @@ Prefect orion application bundle
 | agent.debug_enabled | bool | `true` |  |
 | agent.image.name | string | `"prefecthq/prefect"` |  |
 | agent.image.pullPolicy | string | `"IfNotPresent"` |  |
-| agent.image.tag | string | `"latest-python3.9"` |  |
+| agent.image.tag | string | `"2-latest"` |  |
 | agent.nodeSelector | object | `{}` |  |
 | agent.podAnnotations | object | `{}` |  |
 | agent.podSecurityContext | object | `{}` |  |
-| agent.prefectApiKey | object | `{"secretKey":"api-key","secretName":"prefect-config"}` | Prefect cloud API key |
+| agent.prefectApiKey | object | `{"secretKey":"api-key","secretName":"prefect-cloud-api-key"}` | Prefect cloud API key |
 | agent.prefectApiKey.secretKey | string | `"api-key"` | Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set |
-| agent.prefectApiKey.secretName | string | `"prefect-config"` | Name of secret containing the prefect API key. |
+| agent.prefectApiKey.secretName | string | `"prefect-cloud-api-key"` | Name of secret containing the prefect API key. |
 | agent.prefectApiUrl | string | `"https://api.prefect.cloud"` | URL for Prefect API |
 | agent.prefectCloud.accountId | string | `nil` | Prefect Cloud Account ID |
 | agent.prefectCloud.workspaceName | string | `nil` | Prefect Cloud Workspace Name |

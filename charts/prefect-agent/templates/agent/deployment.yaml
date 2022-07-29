@@ -1,7 +1,7 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "prefect-agent.fullname" . }}-agent
+  name: {{ include "prefect-agent.fullname" . }}
   labels:
     {{- include "prefect-agent.labels" . | nindent 4 }}
 spec:
@@ -36,10 +36,15 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", {{ .Values.agent.workQueueName }}]
           env:
-            {{- (include "prefect-agent.envConfig" .) | nindent 12 }}
-            {{- with .Values.agent.env }}
-              {{- toYaml . | nindent 12 }}
-            {{- end }}
+            - name: PREFECT_DEBUG_MODE
+              value: {{ .Values.agent.debugEnabled | quote }}
+            - name: PREFECT_API_URL
+              value: include "prefect-agent.prefectApiUrl" .
+            - name: PREFECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{- .Values.agent.prefectApiKey.secretName }}
+                  key:  {{- .Values.agent.prefectApiKey.secretKey }}
           {{- with .Values.agent.resources -}}
           resources:
             {{- toYaml .Values.agent.resources | nindent 12 }}

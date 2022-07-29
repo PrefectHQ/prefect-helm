@@ -1,4 +1,3 @@
-
 prefectVersionTag: 2.0-python3.8
 
 agent:
@@ -9,7 +8,7 @@ agent:
   # -- Name of the prefect cloud workque to subscribe your agent to
   workQueueName: prod
 
-  debug_enabled: true
+  debugEnabled: true
 
   prefectCloud:
     # -- Prefect Cloud Account ID
@@ -20,7 +19,7 @@ agent:
   # -- Prefect cloud API key
   prefectApiKey:
     # -- Name of secret containing the prefect API key.
-    secretName: prefect-config
+    secretName: prefect-cloud-api-key
     # -- Name of secret key rcontaining the Prefect Cloud API key equired if existingSecret set
     secretKey: api-key
 
@@ -28,7 +27,7 @@ agent:
   image:
     name: prefecthq/prefect
     pullPolicy: IfNotPresent
-    tag: latest-python3.9
+    tag: 2-latest
 
   serviceAccount:
     # Specifies whether a service account should be created
