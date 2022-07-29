@@ -1,11 +1,30 @@
 prefectVersionTag: 2.0-python3.8
 
-agent:
-  # Default values for Orion Agent.
+replicaCount: 1
 
-  # -- URL for Prefect API
+image:
+  repository: prefecthq/prefect
+  tag: 2-latest
+  pullPolicy: IfNotPresent
+
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  # pullSecrets:
+  #   - myRegistrKeySecretName
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+config:
   prefectApiUrl: https://api.prefect.cloud
-  # -- Name of the prefect cloud workque to subscribe your agent to
   workQueueName: prod
 
   debugEnabled: true
@@ -19,48 +38,27 @@ agent:
     name: prefect-cloud-api-key
     key: api-key
 
-  image:
-    name: prefecthq/prefect
-    pullPolicy: IfNotPresent
-    tag: 2-latest
+securityContext: {}
+  # The securityContext this Pod should use. See https://kubernetes.io/docs/concepts/policy/security-context/ for more.
+  # runAsUser: 65534
 
-  serviceAccount:
-    # Specifies whether a service account should be created
-    create: true
-    # Annotations to add to the service account
-    annotations: {}
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
-    name: ""
+nodeSelector: {}
 
-  podAnnotations: {}
+affinity: {}
 
-  podSecurityContext: {}
+tolerations: []
 
-  securityContext: {}
+annotations: {}
 
-  replicaCount: 1
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
-  resources: {}
+podLabels: {}
 
-  autoscaling:
-    enabled: false
-    minReplicas: 1
-    maxReplicas: 10
-    targetCPUUtilizationPercentage: 80
-    # targetMemoryUtilizationPercentage: 80
-
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
-
-
-serviceAccount:
-   enabled: true
-
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
-annotations: {}

@@ -1,63 +1,50 @@
 apiVersion : apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "prefect-agent.fullname" . }}
+  name: {{ template "prefect-agent.fullname" . }}
   labels:
     {{- include "prefect-agent.labels" . | nindent 4 }}
 spec:
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       {{- include "prefect-agent.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.agent.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- if .Values.annotations }} 
+        {{ toYaml .Values.annotations }}
+        {{- end }}
       labels:
         {{- include "prefect-agent.selectorLabels" . | nindent 8 }}
+        {{- if .Values.podLabels }}
+        {{ toYaml .Values.podLabels | trim }}
+        {{- end }}
     spec:
-      {{- with .Values.agent.imagePullSecrets }}
+    {{- if .Values.image.pullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- range .Values.image.pullSecrets }}
+        - name: {{ . }}
       {{- end }}
-      serviceAccountName: {{ include "prefect-agent.serviceAccountName" . }}
-      {{- if .Values.agent.podSecurityContext -}}
-      securityContext:
-        {{- toYaml .Values.agent.podSecurityContext | nindent 8 }}
-      {{- end }}
+    {{- end }}
+      serviceAccountName: {{ template "prefect-agent.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
-          {{- if .Values.agent.securityContext -}}
-          securityContext:
-            {{- toYaml .Values.agent.podSecurityContext | nindent 12 }}
-          {{- end }}
-          image: "{{ .Values.agent.image.name }}:{{ .Values.agent.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
-          command: ["prefect", "agent", "start", {{ .Values.agent.workQueueName }}]
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["prefect", "agent", "start", {{ .Values.config.workQueueName }}]
           env:
             - name: PREFECT_DEBUG_MODE
-              value: {{ .Values.agent.debugEnabled | quote }}
+              value: {{ .Values.config.debugEnabled | quote }}
             - name: PREFECT_API_URL
-              value: {{ include "prefect-agent.prefectApiUrl" . }}
+              value: {{ template "prefect-agent.prefectApiUrl" . }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{- .Values.agent.apiKeySecret.name }}
-                  key:  {{- .Values.agent.apiKeySecret.key }}
-          {{- with .Values.agent.resources -}}
-          resources:
-            {{- toYaml .Values.agent.resources | nindent 12 }}
-          {{- end }}
-      {{- with .Values.agent.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.agent.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.agent.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+                  name: {{ .Values.config.apiKeySecret.name }}
+                  key:  {{ .Values.config.apiKeySecret.key }}
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+      securityContext: {{ toYaml .Values.securityContext | nindent 8 }}
+      nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}
+      affinity: {{ toYaml .Values.affinity | nindent 8 }}
+      tolerations: {{ toYaml .Values.tolerations | nindent 8 }}
