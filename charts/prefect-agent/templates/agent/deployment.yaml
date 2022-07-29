@@ -34,7 +34,7 @@ spec:
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.config.debugEnabled | quote }}
             - name: PREFECT_API_URL
-              value: {{ template "prefect-agent.prefectApiUrl" . }}
+              value: {{ template "prefect-agent.apiUrl" . }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:

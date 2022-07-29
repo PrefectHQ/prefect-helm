@@ -23,12 +23,12 @@ Prefect orion application bundle
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
 | annotations | object | `{}` |  |
+| config.accountId | string | `""` |  |
 | config.apiKeySecret | object | `{"key":"api-key","name":"prefect-cloud-api-key"}` | Prefect cloud API key |
+| config.apiUrl | string | `"https://api.prefect.cloud"` |  |
 | config.debugEnabled | bool | `true` |  |
-| config.prefectApiUrl | string | `"https://api.prefect.cloud"` |  |
-| config.prefectCloud.accountId | string | `"accounts/2e171c27-076d-470d-8a2e-5c1910a970af"` |  |
-| config.prefectCloud.workspaceName | string | `"workspaces/4f2d3b76-fc6b-4283-9142-b6c0bc7d284b"` |  |
-| config.workQueueName | string | `"dw"` |  |
+| config.workQueueName | string | `"prd"` |  |
+| config.workspaceName | string | `""` |  |
 | fullnameOverride | string | `""` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"prefecthq/prefect"` |  |

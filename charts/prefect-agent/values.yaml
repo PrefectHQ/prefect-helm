@@ -24,14 +24,12 @@ serviceAccount:
   name: ""
 
 config:
-  prefectApiUrl: https://api.prefect.cloud
-  workQueueName: dw
+  apiUrl: https://api.prefect.cloud
+  accountId: ""
+  workspaceName: ""
+  workQueueName: prd
 
   debugEnabled: true
-
-  prefectCloud:
-    accountId: accounts/2e171c27-076d-470d-8a2e-5c1910a970af
-    workspaceName: workspaces/4f2d3b76-fc6b-4283-9142-b6c0bc7d284b
 
   # -- Prefect cloud API key
   apiKeySecret:

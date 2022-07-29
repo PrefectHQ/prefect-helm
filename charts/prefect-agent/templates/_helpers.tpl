@@ -62,13 +62,13 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-  prefect-agent.prefectApiUrl:
+  prefect-agent.apiUrl:
     Define API URL for workspace or for
 */}}
-{{- define "prefect-agent.prefectApiUrl" -}}
-{{- if ne .Values.config.prefectApiUrl  "api.prefect.cloud" }}
-{{- .Values.config.prefectApiUrl | quote }}
+{{- define "prefect-agent.apiUrl" -}}
+{{- if ne .Values.config.apiUrl  "https://api.prefect.cloud" }}
+{{- .Values.config.apiUrl | quote }}
 {{- else }}
-{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.config.prefectApiUrl .Values.config.prefectCloud.accountId .Values.config.prefectCloud.workspaceName | quote }}
+{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.config.apiUrl .Values.config.accountId .Values.config.workspaceName | quote }}
 {{- end }}
 {{- end }}
