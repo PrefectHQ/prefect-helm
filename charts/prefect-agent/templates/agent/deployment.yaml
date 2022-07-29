@@ -36,10 +36,35 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", {{ .Values.agent.workQueueName }}]
           env:
-            {{- (include "prefect-agent.envConfig" .) | nindent 12 }}
-            {{- with .Values.agent.env }}
-              {{- toYaml . | nindent 12 }}
+            - name: PREFECT_DEBUG_MODE
+              value: {{ .Values.agent.debugEnabled | quote }}
+            - name: PREFECT_API_URL
+              value: include "prefect-agent.prefectApiUrl" .
+            - name: PREFECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{- .Values.agent.prefectApiKey.secretName }}
+                  key:  {{- .Values.agent.prefectApiKey.secretKey }}
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            {{- with .Values.extraEnv }}
+            {{- toYaml . | nindent 10 }}
             {{- end }}
+            {{- with .Values.http_proxy }}
+            - name: HTTP_PROXY
+              value: {{ . }}
+            {{- end }}
+            {{- with .Values.https_proxy }}
+            - name: HTTPS_PROXY
+              value: {{ . }}
+            {{- end }}
+            {{- with .Values.no_proxy }}
+            - name: NO_PROXY
+              value: {{ . }}
+            {{- end }}
+
           {{- with .Values.agent.resources -}}
           resources:
             {{- toYaml .Values.agent.resources | nindent 12 }}

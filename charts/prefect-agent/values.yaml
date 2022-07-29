@@ -8,7 +8,7 @@ agent:
   # -- Name of the prefect cloud workque to subscribe your agent to
   workQueueName: prod
 
-  debug_enabled: true
+  debugEnabled: true
 
   prefectCloud:
     # -- Prefect Cloud Account ID

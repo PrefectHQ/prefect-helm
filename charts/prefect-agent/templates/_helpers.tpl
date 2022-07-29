@@ -60,7 +60,7 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-#  "https://api-beta.prefect.io/api/accounts/{{ .Values.agent.prefectCloudAccountId }}/workspaces/{{ .Values.agent.prefectworkspaceName }}"
+#  "https://api.prefect.cloud/api/accounts/{{ .Values.agent.prefectCloudAccountId }}/workspaces/{{ .Values.agent.prefectworkspaceName }}"
 
 {{/*
 Create the name of the service account to use
@@ -73,75 +73,15 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{/*
-  env-unrap:
-    Converts a nested dictionary with keys `prefix` and `map`
-    into a list of environment variable definitions, where each
-    variable name is an uppercased concatenation of keys in the map
-    starting with the original prefix and descending to each leaf.
-    The variable value is then the quoted value of each leaf key.
-*/}}
-{{- define "env-unwrap" -}}
-{{- $prefix := .prefix -}}
-{{/* Iterate through all keys in the current map level */}}
-{{- range $key, $val := .map -}}
-{{- $key := upper $key -}}
-{{/* Create an environment variable if this is a leaf */}}
-{{- if ne (typeOf $val | toString) "map[string]interface {}" }}
-- name: {{ printf "%s__%s" $prefix $key }}
-  value: {{ $val | quote }}
-{{/* Otherwise, recurse into each child key with an updated prefix */}}
-{{- else -}}
-{{- $prefix := (printf "%s__%s" $prefix $key) -}}
-{{- $args := (dict "prefix" $prefix "map" $val)  -}}
-{{- include "env-unwrap" $args -}}
-{{- end -}}
-{{- end -}}
-{{- end -}}
 
 {{/*
   prefect-agent.prefectApiUrl:
     Define API URL for workspace or for
 */}}
 {{- define "prefect-agent.prefectApiUrl" -}}
-{{- if ne .Values.agent.prefectApiUrl  "api-beta.prefect.io" }}
+{{- if ne .Values.agent.prefectApiUrl  "api.prefect.cloud" }}
 {{- .Values.agent.prefectApiUrl | quote }}
 {{- else }}
 {{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.prefectApiUrl .Values.agent.prefectCloud.accountId .Values.agent.prefectCloud.workspaceName | quote }}
 {{- end }}
-{{- end }}
-
-{{/*
-  prefect-agent.postgres-secret-ref:
-    Generates a reference to the postgreqsql connection-string password
-    secret.
-*/}}
-{{- define "prefect-agent.api-key-secret-ref" }}
-{{- if eq .Values.agent.prefectApiUrl "api-beta.prefect.io" -}}
-secretKeyRef:
-  name: {{ .Values.agent.prefectApiKey.secretName }}
-  key: {{ .Values.agent.prefectApiKey.secretKey }}
-{{- end -}}
-{{- end -}}
-
-
-
-{{/*
-  prefect-agent.envConfig:
-    Define environment variables for prefect config.
-    Includes a constant set of common variables as well as
-    generated environment variables from .Values.prefectConfig
-    using "env-unwrap"
-*/}}
-{{- define "prefect-agent.envConfig" -}}
-- name: PREFECT_DEBUG_MODE
-  value: {{ .Values.agent.debug_enabled | quote }}
-- name: PREFECT_API_URL
-  value: {{  include "prefect-agent.prefectApiUrl" . }}
-{{- if (include "prefect-agent.api-key-secret-ref" . ) }}
-- name: PREFECT_API_KEY
-  valueFrom: {{- include "prefect-agent.api-key-secret-ref" . | nindent 4 -}}
-{{- end -}}
-{{- $args := (dict "prefix" "PREFECT_SERVER" "map" .Values.prefectConfig) -}}
-{{- include "env-unwrap" $args -}}
 {{- end }}
