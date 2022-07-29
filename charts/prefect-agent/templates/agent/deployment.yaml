@@ -39,7 +39,7 @@ spec:
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.agent.debugEnabled | quote }}
             - name: PREFECT_API_URL
-              value: include "prefect-agent.prefectApiUrl" .
+              value: {{ include "prefect-agent.prefectApiUrl" . }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
