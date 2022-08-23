@@ -3,6 +3,24 @@ entries:
   prefect-agent:
   - apiVersion: v2
     appVersion: latest
+    created: "2022-08-23T17:24:50.850111924Z"
+    description: Prefect orion application bundle
+    digest: 7099a32aac64c7fae244adb1634c272eb2d7f99dc1ddad2b8a0132cf7c4002c0
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiedick
+    name: prefect-agent
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-agent-0.3.2/prefect-agent-0.3.2.tgz
+    version: 0.3.2
+  - apiVersion: v2
+    appVersion: latest
     created: "2022-07-29T21:58:27.687458402Z"
     description: Prefect orion application bundle
     digest: 9ccf673a388a2b9a1da0eece237d99c6e9ea354e2b15f9659d1300ee4e721be3
@@ -79,4 +97,4 @@ entries:
     urls:
     - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-orion-0.2.5/prefect-orion-0.2.5.tgz
     version: 0.2.5
-generated: "2022-07-29T21:58:27.687504103Z"
+generated: "2022-08-23T17:24:50.850149225Z"
