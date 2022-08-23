@@ -5,7 +5,7 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
 subjects:
 - kind: ServiceAccount
-  name: default
+  name: {{ template "prefect-agent.serviceAccountName" . }}
   namespace: {{ .Release.Namespace | quote }}
 roleRef:
   kind: Role
