@@ -35,11 +35,13 @@ spec:
               value: {{ .Values.config.debugEnabled | quote }}
             - name: PREFECT_API_URL
               value: {{ template "prefect-agent.apiUrl" . }}
+            {{- if and .Values.config.apiKeySecret.name .Values.config.apiKeySecret.key }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.config.apiKeySecret.name }}
                   key:  {{ .Values.config.apiKeySecret.key }}
+            {{- end }}
           resources: {{ toYaml .Values.resources | nindent 12 }}
       securityContext: {{ toYaml .Values.securityContext | nindent 8 }}
       nodeSelector: {{ toYaml .Values.nodeSelector | nindent 8 }}

@@ -33,8 +33,8 @@ config:
 
   # -- Prefect cloud API key
   apiKeySecret:
-    name: prefect-cloud-api-key
-    key: api-key
+    name: ""
+    key: ""
 
 securityContext: {}
   # The securityContext this Pod should use. See https://kubernetes.io/docs/concepts/policy/security-context/ for more.
