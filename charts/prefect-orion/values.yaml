@@ -12,7 +12,7 @@ api:
     name: prefecthq/prefect
     pullPolicy: IfNotPresent
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: latest-python3.9
+    tag: 2-python3.9
 
   debug_enabled: false
 
