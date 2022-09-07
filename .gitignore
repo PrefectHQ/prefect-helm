@@ -115,3 +115,7 @@ scheduler.json
 */charts
 requirements.lock
 Chart.lock
+
+# IDEs
+.vscode/
+.idea/
