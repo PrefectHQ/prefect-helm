@@ -45,6 +45,14 @@ api:
   securityContext: {}
   resources: {}
 
+  init:
+    # init configures resources for the initContainer
+    # which upgrades the database
+    enabled: true
+    env: []
+    resources: {}
+    securityContext: {}
+
 postgresql:
   enabled: true
   auth:

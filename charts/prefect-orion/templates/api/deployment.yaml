@@ -28,6 +28,26 @@ spec:
       serviceAccountName: {{ include "orion.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.api.podSecurityContext | nindent 8 }}
+      {{- if .Values.api.init.enabled }}
+      initContainers:
+        - name: db-upgrade
+          {{- with .Values.api.init.securityContext -}}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.api.image.name }}:{{ .Values.api.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.api.image.pullPolicy  }}
+          command: ["prefect", "orion", "database", "upgrade", "--yes"]
+          env:
+            {{- (include "orion.envConfig" .) | nindent 12 }}
+            {{- with .Values.api.init.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          {{- with .Values.api.init.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
