@@ -37,7 +37,6 @@ Prefect orion application bundle
 | nameOverride               | string | `""`                          |                                   |
 | nodeSelector               | object | `{}`                          |                                   |
 | podLabels                  | object | `{}`                          |                                   |
-| prefectVersionTag          | string | `"2.0-python3.8"`             |                                   |
 | replicaCount               | int    | `1`                           |                                   |
 | resources                  | object | `{}`                          |                                   |
 | securityContext            | object | `{}`                          |                                   |
