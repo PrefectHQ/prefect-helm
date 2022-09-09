@@ -3,6 +3,24 @@ entries:
   prefect-agent:
   - apiVersion: v2
     appVersion: latest
+    created: "2022-09-09T15:08:22.030319309Z"
+    description: Prefect orion application bundle
+    digest: fd3a570b265dc9730772ac0993cb2826fd9d3c5a0cc12231f6f72752af3a69d5
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiedick
+    name: prefect-agent
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-agent-0.4.0/prefect-agent-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: latest
     created: "2022-08-23T17:24:50.850111924Z"
     description: Prefect orion application bundle
     digest: 7099a32aac64c7fae244adb1634c272eb2d7f99dc1ddad2b8a0132cf7c4002c0
@@ -76,6 +94,29 @@ entries:
   prefect-orion:
   - apiVersion: v2
     appVersion: latest
+    created: "2022-09-09T15:08:22.166467098Z"
+    dependencies:
+    - condition: postgresql.useSubChart
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.6.2
+    description: Prefect orion application bundle
+    digest: e35188b54f856e574accf97ccbad717c000876f652629319bebcc412d18cc929
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiedick
+    name: prefect-orion
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-orion-0.3.0/prefect-orion-0.3.0.tgz
+    version: 0.3.0
+  - apiVersion: v2
+    appVersion: latest
     created: "2022-07-29T15:34:47.172921012Z"
     dependencies:
     - condition: postgresql.useSubChart
@@ -97,4 +138,4 @@ entries:
     urls:
     - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-orion-0.2.5/prefect-orion-0.2.5.tgz
     version: 0.2.5
-generated: "2022-08-23T17:24:50.850149225Z"
+generated: "2022-09-09T15:08:22.166642399Z"
