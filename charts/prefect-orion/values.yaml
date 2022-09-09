@@ -12,7 +12,7 @@ api:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: 2-latest
 
-  debug_enabled: false
+  debugEnabled: false
 
   autoscaling:
     # -- Enable autoscaling

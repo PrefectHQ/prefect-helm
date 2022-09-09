@@ -160,7 +160,7 @@ secretKeyRef:
 */}}
 {{- define "orion.envConfig" -}}
 - name: PREFECT_DEBUG_MODE
-  value: {{ .Values.api.debug_enabled | quote }}
+  value: {{ .Values.api.debugEnabled | quote }}
 {{- if .Values.postgresql.enabled }}
 - name: PREFECT_ORION_DATABASE_CONNECTION_URL
   valueFrom:
