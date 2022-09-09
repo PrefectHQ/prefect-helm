@@ -112,6 +112,10 @@ scheduler.json
 *.out
 
 # Helm stuff
-*/charts
+charts/*/charts
 requirements.lock
 Chart.lock
+
+# IDEs
+.vscode/
+.idea/
