@@ -1,6 +1,6 @@
 # prefect-orion
 
-![Version: 0.2.5](https://img.shields.io/badge/Version-0.2.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Prefect orion application bundle
 
@@ -25,40 +25,40 @@ Prefect orion application bundle
 
 ## Values
 
-| Key                                            | Type   | Default                                                                                                                                                    | Description                                                                      |
-|------------------------------------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| api.affinity                                   | object | `{}`                                                                                                                                                       |                                                                                  |
-| api.autoscaling.enabled                        | bool   | `false`                                                                                                                                                    | Enable autoscaling                                                               |
-| api.autoscaling.maxReplicas                    | int    | `100`                                                                                                                                                      |                                                                                  |
-| api.autoscaling.minReplicas                    | int    | `1`                                                                                                                                                        | Minimum autoscaling replica count                                                |
-| api.autoscaling.targetCPUUtilizationPercentage | int    | `80`                                                                                                                                                       |                                                                                  |
-| api.debugEnabled                               | bool   | `false`                                                                                                                                                    |                                                                                  |
-| api.enabled                                    | bool   | `true`                                                                                                                                                     |                                                                                  |
-| api.image.name                                 | string | `"prefecthq/prefect"`                                                                                                                                      |                                                                                  |
-| api.image.pullPolicy                           | string | `"IfNotPresent"`                                                                                                                                           |                                                                                  |
-| api.image.tag                                  | string | `"2-latest"`                                                                                                                                               | Overrides the image tag whose default is the chart appVersion.                   |
-| api.ingress                                    | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"prefect.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration                                                            |
-| api.nodeSelector                               | object | `{}`                                                                                                                                                       |                                                                                  |
-| api.podAnnotations                             | object | `{}`                                                                                                                                                       |                                                                                  |
-| api.podSecurityContext                         | object | `{}`                                                                                                                                                       |                                                                                  |
-| api.replicaCount                               | int    | `1`                                                                                                                                                        |                                                                                  |
-| api.resources                                  | object | `{}`                                                                                                                                                       |                                                                                  |
-| api.securityContext                            | object | `{}`                                                                                                                                                       |                                                                                  |
-| api.service.port                               | int    | `4200`                                                                                                                                                     |                                                                                  |
-| api.service.type                               | string | `"ClusterIP"`                                                                                                                                              |                                                                                  |
-| api.tolerations                                | list   | `[]`                                                                                                                                                       |                                                                                  |
-| postgresql.auth.database                       | string | `"orion"`                                                                                                                                                  |                                                                                  |
-| postgresql.auth.existingSecret                 | string | `nil`                                                                                                                                                      |                                                                                  |
-| postgresql.auth.username                       | string | `"prefect"`                                                                                                                                                |                                                                                  |
-| postgresql.containerPorts.postgresql           | int    | `5432`                                                                                                                                                     |                                                                                  |
-| postgresql.enabled                             | bool   | `true`                                                                                                                                                     |                                                                                  |
-| postgresql.externalHostname                    | string | `""`                                                                                                                                                       |                                                                                  |
-| postgresql.image.tag                           | string | `"14.3.0"`                                                                                                                                                 | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
-| postgresql.initdbUser                          | string | `"postgres"`                                                                                                                                               | initial postgres user to create                                                  |
-| postgresql.persistence.enabled                 | bool   | `false`                                                                                                                                                    | Enables a PVC that stores db between deployments                                 |
-| postgresql.persistence.size                    | string | `"8Gi"`                                                                                                                                                    | Configures size of postgres PVC                                                  |
-| postgresql.useSubChart                         | bool   | `true`                                                                                                                                                     |                                                                                  |
-| serviceAccount.enabled                         | bool   | `true`                                                                                                                                                     |                                                                                  |
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| api.affinity | object | `{}` |  |
+| api.autoscaling.enabled | bool | `false` | Enable autoscaling |
+| api.autoscaling.maxReplicas | int | `100` |  |
+| api.autoscaling.minReplicas | int | `1` | Minimum autoscaling replica count |
+| api.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| api.debugEnabled | bool | `false` |  |
+| api.enabled | bool | `true` |  |
+| api.image.name | string | `"prefecthq/prefect"` |  |
+| api.image.pullPolicy | string | `"IfNotPresent"` |  |
+| api.image.tag | string | `"2-latest"` | Overrides the image tag whose default is the chart appVersion. |
+| api.ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"prefect.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration |
+| api.nodeSelector | object | `{}` |  |
+| api.podAnnotations | object | `{}` |  |
+| api.podSecurityContext | object | `{}` |  |
+| api.replicaCount | int | `1` |  |
+| api.resources | object | `{}` |  |
+| api.securityContext | object | `{}` |  |
+| api.service.port | int | `4200` |  |
+| api.service.type | string | `"ClusterIP"` |  |
+| api.tolerations | list | `[]` |  |
+| postgresql.auth.database | string | `"orion"` |  |
+| postgresql.auth.existingSecret | string | `nil` |  |
+| postgresql.auth.username | string | `"prefect"` |  |
+| postgresql.containerPorts.postgresql | int | `5432` |  |
+| postgresql.enabled | bool | `true` |  |
+| postgresql.externalHostname | string | `""` |  |
+| postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
+| postgresql.initdbUser | string | `"postgres"` | initial postgres user to create |
+| postgresql.persistence.enabled | bool | `false` | Enables a PVC that stores db between deployments |
+| postgresql.persistence.size | string | `"8Gi"` | Configures size of postgres PVC |
+| postgresql.useSubChart | bool | `true` |  |
+| serviceAccount.enabled | bool | `true` |  |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
