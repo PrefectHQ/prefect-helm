@@ -25,7 +25,11 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.serviceAccount.create  }}
       serviceAccountName: {{ include "orion.serviceAccountName" . }}
+      {{- else if ne .Values.serviceAccount.name "" }}
+      serviceAccountName: {{ .Values.serviceAccount.name | quote}}
+      {{- end }}
       securityContext:
         {{- toYaml .Values.api.podSecurityContext | nindent 8 }}
       containers:
