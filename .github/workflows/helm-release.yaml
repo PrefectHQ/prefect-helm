@@ -53,9 +53,9 @@ jobs:
       - name: Package Agent helm chart
         run: |
           mkdir /tmp/chart
-          cd charts/prefect-agent
+          cd charts
           # Update the chart version tag
-          sed -i "s/^version:.*$/version: \"$VERSION\"/" Chart.yaml
+          sed -i "s/^version:.*$/version: \"$VERSION\"/" prefect-agent/Chart.yaml
           helm package prefect-agent \
             --destination /tmp/chart \
             --dependency-update \
