@@ -12,6 +12,14 @@ api:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: 2-latest
 
+    pullSecrets: []
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistrKeySecretName
+
   debugEnabled: false
 
   # -- Custom enviornment variables

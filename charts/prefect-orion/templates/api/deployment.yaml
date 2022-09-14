@@ -21,9 +21,11 @@ spec:
       labels:
         {{- include "orion.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
+      {{- if .Values.api.image.pullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+      {{- range .Values.api.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
       {{- end }}
       serviceAccountName: {{ include "orion.serviceAccountName" . }}
       securityContext:

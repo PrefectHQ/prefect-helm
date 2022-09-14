@@ -37,6 +37,7 @@ Prefect orion application bundle
 | api.env | object | `{}` | Custom enviornment variables |
 | api.image.name | string | `"prefecthq/prefect"` |  |
 | api.image.pullPolicy | string | `"IfNotPresent"` |  |
+| api.image.pullSecrets | list | `[]` |  |
 | api.image.tag | string | `"2-latest"` | Overrides the image tag whose default is the chart appVersion. |
 | api.ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"prefect.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration |
 | api.nodeSelector | object | `{}` |  |
