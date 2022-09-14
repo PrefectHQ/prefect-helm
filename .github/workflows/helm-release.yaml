@@ -71,7 +71,6 @@ jobs:
 
       - name: Package Orion helm chart
         run: |
-          mkdir /tmp/chart
           cd charts
           # Update the chart version tag
           sed -i "s/^version:.*$/version: \"$VERSION\"/" prefect-orion/Chart.yaml
