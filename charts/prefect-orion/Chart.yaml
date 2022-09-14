@@ -5,7 +5,7 @@ type: application
 home: https://github.com/PrefectHQ
 # This version is never actually shipped. github actions will replace it at build-time
 # with the appropriate version
-version: 0.0.0
+version: 1.0.0
 appVersion: "latest"
 maintainers:
   - name: gabcoyne
