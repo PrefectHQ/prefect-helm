@@ -34,6 +34,7 @@ Prefect orion application bundle
 | api.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | api.debugEnabled | bool | `false` |  |
 | api.enabled | bool | `true` |  |
+| api.env | object | `{}` | Custom enviornment variables |
 | api.image.name | string | `"prefecthq/prefect"` |  |
 | api.image.pullPolicy | string | `"IfNotPresent"` |  |
 | api.image.tag | string | `"2-latest"` | Overrides the image tag whose default is the chart appVersion. |

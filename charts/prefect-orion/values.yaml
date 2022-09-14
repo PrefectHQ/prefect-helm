@@ -14,6 +14,12 @@ api:
 
   debugEnabled: false
 
+  # -- Custom enviornment variables
+  env: {}
+  # Allow custom variables to be added to the deployment
+  # - name: PREFECT_API_URL
+  #   value: http://prefect-server:4200/api
+
   autoscaling:
     # -- Enable autoscaling
     enabled: false
