@@ -3,12 +3,14 @@ name: prefect-orion
 description: Prefect orion application bundle
 type: application
 home: https://github.com/PrefectHQ
-version: 0.3.1
+# This version is never actually shipped. github actions will replace it at build-time
+# with the appropriate version
+version: 1.0.0
 appVersion: "latest"
 maintainers:
   - name: gabcoyne
     email: george@prefect.io
-  - name: jamiedick
+  - name: jamiezieziula
     email: jamie@prefect.io
 sources:
   - https://github.com/PrefectHQ/prefect-helm
