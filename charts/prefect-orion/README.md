@@ -1,6 +1,6 @@
 # prefect-orion
 
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Prefect orion application bundle
 
@@ -11,7 +11,7 @@ Prefect orion application bundle
 | Name | Email | Url |
 | ---- | ------ | --- |
 | gabcoyne | <george@prefect.io> |  |
-| jamiedick | <jamie@prefect.io> |  |
+| jamiezieziula | <jamie@prefect.io> |  |
 
 ## Source Code
 
@@ -60,6 +60,7 @@ Prefect orion application bundle
 | postgresql.persistence.enabled | bool | `false` | Enables a PVC that stores db between deployments |
 | postgresql.persistence.size | string | `"8Gi"` | Configures size of postgres PVC |
 | postgresql.useSubChart | bool | `true` |  |
+| prefectConfig | string | `nil` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
