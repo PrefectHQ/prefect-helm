@@ -17,7 +17,7 @@ entries:
     - https://github.com/PrefectHQ/prefect-helm
     type: application
     urls:
-    - https://prefecthq.github.io/prefect-helm/charts/agent/prefect-agent-0.6.0.tgz
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-agent-0.6.0.tgz
     version: 0.6.0
   - apiVersion: v2
     appVersion: latest
@@ -131,7 +131,7 @@ entries:
     - https://github.com/PrefectHQ/prefect-helm
     type: application
     urls:
-    - https://prefecthq.github.io/prefect-helm/charts/orion/prefect-orion-0.6.0.tgz
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-orion-0.6.0.tgz
     version: 0.6.0
   - apiVersion: v2
     appVersion: latest
