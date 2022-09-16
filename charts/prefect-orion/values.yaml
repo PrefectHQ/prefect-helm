@@ -12,7 +12,21 @@ api:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: 2-latest
 
+    pullSecrets: []
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ##
+    # pullSecrets:
+    #   - myRegistrKeySecretName
+
   debugEnabled: false
+
+  # -- Custom enviornment variables
+  env: {}
+  # Allow custom variables to be added to the deployment
+  # - name: PREFECT_API_URL
+  #   value: http://prefect-server:4200/api
 
   autoscaling:
     # -- Enable autoscaling
