@@ -29,6 +29,8 @@ config:
 
   debugEnabled: true
 
+  commonLabels: {}
+
   # -- Prefect cloud API key
   apiKeySecret:
     name: ""
