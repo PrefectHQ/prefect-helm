@@ -121,8 +121,10 @@ postgresql:
     # -- Configures size of postgres PVC
     size: 8Gi
 
-  # -- initial postgres user to create
-  initdbUser: postgres
+  # initial postgres user to create
+  primary:
+    initdb:
+      user: postgres
 
   image:
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
