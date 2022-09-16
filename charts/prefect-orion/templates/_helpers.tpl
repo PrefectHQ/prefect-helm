@@ -106,7 +106,7 @@ Create the name of the service account to use
 {{- define "orion.postgres-hostname" -}}
 {{- if .Values.postgresql.useSubChart -}}
   {{- $subchart_overrides := .Values.postgresql -}}
-  {{- $name := include "orion.fullname" (dict "Values" $subchart_overrides "Chart" (dict "Name" "postgresql") "Release" .Release) -}}
+  {{- $name := include "postgresql.primary.fullname" (dict "Values" $subchart_overrides "Chart" (dict "Name" "postgresql") "Release" .Release) -}}
   {{- printf "%s.%s" $name .Release.Namespace -}}
 {{- else -}}
   {{- .Values.postgresql.externalHostname -}}
