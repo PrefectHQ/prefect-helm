@@ -133,8 +133,8 @@ Create the name of the service account to use
     an existing secret is not set.
 */}}
 {{- define "orion.postgres-string-secret-name" -}}
-{{- if .Values.postgresql.existingSecret -}}
-  {{- .Values.postgresql.existingSecret -}}
+{{- if .Values.postgresql.auth.existingSecret -}}
+  {{- .Values.postgresql.auth.existingSecret -}}
 {{- else -}}
   {{- printf "%s-%s" .Release.Name "postgresql-connection" -}}
 {{- end -}}
@@ -165,7 +165,7 @@ secretKeyRef:
 - name: PREFECT_ORION_DATABASE_CONNECTION_URL
   valueFrom:
     {{- include "orion.postgres-secret-ref" . | nindent 4 }}
-{{- end }}    
+{{- end }}
 {{- $args := (dict "prefix" "PREFECT_ORION" "map" .Values.prefectConfig) -}}
 {{- include "env-unwrap" $args -}}
 {{- end }}
