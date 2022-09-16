@@ -129,4 +129,4 @@ postgresql:
     tag: 14.3.0
 
 serviceAccount:
-   enabled: true
+  enabled: true
