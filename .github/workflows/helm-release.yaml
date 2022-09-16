@@ -57,7 +57,7 @@ jobs:
           # Update the chart version tag
           sed -i "s/^version:.*$/version: \"$VERSION\"/" prefect-agent/Chart.yaml
           helm package prefect-agent \
-            --destination /tmp/chart/agent \
+            --destination /tmp/chart \
             --dependency-update \
             --version $VERSION \
             --app-version $VERSION \
@@ -75,7 +75,7 @@ jobs:
           # Update the chart version tag
           sed -i "s/^version:.*$/version: \"$VERSION\"/" prefect-orion/Chart.yaml
           helm package prefect-orion \
-            --destination /tmp/chart/orion \
+            --destination /tmp/chart \
             --dependency-update \
             --version $VERSION \
             --app-version $VERSION \
@@ -96,8 +96,8 @@ jobs:
       - name: Commit and push
         run: |
           cp /tmp/chart/index.yaml .
-          cp /tmp/chart/agent/prefect-agent-$VERSION.* ./charts
-          cp /tmp/chart/orion/prefect-orion-$VERSION.* ./charts
+          cp /tmp/chart/prefect-agent-$VERSION.* ./charts
+          cp /tmp/chart/prefect-orion-$VERSION.* ./charts
           git add ./index.yaml ./charts/prefect-agent-$VERSION.* ./charts/prefect-orion-$VERSION.*
           git commit -m "Release $VERSION"
           git push origin gh-pages
