@@ -32,6 +32,7 @@ Prefect orion application bundle
 | api.autoscaling.maxReplicas | int | `100` |  |
 | api.autoscaling.minReplicas | int | `1` | Minimum autoscaling replica count |
 | api.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| api.commonLabels | object | `{}` |  |
 | api.debugEnabled | bool | `false` |  |
 | api.enabled | bool | `true` |  |
 | api.env | object | `{}` | Custom enviornment variables |

@@ -22,6 +22,9 @@ api:
 
   debugEnabled: false
 
+  # Labels to apply to all resources
+  commonLabels: {}
+
   # -- Custom enviornment variables
   env: {}
   # Allow custom variables to be added to the deployment

@@ -26,6 +26,7 @@ Prefect orion application bundle
 | config.accountId | string | `""` |  |
 | config.apiKeySecret | object | `{"key":"","name":""}` | Prefect cloud API key |
 | config.apiUrl | string | `"https://api.prefect.cloud"` |  |
+| config.commonLabels | object | `{}` |  |
 | config.debugEnabled | bool | `true` |  |
 | config.workQueueName | string | `"prd"` |  |
 | config.workspaceName | string | `""` |  |
