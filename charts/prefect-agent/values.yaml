@@ -1,16 +1,22 @@
 ## Common parameters
-## nameOverride String to partially override common.names.name
+# nameOverride is a string to partially override common.names.name
 nameOverride: ""
-##  fullnameOverride String to fully override common.names.fullname
+# fullnameOverride is a string to fully override common.names.fullname
 fullnameOverride: ""
-## namespaceOverride String to fully override common.names.namespace
+# namespaceOverride is a string to fully override common.names.namespace
 namespaceOverride: ""
-## commonLabels Labels to add to all deployed objects
+# commonLabels are labels to add to all deployed objects
 commonLabels: {}
-## commonAnnotations Annotations to add to all deployed objects
+# commonAnnotations are annotations to add to all deployed objects
 commonAnnotations: {}
 
+## Agent parameters
 agent:
+  ## @param agent.image.repository agent image repository
+  ## @param agent.image.tag agent image tag (immutable tags are recommended)
+  ## @param agent.image.pullPolicy agent image pull policy
+  ## @param agent.image.pullSecrets agent image pull secrets
+  ## @param agent.image.debug Enable agent image debug mode
   image:
     repository: prefecthq/prefect
     tag: 2-latest
