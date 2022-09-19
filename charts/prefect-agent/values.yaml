@@ -31,7 +31,7 @@ agent:
       name: prefect-api-key
       key: key
     accountId: ""
-    workspaceName: ""
+    workspaceId: ""
     workQueueName: ""
 
   replicaCount: 1
