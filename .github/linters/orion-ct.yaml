@@ -1,6 +1,4 @@
 # See https://github.com/helm/chart-testing#configuration
-# remote: origin
-# target-branch: main
 charts:
   - charts/prefect-orion
 chart-repos:
