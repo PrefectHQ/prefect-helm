@@ -133,7 +133,7 @@ postgresql:
 # Values placed here will result in environment variable definitions
 # starting with "PREFECT_ORION_" and will be passed to relevant
 # services
-prefectConfig:
+prefectConfig: {}
 
 serviceAccount:
   # Specifies whether a service account should be created

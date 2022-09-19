@@ -60,7 +60,7 @@ Prefect orion application bundle
 | postgresql.persistence.size | string | `"8Gi"` | Configures size of postgres PVC |
 | postgresql.primary.initdb.user | string | `"postgres"` |  |
 | postgresql.useSubChart | bool | `true` |  |
-| prefectConfig | string | `nil` |  |
+| prefectConfig | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
