@@ -1,0 +1,140 @@
+## Common parameters
+# -- partially overrides common.names.name
+nameOverride: ""
+# -- fully override common.names.fullname
+fullnameOverride: "prefect-orion"
+# -- fully override common.names.namespace
+namespaceOverride: ""
+# -- labels to add to all deployed objects
+commonLabels: {}
+# -- annotations to add to all deployed objects
+commonAnnotations: {}
+
+## Deployment Configuration
+orion:
+  image:
+    # -- orion image repository
+    repository: prefecthq/prefect
+    # -- orion image tag (immutable tags are recommended)
+    tag: 2-latest
+    # -- orion image pull policy
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    # -- orion image pull secrets
+    pullSecrets: []
+    # -- enable orion image debug mode
+    debug: false
+
+  # -- number of orion replicas to deploy
+  replicaCount: 1
+
+  resources:
+    # -- the requested resources for the orion container
+    requests: {}
+    # -- the requested limits for the orion container
+    limits: {}
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    # -- enabled orion pods' security context
+    enabled: true
+    # -- set orion pod's security context fsGroup
+    fsGroup: 1001
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # -- extra labels for orion pod
+  podLabels: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # -- extra annotations for orion pod
+  podAnnotations: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- affinity for orion pods assignment
+  affinity: {}
+
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # -- node labels for orion pods assignment
+  nodeSelector: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # -- tolerations for orion pods assignment
+  tolerations: []
+
+  ## List of extra env vars
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  # -- array with extra environment variables to add to orion nodes
+  extraEnvVars: []
+
+  # -- name of existing ConfigMap containing extra env vars to add to orion nodes
+  extraEnvVarsCM: ""
+
+  # -- name of existing Secret containing extra env vars to add to orion nodes
+  extraEnvVarsSecret: ""
+
+## ServiceAccount configuration
+serviceAccount:
+  # -- specifies whether a ServiceAccount should be created
+  create: true
+  # -- the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template
+  name: ""
+  # -- additional service account annotations (evaluated as a template)
+  annotations: {}
+
+## Service configuration
+service:
+  # -- service type
+  type: ClusterIP
+  # -- service port
+  port: 4200
+  # -- service Cluster IP
+  clusterIP: ""
+  # -- service port if defining service as type nodeport
+  nodePort: ""
+
+  ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  # -- service external traffic policy
+  externalTrafficPolicy: Cluster
+  ## -- additional custom annotations for orion service
+  annotations: {}
+
+# Postgresql configuration
+postgresql:
+  enabled: true
+  auth:
+    database: orion
+
+    # postgresqlUsername defines the username to authenticate
+    # with.
+    # NOTE: If you are using Azure, this will include an '@'
+    # which must be encoded as '%40' for the connection string
+    # to work with both Hasura, the GraphQL server, and the
+    # Alembic migration manager
+    username: prefect
+
+    # password sets the password to be used if
+    # `existingSecret` is not set. This is the password for
+    # `username` and will be set within the secret at
+    # the key `postgresql-password`. This argument is only relevant
+    # when using the Postgres database included in the chart.
+    # For an external postgres connection, you must create
+    # and use `existingSecret` instead of `postgresqlPassword`.
+    password: ""
+
+    # existingSecret configures which secret should be referenced
+    # for access to the database. If null and `useSubChart` is
+    # enabled, the secret will be generated. If using an external
+    # postgres service, this value should be set to the name of
+    # an existing Kubernetes secret. This secret must contain
+    # a key-value pair where the key is `connection-string`
+    # and the value is the connection string containing your
+    # password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
+    existingSecret: null
