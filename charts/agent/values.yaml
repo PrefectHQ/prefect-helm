@@ -32,7 +32,7 @@ agent:
       key: key
     accountId: ""
     workspaceName: ""
-    workQueueName: prd
+    workQueueName: ""
 
   replicaCount: 1
 
@@ -77,26 +77,6 @@ agent:
 
   ## Name of existing Secret containing extra env vars
   extraEnvVarsSecret: ""
-
-
-# ## RBAC configuration
-# ##
-# rbac:
-#   ##  rbac.create Specifies whether RBAC resources should be created
-#   ##
-#   create: false
-#   ##  rbac.rules Custom RBAC rules to set
-#   ## e.g:
-#   ## rules:
-#   ##   - apiGroups:
-#   ##       - ""
-#   ##     resources:
-#   ##       - pods
-#   ##     verbs:
-#   ##       - get
-#   ##       - list
-#   ##
-#   rules: []
 
 ## ServiceAccount configuration
 serviceAccount:
