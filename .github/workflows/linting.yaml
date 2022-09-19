@@ -38,9 +38,10 @@ jobs:
         uses: helm/kind-action@v1.3.0
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: Test Install Secret
+      - name: Create API Secret for Agent Chart
         run: |
           kubectl create ns agent
+          kubectl create secret generic prefect-api-key  --from-literal=key=${{ secrets.PREFECT_CLOUD_API_KEY }}
 
       - name: Run chart-testing (install)
         run: ct install --config .github/linters/ct.yaml
