@@ -1,62 +1,89 @@
-replicaCount: 1
-
-image:
-  repository: prefecthq/prefect
-  tag: 2-latest
-  pullPolicy: IfNotPresent
-
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  # pullSecrets:
-  #   - myRegistrKeySecretName
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-config:
-  apiUrl: https://api.prefect.cloud
-  accountId: ""
-  workspaceName: ""
-  workQueueName: prd
-
-  debugEnabled: true
-
-  commonLabels: {}
-
-  # -- Prefect cloud API key
-  apiKeySecret:
-    name: ""
-    key: ""
-
-securityContext: {}
-  # The securityContext this Pod should use. See https://kubernetes.io/docs/concepts/policy/security-context/ for more.
-  # runAsUser: 65534
-
-nodeSelector: {}
-
-affinity: {}
-
-tolerations: []
-
-annotations: {}
-
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-podLabels: {}
-
+## Common parameters
+## nameOverride String to partially override common.names.name
 nameOverride: ""
+##  fullnameOverride String to fully override common.names.fullname
 fullnameOverride: ""
+## namespaceOverride String to fully override common.names.namespace
+namespaceOverride: ""
+## commonLabels Labels to add to all deployed objects
+commonLabels: {}
+## commonAnnotations Annotations to add to all deployed objects
+commonAnnotations: {}
+
+agent:
+  image:
+    repository: prefecthq/prefect
+    tag: 2-latest
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    pullSecrets: []
+    ## Enable debug mode
+    debug: false
+
+  config:
+    apiUrl: https://api.prefect.cloud
+    apiKeySecret:
+      name: prefect-api-key
+      key: key
+    accountId: ""
+    workspaceName: ""
+    workQueueName: ""
+
+  replicaCount: 1
+
+  resources:
+    limits: {}
+    requests: {}
+
+  ## Configure Pods Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext: {}
+  #   enabled: true
+  #   fsGroup: 1001
+
+  ## Configure Container Security Context
+  containerSecurityContext: {}
+  #   enabled: true
+  #   runAsUser: 1001
+  #   runAsNonRoot: true
+  #   readOnlyRootFilesystem: false
+
+  podLabels: {}
+
+  podAnnotations: {}
+
+  ## Affinity for %%MAIN_CONTAINER_NAME%% pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+
+  ## Node labels for main pods assignment
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+
+  ## Tolerations for agent pods assignment
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+
+  ## List of extra env vars
+  extraEnvVars: []
+
+  ## Name of existing ConfigMap containing extra env vars
+  extraEnvVarsCM: ""
+
+  ## Name of existing Secret containing extra env vars
+  extraEnvVarsSecret: ""
+
+## ServiceAccount configuration
+serviceAccount:
+  ## Specifies whether a ServiceAccount should be created
+  create: true
+  ## The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the common.names.fullname template
+  name: ""
+  ## Additional Service Account annotations (evaluated as a template)
+  annotations: {}
