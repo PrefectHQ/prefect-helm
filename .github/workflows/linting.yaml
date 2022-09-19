@@ -1,10 +1,11 @@
 name: Lint and Test Prefect Agent Chart
 
-on: pull_request
-  paths:
-    - .github/workflows/agent-linting.yaml
-    - .github/linters/agent-ct.yaml
-    - 'charts/prefect-agent/**'
+on:
+  pull_request:
+    paths:
+      # - .github/workflows/agent-linting.yaml
+      # - .github/linters/agent-ct.yaml
+      - 'charts/prefect-agent/**'
 
 jobs:
   lint-test:
