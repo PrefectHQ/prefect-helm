@@ -22,6 +22,9 @@ api:
 
   debugEnabled: false
 
+  # Labels to apply to all resources
+  commonLabels: {}
+
   # -- Custom enviornment variables
   env: {}
   # Allow custom variables to be added to the deployment
@@ -121,12 +124,19 @@ postgresql:
     # -- Configures size of postgres PVC
     size: 8Gi
 
-  # -- initial postgres user to create
-  initdbUser: postgres
+  # initial postgres user to create
+  primary:
+    initdb:
+      user: postgres
 
   image:
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
     tag: 14.3.0
+
+# Values placed here will result in environment variable definitions
+# starting with "PREFECT_ORION_" and will be passed to relevant
+# services
+prefectConfig: {}
 
 serviceAccount:
   # Specifies whether a service account should be created

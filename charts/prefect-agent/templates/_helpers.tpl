@@ -41,6 +41,9 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
+{{- if .Values.config.commonLabels}}
+{{ toYaml .Values.config.commonLabels }}
+{{- end }}
 
 {{/*
 Selector labels

@@ -1,6 +1,6 @@
 # prefect-orion
 
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
 Prefect orion application bundle
 
@@ -11,7 +11,7 @@ Prefect orion application bundle
 | Name | Email | Url |
 | ---- | ------ | --- |
 | gabcoyne | <george@prefect.io> |  |
-| jamiedick | <jamie@prefect.io> |  |
+| jamiezieziula | <jamie@prefect.io> |  |
 
 ## Source Code
 
@@ -32,6 +32,7 @@ Prefect orion application bundle
 | api.autoscaling.maxReplicas | int | `100` |  |
 | api.autoscaling.minReplicas | int | `1` | Minimum autoscaling replica count |
 | api.autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| api.commonLabels | object | `{}` |  |
 | api.debugEnabled | bool | `false` |  |
 | api.enabled | bool | `true` |  |
 | api.env | object | `{}` | Custom enviornment variables |
@@ -56,10 +57,11 @@ Prefect orion application bundle
 | postgresql.enabled | bool | `true` |  |
 | postgresql.externalHostname | string | `""` |  |
 | postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
-| postgresql.initdbUser | string | `"postgres"` | initial postgres user to create |
 | postgresql.persistence.enabled | bool | `false` | Enables a PVC that stores db between deployments |
 | postgresql.persistence.size | string | `"8Gi"` | Configures size of postgres PVC |
+| postgresql.primary.initdb.user | string | `"postgres"` |  |
 | postgresql.useSubChart | bool | `true` |  |
+| prefectConfig | object | `{}` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
