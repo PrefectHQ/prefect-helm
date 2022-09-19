@@ -18,7 +18,7 @@ maintainers:
     email: george@prefect.io
   - name: jamiezieziula
     email: jamie@prefect.io
-name: prefect-orion
+name: prefect-orion2
 sources:
   - https://github.com/PrefectHQ/prefect-helm
 type: application

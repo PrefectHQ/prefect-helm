@@ -1,18 +1,18 @@
 ---
-# Source: prefect-orion/templates/serviceaccount.yaml
+# Source: prefect-orion2/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: prefect-orion
   namespace: "test-helm"
   labels:
-    app.kubernetes.io/name: prefect-orion
-    helm.sh/chart: prefect-orion-1.0.0
+    app.kubernetes.io/name: prefect-orion2
+    helm.sh/chart: prefect-orion2-1.0.0
     app.kubernetes.io/instance: orion
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: orion
 ---
-# Source: prefect-orion/charts/postgresql/templates/secrets.yaml
+# Source: prefect-orion2/charts/postgresql/templates/secrets.yaml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -25,19 +25,19 @@ metadata:
     app.kubernetes.io/managed-by: Helm
 type: Opaque
 data:
-  postgres-password: "WEFjc0l4MWNwbQ=="
-  password: "dW9DaUNkS05nYQ=="
+  postgres-password: "SjNDTzRBUmJMMw=="
+  password: "bWJLVUpxbnZ6dA=="
   # We don't auto-generate LDAP password when it's not provided as we do for other passwords
 ---
-# Source: prefect-orion/templates/secret.yaml
+# Source: prefect-orion2/templates/secret.yaml
 apiVersion: v1
 kind: Secret
 metadata:
   name: "orion-postgresql-connection"
   namespace: "test-helm"
   labels:
-    app.kubernetes.io/name: prefect-orion
-    helm.sh/chart: prefect-orion-1.0.0
+    app.kubernetes.io/name: prefect-orion2
+    helm.sh/chart: prefect-orion2-1.0.0
     app.kubernetes.io/instance: orion
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: orion
@@ -45,7 +45,7 @@ type: Opaque
 data:
   connection-string: "cG9zdGdyZXNxbCthc3luY3BnOi8vcHJlZmVjdDpAPG5vIHZhbHVlPjo1NDMyL29yaW9u"
 ---
-# Source: prefect-orion/charts/postgresql/templates/primary/svc-headless.yaml
+# Source: prefect-orion2/charts/postgresql/templates/primary/svc-headless.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -78,7 +78,7 @@ spec:
     app.kubernetes.io/instance: orion
     app.kubernetes.io/component: primary
 ---
-# Source: prefect-orion/charts/postgresql/templates/primary/svc.yaml
+# Source: prefect-orion2/charts/postgresql/templates/primary/svc.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -104,15 +104,15 @@ spec:
     app.kubernetes.io/instance: orion
     app.kubernetes.io/component: primary
 ---
-# Source: prefect-orion/templates/service.yaml
+# Source: prefect-orion2/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
   name: prefect-orion
   namespace: "test-helm"
   labels:
-    app.kubernetes.io/name: prefect-orion
-    helm.sh/chart: prefect-orion-1.0.0
+    app.kubernetes.io/name: prefect-orion2
+    helm.sh/chart: prefect-orion2-1.0.0
     app.kubernetes.io/instance: orion
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/component: orion
@@ -124,11 +124,11 @@ spec:
       protocol: TCP
       nodePort: null
   selector:
-    app.kubernetes.io/name: prefect-orion
+    app.kubernetes.io/name: prefect-orion2
     app.kubernetes.io/instance: orion
     app.kubernetes.io/component: orion
 ---
-# Source: prefect-orion/charts/postgresql/templates/primary/statefulset.yaml
+# Source: prefect-orion2/charts/postgresql/templates/primary/statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -292,3 +292,28 @@ spec:
         resources:
           requests:
             storage: "8Gi"
+---
+# Source: prefect-orion2/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: prefect-orion
+  namespace: "test-helm"
+  labels:
+    app.kubernetes.io/name: prefect-orion2
+    helm.sh/chart: prefect-orion2-1.0.0
+    app.kubernetes.io/instance: orion
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/component: orion
+spec:
+  rules:
+    - host: prefect.local
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: prefect-orion
+                port:
+                  name: http
