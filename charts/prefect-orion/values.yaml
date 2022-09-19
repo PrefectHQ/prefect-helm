@@ -133,6 +133,11 @@ postgresql:
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
     tag: 14.3.0
 
+# Values placed here will result in environment variable definitions
+# starting with "PREFECT_ORION_" and will be passed to relevant
+# services
+prefectConfig: {}
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
