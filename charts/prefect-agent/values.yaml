@@ -2,7 +2,7 @@
 # -- partially overrides common.names.name
 nameOverride: ""
 # -- fully override common.names.fullname
-fullnameOverride: ""
+fullnameOverride: "prefect-agent"
 # -- fully override common.names.namespace
 namespaceOverride: ""
 # -- labels to add to all deployed objects
@@ -60,17 +60,6 @@ agent:
     enabled: true
     # -- set agent pod's security context fsGroup
     fsGroup: 1001
-
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
-  containerSecurityContext:
-    # -- enabled agent containers' security context
-    enabled: true
-    # -- set agent containers' security context runAsUser
-    runAsUser: 1001
-    # -- set agent containers' security context runAsNonRoot
-    runAsNonRoot: true
-    # -- set agent containers' security context runAsNonRoot
-    readOnlyRootFilesystem: true
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for agent pod

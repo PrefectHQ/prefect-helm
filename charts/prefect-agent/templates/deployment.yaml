@@ -50,9 +50,6 @@ spec:
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", "-q", {{ .Values.agent.config.workQueueName }}]
-          {{- if .Values.agent.containerSecurityContext.enabled }}
-          securityContext: {{- omit .Values.agent.containerSecurityContext "enabled" | toYaml | nindent 12 }}
-          {{- end }}
           env:
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.agent.image.debug | quote }}

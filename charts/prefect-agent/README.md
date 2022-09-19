@@ -34,10 +34,6 @@ Prefect Agent application bundle
 | agent.config.apiUrl | string | `"https://api.prefect.cloud"` | prefect API url |
 | agent.config.workQueueName | string | `""` | prefect workqueue name |
 | agent.config.workspaceId | string | `""` | prefect workspace ID |
-| agent.containerSecurityContext.enabled | bool | `true` | enabled agent containers' security context |
-| agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context runAsNonRoot |
-| agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
-| agent.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |
 | agent.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |
@@ -57,7 +53,7 @@ Prefect Agent application bundle
 | agent.tolerations | list | `[]` | tolerations for agent pods assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
-| fullnameOverride | string | `""` | fully override common.names.fullname |
+| fullnameOverride | string | `"prefect-agent"` | fully override common.names.fullname |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
