@@ -38,5 +38,9 @@ jobs:
         uses: helm/kind-action@v1.3.0
         if: steps.list-changed.outputs.changed == 'true'
 
+      - name: Test Install Secret
+        run: |
+          kubectl create ns agent
+
       - name: Run chart-testing (install)
         run: ct install --config .github/linters/ct.yaml
