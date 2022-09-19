@@ -32,7 +32,7 @@ Prefect Agent application bundle
 | agent.config.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | agent.config.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | agent.config.apiUrl | string | `"https://api.prefect.cloud"` | prefect API url |
-| agent.config.workQueueName | string | `""` | prefect workqueue name |
+| agent.config.workQueueName | string | `"prd"` | prefect workqueue name |
 | agent.config.workspaceId | string | `""` | prefect workspace ID |
 | agent.containerSecurityContext.enabled | bool | `true` | enabled agent containers' security context |
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context runAsNonRoot |

@@ -17,6 +17,6 @@ Create the name of the service account to use
 {{- if ne .Values.agent.config.apiUrl  "https://api.prefect.cloud" }}
 {{- .Values.agent.config.apiUrl | quote }}
 {{- else }}
-{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.config.apiUrl .Values.agent.config.accountId .Values.agent.config.workspaceId | quote }}
+{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.config.apiUrl .Values.agent.config.accountId .Values.agent.config.workspaceName | quote }}
 {{- end }}
 {{- end }}

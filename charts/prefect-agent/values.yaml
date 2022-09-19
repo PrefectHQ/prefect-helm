@@ -33,17 +33,17 @@ agent:
   config:
     # -- prefect API url
     apiUrl: https://api.prefect.cloud
-    apiKeySecret:
-      # -- prefect API secret name
-      name: prefect-api-key
-      # -- prefect API secret key
-      key: key
     # -- prefect account ID
     accountId: ""
     # -- prefect workspace ID
     workspaceId: ""
     # -- prefect workqueue name
-    workQueueName: ""
+    workQueueName: prd
+    apiKeySecret:
+      # -- prefect API secret name
+      name: prefect-api-key
+      # -- prefect API secret key
+      key: key
 
   # -- number of agent replicas to deploy
   replicaCount: 1
