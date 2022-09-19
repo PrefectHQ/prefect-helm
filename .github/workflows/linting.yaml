@@ -44,4 +44,4 @@ jobs:
           kubectl create secret generic prefect-api-key  --from-literal=key=${{ secrets.PREFECT_CLOUD_API_KEY }} -n prefect
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/linters/ct.yaml --namespace prefect --set=agent.config.workQueueName=prd
+        run: ct install --config .github/linters/ct.yaml --namespace prefect --helm-extra-set-args "--set=agent.config.workQueueName=testing"
