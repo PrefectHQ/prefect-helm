@@ -114,6 +114,3 @@ serviceAccount:
   name: ""
   # -- additional service account annotations (evaluated as a template)
   annotations: {}
-
-
-# ** existing config map
