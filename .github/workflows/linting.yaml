@@ -40,8 +40,8 @@ jobs:
 
       - name: Create API Secret for Agent Chart
         run: |
-          kubectl create ns agent
-          kubectl create secret generic prefect-api-key  --from-literal=key=${{ secrets.PREFECT_CLOUD_API_KEY }} -n agent
+          kubectl create ns prefect
+          kubectl create secret generic prefect-api-key  --from-literal=key=${{ secrets.PREFECT_CLOUD_API_KEY }} -n prefect
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/linters/ct.yaml --namespace agent
+        run: ct install --config .github/linters/ct.yaml --namespace prefect

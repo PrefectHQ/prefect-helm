@@ -38,7 +38,7 @@ agent:
     # -- prefect workspace ID
     workspaceId: ""
     # -- prefect workqueue name
-    workQueueName: prd
+    workQueueName: ""
     apiKeySecret:
       # -- prefect API secret name
       name: prefect-api-key
