@@ -1,0 +1,37 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 0.6.1
+description: Prefect orion application bundle
+home: https://github.com/PrefectHQ
+maintainers:
+- - email: george@prefect.io
+  name: gabcoyne
+- - email: jamie@prefect.io
+  name: jamiezieziula
+name: prefect-agent
+sources:
+- - https://github.com/PrefectHQ/prefect-helm
+type: application
+version: 0.6.1
+
+...
+files:
+  prefect-agent-0.6.1.tgz: sha256:78224b7b109c17827a4b83c7b8501f95e06bf765e402249870a5fa9d29f935a3
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJjKIZuCRBmvyDZ/AdLeAAADksQAJjq4HdzRR0odTZFL8R5M1rd
+PJj7HVd6CBrT41p1GH9K5LkkAHxSE+DXdeExJLr5DyUBAjIGrzDMScDydG67hDg/
+d6pP5OfipWzWr/enDIaEZJiE/uLWBtQRfj5fC+cPWzSNH2oEUUG1pEHC7lmWBXzJ
+zbjuYUOyasGALIEgFhwh99gNnpj9jcfRxACTzAcYF7+Lxswtdxi0CrxYRADKdcJ+
+ftfQ+22h8aWZWe1rHX80k40JcRTiZZwmC9M4oheyJyrMe8pbmWTg2mLyWg7EWeHC
+IsXBwOMnVgHLoq3c84P4rE6Fgah1RfB/aJD+BI63l4r9ND1oRBsDbbWsxacLFihk
+mY0a4jQRw1ywxoJAYyDms1cFOQGmtIw29vqYG6gqxe2RIRJD7Ox45UMtZf2RErpq
+fu/FCu/7HHDJyBZRKcsBZ8idT6c3gm9NLPGLErV4/Ck+NuddHyoMKv8piQ/BOJZR
+2wjB5SH3V78VypNTB3PW82GGgQRcRlGdv2bMsFfU3HkwamfTJIV0WY4EOYO21EMW
+CimwPpO5ONpLKpkoJ3HWY4wmrwUt26tOpGr1MIEwS7jjfcu1d0DTEPnf20Y3RXvF
+hwbrPppUmy7Gk7D6Nfe931/hp5HU6wD9+TYNKc9R576vdHcv4Kt/BmNUVQ8pA3Qp
+hKi+Y5qlPENv3Sg9xW8o
+=XOyO
+-----END PGP SIGNATURE-----
