@@ -1,25 +1,23 @@
 ## Common parameters
-# nameOverride is a string to partially override common.names.name
+# -- partially overrides common.names.name
 nameOverride: ""
-# fullnameOverride is a string to fully override common.names.fullname
+# -- fully override common.names.fullname
 fullnameOverride: ""
-# namespaceOverride is a string to fully override common.names.namespace
+# -- fully override common.names.namespace
 namespaceOverride: ""
-# commonLabels are labels to add to all deployed objects
+# -- labels to add to all deployed objects
 commonLabels: {}
-# commonAnnotations are annotations to add to all deployed objects
+# -- annotations to add to all deployed objects
 commonAnnotations: {}
 
-## Agent parameters
+## Deployment Configuration
 agent:
-  ## @param agent.image.repository agent image repository
-  ## @param agent.image.tag agent image tag (immutable tags are recommended)
-  ## @param agent.image.pullPolicy agent image pull policy
-  ## @param agent.image.pullSecrets agent image pull secrets
-  ## @param agent.image.debug Enable agent image debug mode
   image:
+    # -- agent image repository
     repository: prefecthq/prefect
+    # -- agent image tag (immutable tags are recommended)
     tag: 2-latest
+    # -- agent image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -27,69 +25,95 @@ agent:
     ## e.g:
     ## pullSecrets:
     ##   - myRegistryKeySecretName
+    # -- agent image pull secrets
     pullSecrets: []
-    ## Enable debug mode
+    # -- enable agent image debug mode
     debug: false
 
   config:
+    # -- prefect API url
     apiUrl: https://api.prefect.cloud
     apiKeySecret:
+      # -- prefect API secret name
       name: prefect-api-key
+      # -- prefect API secret key
       key: key
+    # -- prefect account ID
     accountId: ""
+    # -- prefect workspace ID
     workspaceId: ""
+    # -- prefect workqueue name
     workQueueName: ""
 
+  # -- number of agent replicas to deploy
   replicaCount: 1
 
   resources:
-    limits: {}
+    # -- the requested resources for the agent container
     requests: {}
+    # -- the requested limits for the agent container
+    limits: {}
 
-  ## Configure Pods Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  podSecurityContext: {}
-  #   enabled: true
-  #   fsGroup: 1001
+  podSecurityContext:
+    # -- enabled agent pods' security context
+    enabled: true
+    # -- set agent pod's security context fsGroup
+    fsGroup: 1001
 
-  ## Configure Container Security Context
-  containerSecurityContext: {}
-  #   enabled: true
-  #   runAsUser: 1001
-  #   runAsNonRoot: true
-  #   readOnlyRootFilesystem: false
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  containerSecurityContext:
+    # -- enabled agent containers' security context
+    enabled: true
+    # -- set agent containers' security context runAsUser
+    runAsUser: 1001
+    # -- set agent containers' security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set agent containers' security context runAsNonRoot
+    readOnlyRootFilesystem: true
 
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # -- extra labels for agent pod
   podLabels: {}
 
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # -- extra annotations for agent pod
   podAnnotations: {}
 
-  ## Affinity for %%MAIN_CONTAINER_NAME%% pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- affinity for agent pods assignment
   affinity: {}
 
-  ## Node labels for main pods assignment
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # -- node labels for agent pods assignment
   nodeSelector: {}
 
-  ## Tolerations for agent pods assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # -- tolerations for agent pods assignment
   tolerations: []
 
   ## List of extra env vars
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  # -- array with extra environment variables to add to agent nodes
   extraEnvVars: []
 
-  ## Name of existing ConfigMap containing extra env vars
+  # -- name of existing ConfigMap containing extra env vars to add to agent nodes
   extraEnvVarsCM: ""
 
-  ## Name of existing Secret containing extra env vars
+  # -- name of existing Secret containing extra env vars to add to agent nodes
   extraEnvVarsSecret: ""
 
 ## ServiceAccount configuration
 serviceAccount:
-  ## Specifies whether a ServiceAccount should be created
+  # -- specifies whether a ServiceAccount should be created
   create: true
-  ## The name of the ServiceAccount to use.
-  ## If not set and create is true, a name is generated using the common.names.fullname template
+  # -- the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template
   name: ""
-  ## Additional Service Account annotations (evaluated as a template)
+  # -- additional service account annotations (evaluated as a template)
   annotations: {}
+
+
+# ** existing config map
