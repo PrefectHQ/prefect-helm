@@ -1,61 +1,3 @@
-api:
-  enabled: true
-
-  replicaCount: 1
-
-  image:
-    name: prefecthq/prefect
-    pullPolicy: IfNotPresent
-    # -- Overrides the image tag whose default is the chart appVersion.
-    tag: 2-latest
-
-    pullSecrets: []
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ##
-    # pullSecrets:
-    #   - myRegistrKeySecretName
-
-  debugEnabled: false
-
-  # Labels to apply to all resources
-  commonLabels: {}
-
-  # -- Custom enviornment variables
-  env: {}
-  # Allow custom variables to be added to the deployment
-  # - name: PREFECT_API_URL
-  #   value: http://prefect-server:4200/api
-
-  autoscaling:
-    # -- Enable autoscaling
-    enabled: false
-    # -- Minimum autoscaling replica count
-    minReplicas: 1
-    maxReplicas: 100
-    targetCPUUtilizationPercentage: 80
-    # targetMemoryUtilizationPercentage: 80
-
-  # -- Ingress configuration
-  ingress:
-    enabled: false
-    className: ""
-    annotations: {}
-    hosts:
-      - host: prefect.local
-        paths:
-          - path: /
-            pathType: ImplementationSpecific
-    tls: []
-
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-  podAnnotations: {}
-  podSecurityContext: {}
-  securityContext: {}
-  resources: {}
 
 postgresql:
   enabled: true
@@ -129,8 +71,3 @@ postgresql:
   image:
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
     tag: 14.3.0
-
-# Values placed here will result in environment variable definitions
-# starting with "PREFECT_ORION_" and will be passed to relevant
-# services
-prefectConfig: {}

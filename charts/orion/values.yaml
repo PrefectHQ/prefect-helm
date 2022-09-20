@@ -30,6 +30,12 @@ orion:
     # -- enable orion image debug mode
     debug: false
 
+  # -- array with environment variables to add to orion nodes
+  env: []
+  ## env:
+  ##   - name: PREFECT_API_URL
+  ##     value: http://prefect-orion:4200/api
+
   # Autoscaling configuration
   autoscaling:
     # -- enable autoscaling for orion
@@ -78,14 +84,6 @@ orion:
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   # -- tolerations for orion pods assignment
   tolerations: []
-
-  ## List of extra env vars
-  ## e.g:
-  ## extraEnvVars:
-  ##   - name: FOO
-  ##     value: "bar"
-  # -- array with extra environment variables to add to orion nodes
-  extraEnvVars: []
 
   # -- name of existing ConfigMap containing extra env vars to add to orion nodes
   extraEnvVarsCM: ""

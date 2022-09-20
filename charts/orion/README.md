@@ -1,4 +1,4 @@
-# prefect-orion2
+# prefect-orion
 
 ![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
 
@@ -50,7 +50,7 @@ Prefect orion application bundle
 | orion.autoscaling.minReplicas | int | `1` | minimum number of orion replicas |
 | orion.autoscaling.targetCPU | int | `80` | target CPU utilization percentage |
 | orion.autoscaling.targetMemory | int | `80` | target Memory utilization percentage |
-| orion.extraEnvVars | list | `[]` | array with extra environment variables to add to orion nodes |
+| orion.env | list | `[]` | array with environment variables to add to orion nodes |
 | orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
 | orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
 | orion.image.debug | bool | `false` | enable orion image debug mode |
