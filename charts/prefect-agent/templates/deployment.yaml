@@ -75,3 +75,9 @@ spec:
           {{- if .Values.agent.resources }}
           resources: {{- toYaml .Values.agent.resources | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            - mountPath: /opt/prefect/.prefect
+              name: agent-home
+      volumes:
+        name: agent-home
+        emptyDir: {}
