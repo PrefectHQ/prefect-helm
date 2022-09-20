@@ -79,5 +79,5 @@ spec:
             - mountPath: /opt/prefect/.prefect
               name: agent-home
       volumes:
-        name: agent-home
-        emptyDir: {}
+        - name: agent-home
+          emptyDir: {}
