@@ -51,8 +51,6 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", "-q", {{ .Values.agent.config.workQueueName }}]
           env:
-            - name: PREFECT_DEBUG_MODE
-              value: {{ .Values.agent.image.debug | quote }}
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
             - name: PREFECT_API_KEY
@@ -60,6 +58,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.agent.config.apiKeySecret.name }}
                   key:  {{ .Values.agent.config.apiKeySecret.key }}
+            - name: PREFECT_DEBUG_MODE
+              value: {{ .Values.agent.image.debug | quote }}
+            - name: PREFECT_HOME
+              value: /opt/prefect
             {{- if .Values.agent.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.agent.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
