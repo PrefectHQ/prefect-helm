@@ -37,6 +37,7 @@ orion:
   ##     value: http://prefect-orion:4200/api
 
   # Autoscaling configuration
+  # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
   autoscaling:
     # -- enable autoscaling for orion
     enabled: false
@@ -52,6 +53,7 @@ orion:
   # -- number of orion replicas to deploy
   replicaCount: 1
 
+  # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
   resources:
     # -- the requested resources for the orion container
     requests: {}
