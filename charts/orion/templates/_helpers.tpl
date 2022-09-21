@@ -49,6 +49,7 @@ Create the name of the service account to use
 {{- if .Values.postgresql.auth.existingSecret -}}
   {{- .Values.postgresql.auth.existingSecret -}}
 {{- else -}}
-  {{- printf "%s-%s" .Release.Name "postgresql-connection" -}}
+  {{- $name := include "common.names.fullname" . -}}
+  {{- printf "%s-%s" $name "postgresql-connection" -}}
 {{- end -}}
 {{- end -}}

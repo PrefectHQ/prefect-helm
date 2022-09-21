@@ -181,24 +181,21 @@ ingress:
 # Postgresql configuration
 postgresql:
   enabled: true
-
   auth:
     # -- name for a custom database to create
     database: orion
     # -- name for a custom user to create
     username: prefect
-    ## This is the password for `username` and will be set within the secret at the key `postgresql-password`.
+    ## This is the password for `username` and will be set within the secret at the key `{fullnameOverride}-postgresql-password`.
     ## This argument is only relevant when using the Postgres database included in the chart.
     ## For an external postgres connection, you must create and use `existingSecret` instead of `postgresqlPassword`.
     # -- password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided
     password: "test"
 
-    ## If null and `useSubChart` is enabled, the secret will be generated. If using an external
-    ## postgres service, this value should be set to the name of an existing Kubernetes secret. This secret must contain
-    ## a key-value pair where the key is `connection-string` and the value is the connection string containing your
-    ## password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
+    ## This secret must contain a key-value pair where the key is `connection-string` and the value is the
+    ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
     # -- Name of existing secret to use for PostgreSQL credentials.
-    existingSecret: ""
+    existingSecret: null
 
   # -- PostgreSQL container port
   containerPorts:
