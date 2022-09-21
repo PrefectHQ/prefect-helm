@@ -69,7 +69,7 @@ Prefect orion application bundle
 | orion.tolerations | list | `[]` | tolerations for orion pods assignment |
 | postgresql.auth.database | string | `"orion"` | name for a custom database to create |
 | postgresql.auth.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL credentials. |
-| postgresql.auth.password | string | `"test"` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
+| postgresql.auth.password | string | `""` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user to create |
 | postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
 | postgresql.enabled | bool | `true` |  |
