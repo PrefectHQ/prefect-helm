@@ -1,102 +1,11 @@
 {{/*
-Expand the name of the chart.
-*/}}
-{{- define "orion.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "orion.fullname" -}}
-{{- if .Values.fullnameOverride }}
-{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "orion.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
-Common labels
-*/}}
-{{- define "orion.labels" -}}
-helm.sh/chart: {{ include "orion.chart" . }}
-{{ include "orion.selectorLabels" . }}
-{{- if .Chart.AppVersion }}
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-{{- end }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
-{{- end }}
-{{- if .Values.api.commonLabels}}
-{{ toYaml .Values.api.commonLabels }}
-{{- end }}
-
-
-{{/*
-Selector labels
-*/}}
-{{- define "orion.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "orion.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
 Create the name of the service account to use
 */}}
 {{- define "orion.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "orion.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
-{{- end }}
-
-{{- define "orion.orion-hostname" -}}
-{{- if .Values.api.url -}}
-  {{- .Values.api.url -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
-  {{- $name := include "orion.fullname" . -}}
-  {{- printf "%s.%s" $name .Release.Namespace -}}
-{{- end -}}
-{{- end -}}
-
-{{/*
-  env-unrap:
-    Converts a nested dictionary with keys `prefix` and `map`
-    into a list of environment variable definitions, where each
-    variable name is an uppercased concatenation of keys in the map
-    starting with the original prefix and descending to each leaf.
-    The variable value is then the quoted value of each leaf key.
-*/}}
-{{- define "env-unwrap" -}}
-{{- $prefix := .prefix -}}
-{{/* Iterate through all keys in the current map level */}}
-{{- range $key, $val := .map -}}
-{{- $key := upper $key -}}
-{{/* Create an environment variable if this is a leaf */}}
-{{- if ne (typeOf $val | toString) "map[string]interface {}" }}
-- name: {{ printf "%s_%s" $prefix $key }}
-  value: {{ $val | quote }}
-{{/* Otherwise, recurse into each child key with an updated prefix */}}
-{{- else -}}
-{{- $prefix := (printf "%s__%s" $prefix $key) -}}
-{{- $args := (dict "prefix" $prefix "map" $val)  -}}
-{{- include "env-unwrap" $args -}}
-{{- end -}}
+    {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 
@@ -140,36 +49,7 @@ Create the name of the service account to use
 {{- if .Values.postgresql.auth.existingSecret -}}
   {{- .Values.postgresql.auth.existingSecret -}}
 {{- else -}}
-  {{- printf "%s-%s" .Release.Name "postgresql-connection" -}}
+  {{- $name := include "common.names.fullname" . -}}
+  {{- printf "%s-%s" $name "postgresql-connection" -}}
 {{- end -}}
 {{- end -}}
-
-{{/*
-  orion.postgres-secret-ref:
-    Generates a reference to the postgreqsql connection-string password
-    secret.
-*/}}
-{{- define "orion.postgres-secret-ref" -}}
-secretKeyRef:
-  name: {{ include "orion.postgres-string-secret-name" . }}
-  key: connection-string
-{{- end -}}
-
-{{/*
-  orion.envConfig:
-    Define environment variables for prefect config.
-    Includes a constant set of common variables as well as
-    generated environment variables from .Values.prefectConfig
-    using "env-unwrap"
-*/}}
-{{- define "orion.envConfig" -}}
-- name: PREFECT_DEBUG_MODE
-  value: {{ .Values.api.debugEnabled | quote }}
-{{- if .Values.postgresql.enabled }}
-- name: PREFECT_ORION_DATABASE_CONNECTION_URL
-  valueFrom:
-    {{- include "orion.postgres-secret-ref" . | nindent 4 }}
-{{- end }}
-{{- $args := (dict "prefix" "PREFECT_ORION" "map" .Values.prefectConfig) -}}
-{{- include "env-unwrap" $args -}}
-{{- end }}
