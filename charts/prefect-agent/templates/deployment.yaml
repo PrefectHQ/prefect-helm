@@ -12,6 +12,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  replicas: {{ .Values.agent.replicaCount }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: agent
@@ -42,8 +43,8 @@ spec:
       {{- if .Values.agent.tolerations }}
       tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.agent.tolerations "context" .) | nindent 8 }}
       {{- end }}
-      {{- if .Values.agent.podSecurityContext.enabled }}
-      securityContext: {{- omit .Values.agent.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- if .Values.agent.podSecurityContext }}
+      securityContext: {{- .Values.agent.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
       containers:
         - name: prefect-agent
@@ -51,8 +52,6 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", "-q", {{ .Values.agent.config.workQueueName }}]
           env:
-            - name: PREFECT_DEBUG_MODE
-              value: {{ .Values.agent.image.debug | quote }}
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
             - name: PREFECT_API_KEY
@@ -60,6 +59,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.agent.config.apiKeySecret.name }}
                   key:  {{ .Values.agent.config.apiKeySecret.key }}
+            - name: PREFECT_DEBUG_MODE
+              value: {{ .Values.agent.image.debug | quote }}
+            - name: PREFECT_HOME
+              value: /opt/prefect
             {{- if .Values.agent.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.agent.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -75,3 +78,12 @@ spec:
           {{- if .Values.agent.resources }}
           resources: {{- toYaml .Values.agent.resources | nindent 12 }}
           {{- end }}
+          {{- if .Values.agent.containerSecurityContext }}
+          securityContext: {{- .Values.agent.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /opt/prefect/.prefect
+              name: agent-home
+      volumes:
+        - name: agent-home
+          emptyDir: {}
