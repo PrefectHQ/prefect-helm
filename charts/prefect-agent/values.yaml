@@ -1,62 +1,105 @@
-replicaCount: 1
-
-image:
-  repository: prefecthq/prefect
-  tag: 2-latest
-  pullPolicy: IfNotPresent
-
-  ## Optionally specify an array of imagePullSecrets.
-  ## Secrets must be manually created in the namespace.
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-  ##
-  # pullSecrets:
-  #   - myRegistrKeySecretName
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-config:
-  apiUrl: https://api.prefect.cloud
-  accountId: ""
-  workspaceName: ""
-  workQueueName: prd
-
-  debugEnabled: true
-
-  commonLabels: {}
-
-  # -- Prefect cloud API key
-  apiKeySecret:
-    name: ""
-    key: ""
-
-securityContext: {}
-  # The securityContext this Pod should use. See https://kubernetes.io/docs/concepts/policy/security-context/ for more.
-  # runAsUser: 65534
-
-nodeSelector: {}
-
-affinity: {}
-
-tolerations: []
-
-annotations: {}
-
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-podLabels: {}
-
+## Common parameters
+# -- partially overrides common.names.name
 nameOverride: ""
-fullnameOverride: ""
+# -- fully override common.names.fullname
+fullnameOverride: "prefect-agent"
+# -- fully override common.names.namespace
+namespaceOverride: ""
+# -- labels to add to all deployed objects
+commonLabels: {}
+# -- annotations to add to all deployed objects
+commonAnnotations: {}
+
+## Deployment Configuration
+agent:
+  image:
+    # -- agent image repository
+    repository: prefecthq/prefect
+    # -- agent image tag (immutable tags are recommended)
+    tag: 2-latest
+    # -- agent image pull policy
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    # -- agent image pull secrets
+    pullSecrets: []
+    # -- enable agent image debug mode
+    debug: false
+
+  config:
+    # -- prefect API url
+    apiUrl: https://api.prefect.cloud
+    # -- prefect account ID
+    accountId: ""
+    # -- prefect workspace ID
+    workspaceId: ""
+    # -- prefect workqueue name
+    workQueueName: ""
+    apiKeySecret:
+      # -- prefect API secret name
+      name: prefect-api-key
+      # -- prefect API secret key
+      key: key
+
+  # -- number of agent replicas to deploy
+  replicaCount: 1
+
+  resources:
+    # -- the requested resources for the agent container
+    requests: {}
+    # -- the requested limits for the agent container
+    limits: {}
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    # -- enabled agent pods' security context
+    enabled: true
+    # -- set agent pod's security context fsGroup
+    fsGroup: 1001
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # -- extra labels for agent pod
+  podLabels: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # -- extra annotations for agent pod
+  podAnnotations: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- affinity for agent pods assignment
+  affinity: {}
+
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # -- node labels for agent pods assignment
+  nodeSelector: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # -- tolerations for agent pods assignment
+  tolerations: []
+
+  ## List of extra env vars
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  # -- array with extra environment variables to add to agent nodes
+  extraEnvVars: []
+
+  # -- name of existing ConfigMap containing extra env vars to add to agent nodes
+  extraEnvVarsCM: ""
+
+  # -- name of existing Secret containing extra env vars to add to agent nodes
+  extraEnvVarsSecret: ""
+
+## ServiceAccount configuration
+serviceAccount:
+  # -- specifies whether a ServiceAccount should be created
+  create: true
+  # -- the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template
+  name: ""
+  # -- additional service account annotations (evaluated as a template)
+  annotations: {}

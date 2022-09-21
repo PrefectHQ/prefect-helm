@@ -1,16 +1,23 @@
 apiVersion: v2
-name: prefect-agent
-description: Prefect orion application bundle
-type: application
+appVersion: latest
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 2.0.3
+description: Prefect Agent application bundle
+engine: gotpl
 home: https://github.com/PrefectHQ
-# This version is never actually shipped. github actions will replace it at build-time
-# with the appropriate version
-version: 1.0.0
-appVersion: "latest"
 maintainers:
   - name: gabcoyne
     email: george@prefect.io
   - name: jamiezieziula
     email: jamie@prefect.io
+name: prefect-agent
 sources:
   - https://github.com/PrefectHQ/prefect-helm
+type: application
+# This version is never actually shipped. github actions will replace it at build-time
+# with the appropriate version
+version: 1.0.0
