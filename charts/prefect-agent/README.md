@@ -35,7 +35,6 @@ Prefect Agent application bundle
 | agent.config.workQueueName | string | `""` | prefect workqueue name |
 | agent.config.workspaceId | string | `""` | prefect workspace ID |
 | agent.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set agent containers' security context allowPrivilegeEscalation |
-| agent.containerSecurityContext.enabled | bool | `true` | enabled agent containers' security context |
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
 | agent.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |
@@ -50,7 +49,6 @@ Prefect Agent application bundle
 | agent.nodeSelector | object | `{}` | node labels for agent pods assignment |
 | agent.podAnnotations | object | `{}` | extra annotations for agent pod |
 | agent.podLabels | object | `{}` | extra labels for agent pod |
-| agent.podSecurityContext.enabled | bool | `true` | enabled agent pods' security context |
 | agent.podSecurityContext.fsGroup | int | `1001` | set agent pod's security context fsGroup |
 | agent.podSecurityContext.runAsNonRoot | bool | `true` | set agent pod's security context runAsNonRoot |
 | agent.podSecurityContext.runAsUser | int | `1001` | set agent pod's security context runAsUser |
