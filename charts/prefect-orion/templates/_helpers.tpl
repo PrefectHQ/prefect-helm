@@ -1,27 +1,55 @@
-
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "orion.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
 
 {{/*
-  env-unrap:
-    Converts a nested dictionary with keys `prefix` and `map`
-    into a list of environment variable definitions, where each
-    variable name is an uppercased concatenation of keys in the map
-    starting with the original prefix and descending to each leaf.
-    The variable value is then the quoted value of each leaf key.
+  orion.postgres-hostname:
+    Generate the hostname of the postgresql service
+    If a subchart is used, evaluate using its fullname function
+      as {subchart.fullname}-{namespace}
+    Otherwise, the configured external hostname will be returned
 */}}
-{{- define "env-unwrap" -}}
-{{- $prefix := .prefix -}}
-{{/* Iterate through all keys in the current map level */}}
-{{- range $key, $val := .map -}}
-{{- $key := upper $key -}}
-{{/* Create an environment variable if this is a leaf */}}
-{{- if ne (typeOf $val | toString) "map[string]interface {}" }}
-- name: {{ printf "%s_%s" $prefix $key }}
-  value: {{ $val | quote }}
-{{/* Otherwise, recurse into each child key with an updated prefix */}}
+{{- define "orion.postgres-hostname" -}}
+{{- if .Values.postgresql.useSubChart -}}
+  {{- $subchart_overrides := .Values.postgresql -}}
+  {{- $name := include "postgresql.primary.fullname" (dict "Values" $subchart_overrides "Chart" (dict "Name" "postgresql") "Release" .Release) -}}
+  {{- printf "%s.%s" $name .Release.Namespace -}}
 {{- else -}}
-{{- $prefix := (printf "%s__%s" $prefix $key) -}}
-{{- $args := (dict "prefix" $prefix "map" $val)  -}}
-{{- include "env-unwrap" $args -}}
+  {{- .Values.postgresql.externalHostname -}}
 {{- end -}}
+{{- end -}}
+
+{{/*
+  orion.postgres-connstr:
+    Generates the connection string for the postgresql service
+*/}}
+{{- define "orion.postgres-connstr" -}}
+{{- $user := .Values.postgresql.auth.username -}}
+{{- $pass := .Values.postgresql.auth.password -}}
+{{- $host := include "orion.postgres-hostname" . -}}
+{{- $port := .Values.postgresql.containerPorts.postgresql | toString -}}
+{{- $db := .Values.postgresql.auth.database -}}
+{{- printf "postgresql+asyncpg://%s:%s@%s:%s/%s" $user $pass $host $port $db -}}
+{{- end -}}
+
+{{/*
+  orion.postgres-string-secret-name:
+    Get the name of the secret to be used for the postgresql
+    user password. Generates {release-name}-postgresql if
+    an existing secret is not set.
+*/}}
+{{- define "orion.postgres-string-secret-name" -}}
+{{- if .Values.postgresql.auth.existingSecret -}}
+  {{- .Values.postgresql.auth.existingSecret -}}
+{{- else -}}
+  {{- $name := include "common.names.fullname" . -}}
+  {{- printf "%s-%s" $name "postgresql-connection" -}}
 {{- end -}}
 {{- end -}}

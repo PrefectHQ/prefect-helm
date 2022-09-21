@@ -1,0 +1,27 @@
+apiVersion: v2
+appVersion: latest
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 2.0.2
+  - name: postgresql
+    condition: postgresql.useSubChart
+    repository: https://charts.bitnami.com/bitnami
+    version: "~11.6.2"
+description: Prefect orion application bundle
+engine: gotpl
+home: https://github.com/PrefectHQ
+maintainers:
+  - name: gabcoyne
+    email: george@prefect.io
+  - name: jamiezieziula
+    email: jamie@prefect.io
+name: prefect-orion
+sources:
+  - https://github.com/PrefectHQ/prefect-helm
+type: application
+# This version is never actually shipped. github actions will replace it at build-time
+# with the appropriate version
+version: 1.0.0

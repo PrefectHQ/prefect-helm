@@ -1,0 +1,238 @@
+## Common parameters
+# -- partially overrides common.names.name
+nameOverride: ""
+# -- fully override common.names.fullname
+fullnameOverride: "prefect-orion"
+# -- fully override common.names.namespace
+namespaceOverride: ""
+# -- labels to add to all deployed objects
+commonLabels: {}
+# -- annotations to add to all deployed objects
+commonAnnotations: {}
+
+## Deployment Configuration
+orion:
+  image:
+    # -- orion image repository
+    repository: prefecthq/prefect
+    # -- orion image tag (immutable tags are recommended)
+    tag: 2-latest
+    # -- orion image pull policy
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    # -- orion image pull secrets
+    pullSecrets: []
+    # -- enable orion image debug mode
+    debug: false
+
+  # -- array with environment variables to add to orion nodes
+  env: []
+  ## env:
+  ##   - name: PREFECT_API_URL
+  ##     value: http://prefect-orion:4200/api
+
+  # Autoscaling configuration
+  # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
+  autoscaling:
+    # -- enable autoscaling for orion
+    enabled: false
+    # -- minimum number of orion replicas
+    minReplicas: 1
+    # -- maximum number of orion replicas
+    maxReplicas: 100
+    # -- target CPU utilization percentage
+    targetCPU: 80
+    # -- target Memory utilization percentage
+    targetMemory: 80
+
+  # -- number of orion replicas to deploy
+  replicaCount: 1
+
+  # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
+  resources:
+    # -- the requested resources for the orion container
+    requests: {}
+    # -- the requested limits for the orion container
+    limits: {}
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    # -- enabled orion pods' security context
+    enabled: true
+    # -- set orion pod's security context fsGroup
+    fsGroup: 1001
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # -- extra labels for orion pod
+  podLabels: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # -- extra annotations for orion pod
+  podAnnotations: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- affinity for orion pods assignment
+  affinity: {}
+
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # -- node labels for orion pods assignment
+  nodeSelector: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # -- tolerations for orion pods assignment
+  tolerations: []
+
+  # -- name of existing ConfigMap containing extra env vars to add to orion nodes
+  extraEnvVarsCM: ""
+
+  # -- name of existing Secret containing extra env vars to add to orion nodes
+  extraEnvVarsSecret: ""
+
+## ServiceAccount configuration
+serviceAccount:
+  # -- specifies whether a ServiceAccount should be created
+  create: true
+  # -- the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template
+  name: ""
+  # -- additional service account annotations (evaluated as a template)
+  annotations: {}
+
+## Service configuration
+service:
+  # -- service type
+  type: ClusterIP
+  # -- service port
+  port: 4200
+  # -- service Cluster IP
+  clusterIP: ""
+  # -- service port if defining service as type nodeport
+  nodePort: ""
+
+  ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  # -- service external traffic policy
+  externalTrafficPolicy: Cluster
+  ## -- additional custom annotations for orion service
+  annotations: {}
+
+# Ingress configuration
+ingress:
+  # -- enable ingress record generation for orion
+  enabled: false
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  # -- IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  className: ""
+  host:
+    # -- default host for the ingress record
+    hostname: prefect.local
+    # -- default path for the ingress record
+    path: /
+    # -- ingress path type
+    pathType: ImplementationSpecific
+
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+  # -- additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+  annotations: {}
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+
+  ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.host.hostname }}`
+  ## You can:
+  ##   - Create this secret manually within your cluster
+  ##   - Rely on cert-manager to create it by setting the corresponding annotations
+  ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+  # -- enable TLS configuration for the host defined at `ingress.host.hostname` parameter
+  tls: false
+  # -- create a TLS secret for this ingress record using self-signed certificates generated by Helm
+  selfSigned: false
+
+  # -- an array with additional hostname(s) to be covered with the ingress record
+  extraHosts: []
+  ## extraHosts:
+  ##   - name: orion.local
+  ##     path: /
+
+  # -- an array with additional arbitrary paths that may need to be added to the ingress under the main host
+  extraPaths: []
+  ## extraPaths:
+  ## - path: /*
+  ##   backend:
+  ##     serviceName: ssl-redirect
+  ##     servicePort: use-annotation
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  # -- additional rules to be covered with this ingress record
+  extraRules: []
+  ## extraRules:
+  ## - host: example.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: example-svc
+  ##           port:
+  ##             name: http
+
+# Postgresql configuration
+postgresql:
+  enabled: true
+  auth:
+    # -- name for a custom database to create
+    database: orion
+    # -- name for a custom user to create
+    username: prefect
+    ## This is the password for `username` and will be set within the secret at the key `{fullnameOverride}-postgresql-password`.
+    ## This argument is only relevant when using the Postgres database included in the chart.
+    ## For an external postgres connection, you must create and use `existingSecret` instead of `postgresqlPassword`.
+    # -- password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided
+    password: "test"
+
+    ## This secret must contain a key-value pair where the key is `connection-string` and the value is the
+    ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
+    # -- Name of existing secret to use for PostgreSQL credentials.
+    existingSecret: null
+
+  # -- PostgreSQL container port
+  containerPorts:
+    postgresql: 5432
+
+  # externalHostname defines the address to contact an externally
+  # managed postgres database instance at. This is not required if
+  # `internalPostgres` is `true`
+  externalHostname: ""
+
+  # -- enable use of bitnami/postgresql subchart
+  useSubChart: true
+
+  ## postgresql configuration below here is only used if using the subchart
+
+  # persistence enables a PVC that stores the database between
+  # deployments. If making changes to the database deployment, this
+  # PVC will need to be deleted for database changes to take effect.
+  # This is especially notable when the authentication password
+  # changes on redeploys.
+  # This is disabled by default because we do not recommend using
+  # the subchart deployment for production deployments.
+  persistence:
+    # -- enable PostgreSQL Primary data persistence using PVC
+    enabled: false
+    # -- PVC Storage Request for PostgreSQL volume
+    size: 8Gi
+
+  ## Initdb configuration
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#specifying-initdb-arguments
+  primary:
+    initdb:
+      # -- specify the PostgreSQL username to execute the initdb scripts
+      user: postgres
+
+  image:
+    # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
+    tag: 14.3.0
