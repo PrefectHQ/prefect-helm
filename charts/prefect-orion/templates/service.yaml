@@ -26,7 +26,7 @@ spec:
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
   {{- end }}
   ports:
-    - name: orion # will this be fine?
+    - name: orion-svc-port
       port: {{ .Values.service.port }}
       protocol: TCP
       {{- if and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)) }}

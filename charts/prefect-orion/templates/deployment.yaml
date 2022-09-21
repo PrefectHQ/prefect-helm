@@ -43,8 +43,8 @@ spec:
       {{- if .Values.orion.tolerations }}
       tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.orion.tolerations "context" .) | nindent 8 }}
       {{- end }}
-      {{- if .Values.orion.podSecurityContext.enabled }}
-      securityContext: {{- omit .Values.orion.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- if .Values.orion.podSecurityContext }}
+      securityContext: {{- .Values.orion.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
       containers:
         - name: prefect-orion
@@ -56,6 +56,8 @@ spec:
           env:
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.orion.image.debug | quote }}
+            - name: PREFECT_HOME
+              value: /opt/prefect
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_ORION_DATABASE_CONNECTION_URL
               valueFrom:
@@ -78,3 +80,12 @@ spec:
           {{- if .Values.orion.resources }}
           resources: {{- toYaml .Values.orion.resources | nindent 12 }}
           {{- end }}
+          {{- if .Values.orion.containerSecurityContext }}
+          securityContext: {{- .Values.orion.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /opt/prefect/.prefect
+              name: orion-home
+      volumes:
+        - name: orion-home
+          emptyDir: {}
