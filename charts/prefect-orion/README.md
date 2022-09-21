@@ -50,6 +50,10 @@ Prefect orion application bundle
 | orion.autoscaling.minReplicas | int | `1` | minimum number of orion replicas |
 | orion.autoscaling.targetCPU | int | `80` | target CPU utilization percentage |
 | orion.autoscaling.targetMemory | int | `80` | target Memory utilization percentage |
+| orion.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set orion containers' security context allowPrivilegeEscalation |
+| orion.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set orion containers' security context readOnlyRootFilesystem |
+| orion.containerSecurityContext.runAsNonRoot | bool | `true` | set orion containers' security context runAsNonRoot |
+| orion.containerSecurityContext.runAsUser | int | `1001` | set orion containers' security context runAsUser |
 | orion.env | list | `[]` | array with environment variables to add to orion nodes |
 | orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
 | orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
@@ -61,8 +65,9 @@ Prefect orion application bundle
 | orion.nodeSelector | object | `{}` | node labels for orion pods assignment |
 | orion.podAnnotations | object | `{}` | extra annotations for orion pod |
 | orion.podLabels | object | `{}` | extra labels for orion pod |
-| orion.podSecurityContext.enabled | bool | `true` | enabled orion pods' security context |
 | orion.podSecurityContext.fsGroup | int | `1001` | set orion pod's security context fsGroup |
+| orion.podSecurityContext.runAsNonRoot | bool | `true` | set orion pod's security context runAsNonRoot |
+| orion.podSecurityContext.runAsUser | int | `1001` | set orion pod's security context runAsUser |
 | orion.replicaCount | int | `1` | number of orion replicas to deploy |
 | orion.resources.limits | object | `{}` | the requested limits for the orion container |
 | orion.resources.requests | object | `{}` | the requested resources for the orion container |

@@ -62,10 +62,23 @@ orion:
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
-    # -- enabled orion pods' security context
-    enabled: true
+    # -- set orion pod's security context runAsUser
+    runAsUser: 1001
+    # -- set orion pod's security context runAsNonRoot
+    runAsNonRoot: true
     # -- set orion pod's security context fsGroup
     fsGroup: 1001
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  containerSecurityContext:
+    # -- set orion containers' security context runAsUser
+    runAsUser: 1001
+    # -- set orion containers' security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set orion containers' security context readOnlyRootFilesystem
+    readOnlyRootFilesystem: true
+    # -- set orion containers' security context allowPrivilegeEscalation
+    allowPrivilegeEscalation: false
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for orion pod
