@@ -56,10 +56,23 @@ agent:
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
-    # -- enabled agent pods' security context
-    enabled: true
+    # -- set agent pod's security context runAsUser
+    runAsUser: 1001
+    # -- set agent pod's security context runAsNonRoot
+    runAsNonRoot: true
     # -- set agent pod's security context fsGroup
     fsGroup: 1001
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  containerSecurityContext:
+    # -- set agent containers' security context runAsUser
+    runAsUser: 1001
+    # -- set agent containers' security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set agent containers' security context readOnlyRootFilesystem
+    readOnlyRootFilesystem: true
+    # -- set agent containers' security context allowPrivilegeEscalation
+    allowPrivilegeEscalation: false
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for agent pod

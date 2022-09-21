@@ -34,6 +34,10 @@ Prefect Agent application bundle
 | agent.config.apiUrl | string | `"https://api.prefect.cloud"` | prefect API url |
 | agent.config.workQueueName | string | `""` | prefect workqueue name |
 | agent.config.workspaceId | string | `""` | prefect workspace ID |
+| agent.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set agent containers' security context allowPrivilegeEscalation |
+| agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
+| agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
+| agent.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |
 | agent.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |
@@ -45,8 +49,9 @@ Prefect Agent application bundle
 | agent.nodeSelector | object | `{}` | node labels for agent pods assignment |
 | agent.podAnnotations | object | `{}` | extra annotations for agent pod |
 | agent.podLabels | object | `{}` | extra labels for agent pod |
-| agent.podSecurityContext.enabled | bool | `true` | enabled agent pods' security context |
 | agent.podSecurityContext.fsGroup | int | `1001` | set agent pod's security context fsGroup |
+| agent.podSecurityContext.runAsNonRoot | bool | `true` | set agent pod's security context runAsNonRoot |
+| agent.podSecurityContext.runAsUser | int | `1001` | set agent pod's security context runAsUser |
 | agent.replicaCount | int | `1` | number of agent replicas to deploy |
 | agent.resources.limits | object | `{}` | the requested limits for the agent container |
 | agent.resources.requests | object | `{}` | the requested resources for the agent container |
