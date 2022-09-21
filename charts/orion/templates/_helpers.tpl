@@ -39,7 +39,6 @@ Create the name of the service account to use
 {{- printf "postgresql+asyncpg://%s:%s@%s:%s/%s" $user $pass $host $port $db -}}
 {{- end -}}
 
-
 {{/*
   orion.postgres-string-secret-name:
     Get the name of the secret to be used for the postgresql
@@ -52,15 +51,4 @@ Create the name of the service account to use
 {{- else -}}
   {{- printf "%s-%s" .Release.Name "postgresql-connection" -}}
 {{- end -}}
-{{- end -}}
-
-{{/*
-  orion.postgres-secret-ref:
-    Generates a reference to the postgreqsql connection-string password
-    secret.
-*/}}
-{{- define "orion.postgres-secret-ref" -}}
-secretKeyRef:
-  name: {{ include "orion.postgres-string-secret-name" . }}
-  key: connection-string
 {{- end -}}

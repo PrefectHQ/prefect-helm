@@ -67,11 +67,18 @@ Prefect orion application bundle
 | orion.resources.limits | object | `{}` | the requested limits for the orion container |
 | orion.resources.requests | object | `{}` | the requested resources for the orion container |
 | orion.tolerations | list | `[]` | tolerations for orion pods assignment |
-| postgresql.auth.database | string | `"orion"` |  |
-| postgresql.auth.existingSecret | string | `nil` |  |
-| postgresql.auth.password | string | `""` |  |
-| postgresql.auth.username | string | `"prefect"` |  |
+| postgresql.auth.database | string | `"orion"` | name for a custom database to create |
+| postgresql.auth.existingSecret | string | `""` | Name of existing secret to use for PostgreSQL credentials. |
+| postgresql.auth.password | string | `"test"` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
+| postgresql.auth.username | string | `"prefect"` | name for a custom user to create |
+| postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
 | postgresql.enabled | bool | `true` |  |
+| postgresql.externalHostname | string | `""` |  |
+| postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
+| postgresql.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
+| postgresql.persistence.size | string | `"8Gi"` | PVC Storage Request for PostgreSQL volume |
+| postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
+| postgresql.useSubChart | bool | `true` | enable use of bitnami/postgresql subchart |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |

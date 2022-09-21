@@ -12,9 +12,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  {{- if not .Values.orion.autoscaling.enabled }}
   replicas: {{ .Values.orion.replicaCount }}
-  {{- end }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: orion
@@ -61,7 +59,9 @@ spec:
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_ORION_DATABASE_CONNECTION_URL
               valueFrom:
-                {{- include "orion.postgres-secret-ref" . | nindent 4 }}
+                secretKeyRef:
+                  name: {{ include "orion.postgres-string-secret-name" . }}
+                  key: connection-string
             {{- end }}
             {{- if .Values.orion.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.orion.env "context" $) | nindent 12 }}
