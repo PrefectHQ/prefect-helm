@@ -34,6 +34,8 @@ Prefect Agent application bundle
 | agent.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | agent.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | agent.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
+| agent.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
+| agent.config.queryInterval | int | `5` | how often the agent will query for runs |
 | agent.config.workQueues | list | `["default"]` | names of prefect workqueues the agent will poll |
 | agent.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set agent containers' security context allowPrivilegeEscalation |
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
