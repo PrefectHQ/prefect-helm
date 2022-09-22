@@ -81,8 +81,8 @@ jobs:
         run: |
           cd charts
           # Update the prefect version tag
-          sed -i "^tag:.*$/tag: \"$PREFECT_VERSION\"/" prefect-orion/values.yaml
-          git status
+          sed -i "s/^tag:.*$/tag: \"$PREFECT_VERSION\"/" prefect-orion/values.yaml
+          git checkout main
           # helm package prefect-orion \
           #   --destination /tmp/chart \
           #   --dependency-update \
