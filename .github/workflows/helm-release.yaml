@@ -82,7 +82,7 @@ jobs:
           cd charts
           # Update the prefect version tag
           echo $PREFECT_VERSION
-          sed -i "s/prefectTag:.*$/prefectTag: \"$PREFECT_VERSION\"/g" prefect-orion/values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-orion/values.yaml
           git status
           git diff
 
