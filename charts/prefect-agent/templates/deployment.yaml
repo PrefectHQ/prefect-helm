@@ -51,16 +51,16 @@ spec:
         - name: prefect-agent
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.prefectTag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
-          command: ["prefect", "agent", "start", "-q", {{ .Values.agent.config.workQueueName }}]
+          command: ["prefect", "agent", "start", "-q", '{{ join "," .Values.agent.config.workQueues }}']
           env:
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
-            {{- if .Values.agent.config.apiKeySecret.enabled }}
+            {{- if eq .Values.agent.apiConfig "cloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.agent.config.apiKeySecret.name }}
-                  key:  {{ .Values.agent.config.apiKeySecret.key }}
+                  name: {{ .Values.agent.cloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.agent.cloudApiConfig.apiKeySecret.key }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.agent.image.debug | quote }}

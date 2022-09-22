@@ -14,9 +14,9 @@ Create the name of the service account to use
     Define API URL for workspace or for
 */}}
 {{- define "agent.apiUrl" -}}
-{{- if and .Values.agent.config.accountId .Values.agent.config.workspaceId }}
-{{- printf "%s/api/accounts/%s/workspaces/%s" .Values.agent.config.apiUrl .Values.agent.config.accountId .Values.agent.config.workspaceId | quote }}
+{{- if eq .Values.agent.apiConfig "cloud" }}
+{{- printf "%s/accounts/%s/workspaces/%s" .Values.agent.cloudApiConfig.cloudUrl .Values.agent.cloudApiConfig.accountId .Values.agent.cloudApiConfig.workspaceId | quote }}
 {{- else }}
-{{- .Values.agent.config.apiUrl | quote }}
+{{- .Values.agent.orionApiConfig.apiUrl | quote }}
 {{- end }}
 {{- end }}

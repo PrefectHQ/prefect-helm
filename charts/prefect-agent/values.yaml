@@ -32,22 +32,35 @@ agent:
     # -- enable agent image debug mode
     debug: false
 
+  ## configuration needed for all agent deployments
   config:
-    # -- prefect API url
-    apiUrl: https://api.prefect.cloud
+    # -- names of prefect workqueues the agent will poll
+    workQueues:
+      - default
+
+  ## connection settings
+  # -- one of 'cloud' or 'orion'
+  apiConfig: "cloud"
+
+  cloudApiConfig:
     # -- prefect account ID
     accountId: ""
     # -- prefect workspace ID
     workspaceId: ""
-    # -- prefect workqueue name
-    workQueueName: ""
+
     apiKeySecret:
-      # -- attach prefect-api-key secret to agent container
-      enabled: true
       # -- prefect API secret name
       name: prefect-api-key
       # -- prefect API secret key
       key: key
+
+    # -- prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId
+    cloudUrl: https://api.prefect.cloud/api
+
+  orionApiConfig:
+    # -- prefect API url
+    apiUrl: http://127.0.0.1:4200/api
+
 
   # -- number of agent replicas to deploy
   replicaCount: 1
