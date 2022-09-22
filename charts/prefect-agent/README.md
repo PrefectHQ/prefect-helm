@@ -28,13 +28,13 @@ Prefect Agent application bundle
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | agent.affinity | object | `{}` | affinity for agent pods assignment |
-| agent.config.accountId | string | `""` | prefect account ID |
-| agent.config.apiKeySecret.enabled | bool | `true` | attach prefect-api-key secret to agent container |
-| agent.config.apiKeySecret.key | string | `"key"` | prefect API secret key |
-| agent.config.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
-| agent.config.apiUrl | string | `"https://api.prefect.cloud"` | prefect API url |
-| agent.config.workQueueName | string | `""` | prefect workqueue name |
-| agent.config.workspaceId | string | `""` | prefect workspace ID |
+| agent.apiConfig | string | `"cloud"` | one of 'cloud' or 'orion' |
+| agent.cloudApiConfig.accountId | string | `""` | prefect account ID |
+| agent.cloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
+| agent.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
+| agent.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
+| agent.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
+| agent.config.workQueueName | string | `"default"` | prefect workqueue name |
 | agent.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set agent containers' security context allowPrivilegeEscalation |
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
@@ -48,6 +48,7 @@ Prefect Agent application bundle
 | agent.image.pullSecrets | list | `[]` | agent image pull secrets |
 | agent.image.repository | string | `"prefecthq/prefect"` | agent image repository |
 | agent.nodeSelector | object | `{}` | node labels for agent pods assignment |
+| agent.orionApiConfig.apiUrl | string | `"http://127.0.0.1:4200/api"` | prefect API url |
 | agent.podAnnotations | object | `{}` | extra annotations for agent pod |
 | agent.podLabels | object | `{}` | extra labels for agent pod |
 | agent.podSecurityContext.fsGroup | int | `1001` | set agent pod's security context fsGroup |
