@@ -15,7 +15,9 @@ orion:
   image:
     # -- orion image repository
     repository: prefecthq/prefect
-    # -- orion image tag (immutable tags are recommended)
+    ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
+    ## override pinned tag
+    # -- prefect image tag (immutable tags are recommended)
     prefectTag: 2-latest
     # -- orion image pull policy
     pullPolicy: IfNotPresent
