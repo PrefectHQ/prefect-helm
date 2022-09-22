@@ -35,7 +35,7 @@ agent:
   ## configuration needed for all agent deployments
   config:
     # -- names of prefect workqueues the agent will poll
-    workQueueNames:
+    workQueues:
       - default
 
   ## connection settings
