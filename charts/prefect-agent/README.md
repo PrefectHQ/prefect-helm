@@ -29,6 +29,7 @@ Prefect Agent application bundle
 |-----|------|---------|-------------|
 | agent.affinity | object | `{}` | affinity for agent pods assignment |
 | agent.config.accountId | string | `""` | prefect account ID |
+| agent.config.apiKeySecret.enabled | bool | `true` | attach prefect-api-key secret to agent container |
 | agent.config.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | agent.config.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | agent.config.apiUrl | string | `"https://api.prefect.cloud"` | prefect API url |
