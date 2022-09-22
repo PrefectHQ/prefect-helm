@@ -57,43 +57,39 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      # - name: Package Agent helm chart
-      #   run: |
-      #     mkdir /tmp/chart
-      #     cd charts
-      #     # Update the prefect version tag
-      #     sed -i "s/^tag:.*$/tag: \"$PREFECT_VERSION\"/" prefect-agent/values.yaml
-      #     helm package prefect-agent \
-      #       --destination /tmp/chart \
-      #       --dependency-update \
-      #       --version $RELEASE_VERSION \
-      #       --app-version $PREFECT_VERSION \
-      #       --sign --key 'jamie@prefect.io' \
-      #       --keyring $SIGN_KEYRING \
-      #       --passphrase-file $SIGN_PASSPHRASE_FILE
-      #   env:
-      #     RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-      #     PREFECT_VERSION: ${{ steps.get_version.outputs.CORE_VERSION }}
-      #     SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
-      #     SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
+      - name: Package Agent helm chart
+        run: |
+          mkdir /tmp/chart
+          cd charts
+          # Update the prefect version tag in values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-agent/values.yaml
+          helm package prefect-agent \
+            --destination /tmp/chart \
+            --dependency-update \
+            --version $RELEASE_VERSION \
+            --app-version $PREFECT_VERSION \
+            --sign --key 'jamie@prefect.io' \
+            --keyring $SIGN_KEYRING \
+            --passphrase-file $SIGN_PASSPHRASE_FILE
+        env:
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
+          SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
+          SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
       - name: Package Orion helm chart
         run: |
           cd charts
-          # Update the prefect version tag
-          echo $PREFECT_VERSION
+          # Update the prefect version tag in values.yaml
           sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-orion/values.yaml
-          git status
-          git diff
-
-          # helm package prefect-orion \
-          #   --destination /tmp/chart \
-          #   --dependency-update \
-          #   --version $RELEASE_VERSION \
-          #   --app-version $PREFECT_VERSION \
-          #   --sign --key 'jamie@prefect.io' \
-          #   --keyring $SIGN_KEYRING \
-          #   --passphrase-file $SIGN_PASSPHRASE_FILE
+          helm package prefect-orion \
+            --destination /tmp/chart \
+            --dependency-update \
+            --version $RELEASE_VERSION \
+            --app-version $PREFECT_VERSION \
+            --sign --key 'jamie@prefect.io' \
+            --keyring $SIGN_KEYRING \
+            --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
           PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
