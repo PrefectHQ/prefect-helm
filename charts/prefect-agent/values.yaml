@@ -34,8 +34,9 @@ agent:
 
   ## configuration needed for all agent deployments
   config:
-    # -- prefect workqueue name
-    workQueueName: "default"
+    # -- names of prefect workqueues the agent will poll
+    workQueueNames:
+      - default
 
   ## connection settings
   # -- one of 'cloud' or 'orion'
