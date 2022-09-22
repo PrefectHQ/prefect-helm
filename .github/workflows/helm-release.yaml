@@ -84,7 +84,7 @@ jobs:
           sed -i "s/^tag:.*$/tag: \"$PREFECT_VERSION\"/" prefect-orion/values.yaml
           # sed -i "s/^prefectVersionTag:.*$/prefectVersionTag: \"$CORE_VERSION\"/"
 
-          sed -i -E 's/^tag:'"${{ steps.get_version.outputs.PREFECT_VERSION }}"'/' prefect-orion/values.yaml
+          sed -i -E 's/^tag:'2.4.0'/' prefect-orion/values.yaml
           git status
           git diff
 
