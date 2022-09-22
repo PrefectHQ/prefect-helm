@@ -53,6 +53,10 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", "-q", '{{ join "," .Values.agent.config.workQueues }}']
           env:
+            - name: PREFECT_AGENT_PREFETCH_SECONDS
+              value: {{ .Values.agent.config.prefetchSeconds | quote }}
+            - name: PREFECT_AGENT_QUERY_INTERVAL
+              value: {{ .Values.agent.config.queryInterval | quote }}
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
             {{- if eq .Values.agent.apiConfig "cloud" }}

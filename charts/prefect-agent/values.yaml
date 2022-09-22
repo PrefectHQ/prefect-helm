@@ -32,11 +32,15 @@ agent:
     # -- enable agent image debug mode
     debug: false
 
-  ## configuration needed for all agent deployments
+  ## general configuration of the agent
   config:
     # -- names of prefect workqueues the agent will poll
     workQueues:
       - default
+    # -- how often the agent will query for runs
+    queryInterval: 5
+    # -- when querying for runs, how many seconds in the future can they be scheduled
+    prefetchSeconds: 10
 
   ## connection settings
   # -- one of 'cloud' or 'orion'
