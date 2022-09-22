@@ -16,7 +16,7 @@ orion:
     # -- orion image repository
     repository: prefecthq/prefect
     # -- orion image tag (immutable tags are recommended)
-    tag: 2-latest
+    prefectTag: 2-latest
     # -- orion image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.

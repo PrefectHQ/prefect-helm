@@ -16,7 +16,7 @@ agent:
     # -- agent image repository
     repository: prefecthq/prefect
     # -- agent image tag (immutable tags are recommended)
-    tag: 2-latest
+    prefectTag: 2-latest
     # -- agent image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.

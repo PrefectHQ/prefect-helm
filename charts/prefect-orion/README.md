@@ -58,10 +58,10 @@ Prefect orion application bundle
 | orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
 | orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
 | orion.image.debug | bool | `false` | enable orion image debug mode |
+| orion.image.prefectTag | string | `"2-latest"` | orion image tag (immutable tags are recommended) |
 | orion.image.pullPolicy | string | `"IfNotPresent"` | orion image pull policy |
 | orion.image.pullSecrets | list | `[]` | orion image pull secrets |
 | orion.image.repository | string | `"prefecthq/prefect"` | orion image repository |
-| orion.image.tag | string | `"2-latest"` | orion image tag (immutable tags are recommended) |
 | orion.nodeSelector | object | `{}` | node labels for orion pods assignment |
 | orion.podAnnotations | object | `{}` | extra annotations for orion pod |
 | orion.podLabels | object | `{}` | extra labels for orion pod |
