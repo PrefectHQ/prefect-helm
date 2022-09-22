@@ -81,6 +81,7 @@ jobs:
         run: |
           cd charts
           # Update the prefect version tag
+          echo $PREFECT_VERSION
           sed -i "s/prefectTag:.*$/prefectTag: \"$PREFECT_VERSION\"/g" prefect-orion/values.yaml
           git status
           git diff
@@ -94,7 +95,7 @@ jobs:
           #   --keyring $SIGN_KEYRING \
           #   --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
-          # RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
           PREFECT_VERSION: ${{ steps.get_version.outputs.CORE_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
