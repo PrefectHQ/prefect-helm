@@ -22,7 +22,8 @@ jobs:
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo ::set-output name=RELEASE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+          # echo ::set-output name=RELEASE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+          echo ::set-output name=RELEASE_VERSION::2022.09.21
 
           echo ::set-output name=PREFECT_VERSION::$(\
             git ls-remote --tags --refs --sort="v:refname" \
