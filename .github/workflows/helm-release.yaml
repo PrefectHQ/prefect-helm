@@ -96,7 +96,7 @@ jobs:
           #   --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-          PREFECT_VERSION: ${{ steps.get_version.outputs.CORE_VERSION }}
+          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
