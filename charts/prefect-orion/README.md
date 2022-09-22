@@ -1,6 +1,6 @@
 # prefect-orion
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2-latest](https://img.shields.io/badge/AppVersion-2--latest-informational?style=flat-square)
 
 Prefect orion application bundle
 
@@ -58,10 +58,10 @@ Prefect orion application bundle
 | orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
 | orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
 | orion.image.debug | bool | `false` | enable orion image debug mode |
+| orion.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | orion.image.pullPolicy | string | `"IfNotPresent"` | orion image pull policy |
 | orion.image.pullSecrets | list | `[]` | orion image pull secrets |
 | orion.image.repository | string | `"prefecthq/prefect"` | orion image repository |
-| orion.image.tag | string | `"2-latest"` | orion image tag (immutable tags are recommended) |
 | orion.nodeSelector | object | `{}` | node labels for orion pods assignment |
 | orion.podAnnotations | object | `{}` | extra annotations for orion pod |
 | orion.podLabels | object | `{}` | extra labels for orion pod |

@@ -48,7 +48,7 @@ spec:
       {{- end }}
       containers:
         - name: prefect-orion
-          image: "{{ .Values.orion.image.repository }}:{{ .Values.orion.image.tag }}"
+          image: "{{ .Values.orion.image.repository }}:{{ .Values.orion.image.prefectTag }}"
           imagePullPolicy: {{ .Values.orion.image.pullPolicy }}
           command: ["prefect", "orion", "start", "--host", "0.0.0.0", "--log-level", "WARNING", "--port", {{ .Values.service.port | quote }}]
           ports:

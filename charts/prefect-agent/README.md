@@ -1,6 +1,6 @@
 # prefect-agent
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: latest](https://img.shields.io/badge/AppVersion-latest-informational?style=flat-square)
+![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2-latest](https://img.shields.io/badge/AppVersion-2--latest-informational?style=flat-square)
 
 Prefect Agent application bundle
 
@@ -42,10 +42,10 @@ Prefect Agent application bundle
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |
 | agent.image.debug | bool | `false` | enable agent image debug mode |
+| agent.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | agent.image.pullPolicy | string | `"IfNotPresent"` | agent image pull policy |
 | agent.image.pullSecrets | list | `[]` | agent image pull secrets |
 | agent.image.repository | string | `"prefecthq/prefect"` | agent image repository |
-| agent.image.tag | string | `"2-latest"` | agent image tag (immutable tags are recommended) |
 | agent.nodeSelector | object | `{}` | node labels for agent pods assignment |
 | agent.podAnnotations | object | `{}` | extra annotations for agent pod |
 | agent.podLabels | object | `{}` | extra labels for agent pod |

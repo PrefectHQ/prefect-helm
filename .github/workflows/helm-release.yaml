@@ -20,7 +20,12 @@ jobs:
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+          echo ::set-output name=RELEASE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+
+          echo ::set-output name=PREFECT_VERSION::$(\
+            git ls-remote --tags --refs --sort="v:refname" \
+            https://github.com/PrefectHQ/prefect.git | tail -n1 | sed 's/.*\///' \
+          )
 
       - name: Configure Git
         run: |
@@ -54,36 +59,38 @@ jobs:
         run: |
           mkdir /tmp/chart
           cd charts
-          # Update the chart version tag
-          sed -i "s/^version:.*$/version: \"$VERSION\"/" prefect-agent/Chart.yaml
+          # Update the prefect version tag in values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-agent/values.yaml
           helm package prefect-agent \
             --destination /tmp/chart \
             --dependency-update \
-            --version $VERSION \
-            --app-version $VERSION \
+            --version $RELEASE_VERSION \
+            --app-version $PREFECT_VERSION \
             --sign --key 'jamie@prefect.io' \
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
-          VERSION: ${{ steps.get_version.outputs.VERSION }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
       - name: Package Orion helm chart
         run: |
           cd charts
-          # Update the chart version tag
-          sed -i "s/^version:.*$/version: \"$VERSION\"/" prefect-orion/Chart.yaml
+          # Update the prefect version tag in values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-orion/values.yaml
           helm package prefect-orion \
             --destination /tmp/chart \
             --dependency-update \
-            --version $VERSION \
-            --app-version $VERSION \
+            --version $RELEASE_VERSION \
+            --app-version $PREFECT_VERSION \
             --sign --key 'jamie@prefect.io' \
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
-          VERSION: ${{ steps.get_version.outputs.VERSION }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
@@ -96,10 +103,10 @@ jobs:
       - name: Commit and push
         run: |
           cp /tmp/chart/index.yaml .
-          cp /tmp/chart/prefect-agent-$VERSION.* ./charts
-          cp /tmp/chart/prefect-orion-$VERSION.* ./charts
-          git add ./index.yaml ./charts/prefect-agent-$VERSION.* ./charts/prefect-orion-$VERSION.*
-          git commit -m "Release $VERSION"
+          cp /tmp/chart/prefect-agent-$RELEASE_VERSION.* ./charts
+          cp /tmp/chart/prefect-orion-$RELEASE_VERSION.* ./charts
+          git add ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-orion-$RELEASE_VERSION.*
+          git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
         env:
-          VERSION: ${{ steps.get_version.outputs.VERSION }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}

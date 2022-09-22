@@ -48,7 +48,7 @@ spec:
       {{- end }}
       containers:
         - name: prefect-agent
-          image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
+          image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.prefectTag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", "-q", {{ .Values.agent.config.workQueueName }}]
           env:
