@@ -42,6 +42,8 @@ agent:
     # -- prefect workqueue name
     workQueueName: ""
     apiKeySecret:
+      # -- attach prefect-api-key secret to agent container
+      enabled: false
       # -- prefect API secret name
       name: prefect-api-key
       # -- prefect API secret key
