@@ -80,9 +80,9 @@ Prefect orion application bundle
 | postgresql.enabled | bool | `true` |  |
 | postgresql.externalHostname | string | `""` |  |
 | postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
-| postgresql.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
-| postgresql.persistence.size | string | `"8Gi"` | PVC Storage Request for PostgreSQL volume |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
+| postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
+| postgresql.primary.persistence.size | string | `"8Gi"` | PVC Storage Request for PostgreSQL volume |
 | postgresql.useSubChart | bool | `true` | enable use of bitnami/postgresql subchart |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
