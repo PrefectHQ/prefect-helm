@@ -51,7 +51,7 @@ spec:
         - name: prefect-agent
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.prefectTag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
-          command: ["prefect", "agent", "start", "-q", {{ .Values.agent.config.workQueueName }}]
+          command: ["prefect", "agent", "start", "-q", '{{ join "," .Values.agent.config.workQueues }}']
           env:
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
