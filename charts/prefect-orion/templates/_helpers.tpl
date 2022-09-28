@@ -9,6 +9,10 @@ Create the name of the service account to use
 {{- end -}}
 {{- end -}}
 
+{{- define "orion.servicePortName" -}}
+    {{- include "common.names.fullname" . }}
+{{- end -}}
+
 {{/*
   orion.postgres-hostname:
     Generate the hostname of the postgresql service

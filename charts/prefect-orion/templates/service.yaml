@@ -27,7 +27,7 @@ spec:
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
   {{- end }}
   ports:
-    - name: orion-svc-port
+    - name: {{ include "orion.servicePortName" . }}
       port: {{ .Values.service.port }}
       protocol: TCP
       {{- if and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)) }}
