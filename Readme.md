@@ -6,7 +6,7 @@
 ``` bash
 $ helm repo add prefect https://prefecthq.github.io/prefect-helm
 $ helm search repo prefect
-$ helm install my-release prefecthq/<chart>
+$ helm install my-release prefect/<chart>
 ```
 
 ### Installing released versions
@@ -18,7 +18,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 1. Let you local Helm manager know about the repository.
 
     ```
-    $ helm repo add prefecthq https://prefecthq.github.io/prefect-helm/
+    $ helm repo add prefect https://prefecthq.github.io/prefect-helm/
     ```
 
 2. Sync versions available in the repo to your local cache.
@@ -30,14 +30,14 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 3. Search for available charts and versions
 
     ```
-    $ helm search repo prefecthq
+    $ helm search repo prefect
     ```
 
 4. Install the Helm chart
 
     Using default options
     ```
-    $ helm install prefecthq/prefect-orion --generate-name
+    $ helm install prefect/prefect-orion --generate-name
     ```
 
     Setting some typical flags for customization
@@ -57,7 +57,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
         --version $VERSION \
         --values $CONFIG_PATH \
         $NAME \
-        prefecthq/prefect-orion
+        prefect/prefect-orion
     ```
 
  If chart installation fails, `--debug` can provide more information_
@@ -100,7 +100,7 @@ Development versions of the Helm chart will always be available directly from th
     # Choose a version to upgrade to or omit the flag to use the latest version
     VERSION=2022.09.21
 
-    helm upgrade $NAME prefecthq/prefect-orion --version $VERSION
+    helm upgrade $NAME prefect/prefect-orion --version $VERSION
     ```
 
     For development versions, make sure your cloned repository is updated (`git pull`) and reference the local chart
@@ -115,7 +115,7 @@ Development versions of the Helm chart will always be available directly from th
 
     helm upgrade \
         $NAME \
-        prefecthq/prefect-orion
+        prefect/prefect-orion
     ```
 
 #### Important notes about upgrading
