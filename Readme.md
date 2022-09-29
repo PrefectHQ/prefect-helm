@@ -18,7 +18,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 1. Let you local Helm manager know about the repository.
 
     ```
-    $ helm repo add prefecthq https://prefecthq.github.io/prefect-helm/
+    $ helm repo add prefect https://prefecthq.github.io/prefect-helm/
     ```
 
 2. Sync versions available in the repo to your local cache.
@@ -100,7 +100,7 @@ Development versions of the Helm chart will always be available directly from th
     # Choose a version to upgrade to or omit the flag to use the latest version
     VERSION=2022.09.21
 
-    helm upgrade $NAME prefecthq/prefect-orion --version $VERSION
+    helm upgrade $NAME prefect/prefect-orion --version $VERSION
     ```
 
     For development versions, make sure your cloned repository is updated (`git pull`) and reference the local chart
@@ -115,7 +115,7 @@ Development versions of the Helm chart will always be available directly from th
 
     helm upgrade \
         $NAME \
-        prefecthq/prefect-orion
+        prefect/prefect-orion
     ```
 
 #### Important notes about upgrading
