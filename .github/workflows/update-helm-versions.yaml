@@ -2,8 +2,6 @@
 name: "updatecli"
 
 on:
-  push:
-    branch: [bitnami-dependency-management]
   workflow_dispatch:
   schedule:
     - cron: "0 15 1 * *"
