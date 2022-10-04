@@ -1,0 +1,52 @@
+---
+name: "updatecli"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 15 1 * *" # The first of each month at 10am EST
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: configure git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: create branch for helm version updates
+        run: |
+          git checkout -b "helm-version-${{ steps.date.outputs.date }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.MARVIN_GITHUB_TOKEN }}
+
+      - name: install updatecli in the runner
+        uses: updatecli/updatecli-action@v2
+
+      - name: run updatecli in apply mode
+        run: |
+          updatecli apply --config .github/updatecli/manifest.yaml
+          git commit -am "helm-version-${{ steps.date.outputs.date }}"
+          git push --set-upstream origin "helm-version-${{ steps.date.outputs.date }}"
+        env:
+          GITHUB_TOKEN: "${{ secrets.MARVIN_GITHUB_TOKEN }}"
+
+      - name: create pr
+        run: |
+          git checkout "helm-version-${{ steps.date.outputs.date }}"
+          gh pr create --base main --title "helm-version-bump-${{ steps.date.outputs.date }}" -f
+        env:
+          GITHUB_TOKEN: ${{ secrets.MARVIN_GITHUB_TOKEN }}
