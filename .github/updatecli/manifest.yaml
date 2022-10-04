@@ -1,0 +1,39 @@
+---
+sources:
+  common:
+    kind: helmchart
+    spec:
+      url: "https://charts.bitnami.com/bitnami"
+      name: "common"
+      version: "2.*.*"
+    sourceid: common
+  postgresql:
+    kind: helmchart
+    spec:
+      url: "https://charts.bitnami.com/bitnami"
+      name: "postgresql"
+      version: "11.*.*"
+    sourceid: postgresql
+conditions: {}
+targets:
+  agent-common:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-agent/Chart.yaml"
+      key: "dependencies[0].version"
+    sourceid: common
+  orion-common:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-orion/Chart.yaml"
+      key: "dependencies[0].version"
+    sourceid: common
+  orion-postgresql:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-orion/Chart.yaml"
+      key: "dependencies[1].version"
+    sourceid: postgresql
