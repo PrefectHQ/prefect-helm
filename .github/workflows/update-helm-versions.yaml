@@ -4,7 +4,7 @@ name: "updatecli"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 15 1 * *"
+    - cron: "0 15 1 * *" # The first of each month at 10am EST
 
 permissions:
   contents: write
