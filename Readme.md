@@ -132,6 +132,41 @@ Development versions of the Helm chart will always be available directly from th
 
 See comments in `values.yaml`.
 
+### Security Context
+
+By default, the agent and server run as an unprivileged user with a read-only root filesystem. You can customize the security context settings for both the agent and server in the `values.yaml` file for your use case.
+
+If you need to install system packages or configure other settings at runtime, you can configure a writable filesystem and run as root by configuring the pod and container security context accordingly:
+
+```yaml
+  podSecurityContext:
+    runAsUser: 0
+    runAsNonRoot: false
+    fsGroup: 0
+
+  containerSecurityContext:
+    runAsUser: 0
+    # this must be false, since we are running as root
+    runAsNonRoot: false
+    # make the filesystem writable
+    readOnlyRootFilesystem: false
+    # this must be false, since we are running as root
+    allowPrivilegeEscalation: false
+```
+
+If you are running in OpenShift, the default `restricted` security context constraint will prevent customization of the user. In this case, explicitly configure the `runAsUser` settings to `null` to use OpenShift-assigned settings:
+
+```yaml
+  podSecurityContext:
+    runAsUser: null
+    fsGroup: null
+
+  containerSecurityContext:
+    runAsUser: null
+```
+
+The other default settings, such as a read-only root filesystem, are suitable for an OpenShift environment.
+
 ## Troubleshooting
 
 ### The database deploys correctly but other services fail with "bad password"

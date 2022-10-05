@@ -53,13 +53,14 @@ spec:
           image: "{{ .Values.orion.image.repository }}:{{ .Values.orion.image.prefectTag }}"
           imagePullPolicy: {{ .Values.orion.image.pullPolicy }}
           command: ["prefect", "orion", "start", "--host", "0.0.0.0", "--log-level", "WARNING", "--port", {{ .Values.service.port | quote }}]
+          workingDir: /home/prefect
           ports:
             - containerPort: {{ int .Values.service.port }}
           env:
+            - name: HOME
+              value: /home/prefect
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.orion.image.debug | quote }}
-            - name: PREFECT_HOME
-              value: /opt/prefect
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_ORION_DATABASE_CONNECTION_URL
               valueFrom:
@@ -86,8 +87,12 @@ spec:
           securityContext: {{- .Values.orion.containerSecurityContext | toYaml | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - mountPath: /opt/prefect/.prefect
-              name: orion-home
+            - mountPath: /home/prefect
+              name: scratch
+              subPathExpr: home
+            - mountPath: /tmp
+              name: scratch
+              subPathExpr: tmp
       volumes:
-        - name: orion-home
+        - name: scratch
           emptyDir: {}

@@ -53,7 +53,10 @@ spec:
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.prefectTag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           command: ["prefect", "agent", "start", "-q", '{{ join "," .Values.agent.config.workQueues }}']
+          workingDir: /home/prefect
           env:
+            - name: HOME
+              value: /home/prefect
             - name: PREFECT_AGENT_PREFETCH_SECONDS
               value: {{ .Values.agent.config.prefetchSeconds | quote }}
             - name: PREFECT_AGENT_QUERY_INTERVAL
@@ -69,8 +72,6 @@ spec:
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.agent.image.debug | quote }}
-            - name: PREFECT_HOME
-              value: /opt/prefect
             {{- if .Values.agent.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.agent.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
@@ -90,8 +91,12 @@ spec:
           securityContext: {{- .Values.agent.containerSecurityContext | toYaml | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - mountPath: /opt/prefect/.prefect
-              name: agent-home
+            - mountPath: /home/prefect
+              name: scratch
+              subPathExpr: home
+            - mountPath: /tmp
+              name: scratch
+              subPathExpr: tmp
       volumes:
-        - name: agent-home
+        - name: scratch
           emptyDir: {}
