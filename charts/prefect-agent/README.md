@@ -41,6 +41,7 @@ Prefect Agent application bundle
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
 | agent.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |
+| agent.daskKubernetesCluster | bool | `false` | enable this to grant additional permission to the agent role if you wish to use the Dask task runner |
 | agent.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |

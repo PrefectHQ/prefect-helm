@@ -19,3 +19,11 @@ rules:
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: [ "get", "list", "watch", "create", "update", "patch", "delete" ]
+{{- if .Values.agent.daskKubernetesCluster }}
+- apiGroups: [""]
+  resources: ["pods", "services"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["policy"]
+  resources: ["poddisruptionbudgets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+{{- end }}
