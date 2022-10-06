@@ -41,7 +41,6 @@ Prefect Agent application bundle
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
 | agent.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |
-| agent.daskKubernetesCluster | bool | `false` | enable this to grant additional permission to the agent role if you wish to use the Dask task runner |
 | agent.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |
@@ -66,6 +65,7 @@ Prefect Agent application bundle
 | fullnameOverride | string | `"prefect-agent"` | fully override common.names.fullname |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
+| role.extraPermissions | list | `[]` | array with extra permissions to add to the agent role |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |

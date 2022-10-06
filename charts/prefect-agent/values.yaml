@@ -65,9 +65,6 @@ agent:
     # -- prefect API url
     apiUrl: http://127.0.0.1:4200/api
 
-  # -- enable this to grant additional permission to the agent role if you are using the Dask task runner to create dynamic Dask Kubernetes pods 
-  daskKubernetesCluster: false
-
   # -- number of agent replicas to deploy
   replicaCount: 1
 
@@ -139,3 +136,14 @@ serviceAccount:
   name: ""
   # -- additional service account annotations (evaluated as a template)
   annotations: {}
+
+## Role configuration
+role:
+  ## List of extra role permissions
+  ## e.g:
+  ## extraPermissions:
+  ##  - apiGroups: [""]
+  ##    resources: ["pods", "services"]
+  ##    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # -- array with extra permissions to add to the agent role
+  extraPermissions: []
