@@ -65,7 +65,6 @@ agent:
     # -- prefect API url
     apiUrl: http://127.0.0.1:4200/api
 
-
   # -- number of agent replicas to deploy
   replicaCount: 1
 
@@ -137,3 +136,14 @@ serviceAccount:
   name: ""
   # -- additional service account annotations (evaluated as a template)
   annotations: {}
+
+## Role configuration
+role:
+  ## List of extra role permissions
+  ## e.g:
+  ## extraPermissions:
+  ##  - apiGroups: [""]
+  ##    resources: ["pods", "services"]
+  ##    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+  # -- array with extra permissions to add to the agent role
+  extraPermissions: []
