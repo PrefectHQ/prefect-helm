@@ -65,7 +65,7 @@ agent:
     # -- prefect API url
     apiUrl: http://127.0.0.1:4200/api
 
-  # -- enable this to grant additional permission to the agent role if you wish to use the Dask task runner
+  # -- enable this to grant additional permission to the agent role if you are using the Dask task runner to create dynamic Dask Kubernetes pods 
   daskKubernetesCluster: false
 
   # -- number of agent replicas to deploy
