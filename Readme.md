@@ -169,7 +169,7 @@ The other default settings, such as a read-only root filesystem, are suitable fo
 
 ## Additional Permissions for Prefect Agent
 
-## Dask
+### Dask
 
 If you are running flows on your agent’s pod (i.e. with Process infrastructure), and using the Dask task runner to create Dask Kubernetes clusters, you will need to grant the following permissions within `values.yaml`.
 
