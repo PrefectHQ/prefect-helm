@@ -167,6 +167,23 @@ If you are running in OpenShift, the default `restricted` security context const
 
 The other default settings, such as a read-only root filesystem, are suitable for an OpenShift environment.
 
+## Additional Permissions for Prefect Agent
+
+## Dask
+
+If you are running flows on your agent’s pod (i.e. with Process infrastructure), and using the Dask task runner to create Dask Kubernetes clusters, you will need to grant the following permissions within `values.yaml`.
+
+```yaml
+role:
+  extraPermissions:
+    - apiGroups: [""]
+    resources: ["pods", "services"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+    - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+```
+
 ## Troubleshooting
 
 ### The database deploys correctly but other services fail with "bad password"
