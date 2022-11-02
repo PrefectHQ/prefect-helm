@@ -57,6 +57,8 @@ Prefect orion application bundle
 | orion.env | list | `[]` | array with environment variables to add to orion nodes |
 | orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
 | orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
+| agent.extraVolumeMounts | string | `[]` | array with extra volume mounts to add to agent nodes |
+| agent.extraVolumes | string | `[]` | array with extra volumes to add to agent nodes |
 | orion.image.debug | bool | `false` | enable orion image debug mode |
 | orion.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | orion.image.pullPolicy | string | `"IfNotPresent"` | orion image pull policy |

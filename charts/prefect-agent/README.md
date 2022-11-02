@@ -44,6 +44,8 @@ Prefect Agent application bundle
 | agent.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |
+| agent.extraVolumeMounts | string | `[]` | array with extra volume mounts to add to agent nodes |
+| agent.extraVolumes | string | `[]` | array with extra volumes to add to agent nodes |
 | agent.image.debug | bool | `false` | enable agent image debug mode |
 | agent.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | agent.image.pullPolicy | string | `"IfNotPresent"` | agent image pull policy |
