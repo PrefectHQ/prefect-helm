@@ -128,6 +128,12 @@ agent:
   # -- name of existing Secret containing extra env vars to add to agent nodes
   extraEnvVarsSecret: ""
 
+  # -- array with extra volume mounts to add to agent nodes
+  extraVolumeMounts: []
+
+  # -- array with extra volumes to add to agent nodes
+  extraVolumes: []
+  
 ## ServiceAccount configuration
 serviceAccount:
   # -- specifies whether a ServiceAccount should be created
