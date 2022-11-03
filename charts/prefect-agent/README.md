@@ -21,7 +21,7 @@ Prefect Agent application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.0.3 |
+| https://charts.bitnami.com/bitnami | common | 2.1.2 |
 
 ## Values
 
@@ -44,6 +44,8 @@ Prefect Agent application bundle
 | agent.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | agent.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | agent.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |
+| agent.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the agent pod |
+| agent.extraVolumes | list | `[]` | array with extra volumes for the agent pod |
 | agent.image.debug | bool | `false` | enable agent image debug mode |
 | agent.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | agent.image.pullPolicy | string | `"IfNotPresent"` | agent image pull policy |

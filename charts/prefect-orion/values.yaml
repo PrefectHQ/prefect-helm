@@ -108,6 +108,12 @@ orion:
   # -- name of existing Secret containing extra env vars to add to orion nodes
   extraEnvVarsSecret: ""
 
+  # -- array with extra volumes for the orion pod
+  extraVolumes: []
+
+  # -- array with extra volumeMounts for the orion pod
+  extraVolumeMounts: []
+
 ## ServiceAccount configuration
 serviceAccount:
   # -- specifies whether a ServiceAccount should be created
