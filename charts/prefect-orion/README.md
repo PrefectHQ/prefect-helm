@@ -21,8 +21,8 @@ Prefect orion application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.0.3 |
-| https://charts.bitnami.com/bitnami | postgresql | 11.9.6 |
+| https://charts.bitnami.com/bitnami | common | 2.1.2 |
+| https://charts.bitnami.com/bitnami | postgresql | 11.9.13 |
 
 ## Values
 
@@ -57,6 +57,8 @@ Prefect orion application bundle
 | orion.env | list | `[]` | array with environment variables to add to orion nodes |
 | orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
 | orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
+| orion.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the orion pod |
+| orion.extraVolumes | list | `[]` | array with extra volumes for the orion pod |
 | orion.image.debug | bool | `false` | enable orion image debug mode |
 | orion.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | orion.image.pullPolicy | string | `"IfNotPresent"` | orion image pull policy |

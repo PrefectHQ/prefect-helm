@@ -93,6 +93,12 @@ spec:
             - mountPath: /tmp
               name: scratch
               subPathExpr: tmp
+          {{- if .Values.orion.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.orion.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}
       volumes:
         - name: scratch
           emptyDir: {}
+        {{- if .Values.orion.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.orion.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
