@@ -193,7 +193,7 @@ If you are using the subchart deployed database with persistence enabled, it is 
 
 ## Contributing
 
-Contributions to the Prefect Helm Charts are always welcome! We welcome your help, whether it's adding new functionality,
+Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality,
 tweaking documentation, or anything in between.
 
 ### Documentation
