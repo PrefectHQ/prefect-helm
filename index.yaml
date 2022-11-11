@@ -2,6 +2,30 @@ apiVersion: v1
 entries:
   prefect-agent:
   - apiVersion: v2
+    appVersion: 2.6.7
+    created: "2022-11-11T20:51:48.168661254Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.1.2
+    description: Prefect Agent application bundle
+    digest: 89a1815153c80461b9f8901c5fc59a59976991b14fe9f084d1e69ff879eac297
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    name: prefect-agent
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-agent-2022.11.11.tgz
+    version: 2022.11.11
+  - apiVersion: v2
     appVersion: 2.6.6
     created: "2022-11-03T20:09:25.579730584Z"
     dependencies:
@@ -344,6 +368,34 @@ entries:
     - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-agent-0.2.5/prefect-agent-0.2.5.tgz
     version: 0.2.5
   prefect-orion:
+  - apiVersion: v2
+    appVersion: 2.6.7
+    created: "2022-11-11T20:51:48.175283955Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.1.2
+    - condition: postgresql.useSubChart
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.9.13
+    description: Prefect orion application bundle
+    digest: 5530eb6504e331f4adc694a3a36eda39e653e8dcca5e90544c38fa50aaf497d2
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: george@prefect.io
+      name: gabcoyne
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    name: prefect-orion
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-orion-2022.11.11.tgz
+    version: 2022.11.11
   - apiVersion: v2
     appVersion: 2.6.6
     created: "2022-11-03T20:09:25.589670952Z"
@@ -711,4 +763,4 @@ entries:
     urls:
     - https://github.com/PrefectHQ/prefect-helm/releases/download/prefect-orion-0.2.5/prefect-orion-0.2.5.tgz
     version: 0.2.5
-generated: "2022-11-03T20:09:25.577524824Z"
+generated: "2022-11-11T20:51:48.166949754Z"
