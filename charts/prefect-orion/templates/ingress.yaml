@@ -59,6 +59,7 @@ spec:
       secretName: {{ .Values.ingress.TlsSecretName | quote }}
       {{- else }}
       secretName: {{ printf "%s-tls" .Values.ingress.host.hostname }}
+      {{- end }}
     {{- end }}
   {{- end }}
 {{- end }}
