@@ -37,6 +37,7 @@ Prefect orion application bundle
 | ingress.extraHosts | list | `[]` | an array with additional hostname(s) to be covered with the ingress record |
 | ingress.extraPaths | list | `[]` | an array with additional arbitrary paths that may need to be added to the ingress under the main host |
 | ingress.extraRules | list | `[]` | additional rules to be covered with this ingress record |
+| ingress.extraTls | list | `[]` | an array with additional tls configuration to be added to the ingress record |
 | ingress.host.hostname | string | `"prefect.local"` | default host for the ingress record |
 | ingress.host.path | string | `"/"` | default path for the ingress record |
 | ingress.host.pathType | string | `"ImplementationSpecific"` | ingress path type |
