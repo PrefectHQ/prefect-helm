@@ -201,6 +201,9 @@ ingress:
   ##           port:
   ##             name: http
 
+  # -- an array with additional tls configuration to be added to the ingress record
+  extraTls: []
+
 # Postgresql configuration
 postgresql:
   enabled: true
@@ -209,9 +212,9 @@ postgresql:
     database: orion
     # -- name for a custom user to create
     username: prefect
-    ## This is the password for `username` and will be set within the secret at the key `{fullnameOverride}-postgresql-password`.
+    ## This is the password for `username` and will be set within the secret `{fullnameOverride}-postgresql` at the key `password`.
     ## This argument is only relevant when using the Postgres database included in the chart.
-    ## For an external postgres connection, you must create and use `existingSecret` instead of `postgresqlPassword`.
+    ## For an external postgres connection, you must create and use `existingSecret` instead.
     # -- password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided
     password: ""
 

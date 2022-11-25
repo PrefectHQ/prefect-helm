@@ -57,5 +57,8 @@ spec:
         - {{ .Values.ingress.host.hostname | quote }}
       secretName: {{ printf "%s-tls" .Values.ingress.host.hostname }}
     {{- end }}
+    {{- if .Values.ingress.extraTls -}}
+      {{ toYaml .Values.ingress.extraTls  | nindent 4 }}
+    {{- end }}
   {{- end }}
 {{- end }}
