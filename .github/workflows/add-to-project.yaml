@@ -1,5 +1,5 @@
 ---
-name: Add issues to platform board
+name: Add issues to project board
 
 on:
   issues:
