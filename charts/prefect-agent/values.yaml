@@ -70,9 +70,13 @@ agent:
 
   resources:
     # -- the requested resources for the agent container
-    requests: {}
+    requests:
+      memory: 256Mi
+      cpu: 100m
     # -- the requested limits for the agent container
-    limits: {}
+    limits:
+      memory: 1Gi
+      cpu: 1000m
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
