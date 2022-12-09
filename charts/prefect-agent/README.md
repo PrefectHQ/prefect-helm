@@ -59,8 +59,8 @@ Prefect Agent application bundle
 | agent.podSecurityContext.runAsNonRoot | bool | `true` | set agent pod's security context runAsNonRoot |
 | agent.podSecurityContext.runAsUser | int | `1001` | set agent pod's security context runAsUser |
 | agent.replicaCount | int | `1` | number of agent replicas to deploy |
-| agent.resources.limits | object | `{}` | the requested limits for the agent container |
-| agent.resources.requests | object | `{}` | the requested resources for the agent container |
+| agent.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the agent container |
+| agent.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the agent container |
 | agent.tolerations | list | `[]` | tolerations for agent pods assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
