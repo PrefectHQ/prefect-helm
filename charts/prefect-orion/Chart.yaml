@@ -7,7 +7,7 @@ dependencies:
       - bitnami-common
     version: 2.2.1
   - name: postgresql
-    condition: postgresql.useSubChart
+    condition: postgresql.enabled,postgresql.useSubChart
     repository: https://charts.bitnami.com/bitnami
     version: 11.9.13
 description: Prefect orion application bundle
