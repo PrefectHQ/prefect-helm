@@ -188,6 +188,14 @@ ingress:
   ##     serviceName: ssl-redirect
   ##     servicePort: use-annotation
 
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+  # -- an array with additional tls configuration to be added to the ingress record
+  extraTls: []
+  ## extraTls:
+  ## - hosts:
+  ##     - orion.local
+  ##   secretName: orion.local-tls
+
   ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
   # -- additional rules to be covered with this ingress record
   extraRules: []
@@ -201,8 +209,6 @@ ingress:
   ##           port:
   ##             name: http
 
-  # -- an array with additional tls configuration to be added to the ingress record
-  extraTls: []
 
 # Postgresql configuration
 postgresql:
