@@ -42,7 +42,7 @@ Create the name of the service account to use
 {{/*
   orion.postgres-string-secret-name:
     Get the name of the secret to be used for the postgresql
-    user password. Generates {release-name}-postgresql if
+    user password. Generates {release-name}-postgresql-connection if
     an existing secret is not set.
 */}}
 {{- define "orion.postgres-string-secret-name" -}}
