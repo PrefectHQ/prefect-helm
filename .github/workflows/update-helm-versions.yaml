@@ -55,6 +55,6 @@ jobs:
       - name: create pr
         run: |
           git checkout "helm-version-${{ steps.date.outputs.date }}"
-          gh pr create --base main --title "helm-version-bump-${{ steps.date.outputs.date }}" -b "please run helm-docs locally to update chart readmes"
+          gh pr create --base main --title "helm-version-bump-${{ steps.date.outputs.date }}" -b "please run helm-docs locally to update chart readmes" --label dependencies
         env:
           GITHUB_TOKEN: ${{ github.token }}
