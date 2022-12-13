@@ -10,10 +10,14 @@ description: Prefect Agent application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
 maintainers:
-  - name: gabcoyne
-    email: george@prefect.io
   - name: jamiezieziula
     email: jamie@prefect.io
+  - name: jimid27
+    email: jimi@prefect.io
+  - name: parkedwards
+    email: edward@prefect.io
+  - name: jawnsy
+    email: jonathan@prefect.io
 name: prefect-agent
 sources:
   - https://github.com/PrefectHQ/prefect-helm
