@@ -78,6 +78,7 @@ Prefect orion application bundle
 | orion.resources.requests | object | `{}` | the requested resources for the orion container |
 | orion.tolerations | list | `[]` | tolerations for orion pods assignment |
 | postgresql.auth.database | string | `"orion"` | name for a custom database to create |
+| postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
 | postgresql.auth.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL credentials. |
 | postgresql.auth.password | string | `""` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user to create |
