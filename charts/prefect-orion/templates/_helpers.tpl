@@ -32,7 +32,7 @@ Create the name of the service account to use
 */}}
 {{- define "orion.postgres-connstr" -}}
 {{- $user := .Values.postgresql.auth.username -}}
-{{- $pass := .Values.postgresql.auth.password -}}
+{{- $pass := .Values.postgresql.auth.password | required ".Values.postgresql.auth.password is required." -}}
 {{- $host := include "orion.postgres-hostname" . -}}
 {{- $port := .Values.postgresql.containerPorts.postgresql | toString -}}
 {{- $db := .Values.postgresql.auth.database -}}

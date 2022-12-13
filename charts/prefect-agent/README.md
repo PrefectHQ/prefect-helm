@@ -10,8 +10,10 @@ Prefect Agent application bundle
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| gabcoyne | <george@prefect.io> |  |
 | jamiezieziula | <jamie@prefect.io> |  |
+| jimid27 | <jimi@prefect.io> |  |
+| parkedwards | <edward@prefect.io> |  |
+| jawnsy | <jonathan@prefect.io> |  |
 
 ## Source Code
 
