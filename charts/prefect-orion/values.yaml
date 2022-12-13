@@ -214,6 +214,7 @@ ingress:
 postgresql:
   enabled: true
   auth:
+    # -- determines whether an admin user is created within postgres
     enablePostgresUser: false
     # -- name for a custom database to create
     database: orion
