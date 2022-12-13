@@ -214,6 +214,7 @@ ingress:
 postgresql:
   enabled: true
   auth:
+    enablePostgresUser: false
     # -- name for a custom database to create
     database: orion
     # -- name for a custom user to create
@@ -224,8 +225,9 @@ postgresql:
     # -- password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided
     password: ""
 
-    ## This secret must contain a key-value pair where the key is `connection-string` and the value is the
+    ## This secret must contain two key-value pairs where the first key is `connection-string` and the value is the
     ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
+    ## The second key-value pair has the key `password` and the value is the {password} used in the connection string
     # -- Name of existing secret to use for PostgreSQL credentials.
     existingSecret: null
 
