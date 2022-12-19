@@ -29,6 +29,6 @@ Create the name of the service account to use
 {{- if .Values.agent.clusterUid }}
 {{- .Values.agent.clusterUid | quote }}
 {{- else }}
-{{- (lookup "v1" "Namespace" "" "kube-system").metadata.uid | quote }}
+{{- (lookup "v1" "Namespace" "" "kube-system" | default dict "metadata" (dict "uid" "")) }}
 {{- end }}
 {{- end }}
