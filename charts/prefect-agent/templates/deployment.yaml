@@ -63,6 +63,8 @@ spec:
               value: {{ .Values.agent.config.queryInterval | quote }}
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
+            - name: PREFECT_KUBERNETES_CLUSTER_UID
+              value: {{ template "agent.clusterUUID" . }}
             {{- if eq .Values.agent.apiConfig "cloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
