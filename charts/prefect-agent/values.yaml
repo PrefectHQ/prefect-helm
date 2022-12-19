@@ -124,7 +124,7 @@ agent:
   ## List of extra env vars
   ## e.g:
   ## extraEnvVars:
-  ##   - name: foo
+  ##   - name: FOO
   ##     value: "bar"
   # -- array with extra environment variables to add to agent nodes
   extraEnvVars: []
