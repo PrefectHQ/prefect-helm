@@ -11,7 +11,7 @@ Create the name of the service account to use
 
 {{/*
   agent.apiUrl:
-    Define API URL for workspace or for
+    Define API URL for cloud or orion agent install
 */}}
 {{- define "agent.apiUrl" -}}
 {{- if eq .Values.agent.apiConfig "cloud" }}
@@ -26,9 +26,10 @@ Create the name of the service account to use
     Define cluster UID either from user-defined UID or by doing a lookup at helm install time
 */}}
 {{- define "agent.clusterUUID" -}}
+{{- $defaultDict := dict "metadata" (dict "uid" "") -}}
 {{- if .Values.agent.clusterUid }}
 {{- .Values.agent.clusterUid | quote }}
 {{- else }}
-{{- (lookup "v1" "Namespace" "" "kube-system" | default dict "metadata" (dict "uid" "")) }}
+{{- (lookup "v1" "Namespace" "" "kube-system" | default $defaultDict).metadata.uid | quote }}
 {{- end }}
 {{- end }}
