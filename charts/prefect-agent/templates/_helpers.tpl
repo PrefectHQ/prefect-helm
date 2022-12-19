@@ -22,10 +22,10 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-  agent.cluster_uid:
+  agent.clusterUUID:
     Define cluster UID either from user-defined UID or by doing a lookup at helm install time
 */}}
-{{- define "agent.cluster_uid" -}}
+{{- define "agent.clusterUUID" -}}
 {{- if .Values.agent.clusterUid }}
 {{- .Values.agent.clusterUid | quote }}
 {{- else }}
