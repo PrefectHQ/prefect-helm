@@ -20,3 +20,15 @@ Create the name of the service account to use
 {{- .Values.agent.orionApiConfig.apiUrl | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+  agent.cluster_uid:
+    Define cluster UID either from user-defined UID or by doing a lookup at helm install time
+*/}}
+{{- define "agent.cluster_uid" -}}
+{{- if .Values.agent.clusterUid }}
+{{- .Values.agent.clusterUid | quote }}
+{{- else }}
+{{- (lookup "v1" "Namespace" "" "kube-system").metadata.uid | quote }}
+{{- end }}
+{{- end }}

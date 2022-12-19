@@ -12,6 +12,9 @@ commonAnnotations: {}
 
 ## Deployment Configuration
 agent:
+  # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
+  clusterUid: "test123"
+
   image:
     # -- agent image repository
     repository: prefecthq/prefect
@@ -121,7 +124,7 @@ agent:
   ## List of extra env vars
   ## e.g:
   ## extraEnvVars:
-  ##   - name: FOO
+  ##   - name: foo
   ##     value: "bar"
   # -- array with extra environment variables to add to agent nodes
   extraEnvVars: []
