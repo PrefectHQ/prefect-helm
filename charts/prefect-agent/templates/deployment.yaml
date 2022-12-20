@@ -57,7 +57,7 @@ spec:
             - agent
             - start
             - -q
-            - {{ range .Values.agent.config.workQueues }} {{ . }}{{ end }}
+            - {{ join " " .Values.agent.config.workQueues }}
           workingDir: /home/prefect
           env:
             - name: HOME
