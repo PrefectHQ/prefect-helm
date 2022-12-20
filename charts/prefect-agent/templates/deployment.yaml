@@ -52,7 +52,12 @@ spec:
         - name: prefect-agent
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.prefectTag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
-          command: ["prefect", "agent", "start", "-q", '{{ join "," .Values.agent.config.workQueues }}']
+          command:
+            - prefect
+            - agent
+            - start
+            - -q
+            - {{ range .Values.agent.config.workQueues }} {{ . }}{{ end }}
           workingDir: /home/prefect
           env:
             - name: HOME
