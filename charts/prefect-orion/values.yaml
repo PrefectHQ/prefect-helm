@@ -35,6 +35,7 @@ orion:
   # -- array with environment variables to add to orion nodes
   env: []
   ## env:
+  ##   -- API url used by services such as the agent; can be in-cluster API url
   ##   - name: PREFECT_API_URL
   ##     value: http://prefect-orion:4200/api
 
