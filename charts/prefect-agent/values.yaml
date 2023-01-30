@@ -65,7 +65,7 @@ agent:
     cloudUrl: https://api.prefect.cloud/api
 
   orionApiConfig:
-    # -- prefect API url; used by orion UI; should be set to publicly accessible API url
+    # -- prefect API url (PREFECT_API_URL); should be in-cluster url if the agent is deployed in the same cluster as the API
     apiUrl: http://127.0.0.1:4200/api
 
   # -- number of agent replicas to deploy
