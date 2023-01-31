@@ -32,7 +32,7 @@ orion:
     # -- enable orion image debug mode
     debug: false
 
-  # -- PREFECT_ORION_UI_API_URL; should be publically accesible API url; default to PREFECT_API_URL for running API locally
+  # -- sets PREFECT_ORION_UI_API_URL; should be publically accesible API url; UI will not work unless set
   publicApiUrl: ""
 
   # -- array with environment variables to add to orion nodes
