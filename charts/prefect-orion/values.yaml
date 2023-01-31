@@ -38,8 +38,8 @@ orion:
   # -- array with environment variables to add to orion nodes
   env: []
   ## env:
-  ##   - name: PREFECT_API_URL
-  ##     value: http://prefect-orion:4200/api
+  ##   - name: PREFECT_LOGGING_SERVER_LEVEL
+  ##     value: WARNING
 
   # Autoscaling configuration
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
