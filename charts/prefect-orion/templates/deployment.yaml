@@ -61,6 +61,10 @@ spec:
               value: /home/prefect
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.orion.image.debug | quote }}
+            {{- if .Values.orion.publicApiUrl }}
+            - name: PREFECT_ORION_UI_API_URL
+              value: {{ .Values.orion.publicApiUrl | quote }}
+            {{- end }}
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_ORION_DATABASE_CONNECTION_URL
               valueFrom:
