@@ -55,7 +55,7 @@ Prefect Agent application bundle
 | agent.image.pullSecrets | list | `[]` | agent image pull secrets |
 | agent.image.repository | string | `"prefecthq/prefect"` | agent image repository |
 | agent.nodeSelector | object | `{}` | node labels for agent pods assignment |
-| agent.orionApiConfig.apiUrl | string | `"http://127.0.0.1:4200/api"` | prefect API url |
+| agent.orionApiConfig.apiUrl | string | `"http://127.0.0.1:4200/api"` | prefect API url (PREFECT_API_URL); should be in-cluster URL if the agent is deployed in the same cluster as the API |
 | agent.podAnnotations | object | `{}` | extra annotations for agent pod |
 | agent.podLabels | object | `{}` | extra labels for agent pod |
 | agent.podSecurityContext.fsGroup | int | `1001` | set agent pod's security context fsGroup |

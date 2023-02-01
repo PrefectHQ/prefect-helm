@@ -73,6 +73,7 @@ Prefect orion application bundle
 | orion.podSecurityContext.fsGroup | int | `1001` | set orion pod's security context fsGroup |
 | orion.podSecurityContext.runAsNonRoot | bool | `true` | set orion pod's security context runAsNonRoot |
 | orion.podSecurityContext.runAsUser | int | `1001` | set orion pod's security context runAsUser |
+| orion.publicApiUrl | string | `""` | sets PREFECT_ORION_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
 | orion.replicaCount | int | `1` | number of orion replicas to deploy |
 | orion.resources.limits | object | `{}` | the requested limits for the orion container |
 | orion.resources.requests | object | `{}` | the requested resources for the orion container |
