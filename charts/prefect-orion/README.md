@@ -23,8 +23,8 @@ Prefect orion application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.2.1 |
-| https://charts.bitnami.com/bitnami | postgresql | 11.9.13 |
+| https://charts.bitnami.com/bitnami | common | 2.2.2 |
+| https://charts.bitnami.com/bitnami | postgresql | 12.1.13 |
 
 ## Values
 
