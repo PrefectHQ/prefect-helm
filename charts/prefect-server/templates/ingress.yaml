@@ -5,8 +5,8 @@ metadata:
   name: {{ template "common.names.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: orion
-    prefect-version: {{ .Values.orion.image.prefectTag }}
+    app.kubernetes.io/component: server
+    prefect-version: {{ .Values.server.image.prefectTag }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -35,7 +35,7 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
             pathType: {{ .Values.ingress.host.pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" "orion-svc-port" "context" $)  | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" "server-svc-port" "context" $)  | nindent 14 }}
     {{- end }}
     {{- range .Values.ingress.extraHosts }}
     - host: {{ .name | quote }}
@@ -45,7 +45,7 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" $) }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
             {{- end }}
-            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" $) "servicePort" "orion-svc-port" "context" $) | nindent 14 }}
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" $) "servicePort" "server-svc-port" "context" $) | nindent 14 }}
     {{- end }}
     {{- if .Values.ingress.extraRules }}
     {{- include "common.tplvalues.render" (dict "value" .Values.ingress.extraRules "context" $) | nindent 4 }}

@@ -11,13 +11,13 @@ Create the name of the service account to use
 
 {{/*
   agent.apiUrl:
-    Define API URL for cloud or orion agent install
+    Define API URL for cloud or server agent install
 */}}
 {{- define "agent.apiUrl" -}}
 {{- if eq .Values.agent.apiConfig "cloud" }}
 {{- printf "%s/accounts/%s/workspaces/%s" .Values.agent.cloudApiConfig.cloudUrl .Values.agent.cloudApiConfig.accountId .Values.agent.cloudApiConfig.workspaceId | quote }}
 {{- else }}
-{{- .Values.agent.orionApiConfig.apiUrl | quote }}
+{{- .Values.agent.serverApiConfig.apiUrl | quote }}
 {{- end }}
 {{- end }}
 

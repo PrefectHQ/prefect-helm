@@ -75,12 +75,12 @@ jobs:
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
-      - name: Package Orion helm chart
+      - name: Package server helm chart
         run: |
           cd charts
           # Update the prefect version tag in values.yaml
-          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-orion/values.yaml
-          helm package prefect-orion \
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-server/values.yaml
+          helm package prefect-server \
             --destination /tmp/chart \
             --dependency-update \
             --version $RELEASE_VERSION \
@@ -104,8 +104,8 @@ jobs:
         run: |
           cp /tmp/chart/index.yaml .
           cp /tmp/chart/prefect-agent-$RELEASE_VERSION.* ./charts
-          cp /tmp/chart/prefect-orion-$RELEASE_VERSION.* ./charts
-          git add ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-orion-$RELEASE_VERSION.*
+          cp /tmp/chart/prefect-server-$RELEASE_VERSION.* ./charts
+          git add ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-server-$RELEASE_VERSION.*
           git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
         env:
