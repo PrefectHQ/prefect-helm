@@ -75,7 +75,7 @@ jobs:
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
-      - name: Package server helm chart
+      - name: Package Server helm chart
         run: |
           cd charts
           # Update the prefect version tag in values.yaml
