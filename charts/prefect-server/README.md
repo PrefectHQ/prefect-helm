@@ -86,7 +86,7 @@ Prefect server application bundle
 | server.podSecurityContext.fsGroup | int | `1001` | set server pod's security context fsGroup |
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
-| server.publicApiUrl | string | `""` | sets PREFECT_server_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
+| server.publicApiUrl | string | `""` | sets PREFECT_SERVER_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
 | server.replicaCount | int | `1` | number of server replicas to deploy |
 | server.resources.limits | object | `{}` | the requested limits for the server container |
 | server.resources.requests | object | `{}` | the requested resources for the server container |
