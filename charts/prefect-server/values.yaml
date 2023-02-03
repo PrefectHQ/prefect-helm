@@ -32,11 +32,14 @@ server:
     # -- enable server image debug mode
     debug: false
 
+  # -- sets PREFECT_server_UI_API_URL; should be publicly accessible API URL; UI will not work unless set
+  publicApiUrl: ""
+
   # -- array with environment variables to add to server nodes
   env: []
   ## env:
-  ##   - name: PREFECT_API_URL
-  ##     value: http://prefect-server:4200/api
+  ##   - name: PREFECT_LOGGING_SERVER_LEVEL
+  ##     value: WARNING
 
   # Autoscaling configuration
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event

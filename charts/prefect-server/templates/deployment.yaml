@@ -61,6 +61,10 @@ spec:
               value: /home/prefect
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.server.image.debug | quote }}
+            {{- if .Values.server.publicApiUrl }}
+            - name: PREFECT_server_UI_API_URL
+              value: {{ .Values.server.publicApiUrl | quote }}
+            {{- end }}
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_server_DATABASE_CONNECTION_URL
               valueFrom:

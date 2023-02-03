@@ -63,7 +63,7 @@ Prefect Agent application bundle
 | agent.replicaCount | int | `1` | number of agent replicas to deploy |
 | agent.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the agent container |
 | agent.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the agent container |
-| agent.serverApiConfig.apiUrl | string | `"http://127.0.0.1:4200/api"` | prefect API url |
+| agent.serverApiConfig.apiUrl | string | `"http://127.0.0.1:4200/api"` | prefect API url (PREFECT_API_URL); should be in-cluster URL if the agent is deployed in the same cluster as the API |
 | agent.tolerations | list | `[]` | tolerations for agent pods assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
