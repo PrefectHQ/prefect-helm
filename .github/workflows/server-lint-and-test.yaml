@@ -1,4 +1,4 @@
-name: Lint and Test Prefect server Chart
+name: Lint and Test Prefect Server Chart
 
 on:
   pull_request:
