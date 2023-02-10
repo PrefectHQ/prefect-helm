@@ -62,7 +62,7 @@ spec:
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.server.image.debug | quote }}
             {{- if .Values.server.publicApiUrl }}
-            - name: PREFECT_SERVER_UI_API_URL
+            - name: PREFECT_UI_API_URL
               value: {{ .Values.server.publicApiUrl | quote }}
             {{- end }}
             {{- if .Values.postgresql.enabled }}
