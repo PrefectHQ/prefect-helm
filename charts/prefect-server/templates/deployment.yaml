@@ -66,7 +66,7 @@ spec:
               value: {{ .Values.server.publicApiUrl | quote }}
             {{- end }}
             {{- if .Values.postgresql.enabled }}
-            - name: PREFECT_server_DATABASE_CONNECTION_URL
+            - name: PREFECT_API_DATABASE_CONNECTION_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ include "server.postgres-string-secret-name" . }}
