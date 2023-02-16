@@ -1,11 +1,11 @@
-name: Lint and Test Prefect Orion Chart
+name: Lint and Test Prefect Server Chart
 
 on:
   pull_request:
     paths:
-      - .github/workflows/orion-lint-and-test.yaml
-      - .github/linters/orion-ct.yaml
-      - 'charts/prefect-orion/**'
+      - .github/workflows/server-lint-and-test.yaml
+      - .github/linters/server-ct.yaml
+      - 'charts/prefect-server/**'
 
 jobs:
   lint-test:
@@ -25,10 +25,10 @@ jobs:
         uses: helm/chart-testing-action@v2.3.1
 
       - name: Run chart-testing (lint)
-        run: ct lint --config .github/linters/orion-ct.yaml
+        run: ct lint --config .github/linters/server-ct.yaml
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
 
       - name: Run chart-testing (install)
-        run: ct install --config .github/linters/orion-ct.yaml --helm-extra-set-args "--set=postgresql.auth.password=TESTING"
+        run: ct install --config .github/linters/server-ct.yaml --helm-extra-set-args "--set=postgresql.auth.password=TESTING"

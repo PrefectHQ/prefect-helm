@@ -23,17 +23,17 @@ targets:
       file: "charts/prefect-agent/Chart.yaml"
       key: "dependencies[0].version"
     sourceid: common
-  orion-common:
+  server-common:
     name: bump chart dependencies
     kind: yaml
     spec:
-      file: "charts/prefect-orion/Chart.yaml"
+      file: "charts/prefect-server/Chart.yaml"
       key: "dependencies[0].version"
     sourceid: common
-  orion-postgresql:
+  server-postgresql:
     name: bump chart dependencies
     kind: yaml
     spec:
-      file: "charts/prefect-orion/Chart.yaml"
+      file: "charts/prefect-server/Chart.yaml"
       key: "dependencies[1].version"
     sourceid: postgresql

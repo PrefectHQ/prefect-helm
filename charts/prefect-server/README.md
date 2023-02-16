@@ -1,8 +1,8 @@
-# prefect-orion
+# prefect-server
 
 ![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2-latest](https://img.shields.io/badge/AppVersion-2--latest-informational?style=flat-square)
 
-Prefect orion application bundle
+Prefect server application bundle
 
 **Homepage:** <https://github.com/PrefectHQ>
 
@@ -32,10 +32,10 @@ Prefect orion application bundle
 |-----|------|---------|-------------|
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
-| fullnameOverride | string | `"prefect-orion"` | fully override common.names.fullname |
+| fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
 | ingress.annotations | object | `{}` | additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. |
 | ingress.className | string | `""` | IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+) |
-| ingress.enabled | bool | `false` | enable ingress record generation for orion |
+| ingress.enabled | bool | `false` | enable ingress record generation for server |
 | ingress.extraHosts | list | `[]` | an array with additional hostname(s) to be covered with the ingress record |
 | ingress.extraPaths | list | `[]` | an array with additional arbitrary paths that may need to be added to the ingress under the main host |
 | ingress.extraRules | list | `[]` | additional rules to be covered with this ingress record |
@@ -47,38 +47,7 @@ Prefect orion application bundle
 | ingress.tls | bool | `false` | enable TLS configuration for the host defined at `ingress.host.hostname` parameter |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
-| orion.affinity | object | `{}` | affinity for orion pods assignment |
-| orion.autoscaling.enabled | bool | `false` | enable autoscaling for orion |
-| orion.autoscaling.maxReplicas | int | `100` | maximum number of orion replicas |
-| orion.autoscaling.minReplicas | int | `1` | minimum number of orion replicas |
-| orion.autoscaling.targetCPU | int | `80` | target CPU utilization percentage |
-| orion.autoscaling.targetMemory | int | `80` | target Memory utilization percentage |
-| orion.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set orion containers' security context allowPrivilegeEscalation |
-| orion.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set orion containers' security context readOnlyRootFilesystem |
-| orion.containerSecurityContext.runAsNonRoot | bool | `true` | set orion containers' security context runAsNonRoot |
-| orion.containerSecurityContext.runAsUser | int | `1001` | set orion containers' security context runAsUser |
-| orion.env | list | `[]` | array with environment variables to add to orion nodes |
-| orion.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to orion nodes |
-| orion.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to orion nodes |
-| orion.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the orion pod |
-| orion.extraVolumes | list | `[]` | array with extra volumes for the orion pod |
-| orion.image.debug | bool | `false` | enable orion image debug mode |
-| orion.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
-| orion.image.pullPolicy | string | `"IfNotPresent"` | orion image pull policy |
-| orion.image.pullSecrets | list | `[]` | orion image pull secrets |
-| orion.image.repository | string | `"prefecthq/prefect"` | orion image repository |
-| orion.nodeSelector | object | `{}` | node labels for orion pods assignment |
-| orion.podAnnotations | object | `{}` | extra annotations for orion pod |
-| orion.podLabels | object | `{}` | extra labels for orion pod |
-| orion.podSecurityContext.fsGroup | int | `1001` | set orion pod's security context fsGroup |
-| orion.podSecurityContext.runAsNonRoot | bool | `true` | set orion pod's security context runAsNonRoot |
-| orion.podSecurityContext.runAsUser | int | `1001` | set orion pod's security context runAsUser |
-| orion.publicApiUrl | string | `""` | sets PREFECT_ORION_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
-| orion.replicaCount | int | `1` | number of orion replicas to deploy |
-| orion.resources.limits | object | `{}` | the requested limits for the orion container |
-| orion.resources.requests | object | `{}` | the requested resources for the orion container |
-| orion.tolerations | list | `[]` | tolerations for orion pods assignment |
-| postgresql.auth.database | string | `"orion"` | name for a custom database to create |
+| postgresql.auth.database | string | `"server"` | name for a custom database to create |
 | postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
 | postgresql.auth.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL credentials. |
 | postgresql.auth.password | string | `""` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
@@ -91,6 +60,37 @@ Prefect orion application bundle
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
 | postgresql.primary.persistence.size | string | `"8Gi"` | PVC Storage Request for PostgreSQL volume |
 | postgresql.useSubChart | bool | `true` | enable use of bitnami/postgresql subchart |
+| server.affinity | object | `{}` | affinity for server pods assignment |
+| server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
+| server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |
+| server.autoscaling.minReplicas | int | `1` | minimum number of server replicas |
+| server.autoscaling.targetCPU | int | `80` | target CPU utilization percentage |
+| server.autoscaling.targetMemory | int | `80` | target Memory utilization percentage |
+| server.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set server containers' security context allowPrivilegeEscalation |
+| server.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set server containers' security context readOnlyRootFilesystem |
+| server.containerSecurityContext.runAsNonRoot | bool | `true` | set server containers' security context runAsNonRoot |
+| server.containerSecurityContext.runAsUser | int | `1001` | set server containers' security context runAsUser |
+| server.env | list | `[]` | array with environment variables to add to server nodes |
+| server.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to server nodes |
+| server.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to server nodes |
+| server.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the server pod |
+| server.extraVolumes | list | `[]` | array with extra volumes for the server pod |
+| server.image.debug | bool | `false` | enable server image debug mode |
+| server.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
+| server.image.pullPolicy | string | `"IfNotPresent"` | server image pull policy |
+| server.image.pullSecrets | list | `[]` | server image pull secrets |
+| server.image.repository | string | `"prefecthq/prefect"` | server image repository |
+| server.nodeSelector | object | `{}` | node labels for server pods assignment |
+| server.podAnnotations | object | `{}` | extra annotations for server pod |
+| server.podLabels | object | `{}` | extra labels for server pod |
+| server.podSecurityContext.fsGroup | int | `1001` | set server pod's security context fsGroup |
+| server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
+| server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
+| server.publicApiUrl | string | `""` | sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
+| server.replicaCount | int | `1` | number of server replicas to deploy |
+| server.resources.limits | object | `{}` | the requested limits for the server container |
+| server.resources.requests | object | `{}` | the requested resources for the server container |
+| server.tolerations | list | `[]` | tolerations for server pods assignment |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |

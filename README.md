@@ -38,16 +38,16 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 
     Using default options
     ```
-    $ helm install prefect/prefect-orion --generate-name
+    $ helm install prefect/prefect-server --generate-name
     ```
 
     Setting some typical flags for customization
 
     ```shell
     # The kubernetes namespace to install into, can be anything or excluded to install in the default namespace
-    NAMESPACE=prefect-orion
+    NAMESPACE=prefect-server
     # The Helm "release" name, can be anything but we recommend matching the chart name
-    NAME=prefect-orion
+    NAME=prefect-server
     # The path to your config that overrides values in `values.yaml`
     CONFIG_PATH=path/to/your/config.yaml
     # The chart version to install
@@ -58,7 +58,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
         --version $VERSION \
         --values $CONFIG_PATH \
         $NAME \
-        prefect/prefect-orion
+        prefect/prefect-server
     ```
 
  If chart installation fails, `--debug` can provide more information_
@@ -97,11 +97,11 @@ Development versions of the Helm chart will always be available directly from th
 
     ```shell
     # Set this name to the name of your last Helm release
-    NAME=prefect-orion
+    NAME=prefect-server
     # Choose a version to upgrade to or omit the flag to use the latest version
     VERSION=2022.09.21
 
-    helm upgrade $NAME prefect/prefect-orion --version $VERSION
+    helm upgrade $NAME prefect/prefect-server --version $VERSION
     ```
 
     For development versions, make sure your cloned repository is updated (`git pull`) and reference the local chart
@@ -112,11 +112,11 @@ Development versions of the Helm chart will always be available directly from th
 3. Upgrades can also be used enable features or change options
 
     ```shell
-    NAME=prefect-orion
+    NAME=prefect-server
 
     helm upgrade \
         $NAME \
-        prefect/prefect-orion
+        prefect/prefect-server
     ```
 
 #### Important notes about upgrading

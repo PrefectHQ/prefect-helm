@@ -46,7 +46,7 @@ agent:
     prefetchSeconds: 10
 
   ## connection settings
-  # -- one of 'cloud' or 'orion'
+  # -- one of 'cloud' or 'server'
   apiConfig: "cloud"
 
   cloudApiConfig:
@@ -64,7 +64,7 @@ agent:
     # -- prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId
     cloudUrl: https://api.prefect.cloud/api
 
-  orionApiConfig:
+  serverApiConfig:
     # -- prefect API url (PREFECT_API_URL); should be in-cluster URL if the agent is deployed in the same cluster as the API
     apiUrl: http://127.0.0.1:4200/api
 

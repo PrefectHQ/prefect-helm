@@ -1,0 +1,108 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: server
+    prefect-version: {{ .Values.server.image.prefectTag }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.server.replicaCount }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: server
+  template:
+    metadata:
+      {{- if .Values.server.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.server.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: server
+        prefect-version: {{ .Values.server.image.prefectTag }}
+        {{- if .Values.server.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.server.podLabels "context" $) | nindent 8 }}
+        {{- end }}
+    spec:
+    {{- if .Values.server.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.server.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+    {{- end }}
+      serviceAccountName: {{ template "server.serviceAccountName" . }}
+      {{- if .Values.server.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.server.affinity "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.server.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.server.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.server.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.server.tolerations "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.server.podSecurityContext }}
+      securityContext: {{- .Values.server.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: prefect-server
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
+          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          command: ["prefect", "server", "start", "--host", "0.0.0.0", "--log-level", "WARNING", "--port", {{ .Values.service.port | quote }}]
+          workingDir: /home/prefect
+          ports:
+            - containerPort: {{ int .Values.service.port }}
+          env:
+            - name: HOME
+              value: /home/prefect
+            - name: PREFECT_DEBUG_MODE
+              value: {{ .Values.server.image.debug | quote }}
+            {{- if .Values.server.publicApiUrl }}
+            - name: PREFECT_UI_API_URL
+              value: {{ .Values.server.publicApiUrl | quote }}
+            {{- end }}
+            {{- if .Values.postgresql.enabled }}
+            - name: PREFECT_API_DATABASE_CONNECTION_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "server.postgres-string-secret-name" . }}
+                  key: connection-string
+            {{- end }}
+            {{- if .Values.server.env }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if .Values.server.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.server.extraEnvVarsCM "context" $) }}
+            {{- end }}
+            {{- if .Values.server.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.server.extraEnvVarsSecret "context" $) }}
+            {{- end }}
+          {{- if .Values.server.resources }}
+          resources: {{- toYaml .Values.server.resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.server.containerSecurityContext }}
+          securityContext: {{- .Values.server.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /home/prefect
+              name: scratch
+              subPathExpr: home
+            - mountPath: /tmp
+              name: scratch
+              subPathExpr: tmp
+          {{- if .Values.server.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: scratch
+          emptyDir: {}
+        {{- if .Values.server.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}

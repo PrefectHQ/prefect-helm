@@ -4,8 +4,8 @@ metadata:
   name: {{ template "common.names.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: orion
-    prefect-version: {{ .Values.orion.image.prefectTag }}
+    app.kubernetes.io/component: server
+    prefect-version: {{ .Values.server.image.prefectTag }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -27,7 +27,7 @@ spec:
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
   {{- end }}
   ports:
-    - name: orion-svc-port
+    - name: server-svc-port
       port: {{ .Values.service.port }}
       protocol: TCP
       {{- if and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)) }}
@@ -36,4 +36,4 @@ spec:
       nodePort: null
       {{- end }}
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
-    app.kubernetes.io/component: orion
+    app.kubernetes.io/component: server
