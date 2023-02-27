@@ -60,6 +60,10 @@ spec:
             - --work-queue
             - {{ . | quote }}
             {{- end }}
+            {{- if .Values.agent.config.workPool }}
+            - --pool
+            - {{ .Values.agent.config.workPool | quote }}
+            {{- end }}
           workingDir: /home/prefect
           env:
             - name: HOME

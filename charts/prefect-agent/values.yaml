@@ -40,6 +40,8 @@ agent:
     # -- names of prefect workqueues the agent will poll
     workQueues:
       - default
+    # -- name of workpool the agent will poll
+    workPool: ""
     # -- how often the agent will query for runs
     queryInterval: 5
     # -- when querying for runs, how many seconds in the future can they be scheduled
