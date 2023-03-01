@@ -40,7 +40,7 @@ agent:
     # -- names of prefect workqueues the agent will poll
     workQueues:
       - default
-    # -- name of workpool the agent will poll
+    # -- name of workpool the agent will poll - blank uses the default work pool
     workPool: ""
     # -- how often the agent will query for runs
     queryInterval: 5
