@@ -23,8 +23,8 @@ Prefect server application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.2.2 |
-| https://charts.bitnami.com/bitnami | postgresql | 12.1.13 |
+| https://charts.bitnami.com/bitnami | common | 2.2.3 |
+| https://charts.bitnami.com/bitnami | postgresql | 12.2.2 |
 
 ## Values
 
