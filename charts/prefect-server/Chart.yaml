@@ -24,7 +24,7 @@ maintainers:
     email: jonathan@prefect.io
 name: prefect-server
 sources:
-    - https://github.com/PrefectHQ/prefect-helm
+  - https://github.com/PrefectHQ/prefect-helm
 type: application
 # This version is never actually shipped. github actions will package add the appropriate version at build-time
 version: 0.0.0
