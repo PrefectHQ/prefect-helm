@@ -37,9 +37,9 @@ agent:
 
   ## general configuration of the agent
   config:
+    # -- if workpool or workqueues is not provided, we use the default queue
     # -- names of prefect workqueues the agent will poll
-    workQueues:
-      - default
+    workQueues: []
     # -- name of workpool the agent will poll - blank uses the default work pool
     workPool: ""
     # -- how often the agent will query for runs
