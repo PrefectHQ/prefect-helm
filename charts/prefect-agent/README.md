@@ -39,7 +39,8 @@ Prefect Agent application bundle
 | agent.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
 | agent.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | agent.config.queryInterval | int | `5` | how often the agent will query for runs |
-| agent.config.workQueues | list | `["default"]` | names of prefect workqueues the agent will poll |
+| agent.config.workPool | string | `""` | name of prefect workpool the agent will poll; if workpool or workqueues is not provided, we use the default queue |
+| agent.config.workQueues | list | `[]` | names of prefect workqueues the agent will poll; if workpool or workqueues is not provided, we use the default queue |
 | agent.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set agent containers' security context allowPrivilegeEscalation |
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |

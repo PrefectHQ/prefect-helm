@@ -56,9 +56,18 @@ spec:
             - prefect
             - agent
             - start
+            {{- if or ( gt ( len .Values.agent.config.workQueues) 0 ) .Values.agent.config.workPool }}
             {{- range .Values.agent.config.workQueues }}
             - --work-queue
             - {{ . | quote }}
+            {{- end }}
+            {{- if .Values.agent.config.workPool }}
+            - --pool
+            - {{ .Values.agent.config.workPool | quote }}
+            {{- end }}
+            {{- else }}
+            - --work-queue
+            - "default"
             {{- end }}
           workingDir: /home/prefect
           env:
