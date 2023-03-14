@@ -1,5 +1,5 @@
 ---
-name: Add issues to project boards
+name: Add issues to security board
 
 on:
   issues:
@@ -19,13 +19,6 @@ jobs:
       repository-projects: write
 
     steps:
-      - name: Add issue to platform project
-        uses: actions/add-to-project@v0.4.1
-        with:
-          project-url: https://github.com/orgs/PrefectHQ/projects/44
-          github-token: ${{ secrets.GLOBAL_PROJECTS_CI }}
-          labeled: platform
-
       - name: Add issue to security project
         uses: actions/add-to-project@v0.4.1
         with:

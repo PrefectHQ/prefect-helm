@@ -1,0 +1,25 @@
+---
+name: Add issues to platform board
+
+on:
+  issues:
+    types:
+      - opened
+
+# Do not grant jobs any permissions by default
+permissions: {}
+
+jobs:
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: read
+      repository-projects: write
+
+    steps:
+      - uses: actions/add-to-project@v0.4.1
+        with:
+          project-url: https://github.com/orgs/PrefectHQ/projects/44
+          github-token: ${{ secrets.GLOBAL_PROJECTS_CI }}
