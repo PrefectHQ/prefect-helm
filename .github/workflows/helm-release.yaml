@@ -20,12 +20,11 @@ jobs:
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo ::set-output name=RELEASE_VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-
-          echo ::set-output name=PREFECT_VERSION::$(\
+          echo "RELEASE_VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+          echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prefect.git | tail -n1 | sed 's/.*\///' \
-          )
+          )" >> $GITHUB_OUTPUT
 
       - name: Configure Git
         run: |
