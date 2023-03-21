@@ -13,7 +13,7 @@ commonAnnotations: {}
 ## Deployment Configuration
 agent:
   # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
-  clusterUid: ""
+  clusterUUID: ""
 
   image:
     # -- agent image repository
