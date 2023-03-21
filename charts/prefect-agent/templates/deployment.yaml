@@ -80,7 +80,7 @@ spec:
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
             - name: PREFECT_KUBERNETES_CLUSTER_UID
-              value: {{ template "agent.clusterUUID" . }}
+              value: {{ template "agent.clusterUID" . }}
             {{- if eq .Values.agent.apiConfig "cloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
