@@ -19,9 +19,10 @@ sources:
     spec:
       owner: helm
       repository: helm
-      versioning:
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
         kind: semver
-    sourceid: helm
+        pattern: "v3.x.x"
 conditions: {}
 targets:
   agent-common:
