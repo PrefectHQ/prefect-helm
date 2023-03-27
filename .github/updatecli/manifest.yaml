@@ -14,6 +14,15 @@ sources:
       name: "postgresql"
       version: "11.*.*"
     sourceid: postgresql
+  helm:
+    kind: githubRelease
+    spec:
+      owner: helm
+      repository: helm
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: "v3.x.x"
 conditions: {}
 targets:
   agent-common:
@@ -37,3 +46,24 @@ targets:
       file: "charts/prefect-server/Chart.yaml"
       key: "dependencies[1].version"
     sourceid: postgresql
+  helm-agent:
+    name: bump helm version
+    kind: yaml
+    spec:
+      file: ".github/workflows/agent-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[1].with.version"
+    sourceid: helm
+  helm-server:
+    name: bump helm version
+    kind: yaml
+    spec:
+      file: ".github/workflows/server-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[1].with.version"
+    sourceid: helm
+  helm-worker:
+    name: bump helm version
+    kind: yaml
+    spec:
+      file: ".github/workflows/worker-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[1].with.version"
+    sourceid: helm

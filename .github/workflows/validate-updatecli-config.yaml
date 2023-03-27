@@ -1,0 +1,29 @@
+---
+name: Validate updatecli config
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/updatecli/**
+
+# Do not grant jobs any permissions by default
+permissions: {}
+
+jobs:
+  validate_updatecli_config:
+    runs-on: ubuntu-latest
+    permissions:
+      # required to read from the repo
+      contents: read
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: install updatecli
+        uses: updatecli/updatecli-action@v2
+      - name: run updatecli diff to validate config
+        run: updatecli diff --config .github/updatecli/manifest.yaml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
