@@ -56,7 +56,7 @@ jobs:
 
       - name: Package Agent helm chart
         run: |
-          mkdir /tmp/chart
+          mkdir -p /tmp/chart
           cd charts
           # Update the prefect version tag in values.yaml
           sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-agent/values.yaml
@@ -76,7 +76,7 @@ jobs:
 
       - name: Package Worker helm chart
         run: |
-          mkdir /tmp/chart
+          mkdir -p /tmp/chart
           cd charts
           helm package prefect-worker \
             --destination /tmp/chart \
@@ -94,6 +94,7 @@ jobs:
 
       - name: Package Server helm chart
         run: |
+          mkdir -p /tmp/chart
           cd charts
           # Update the prefect version tag in values.yaml
           sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-server/values.yaml
