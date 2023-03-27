@@ -2,7 +2,7 @@
 # -- partially overrides common.names.name
 nameOverride: ""
 # -- fully override common.names.fullname
-fullnameOverride: "prefect-agent"
+fullnameOverride: "prefect-worker"
 # -- fully override common.names.namespace
 namespaceOverride: ""
 # -- labels to add to all deployed objects
@@ -11,17 +11,17 @@ commonLabels: {}
 commonAnnotations: {}
 
 ## Deployment Configuration
-agent:
+worker:
   # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
   clusterUid: ""
 
   image:
     # -- agent image repository
-    repository: prefecthq/prefect
+    repository: prefecthq/prefect-dev
     ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
     ## override pinned tag
     # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 2-latest
+    prefectTag: main-python3.11-kubernetes
     # -- agent image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -37,9 +37,6 @@ agent:
 
   ## general configuration of the agent
   config:
-    # -- names of prefect workqueues the agent will poll; if workpool or workqueues
-    # is not provided, we use the default queue
-    workQueues: []
     # -- name of prefect workpool the agent will poll; if workpool or workqueues
     # is not provided, we use the default queue
     workPool: ""

@@ -1,0 +1,119 @@
+apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
+kind: Deployment
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: worker
+    prefect-version: {{ .Values.worker.image.prefectTag }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
+      app.kubernetes.io/component: worker
+  template:
+    metadata:
+      {{- if .Values.worker.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.worker.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
+        app.kubernetes.io/component: worker
+        prefect-version: {{ .Values.worker.image.prefectTag }}
+        {{- if .Values.worker.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.worker.podLabels "context" $) | nindent 8 }}
+        {{- end }}
+    spec:
+    {{- if .Values.worker.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.worker.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+    {{- end }}
+      serviceAccountName: {{ template "worker.serviceAccountName" . }}
+      {{- if .Values.worker.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.worker.affinity "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.worker.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.worker.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.worker.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.worker.tolerations "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.worker.podSecurityContext }}
+      securityContext: {{- .Values.worker.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: prefect-worker
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.prefectTag }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          command:
+            - prefect
+            - worker
+            - start
+            - --type
+            - kubernetes
+            - --pool
+            - {{ .Values.worker.config.workPool | quote }}
+          workingDir: /home/prefect
+          env:
+            - name: HOME
+              value: /home/prefect
+            - name: PREFECT_EXPERIMENTAL_ENABLE_WORKERS
+              value: "True"
+            - name: PREFECT_AGENT_PREFETCH_SECONDS
+              value: {{ .Values.worker.config.prefetchSeconds | quote }}
+            - name: PREFECT_AGENT_QUERY_INTERVAL
+              value: {{ .Values.worker.config.queryInterval | quote }}
+            - name: PREFECT_API_URL
+              value: {{ template "worker.apiUrl" . }}
+            - name: PREFECT_KUBERNETES_CLUSTER_UID
+              value: {{ template "worker.clusterUUID" . }}
+            {{- if eq .Values.worker.apiConfig "cloud" }}
+            - name: PREFECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
+            {{- end }}
+            - name: PREFECT_DEBUG_MODE
+              value: {{ .Values.worker.image.debug | quote }}
+            {{- if .Values.worker.extraEnvVars }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVars "context" $) | nindent 12 }}
+            {{- end }}
+          envFrom:
+            {{- if .Values.worker.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVarsCM "context" $) }}
+            {{- end }}
+            {{- if .Values.worker.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVarsSecret "context" $) }}
+            {{- end }}
+          {{- if .Values.worker.resources }}
+          resources: {{- toYaml .Values.worker.resources | nindent 12 }}
+          {{- end }}
+          {{- if .Values.worker.containerSecurityContext }}
+          securityContext: {{- .Values.worker.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: /home/prefect
+              name: scratch
+              subPathExpr: home
+            - mountPath: /tmp
+              name: scratch
+              subPathExpr: tmp
+          {{- if .Values.worker.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: scratch
+          emptyDir: {}
+        {{- if .Values.worker.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
