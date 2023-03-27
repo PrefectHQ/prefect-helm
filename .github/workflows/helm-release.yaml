@@ -74,6 +74,24 @@ jobs:
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
+      - name: Package Worker helm chart
+        run: |
+          mkdir /tmp/chart
+          cd charts
+          helm package prefect-worker \
+            --destination /tmp/chart \
+            --dependency-update \
+            --version $RELEASE_VERSION \
+            --app-version $PREFECT_VERSION \
+            --sign --key 'jamie@prefect.io' \
+            --keyring $SIGN_KEYRING \
+            --passphrase-file $SIGN_PASSPHRASE_FILE
+        env:
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
+          SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
+          SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
+
       - name: Package Server helm chart
         run: |
           cd charts
@@ -104,7 +122,8 @@ jobs:
           cp /tmp/chart/index.yaml .
           cp /tmp/chart/prefect-agent-$RELEASE_VERSION.* ./charts
           cp /tmp/chart/prefect-server-$RELEASE_VERSION.* ./charts
-          git add ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-server-$RELEASE_VERSION.*
+          cp /tmp/chart/prefect-worker-$RELEASE_VERSION.* ./charts
+          git add ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-server-$RELEASE_VERSION.* ./charts/prefect-worker-$RELEASE_VERSION.*
           git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
         env:
