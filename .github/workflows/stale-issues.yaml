@@ -20,7 +20,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/stale@v7
+      - uses: actions/stale@v8
         with:
           # https://github.com/actions/stale#all-options
           repo-token: ${{ github.token }}
