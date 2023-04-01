@@ -5,7 +5,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.2.3
+    version: 2.2.4
 description: Prefect Agent application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ

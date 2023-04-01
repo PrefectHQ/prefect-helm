@@ -5,11 +5,11 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.2.3
+    version: 2.2.4
   - name: postgresql
     condition: postgresql.useSubChart
     repository: https://charts.bitnami.com/bitnami
-    version: 12.2.2
+    version: 12.2.6
 description: Prefect server application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
