@@ -70,6 +70,8 @@ spec:
               value: {{ .Values.worker.config.prefetchSeconds | quote }}
             - name: PREFECT_AGENT_QUERY_INTERVAL
               value: {{ .Values.worker.config.queryInterval | quote }}
+            - name: PREFECT_API_ENABLE_HTTP2
+              value: {{ .Values.worker.config.http2 | quote }}
             - name: PREFECT_API_URL
               value: {{ template "worker.apiUrl" . }}
             - name: PREFECT_KUBERNETES_CLUSTER_UID
