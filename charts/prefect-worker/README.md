@@ -53,6 +53,7 @@ Prefect Worker application bundle
 | worker.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | worker.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
 | worker.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |
+| worker.extraContainers | list | `[]` | additional sidecar containers |
 | worker.extraEnvVars | list | `[]` | array with extra environment variables to add to agent nodes |
 | worker.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to agent nodes |
 | worker.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to agent nodes |

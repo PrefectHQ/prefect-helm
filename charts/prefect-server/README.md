@@ -71,6 +71,7 @@ Prefect server application bundle
 | server.containerSecurityContext.runAsNonRoot | bool | `true` | set server containers' security context runAsNonRoot |
 | server.containerSecurityContext.runAsUser | int | `1001` | set server containers' security context runAsUser |
 | server.env | list | `[]` | array with environment variables to add to server nodes |
+| server.extraContainers | list | `[]` | additional sidecar containers |
 | server.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to server nodes |
 | server.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to server nodes |
 | server.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the server pod |
