@@ -17,11 +17,11 @@ worker:
 
   image:
     # -- agent image repository
-    repository: prefecthq/prefect-dev
+    repository: prefecthq/prefect
     ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
     ## override pinned tag
     # -- prefect image tag (immutable tags are recommended)
-    prefectTag: main-python3.11-kubernetes
+    prefectTag: 2-python3.11-kubernetes
     # -- agent image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.

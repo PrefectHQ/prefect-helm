@@ -61,10 +61,10 @@ Prefect Worker application bundle
 | worker.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the agent pod |
 | worker.extraVolumes | list | `[]` | array with extra volumes for the agent pod |
 | worker.image.debug | bool | `false` | enable agent image debug mode |
-| worker.image.prefectTag | string | `"main-python3.11-kubernetes"` | prefect image tag (immutable tags are recommended) |
+| worker.image.prefectTag | string | `"2-python3.11-kubernetes"` | prefect image tag (immutable tags are recommended) |
 | worker.image.pullPolicy | string | `"IfNotPresent"` | agent image pull policy |
 | worker.image.pullSecrets | list | `[]` | agent image pull secrets |
-| worker.image.repository | string | `"prefecthq/prefect-dev"` | agent image repository |
+| worker.image.repository | string | `"prefecthq/prefect"` | agent image repository |
 | worker.nodeSelector | object | `{}` | node labels for agent pods assignment |
 | worker.podAnnotations | object | `{}` | extra annotations for agent pod |
 | worker.podLabels | object | `{}` | extra labels for agent pod |
