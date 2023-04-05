@@ -77,6 +77,8 @@ spec:
               value: {{ .Values.agent.config.prefetchSeconds | quote }}
             - name: PREFECT_AGENT_QUERY_INTERVAL
               value: {{ .Values.agent.config.queryInterval | quote }}
+            - name: PREFECT_API_ENABLE_HTTP2
+              value: {{ .Values.agent.config.http2 | quote }}
             - name: PREFECT_API_URL
               value: {{ template "agent.apiUrl" . }}
             - name: PREFECT_KUBERNETES_CLUSTER_UID
