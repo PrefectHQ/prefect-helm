@@ -138,6 +138,9 @@ agent:
   # -- name of existing Secret containing extra env vars to add to agent nodes
   extraEnvVarsSecret: ""
 
+  # -- additional sidecar containers
+  extraContainers: []
+
   # -- array with extra volumes for the agent pod
   extraVolumes: []
 
