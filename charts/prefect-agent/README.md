@@ -37,7 +37,7 @@ Prefect Agent application bundle
 | agent.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | agent.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | agent.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
-| agent.config.http2 | bool | `false` | connect using HTTP/2 if the server supports it (experimental) |
+| agent.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
 | agent.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | agent.config.queryInterval | int | `5` | how often the agent will query for runs |
 | agent.config.workPool | string | `""` | name of prefect workpool the agent will poll; if workpool or workqueues is not provided, we use the default queue |
