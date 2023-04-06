@@ -64,8 +64,6 @@ spec:
           env:
             - name: HOME
               value: /home/prefect
-            - name: PREFECT_EXPERIMENTAL_ENABLE_WORKERS
-              value: "True"
             - name: PREFECT_AGENT_PREFETCH_SECONDS
               value: {{ .Values.worker.config.prefetchSeconds | quote }}
             - name: PREFECT_AGENT_QUERY_INTERVAL
