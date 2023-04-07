@@ -78,6 +78,8 @@ jobs:
         run: |
           mkdir -p /tmp/chart
           cd charts
+          # Update the prefect version tag in values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.11/g" prefect-worker/values.yaml
           helm package prefect-worker \
             --destination /tmp/chart \
             --dependency-update \
