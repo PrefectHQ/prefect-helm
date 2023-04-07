@@ -5,7 +5,8 @@ metadata:
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: server
-    prefect-version: {{ .Values.server.image.prefectTag }}
+    app.kubernetes.io/version: {{ include "server.imageTag" . | quote }}
+    prefect-version: {{ include "server.imageTag" . | quote }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -24,7 +25,7 @@ spec:
       {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: server
-        prefect-version: {{ .Values.server.image.prefectTag }}
+        prefect-version: {{ include "server.imageTag" . | quote }}
         {{- if .Values.server.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.podLabels "context" $) | nindent 8 }}
         {{- end }}
@@ -50,7 +51,7 @@ spec:
       {{- end }}
       containers:
         - name: prefect-server
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
+          image: "{{ .Values.server.image.repository }}:{{ template "server.imageTag" . }}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           command: ["prefect", "server", "start", "--host", "0.0.0.0", "--log-level", "WARNING", "--port", {{ .Values.service.port | quote }}]
           workingDir: /home/prefect

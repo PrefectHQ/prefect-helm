@@ -57,9 +57,6 @@ jobs:
       - name: Package Agent helm chart
         run: |
           mkdir -p /tmp/chart
-          cd charts
-          # Update the prefect version tag in values.yaml
-          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-agent/values.yaml
           helm package prefect-agent \
             --destination /tmp/chart \
             --dependency-update \
@@ -73,11 +70,11 @@ jobs:
           PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
+        working-directory: charts
 
       - name: Package Worker helm chart
         run: |
           mkdir -p /tmp/chart
-          cd charts
           helm package prefect-worker \
             --destination /tmp/chart \
             --dependency-update \
@@ -91,13 +88,11 @@ jobs:
           PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
+        working-directory: charts
 
       - name: Package Server helm chart
         run: |
           mkdir -p /tmp/chart
-          cd charts
-          # Update the prefect version tag in values.yaml
-          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-server/values.yaml
           helm package prefect-server \
             --destination /tmp/chart \
             --dependency-update \
@@ -111,6 +106,7 @@ jobs:
           PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
+        working-directory: charts
 
       - name: Update chart index
         run: |

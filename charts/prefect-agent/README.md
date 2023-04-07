@@ -53,7 +53,7 @@ Prefect Agent application bundle
 | agent.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the agent pod |
 | agent.extraVolumes | list | `[]` | array with extra volumes for the agent pod |
 | agent.image.debug | bool | `false` | enable agent image debug mode |
-| agent.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
+| agent.image.prefectTag | string | `""` | as the tag, unless overridden here (immutable tags are recommended) |
 | agent.image.pullPolicy | string | `"IfNotPresent"` | agent image pull policy |
 | agent.image.pullSecrets | list | `[]` | agent image pull secrets |
 | agent.image.repository | string | `"prefecthq/prefect"` | agent image repository |

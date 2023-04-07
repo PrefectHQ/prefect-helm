@@ -15,10 +15,9 @@ server:
   image:
     # -- server image repository
     repository: prefecthq/prefect
-    ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
-    ## override pinned tag
-    # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 2-latest
+    # -- by default, the chart will use the appVersion defined in the Chart.yaml
+    # -- as the tag, unless overridden here (immutable tags are recommended)
+    prefectTag: ""
     # -- server image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.

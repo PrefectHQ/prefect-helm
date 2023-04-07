@@ -53,3 +53,11 @@ Create the name of the service account to use
   {{- printf "%s-%s" $name "postgresql-connection" -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+  server.imageTag:
+    Define image tag either from appVersion or imageTag value
+*/}}
+{{- define "server.imageTag" }}
+{{- .Values.server.image.prefectTag | default .Chart.AppVersion }}
+{{- end }}

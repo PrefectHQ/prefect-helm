@@ -77,7 +77,7 @@ Prefect server application bundle
 | server.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the server pod |
 | server.extraVolumes | list | `[]` | array with extra volumes for the server pod |
 | server.image.debug | bool | `false` | enable server image debug mode |
-| server.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
+| server.image.prefectTag | string | `""` | as the tag, unless overridden here (immutable tags are recommended) |
 | server.image.pullPolicy | string | `"IfNotPresent"` | server image pull policy |
 | server.image.pullSecrets | list | `[]` | server image pull secrets |
 | server.image.repository | string | `"prefecthq/prefect"` | server image repository |

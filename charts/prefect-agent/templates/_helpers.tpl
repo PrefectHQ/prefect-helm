@@ -33,3 +33,11 @@ Create the name of the service account to use
 {{- (lookup "v1" "Namespace" "" "kube-system" | default $defaultDict).metadata.uid | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+  agent.imageTag:
+    Define image tag either from appVersion or imageTag value
+*/}}
+{{- define "agent.imageTag" }}
+{{- .Values.agent.image.prefectTag | default .Chart.AppVersion }}
+{{- end }}
