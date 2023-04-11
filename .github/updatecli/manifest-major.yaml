@@ -1,0 +1,78 @@
+---
+sources:
+  common:
+    kind: helmchart
+    spec:
+      url: "https://charts.bitnami.com/bitnami"
+      name: "common"
+      version: "*.*.*"
+    sourceid: common
+  postgresql:
+    kind: helmchart
+    spec:
+      url: "https://charts.bitnami.com/bitnami"
+      name: "postgresql"
+      version: "*.*.*"
+    sourceid: postgresql
+  helm:
+    kind: githubRelease
+    spec:
+      owner: helm
+      repository: helm
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: "x.x.x"
+    transformers:
+      - trimprefix: "v"
+conditions: {}
+targets:
+  agent-common:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-agent/Chart.yaml"
+      key: "dependencies[0].version"
+    sourceid: common
+  server-common:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-server/Chart.yaml"
+      key: "dependencies[0].version"
+    sourceid: common
+  worker-common:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-worker/Chart.yaml"
+      key: "dependencies[0].version"
+    sourceid: common
+  server-postgresql:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: "charts/prefect-server/Chart.yaml"
+      key: "dependencies[1].version"
+    sourceid: postgresql
+  helm-agent:
+    name: bump helm version
+    kind: yaml
+    spec:
+      file: ".github/workflows/agent-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[1].with.version"
+    sourceid: helm
+  helm-server:
+    name: bump helm version
+    kind: yaml
+    spec:
+      file: ".github/workflows/server-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[1].with.version"
+    sourceid: helm
+  helm-worker:
+    name: bump helm version
+    kind: yaml
+    spec:
+      file: ".github/workflows/worker-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[1].with.version"
+    sourceid: helm

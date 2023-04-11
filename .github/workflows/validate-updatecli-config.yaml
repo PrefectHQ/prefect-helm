@@ -24,6 +24,8 @@ jobs:
       - name: install updatecli
         uses: updatecli/updatecli-action@v2
       - name: run updatecli diff to validate config
-        run: updatecli diff --config .github/updatecli/manifest.yaml
+        run: |
+          updatecli diff --config .github/updatecli/manifest-minor.yaml
+          updatecli diff --config .github/updatecli/manifest-major.yaml
         env:
           GITHUB_TOKEN: ${{ github.token }}

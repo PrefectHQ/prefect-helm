@@ -1,5 +1,5 @@
 ---
-name: "updatecli"
+name: Updatecli minor dependency updates
 
 on:
   workflow_dispatch:
@@ -23,8 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: configure git
         run: |
@@ -46,15 +44,57 @@ jobs:
 
       - name: run updatecli in apply mode
         run: |
-          updatecli apply --config .github/updatecli/manifest.yaml
+          updatecli apply --config .github/updatecli/manifest-minor.yaml
           git commit -am "helm-version-${{ steps.date.outputs.date }}"
           git push --set-upstream origin "helm-version-${{ steps.date.outputs.date }}"
         env:
-          GITHUB_TOKEN: "${{ github.token }}"
+          GITHUB_TOKEN: ${{ github.token }}
 
       - name: create pr
         run: |
           git checkout "helm-version-${{ steps.date.outputs.date }}"
           gh pr create --base main --title "helm-version-bump-${{ steps.date.outputs.date }}" -b "please run helm-docs locally to update chart readmes" --label dependencies
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+---
+name: Updatecli minor dependency updates
+
+on:
+  workflow_dispatch:
+  schedule:
+    #        ┌───────────── minute (0 - 59)
+    #        │  ┌───────────── hour (0 - 23)
+    #        │  │  ┌───────────── day of the month (1 - 31)
+    #        │  │  │ ┌───────────── month (1 - 12 or JAN-DEC)
+    #        │  │  │ │ ┌───────────── day of the week (0 - 6 or SUN-SAT)
+    #        │  │  │ │ │
+    #        │  │  │ │ │
+    #        │  │  │ │ │
+    - cron: "0 15 1 * *" # The first of each month at 10am EST
+
+permissions:
+  contents: read
+
+jobs:
+  updatecli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: configure git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+
+      - name: install updatecli in the runner
+        uses: updatecli/updatecli-action@v2
+
+      - name: run updatecli in diff mode
+        run: |
+          updatecli diff --config .github/updatecli/manifest-major.yaml
         env:
           GITHUB_TOKEN: ${{ github.token }}
