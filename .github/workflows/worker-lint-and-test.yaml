@@ -9,7 +9,14 @@ on:
 
 jobs:
   lint-test:
+    name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        kubernetes:
+          - "1.25"
+          - "1.26"
+          - "1.27"
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -27,6 +34,9 @@ jobs:
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
+        with:
+          version: v0.18.0
+          node_image: "${{ matrix.kubernetes }}"
 
       - name: Create API Secret for Agent Chart
         run: |

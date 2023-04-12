@@ -25,6 +25,15 @@ sources:
         pattern: "3.x.x"
     transformers:
       - trimprefix: "v"
+  kind:
+    kind: githubRelease
+    spec:
+      owner: kubernetes-sigs
+      repository: kind
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: "x.x.x"
 conditions: {}
 targets:
   agent-common:

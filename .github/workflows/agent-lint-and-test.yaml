@@ -27,6 +27,8 @@ jobs:
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.5.0
+        with:
+          version: v0.18.0
 
       - name: Create API Secret for Agent Chart
         run: |
