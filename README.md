@@ -181,9 +181,9 @@ role:
 
 ## Version Support Policy
 
-Prefect follows the [upstream Kubernetes support policy](https://kubernetes.io/releases/version-skew-policy/), meaning that test against the three most recent minor version releases of Kubernetes. Older releases of Kubernetes may continue to work, but we do not test against those versions and may reject issues or patches to add support.
+Prefect follows the [upstream Kubernetes support policy](https://kubernetes.io/releases/version-skew-policy/), meaning that we test against the three most recent minor version releases of Kubernetes. The charts may be compatible with older releases of Kubernetes, however, we do not test against those versions and may choose to reject issues or patches to add support.
 
-The chart repository also includes a legacy `prefect-orion` chart, which is no longer being updated; please upgrade to `prefect-server` at your earliest convenience.
+The chart repository also includes a deprecated `prefect-orion` chart, which no longer receives updates. Please upgrade to `prefect-server` at your earliest convenience.
 
 ## Troubleshooting
 
