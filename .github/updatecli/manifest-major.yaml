@@ -25,6 +25,15 @@ sources:
         pattern: "x.x.x"
     transformers:
       - trimprefix: "v"
+  kind:
+    kind: githubRelease
+    spec:
+      owner: kubernetes-sigs
+      repository: kind
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      versionFilter:
+        kind: semver
+        pattern: "x.x.x"
 conditions: {}
 targets:
   agent-common:
@@ -76,3 +85,24 @@ targets:
       file: ".github/workflows/worker-lint-and-test.yaml"
       key: "jobs.lint-test.steps[1].with.version"
     sourceid: helm
+  kind-agent:
+    name: bump kind version
+    kind: yaml
+    spec:
+      file: ".github/workflows/agent-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[4].with.version"
+    sourceid: kind
+  kind-server:
+    name: bump kind version
+    kind: yaml
+    spec:
+      file: ".github/workflows/server-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[4].with.version"
+    sourceid: kind
+  kind-worker:
+    name: bump kind version
+    kind: yaml
+    spec:
+      file: ".github/workflows/worker-lint-and-test.yaml"
+      key: "jobs.lint-test.steps[4].with.version"
+    sourceid: kind
