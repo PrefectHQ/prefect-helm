@@ -179,6 +179,12 @@ role:
     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ```
 
+## Version Support Policy
+
+Prefect follows the [upstream Kubernetes support policy](https://kubernetes.io/releases/version-skew-policy/), meaning that we test against the three most recent minor version releases of Kubernetes. The charts may be compatible with older releases of Kubernetes, however, we do not test against those versions and may choose to reject issues or patches to add support.
+
+The chart repository also includes a deprecated `prefect-orion` chart, which no longer receives updates. Please upgrade to `prefect-server` at your earliest convenience. We will remove all published versions of `prefect-server` from our Helm repository, on or after May 31st, 2023.
+
 ## Troubleshooting
 
 ### The database deploys correctly but other services fail with "bad password"
