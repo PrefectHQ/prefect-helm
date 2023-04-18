@@ -26,6 +26,11 @@ jobs:
             https://github.com/PrefectHQ/prefect.git | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_OUTPUT
 
+      - name: Copy Artifact Hub metadata
+        run: |
+          mkdir -p /tmp/chart
+          cp artifacthub-repo.yml /tmp/chart
+
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
@@ -122,11 +127,12 @@ jobs:
 
       - name: Commit and push
         run: |
+          cp /tmp/chart/artifacthub-repo.yml .
           cp /tmp/chart/index.yaml .
           cp /tmp/chart/prefect-agent-$RELEASE_VERSION.* ./charts
           cp /tmp/chart/prefect-server-$RELEASE_VERSION.* ./charts
           cp /tmp/chart/prefect-worker-$RELEASE_VERSION.* ./charts
-          git add ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-server-$RELEASE_VERSION.* ./charts/prefect-worker-$RELEASE_VERSION.*
+          git add ./artifacthub-repo.yml ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-server-$RELEASE_VERSION.* ./charts/prefect-worker-$RELEASE_VERSION.*
           git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
         env:

@@ -1,0 +1,12 @@
+repositoryID: 9eabedea-e9f6-4f35-ab50-4788aa4d1e67
+owners:
+  - name: jamiezieziula
+    email: jamie@prefect.io
+  - name: jimid27
+    email: jimi@prefect.io
+  - name: parkedwards
+    email: edward@prefect.io
+  - name: jawnsy
+    email: jonathan@prefect.io
+ignore:
+  - name: prefect-orion
