@@ -172,11 +172,11 @@ If you are running flows on your agent’s pod (i.e. with Process infrastructure
 role:
   extraPermissions:
     - apiGroups: [""]
-    resources: ["pods", "services"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      resources: ["pods", "services"]
+      verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
     - apiGroups: ["policy"]
-    resources: ["poddisruptionbudgets"]
-    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+      resources: ["poddisruptionbudgets"]
+      verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ```
 
 ## Version Support Policy
