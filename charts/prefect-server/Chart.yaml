@@ -9,7 +9,7 @@ dependencies:
   - name: postgresql
     condition: postgresql.useSubChart
     repository: https://charts.bitnami.com/bitnami
-    version: 12.2.6
+    version: 12.4.2
 description: Prefect server application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
