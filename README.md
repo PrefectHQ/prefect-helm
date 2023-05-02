@@ -3,9 +3,24 @@
 ## Description
 This repository contains the official Prefect Helm chart for installing and configuring Prefect on Kubernetes. This chart supports multiple use cases of Prefect on Kubernetes depending on the values provided and chart selected including:
 
-1. [Prefect Worker](charts/prefect-worker/)
-2. [Prefect Agent](charts/prefect-agent/)
-3. [Prefect Server](charts/prefect-server/)
+### [Prefect Worker](charts/prefect-worker/)
+:rotating_light: Workers are a beta feature and are subject to change in future releases.:rotating_light:
+
+[Workers](https://docs.prefect.io/latest/concepts/work-pools/#worker-overview) are lightweight polling services that retrieve scheduled runs from a work pool and execute them.
+
+Workers are similar to agents, but offer greater control over infrastructure configuration and the ability to route work to specific types of execution environments.
+
+Workers each have a type corresponding to the execution environment to which they will submit flow runs. Workers are only able to join work pools that match their type. As a result, when deployments are assigned to a work pool, you know in which execution environment scheduled flow runs for that deployment will run.
+### [Prefect Agent](charts/prefect-agent/)
+[Agent](https://docs.prefect.io/latest/concepts/work-pools/#agent-overview) processes are lightweight polling services that get scheduled work from a work pool and deploy the corresponding flow runs.
+
+Agents poll for work every 15 seconds by default. This interval is configurable in your profile settings with the PREFECT_AGENT_QUERY_INTERVAL setting.
+
+It is possible for multiple agent processes to be started for a single work pool. Each agent process sends a unique ID to the server to help disambiguate themselves and let users know how many agents are active.
+
+
+### [Prefect Server](charts/prefect-server/)
+[Prefect Server](https://docs.prefect.io/latest/host/#hosting-prefect-server) is an open source backend that makes it easy to observe and orchestrate your Prefect flows.
 
 ## Usage
 
