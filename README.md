@@ -3,9 +3,9 @@
 ## Description
 This repository contains the official Prefect Helm chart for installing and configuring Prefect on Kubernetes. This chart supports multiple use cases of Prefect on Kubernetes depending on the values provided and chart selected including:
 
-1. [Prefect Worker](charts/prefect-worker/README.md)
-2. [Prefect Agent](charts/prefect-agent/README.md)
-3. [Prefect Server](charts/prefect-server/README.md)
+1. [Prefect Worker](charts/prefect-worker/)
+2. [Prefect Agent](charts/prefect-agent/)
+3. [Prefect Server](charts/prefect-server/)
 
 ## Usage
 
