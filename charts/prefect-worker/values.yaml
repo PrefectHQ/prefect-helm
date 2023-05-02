@@ -45,7 +45,7 @@ worker:
     # -- when querying for runs, how many seconds in the future can they be scheduled
     prefetchSeconds: 10
     # -- connect using HTTP/2 if the server supports it (experimental)
-    http2: true
+    http2: false
 
   ## connection settings
   # -- one of 'cloud' or 'server'
