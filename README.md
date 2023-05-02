@@ -22,7 +22,6 @@ Agents poll for work every 15 seconds by default. This interval is configurable 
 
 It is possible for multiple agent processes to be started for a single work pool. Each agent process sends a unique ID to the server to help disambiguate themselves and let users know how many agents are active.
 
-
 ### [Prefect Server](charts/prefect-server/)
 
 [Prefect Server](https://docs.prefect.io/latest/host/#hosting-prefect-server) is an open source backend that makes it easy to observe and orchestrate your Prefect flows.
