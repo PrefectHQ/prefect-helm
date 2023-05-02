@@ -14,7 +14,7 @@ Workers each have a type corresponding to the execution environment to which the
 ### [Prefect Agent](charts/prefect-agent/)
 [Agent](https://docs.prefect.io/latest/concepts/work-pools/#agent-overview) processes are lightweight polling services that get scheduled work from a work pool and deploy the corresponding flow runs.
 
-Agents poll for work every 15 seconds by default. This interval is configurable in your profile settings with the PREFECT_AGENT_QUERY_INTERVAL setting.
+Agents poll for work every 15 seconds by default. This interval is configurable in your profile settings with the `PREFECT_AGENT_QUERY_INTERVAL` setting.
 
 It is possible for multiple agent processes to be started for a single work pool. Each agent process sends a unique ID to the server to help disambiguate themselves and let users know how many agents are active.
 
