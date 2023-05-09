@@ -6,6 +6,9 @@ Prefect Worker application bundle
 
 **Homepage:** <https://github.com/PrefectHQ>
 
+## Getting Started Guide
+https://docs.prefect.io/latest/guides/deployment/helm-worker/
+
 ## Maintainers
 
 | Name | Email | Url |
