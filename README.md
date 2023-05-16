@@ -60,7 +60,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
    Using default options
 
    ```shell-session
-   $ helm install prefect/prefect-server --generate-name
+   $ helm install prefecthq/prefect-server --generate-name
    ```
 
    Setting some typical flags for customization
@@ -80,7 +80,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
      --version $VERSION \
      --values $CONFIG_PATH \
      $NAME \
-   prefect/prefect-server
+   prefecthq/prefect-server
    ```
 
 If chart installation fails, run the same command with `--debug` to see additional diagnostic information.
