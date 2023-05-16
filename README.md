@@ -36,7 +36,7 @@ Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 ```shell-session
 $ helm repo add prefect https://prefecthq.github.io/prefect-helm
 $ helm search repo prefect
-$ helm install my-release prefect/<chart>
+$ helm install my-release prefecthq/prefect-<chart>
 ```
 
 ### Installing released versions
@@ -60,7 +60,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
    Using default options
 
    ```shell-session
-   $ helm install prefect/prefect-server --generate-name
+   $ helm install prefecthq/prefect-server --generate-name
    ```
 
    Setting some typical flags for customization
@@ -80,7 +80,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
      --version $VERSION \
      --values $CONFIG_PATH \
      $NAME \
-   prefect/prefect-server
+   prefecthq/prefect-server
    ```
 
 If chart installation fails, run the same command with `--debug` to see additional diagnostic information.

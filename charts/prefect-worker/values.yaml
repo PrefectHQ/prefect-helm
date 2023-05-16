@@ -16,13 +16,13 @@ worker:
   clusterUid: ""
 
   image:
-    # -- agent image repository
+    # -- worker image repository
     repository: prefecthq/prefect
     ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
     ## override pinned tag
     # -- prefect image tag (immutable tags are recommended)
     prefectTag: 2-python3.11-kubernetes
-    # -- agent image pull policy
+    # -- worker image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -30,17 +30,16 @@ worker:
     ## e.g:
     ## pullSecrets:
     ##   - myRegistryKeySecretName
-    # -- agent image pull secrets
+    # -- worker image pull secrets
     pullSecrets: []
-    # -- enable agent image debug mode
+    # -- enable worker image debug mode
     debug: false
 
-  ## general configuration of the agent
+  ## general configuration of the worker
   config:
-    # -- name of prefect workpool the agent will poll; if workpool or workqueues
-    # is not provided, we use the default queue
+    # -- name of prefect work pool the worker will poll
     workPool: ""
-    # -- how often the agent will query for runs
+    # -- how often the worker will query for runs
     queryInterval: 5
     # -- when querying for runs, how many seconds in the future can they be scheduled
     prefetchSeconds: 10
@@ -67,60 +66,60 @@ worker:
     cloudUrl: https://api.prefect.cloud/api
 
   serverApiConfig:
-    # -- prefect API url (PREFECT_API_URL); should be in-cluster URL if the agent is deployed in the same cluster as the API
+    # -- prefect API url (PREFECT_API_URL); should be in-cluster URL if the worker is deployed in the same cluster as the API
     apiUrl: http://127.0.0.1:4200/api
 
-  # -- number of agent replicas to deploy
+  # -- number of worker replicas to deploy
   replicaCount: 1
 
   resources:
-    # -- the requested resources for the agent container
+    # -- the requested resources for the worker container
     requests:
       memory: 256Mi
       cpu: 100m
-    # -- the requested limits for the agent container
+    # -- the requested limits for the worker container
     limits:
       memory: 1Gi
       cpu: 1000m
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
-    # -- set agent pod's security context runAsUser
+    # -- set worker pod's security context runAsUser
     runAsUser: 1001
-    # -- set agent pod's security context runAsNonRoot
+    # -- set worker pod's security context runAsNonRoot
     runAsNonRoot: true
-    # -- set agent pod's security context fsGroup
+    # -- set worker pod's security context fsGroup
     fsGroup: 1001
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   containerSecurityContext:
-    # -- set agent containers' security context runAsUser
+    # -- set worker containers' security context runAsUser
     runAsUser: 1001
-    # -- set agent containers' security context runAsNonRoot
+    # -- set worker containers' security context runAsNonRoot
     runAsNonRoot: true
-    # -- set agent containers' security context readOnlyRootFilesystem
+    # -- set worker containers' security context readOnlyRootFilesystem
     readOnlyRootFilesystem: true
-    # -- set agent containers' security context allowPrivilegeEscalation
+    # -- set worker containers' security context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
-  # -- extra labels for agent pod
+  # -- extra labels for worker pod
   podLabels: {}
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
-  # -- extra annotations for agent pod
+  # -- extra annotations for worker pod
   podAnnotations: {}
 
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  # -- affinity for agent pods assignment
+  # -- affinity for worker pods assignment
   affinity: {}
 
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
-  # -- node labels for agent pods assignment
+  # -- node labels for worker pods assignment
   nodeSelector: {}
 
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  # -- tolerations for agent pods assignment
+  # -- tolerations for worker pods assignment
   tolerations: []
 
   ## List of extra env vars
@@ -128,22 +127,22 @@ worker:
   ## extraEnvVars:
   ##   - name: FOO
   ##     value: "bar"
-  # -- array with extra environment variables to add to agent nodes
+  # -- array with extra environment variables to add to worker nodes
   extraEnvVars: []
 
-  # -- name of existing ConfigMap containing extra env vars to add to agent nodes
+  # -- name of existing ConfigMap containing extra env vars to add to worker nodes
   extraEnvVarsCM: ""
 
-  # -- name of existing Secret containing extra env vars to add to agent nodes
+  # -- name of existing Secret containing extra env vars to add to worker nodes
   extraEnvVarsSecret: ""
 
   # -- additional sidecar containers
   extraContainers: []
 
-  # -- array with extra volumes for the agent pod
+  # -- array with extra volumes for the worker pod
   extraVolumes: []
 
-  # -- array with extra volumeMounts for the agent pod
+  # -- array with extra volumeMounts for the worker pod
   extraVolumeMounts: []
 
 ## ServiceAccount configuration
@@ -163,5 +162,5 @@ role:
   ##  - apiGroups: [""]
   ##    resources: ["pods", "services"]
   ##    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-  # -- array with extra permissions to add to the agent role
+  # -- array with extra permissions to add to the worker role
   extraPermissions: []
