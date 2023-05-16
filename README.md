@@ -36,7 +36,7 @@ Please refer to Helm's [documentation](https://helm.sh/docs/) to get started.
 ```shell-session
 $ helm repo add prefect https://prefecthq.github.io/prefect-helm
 $ helm search repo prefect
-$ helm install my-release prefect/<chart>
+$ helm install my-release prefecthq/prefect-<chart>
 ```
 
 ### Installing released versions
