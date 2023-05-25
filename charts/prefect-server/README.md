@@ -81,6 +81,12 @@ Prefect server application bundle
 | server.image.pullPolicy | string | `"IfNotPresent"` | server image pull policy |
 | server.image.pullSecrets | list | `[]` | server image pull secrets |
 | server.image.repository | string | `"prefecthq/prefect"` | server image repository |
+| server.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
+| server.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
+| server.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
+| server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
+| server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
+| server.livenessProbe.enabled | bool | `true` |  |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
 | server.podLabels | object | `{}` | extra labels for server pod |
@@ -88,6 +94,12 @@ Prefect server application bundle
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
 | server.publicApiUrl | string | `""` | sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
+| server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
+| server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
+| server.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
+| server.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
+| server.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
+| server.readinessProbe.enabled | bool | `true` |  |
 | server.replicaCount | int | `1` | number of server replicas to deploy |
 | server.resources.limits | object | `{}` | the requested limits for the server container |
 | server.resources.requests | object | `{}` | the requested resources for the server container |
