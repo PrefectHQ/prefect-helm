@@ -67,7 +67,7 @@ server:
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
-    enabled: false
+    enabled: true
     config:
       # -- The number of seconds to wait before starting the first probe.
       initialDelaySeconds: 10
@@ -80,7 +80,7 @@ server:
       # -- The minimum consecutive successes required to consider the probe successful.
       successThreshold: 1
   readinessProbe:
-    enabled: false
+    enabled: true
     config:
       # -- The number of seconds to wait before starting the first probe.
       initialDelaySeconds: 10

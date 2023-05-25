@@ -86,7 +86,7 @@ Prefect server application bundle
 | server.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| server.livenessProbe.enabled | bool | `false` |  |
+| server.livenessProbe.enabled | bool | `true` |  |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
 | server.podLabels | object | `{}` | extra labels for server pod |
@@ -99,7 +99,7 @@ Prefect server application bundle
 | server.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
 | server.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| server.readinessProbe.enabled | bool | `false` |  |
+| server.readinessProbe.enabled | bool | `true` |  |
 | server.replicaCount | int | `1` | number of server replicas to deploy |
 | server.resources.limits | object | `{}` | the requested limits for the server container |
 | server.resources.requests | object | `{}` | the requested resources for the server container |
