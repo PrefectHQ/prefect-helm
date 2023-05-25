@@ -86,7 +86,7 @@ Prefect server application bundle
 | server.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| server.livenessProbe.enabled | bool | `false` |  |
+| server.livenessProbe.enabled | bool | `true` |  |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
 | server.podLabels | object | `{}` | extra labels for server pod |
