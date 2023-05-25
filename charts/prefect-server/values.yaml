@@ -65,6 +65,34 @@ server:
     # -- the requested limits for the server container
     limits: {}
 
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+  livenessProbe:
+    enabled: false
+    config:
+      # -- The number of seconds to wait before starting the first probe.
+      initialDelaySeconds: 10
+      # -- The number of seconds to wait between consecutive probes.
+      periodSeconds: 10
+      # -- The number of seconds to wait for a probe response before considering it as failed.
+      timeoutSeconds: 5
+      # -- The number of consecutive failures allowed before considering the probe as failed.
+      failureThreshold: 3
+      # -- The minimum consecutive successes required to consider the probe successful.
+      successThreshold: 1
+  readinessProbe:
+    enabled: false
+    config:
+      # -- The number of seconds to wait before starting the first probe.
+      initialDelaySeconds: 10
+      # -- The number of seconds to wait between consecutive probes.
+      periodSeconds: 10
+      # -- The number of seconds to wait for a probe response before considering it as failed.
+      timeoutSeconds: 5
+      # -- The number of consecutive failures allowed before considering the probe as failed.
+      failureThreshold: 3
+      # -- The minimum consecutive successes required to consider the probe successful.
+      successThreshold: 1
+
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
     # -- set server pod's security context runAsUser
