@@ -6,10 +6,6 @@ Prefect Worker application bundle
 
 **Homepage:** <https://github.com/PrefectHQ>
 
-## Getting Started Guide
-
-[Using Prefect Helm Chart for Prefect Workers](https://docs.prefect.io/latest/guides/deployment/helm-worker/)
-
 ## Maintainers
 
 | Name | Email | Url |
