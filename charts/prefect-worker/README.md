@@ -69,6 +69,12 @@ Prefect Worker application bundle
 | worker.image.pullPolicy | string | `"IfNotPresent"` | worker image pull policy |
 | worker.image.pullSecrets | list | `[]` | worker image pull secrets |
 | worker.image.repository | string | `"prefecthq/prefect"` | worker image repository |
+| worker.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
+| worker.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
+| worker.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
+| worker.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
+| worker.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
+| worker.livenessProbe.enabled | bool | `false` |  |
 | worker.nodeSelector | object | `{}` | node labels for worker pods assignment |
 | worker.podAnnotations | object | `{}` | extra annotations for worker pod |
 | worker.podLabels | object | `{}` | extra labels for worker pod |

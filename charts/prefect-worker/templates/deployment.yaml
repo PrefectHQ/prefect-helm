@@ -60,6 +60,9 @@ spec:
             - kubernetes
             - --pool
             - {{ .Values.worker.config.workPool | quote }}
+            {{- if .Values.worker.livenessProbe.enabled }}
+            - --with-healthcheck
+            {{- end }}
           workingDir: /home/prefect
           env:
             - name: HOME
@@ -100,6 +103,13 @@ spec:
           {{- end }}
           {{- if .Values.worker.containerSecurityContext }}
           securityContext: {{- .Values.worker.containerSecurityContext | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if .Values.worker.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+          {{- toYaml .Values.worker.livenessProbe.config | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect
