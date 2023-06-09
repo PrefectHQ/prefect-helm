@@ -32,6 +32,9 @@ server:
     # -- enable server image debug mode
     debug: false
 
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  priorityClassName: ""
+
   # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set
   publicApiUrl: ""
 

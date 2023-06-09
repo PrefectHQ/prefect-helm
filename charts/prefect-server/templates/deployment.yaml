@@ -48,6 +48,9 @@ spec:
       {{- if .Values.server.podSecurityContext }}
       securityContext: {{- .Values.server.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
+      {{- if .Values.server.priorityClassName }}
+      priorityClassName: {{ .Values.server.priorityClassName }}
+      {{- end }}
       containers:
         - name: prefect-server
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
