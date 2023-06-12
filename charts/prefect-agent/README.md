@@ -63,7 +63,7 @@ Prefect Agent application bundle
 | agent.podSecurityContext.fsGroup | int | `1001` | set agent pod's security context fsGroup |
 | agent.podSecurityContext.runAsNonRoot | bool | `true` | set agent pod's security context runAsNonRoot |
 | agent.podSecurityContext.runAsUser | int | `1001` | set agent pod's security context runAsUser |
-| agent.priorityClassName | string | `""` | priority class name to use for agent pods; if the priority class is empty or doesn't exist, the agent pods are scheduled without a priority class |
+| agent.priorityClassName | string | `""` | priority class name to use for the agent pods; if the priority class is empty or doesn't exist, the agent pods are scheduled without a priority class |
 | agent.replicaCount | int | `1` | number of agent replicas to deploy |
 | agent.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the agent container |
 | agent.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the agent container |

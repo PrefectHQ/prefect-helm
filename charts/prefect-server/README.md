@@ -93,7 +93,7 @@ Prefect server application bundle
 | server.podSecurityContext.fsGroup | int | `1001` | set server pod's security context fsGroup |
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
-| server.priorityClassName | string | `""` | priority class name to use for server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
+| server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
 | server.publicApiUrl | string | `""` | sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |

@@ -33,7 +33,7 @@ server:
     debug: false
 
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
-  # -- priority class name to use for server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
+  # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
 
   # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set
