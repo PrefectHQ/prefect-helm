@@ -95,6 +95,10 @@ agent:
     # -- set agent pod's security context fsGroup
     fsGroup: 1001
 
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  # -- priority class name to use for the agent pods; if the priority class is empty or doesn't exist, the agent pods are scheduled without a priority class
+  priorityClassName: ""
+
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   containerSecurityContext:
     # -- set agent containers' security context runAsUser

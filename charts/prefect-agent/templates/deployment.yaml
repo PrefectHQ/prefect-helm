@@ -48,6 +48,9 @@ spec:
       {{- if .Values.agent.podSecurityContext }}
       securityContext: {{- .Values.agent.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
+      {{- if .Values.agent.priorityClassName }}
+      priorityClassName: {{ .Values.agent.priorityClassName }}
+      {{- end }}
       containers:
         - name: prefect-agent
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.prefectTag }}"

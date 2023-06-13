@@ -34,7 +34,7 @@ Prefect server application bundle
 | commonLabels | object | `{}` | labels to add to all deployed objects |
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
 | ingress.annotations | object | `{}` | additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. |
-| ingress.className | string | `""` | IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+) |
+| ingress.className | string | `""` | IngressClass that will be used to implement the Ingress (Kubernetes 1.18+) |
 | ingress.enabled | bool | `false` | enable ingress record generation for server |
 | ingress.extraHosts | list | `[]` | an array with additional hostname(s) to be covered with the ingress record |
 | ingress.extraPaths | list | `[]` | an array with additional arbitrary paths that may need to be added to the ingress under the main host |
@@ -93,6 +93,7 @@ Prefect server application bundle
 | server.podSecurityContext.fsGroup | int | `1001` | set server pod's security context fsGroup |
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
+| server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
 | server.publicApiUrl | string | `""` | sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |

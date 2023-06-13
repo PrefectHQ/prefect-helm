@@ -32,6 +32,10 @@ server:
     # -- enable server image debug mode
     debug: false
 
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
+  priorityClassName: ""
+
   # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set
   publicApiUrl: ""
 
@@ -180,7 +184,7 @@ ingress:
   enabled: false
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
-  # -- IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  # -- IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)
   className: ""
   host:
     # -- default host for the ingress record
