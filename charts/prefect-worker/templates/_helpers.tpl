@@ -22,6 +22,16 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
+  worker.appUrl:
+    Define APP URL for cloud worker install
+*/}}
+{{- define "worker.appUrl" -}}
+{{- if eq .Values.worker.apiConfig "cloud" }}
+{{- printf "https://app.prefect.cloud/account/%s/workspace/%s" .Values.worker.cloudApiConfig.accountId .Values.worker.cloudApiConfig.workspaceId | quote }}
+{{- end }}
+{{- end }}
+
+{{/*
   worker.clusterUUID:
     Define cluster UID either from user-defined UID or by doing a lookup at helm install time
 */}}
