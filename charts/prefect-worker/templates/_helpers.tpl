@@ -28,8 +28,11 @@ Create the name of the service account to use
 {{- define "worker.appUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
 {{- printf "https://app.prefect.cloud/account/%s/workspace/%s" .Values.worker.cloudApiConfig.accountId .Values.worker.cloudApiConfig.workspaceId | quote }}
+{{- else }}
+{{- .Values.worker.serverApiConfig.apiUrl | quote }}
 {{- end }}
 {{- end }}
+
 
 {{/*
   worker.clusterUUID:
