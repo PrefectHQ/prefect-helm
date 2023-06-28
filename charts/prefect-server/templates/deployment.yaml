@@ -55,7 +55,21 @@ spec:
         - name: prefect-server
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
-          command: ["prefect", "server", "start", "--host", "0.0.0.0", "--log-level", "WARNING", "--port", {{ .Values.service.port | quote }}]
+          command:
+            - /usr/bin/tini
+            - -g
+            - --
+            - /opt/prefect/entrypoint.sh
+          args:
+            - prefect
+            - server
+            - start
+            - --host
+            - 0.0.0.0
+            - --log-level
+            - WARNING
+            - --port
+            - {{ .Values.service.port | quote }}
           workingDir: /home/prefect
           ports:
             - containerPort: {{ int .Values.service.port }}

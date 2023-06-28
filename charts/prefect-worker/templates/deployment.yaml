@@ -56,6 +56,11 @@ spec:
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.prefectTag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           command:
+            - /usr/bin/tini
+            - -g
+            - --
+            - /opt/prefect/entrypoint.sh
+          args:
             - prefect
             - worker
             - start
