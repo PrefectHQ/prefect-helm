@@ -50,7 +50,7 @@ agent:
     # -- connect using HTTP/2 if the server supports it (experimental)
     http2: true
     # -- Maximum number of flow runs to start simultaneously (default: unlimited)
-    limit: None
+    limit: null
 
   ## connection settings
   # -- one of 'cloud' or 'server'

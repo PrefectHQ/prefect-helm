@@ -77,8 +77,10 @@ spec:
             - --work-queue
             - "default"
             {{- end }}
+            {{- if .Values.agent.config.limit }}
             - --limit
             - {{ .Values.agent.config.limit | quote }}
+            {{- end }}
           workingDir: /home/prefect
           env:
             - name: HOME
