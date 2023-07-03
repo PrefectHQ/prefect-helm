@@ -38,7 +38,7 @@ Prefect Agent application bundle
 | agent.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | agent.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
 | agent.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
-| agent.config.limit | string | `"None"` | Maximum number of flow runs to start simultaneously (default: unlimited) |
+| agent.config.limit | string | `nil` | Maximum number of flow runs to start simultaneously (default: unlimited) |
 | agent.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | agent.config.queryInterval | int | `5` | how often the agent will query for runs |
 | agent.config.workPool | string | `""` | name of prefect workpool the agent will poll; if workpool or workqueues is not provided, we use the default queue |

@@ -51,7 +51,7 @@ Prefect Worker application bundle
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
-| worker.config.limit | string | `"None"` | Maximum number of flow runs to start simultaneously (default: unlimited) |
+| worker.config.limit | string | `nil` | Maximum number of flow runs to start simultaneously (default: unlimited) |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | worker.config.queryInterval | int | `5` | how often the worker will query for runs |
 | worker.config.workPool | string | `""` | name of prefect work pool the worker will poll |
