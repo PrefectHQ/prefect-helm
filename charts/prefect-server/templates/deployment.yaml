@@ -132,7 +132,7 @@ spec:
           {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
         {{- if .Values.server.extraContainers }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.agent.extraContainers "context" $) | nindent 8 }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.server.extraContainers "context" $) | nindent 8 }}
         {{- end }}
       volumes:
         - name: scratch
