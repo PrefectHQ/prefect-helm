@@ -1,12 +1,10 @@
 name: Lint and Test Prefect Worker Chart
-
 on:
   pull_request:
     paths:
       - .github/workflows/worker-lint-and-test.yaml
       - .github/linters/worker-ct.yaml
       - 'charts/prefect-worker/**'
-
 jobs:
   lint-test:
     name: "lint-test (${{ matrix.kubernetes }})"
@@ -21,28 +19,22 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
       - name: Set up Helm
         uses: azure/setup-helm@v3.5
         with:
           version: v3.11.2
-
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.4.0
-
       - name: Run chart-testing (lint)
         run: ct lint --config .github/linters/worker-ct.yaml
-
       - name: Create kind cluster
         uses: helm/kind-action@v1.7.0
         with:
-          version: v0.18.0
+          version: v0.20.0
           node_image: "kindest/node:v${{ matrix.kubernetes }}"
-
       - name: Create API Secret for Agent Chart
         run: |
           kubectl create ns prefect
           kubectl create secret generic prefect-api-key  --from-literal=key=${{ secrets.PREFECT_CLOUD_API_KEY }} -n prefect
-
       - name: Run chart-testing (install)
         run: ct install --config .github/linters/worker-ct.yaml --helm-extra-set-args "--set=worker.config.workPool=test-helm --set=worker.cloudApiConfig.accountId=${{ secrets.PREFECT_CLOUD_ACCOUNT_ID }} --set=worker.cloudApiConfig.workspaceId=${{ secrets.PREFECT_CLOUD_WORKSPACE_ID }}"
