@@ -24,7 +24,7 @@ spec:
       {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: server
-        prefect-version: {{ .Values.server.image.prefectTag }}
+        prefect-version: {{ .Chart.AppVersion }}
         {{- if .Values.server.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.podLabels "context" $) | nindent 8 }}
         {{- end }}
