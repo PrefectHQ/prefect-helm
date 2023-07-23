@@ -38,6 +38,8 @@ server:
 
   # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set
   publicApiUrl: ""
+  # -- set PREFECT_API_HOST to something other than 127.0.0.1
+  apiHost: ""
 
   # -- array with environment variables to add to server nodes
   env: []
@@ -171,10 +173,13 @@ service:
   clusterIP: ""
   # -- service port if defining service as type nodeport
   nodePort: ""
+  # -- Loadbalancer IP if defining service using type LoadBalancer
+  loadBalancerIP: ""
+  targetPort: 4200
 
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   # -- service external traffic policy
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: default Cluster
   ## -- additional custom annotations for server service
   annotations: {}
 
@@ -275,8 +280,7 @@ postgresql:
     postgresql: 5432
 
   # externalHostname defines the address to contact an externally
-  # managed postgres database instance at. This is not required if
-  # `internalPostgres` is `true`
+  # managed postgres database instance at.
   externalHostname: ""
 
   # -- enable use of bitnami/postgresql subchart

@@ -82,6 +82,10 @@ spec:
             - name: PREFECT_UI_API_URL
               value: {{ .Values.server.publicApiUrl | quote }}
             {{- end }}
+            {{- if .Values.server.apiHost }}
+            - name: PREFECT_SERVER_API_HOST
+              value: {{ .Values.server.apiHost | quote }}
+            {{- end }}
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
               valueFrom:
