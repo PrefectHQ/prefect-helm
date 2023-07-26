@@ -68,6 +68,10 @@ spec:
             - kubernetes
             - --pool
             - {{ .Values.worker.config.workPool | quote }}
+            {{- range .Values.worker.config.workQueues }}
+            - --work-queue
+            - {{ . }}
+            {{- end }}
             {{- if .Values.worker.config.limit }}
             - --limit
             - {{ .Values.worker.config.limit | quote }}
