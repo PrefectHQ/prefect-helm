@@ -39,12 +39,8 @@ worker:
   config:
     # -- the work pool the started worker should poll.
     workPool: ""
-    ## List of workQueues
-    ## e.g:
-    ## workQueues:
-    ##   - default
     # -- one or more work queue names for the worker to pull from. if not provided, the worker will pull from all work queues in the work pool
-    workQueues: null
+    workQueues: []
     # -- how often the worker will query for runs
     queryInterval: 5
     # -- when querying for runs, how many seconds in the future can they be scheduled
