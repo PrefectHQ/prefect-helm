@@ -261,7 +261,7 @@ postgresql:
     ## This argument is only relevant when using the Postgres database included in the chart.
     ## For an external postgres connection, you must create and use `existingSecret` instead.
     # -- password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided
-    password: "prefect-rocks"
+    password: prefect-rocks
 
     ## This secret must contain two key-value pairs where the first key is `connection-string` and the value is the
     ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
