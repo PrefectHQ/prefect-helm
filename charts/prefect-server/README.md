@@ -1,4 +1,19 @@
-# Getting Started
+# prefect-server
+
+Prefect server application bundle
+
+**Homepage:** <https://github.com/PrefectHQ>
+
+![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2-latest](https://img.shields.io/badge/AppVersion-2--latest-informational?style=flat-square)
+
+## Installing the Chart
+
+To install the chart with the release name `prefect-server`:
+
+```console
+$ helm repo add prefect https://prefecthq.github.io/prefect-helm
+$ helm install prefect-server prefect/prefect-server
+```
 
 ## Prefect Configuration
 
@@ -12,21 +27,13 @@ and visiting http:localhost:4200
 
 Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other with the correct port!
 
-## Using PostgreSQL
+## PostgreSQL Configuration
 
 If you are installing the chart & specificing the use of PostgreSQL - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
 2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
   a. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
   b. `password`: the same password defined in the `connection-string` above
-
-<!-- BEGIN_HELM_DOCS -->
-
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2-latest](https://img.shields.io/badge/AppVersion-2--latest-informational?style=flat-square)
-
-Prefect server application bundle
-
-**Homepage:** <https://github.com/PrefectHQ>
 
 ## Maintainers
 
@@ -36,10 +43,6 @@ Prefect server application bundle
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
 | jawnsy | <jonathan@prefect.io> |  |
-
-## Source Code
-
-* <https://github.com/PrefectHQ/prefect-helm>
 
 ## Requirements
 
@@ -69,11 +72,11 @@ Prefect server application bundle
 | ingress.tls | bool | `false` | enable TLS configuration for the host defined at `ingress.host.hostname` parameter |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
-| postgresql.auth.database | string | `"server"` | name for a custom database to create |
+| postgresql.auth.database | string | `"server"` | name for a custom database |
 | postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
 | postgresql.auth.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL credentials. |
-| postgresql.auth.password | string | `""` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
-| postgresql.auth.username | string | `"prefect"` | name for a custom user to create |
+| postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
+| postgresql.auth.username | string | `"prefect"` | name for a custom user |
 | postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.externalHostname | string | `""` |  |
@@ -116,7 +119,7 @@ Prefect server application bundle
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
 | server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
-| server.publicApiUrl | string | `""` | sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
+| server.publicApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; should be publicly accessible API URL |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | server.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
@@ -130,7 +133,7 @@ Prefect server application bundle
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
-| service.nodePort | string | `""` | service port if defining service as type nodeport |
+| service.nodePort | string | `""` | service port if defining service as type nodeport TEST |
 | service.port | int | `4200` | service port |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
@@ -139,4 +142,3 @@ Prefect server application bundle
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.11.0](https://github.com/norwoodj/helm-docs/releases/v1.11.0)
-<!-- END_HELM_DOCS -->
