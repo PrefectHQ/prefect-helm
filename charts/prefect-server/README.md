@@ -26,7 +26,7 @@ Note: If you choose to make modifications to either the `server.publicApiUrl` or
 
 ## PostgreSQL Configuration
 
-### Secrets
+### Handling Connection Secrets
 
 If you are installing the chart as is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
@@ -45,7 +45,7 @@ No secrets are created when providing an existing secret.
 
 ### Connecting with SSL configured
 
-1. Mount the relevant certificate to /home/prefect/.postgresql so that it can be found by asyncpg. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
+1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
 ```yaml
 prefect-server:
   server:
