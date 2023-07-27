@@ -11,8 +11,8 @@ Prefect server application bundle
 To install the chart with the release name `prefect-server`:
 
 ```console
-$ helm repo add prefect https://prefecthq.github.io/prefect-helm
-$ helm install prefect-server prefect/prefect-server
+helm repo add prefect https://prefecthq.github.io/prefect-helm
+helm install prefect-server prefect/prefect-server
 ```
 
 ## Prefect Configuration
