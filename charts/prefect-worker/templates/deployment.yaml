@@ -83,9 +83,9 @@ spec:
           env:
             - name: HOME
               value: /home/prefect
-            - name: PREFECT_AGENT_PREFETCH_SECONDS
+            - name: PREFECT_WORKER_PREFETCH_SECONDS
               value: {{ .Values.worker.config.prefetchSeconds | quote }}
-            - name: PREFECT_AGENT_QUERY_INTERVAL
+            - name: PREFECT_WORKER_QUERY_SECONDS
               value: {{ .Values.worker.config.queryInterval | quote }}
             - name: PREFECT_API_ENABLE_HTTP2
               value: {{ .Values.worker.config.http2 | quote }}
