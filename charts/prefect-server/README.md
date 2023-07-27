@@ -28,11 +28,11 @@ Note: If you choose to make modifications to either the `server.publicApiUrl` or
 
 ## PostgreSQL Configuration
 
-If you are installing the chart & specificing the use of PostgreSQL - you'll need to update one of two fields:
+If you are installing the chart as is and therefore installing PostgreSQL - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
 2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
-  a. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
-  b. `password`: the same password defined in the `connection-string` above
+  1. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
+  2. `password`: the same password defined in the `connection-string` above
 
 ## Maintainers
 
