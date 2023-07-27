@@ -254,15 +254,15 @@ postgresql:
   auth:
     # -- determines whether an admin user is created within postgres
     enablePostgresUser: false
-    # -- name for a custom database to create
+    # -- name for a custom database
     database: server
-    # -- name for a custom user to create
+    # -- name for a custom user
     username: prefect
     ## This is the password for `username` and will be set within the secret `{fullnameOverride}-postgresql` at the key `password`.
     ## This argument is only relevant when using the Postgres database included in the chart.
     ## For an external postgres connection, you must create and use `existingSecret` instead.
-    # -- password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided
-    password: ""
+    # -- password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided
+    password: "prefect-rocks"
 
     ## This secret must contain two key-value pairs where the first key is `connection-string` and the value is the
     ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).

@@ -47,11 +47,11 @@ Prefect server application bundle
 | ingress.tls | bool | `false` | enable TLS configuration for the host defined at `ingress.host.hostname` parameter |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
-| postgresql.auth.database | string | `"server"` | name for a custom database to create |
+| postgresql.auth.database | string | `"server"` | name for a custom database |
 | postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
 | postgresql.auth.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL credentials. |
-| postgresql.auth.password | string | `""` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
-| postgresql.auth.username | string | `"prefect"` | name for a custom user to create |
+| postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
+| postgresql.auth.username | string | `"prefect"` | name for a custom user |
 | postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.externalHostname | string | `""` |  |
