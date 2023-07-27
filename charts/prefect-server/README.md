@@ -19,13 +19,12 @@ helm install prefect-server prefect/prefect-server
 
 ### Container Port // Port Forwarding
 
-Without making any modifications to the `values.yaml` file, you can access the Prefect UI by port forwarding either the Server `pod` or `service` with the following command:
+Without making any modifications to the `values.yaml` file, you can access the Prefect UI by port forwarding either the Server `pod` or `service` with the following command and visiting [http:localhost:4200](http:localhost:4200):
 ```console
 kubectl port-forward svc/prefect-server 4200:4200
 ```
-and visiting [http:localhost:4200](http:localhost:4200)
 
-Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other with the correct port!
+Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other value with the updated port!
 
 ## PostgreSQL Configuration
 
