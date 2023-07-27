@@ -7,6 +7,7 @@ repos:
     rev: v3.1.0
   - hooks:
       - id: helm-docs
+        args: ['--config', '.helm-docs-config.yaml']
         files: (README\.md\.gotmpl|(Chart|requirements|values)\.yaml)$
     repo: https://github.com/norwoodj/helm-docs
     rev: v1.3.0
