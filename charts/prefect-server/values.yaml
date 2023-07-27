@@ -36,8 +36,8 @@ server:
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
 
-  # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set
-  publicApiUrl: ""
+  # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL
+  publicApiUrl: http://localhost:4200/api
 
   # -- array with environment variables to add to server nodes
   env: []
@@ -246,7 +246,6 @@ ingress:
   ##           name: example-svc
   ##           port:
   ##             name: http
-
 
 # Postgresql configuration
 postgresql:
