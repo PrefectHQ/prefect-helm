@@ -34,6 +34,13 @@ If you are installing the chart as is and therefore installing PostgreSQL - you'
         - database = `postgresql.auth.database`
     2. `password`: the same password defined in the `connection-string` above
 
+### Chart-Created Secret
+
+Two secrets are created when not providing an existing secret name:
+1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
+2. `<release-name>-postgresql-0`: defines the `postgresql.auth.username`'s password on the postgresql server to allow successful authentication from the prefect server.
+
+
 {{ template "chart.maintainersSection" . }}
 
 {{ template "chart.requirementsSection" . }}
