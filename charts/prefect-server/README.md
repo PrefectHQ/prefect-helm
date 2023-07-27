@@ -41,6 +41,8 @@ Two secrets are created when not providing an existing secret name:
 1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
 2. `<release-name>-postgresql-0`: defines the `postgresql.auth.username`'s password on the postgresql server to allow successful authentication from the prefect server.
 
+No secrets are created when providing an existing secret.
+
 ## Maintainers
 
 | Name | Email | Url |
