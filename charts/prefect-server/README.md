@@ -20,10 +20,10 @@ helm install prefect-server prefect/prefect-server
 ### Container Port // Port Forwarding
 
 Without making any modifications to the `values.yaml` file, you can access the Prefect UI by port forwarding either the Server `pod` or `service` with the following command:
-```
+```console
 kubectl port-forward svc/prefect-server 4200:4200
 ```
-and visiting http:localhost:4200
+and visiting [http:localhost:4200](http:localhost:4200)
 
 Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other with the correct port!
 
@@ -133,7 +133,7 @@ If you are installing the chart & specificing the use of PostgreSQL - you'll nee
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
-| service.nodePort | string | `""` | service port if defining service as type nodeport TEST |
+| service.nodePort | string | `""` | service port if defining service as type nodeport |
 | service.port | int | `4200` | service port |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
