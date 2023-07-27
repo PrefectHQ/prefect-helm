@@ -1,0 +1,43 @@
+{{ template "chart.header" . }}
+{{ template "chart.description" . }}
+
+{{ template "chart.homepageLine" . }}
+
+{{ template "chart.versionBadge" . }}{{ template "chart.typeBadge" . }}{{ template "chart.appVersionBadge" . }}
+
+## Installing the Chart
+
+To install the chart with the release name `prefect-server`:
+
+```console
+$ helm repo add prefect https://prefecthq.github.io/prefect-helm
+$ helm install prefect-server prefect/{{ template "chart.name" . }}
+```
+
+## Prefect Configuration
+
+### Container Port // Port Forwarding
+
+Without modifying any of the `values.yaml` file, you can access the Prefect UI by port forwarding either the Server pod or service with the following command:
+```
+kubectl port-forward svc/prefect-server 4200:4200
+```
+and visiting http:localhost:4200
+
+Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other with the correct port!
+
+## PostgreSQL Configuration
+
+If you are installing the chart & specificing the use of PostgreSQL - you'll need to update one of two fields:
+1. `postgresql.auth.password`: a password you want to set for the prefect user
+2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
+  a. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
+  b. `password`: the same password defined in the `connection-string` above
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}
