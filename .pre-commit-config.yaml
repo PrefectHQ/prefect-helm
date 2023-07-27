@@ -1,15 +1,16 @@
 ---
 repos:
-  - hooks:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.1.0
+    hooks:
       - id: end-of-file-fixer
       - id: trailing-whitespace
-    repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.1.0
-  - hooks:
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.11.0
+    hooks:
       - id: helm-docs
-        files: (README\.md\.gotmpl|(Chart|requirements|values)\.yaml)$
-    repo: https://github.com/norwoodj/helm-docs
-    rev: v1.3.0
+        args:
+          - --template-files=README.md.gotmpl
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.17
     hooks:
