@@ -37,8 +37,10 @@ worker:
 
   ## general configuration of the worker
   config:
-    # -- name of prefect work pool the worker will poll
+    # -- the work pool that your started worker will poll.
     workPool: ""
+    # -- one or more work queue names for the worker to pull from. if not provided, the worker will pull from all work queues in the work pool
+    workQueues: []
     # -- how often the worker will query for runs
     queryInterval: 5
     # -- when querying for runs, how many seconds in the future can they be scheduled

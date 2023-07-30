@@ -5,7 +5,7 @@ metadata:
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: server
-    prefect-version: {{ .Values.server.image.prefectTag }}
+    prefect-version: {{ .Chart.AppVersion }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -24,7 +24,7 @@ spec:
       {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: server
-        prefect-version: {{ .Values.server.image.prefectTag }}
+        prefect-version: {{ .Chart.AppVersion }}
         {{- if .Values.server.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.podLabels "context" $) | nindent 8 }}
         {{- end }}
@@ -136,7 +136,7 @@ spec:
           {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
         {{- if .Values.server.extraContainers }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.agent.extraContainers "context" $) | nindent 8 }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.server.extraContainers "context" $) | nindent 8 }}
         {{- end }}
       volumes:
         - name: scratch

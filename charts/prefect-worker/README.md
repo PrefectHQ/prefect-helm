@@ -27,7 +27,7 @@ Prefect Worker application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.2.4 |
+| https://charts.bitnami.com/bitnami | common | 2.6.0 |
 
 ## Values
 
@@ -54,7 +54,8 @@ Prefect Worker application bundle
 | worker.config.limit | string | `nil` | Maximum number of flow runs to start simultaneously (default: unlimited) |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | worker.config.queryInterval | int | `5` | how often the worker will query for runs |
-| worker.config.workPool | string | `""` | name of prefect work pool the worker will poll |
+| worker.config.workPool | string | `""` | the work pool that your started worker will poll. |
+| worker.config.workQueues | list | `[]` | one or more work queue names for the worker to pull from. if not provided, the worker will pull from all work queues in the work pool |
 | worker.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set worker containers' security context allowPrivilegeEscalation |
 | worker.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set worker containers' security context readOnlyRootFilesystem |
 | worker.containerSecurityContext.runAsNonRoot | bool | `true` | set worker containers' security context runAsNonRoot |

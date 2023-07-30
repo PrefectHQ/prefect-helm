@@ -1,10 +1,82 @@
 # prefect-server
 
-![Version: 0.0.0](https://img.shields.io/badge/Version-0.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2-latest](https://img.shields.io/badge/AppVersion-2--latest-informational?style=flat-square)
-
 Prefect server application bundle
 
 **Homepage:** <https://github.com/PrefectHQ>
+
+## Installing the Chart
+
+To install the chart with the release name `prefect-server`:
+
+```console
+helm repo add prefect https://prefecthq.github.io/prefect-helm
+helm install prefect-server prefect/prefect-server
+```
+
+## Prefect Configuration
+
+### Container Port // Port Forwarding
+
+Without making any modifications to the `values.yaml` file, you can access the Prefect UI by port forwarding either the Server `pod` or `service` with the following command and visiting [http:localhost:4200](http:localhost:4200):
+```console
+kubectl port-forward svc/prefect-server 4200:4200
+```
+
+Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other value with the updated port!
+
+## PostgreSQL Configuration
+
+### Handling Connection Secrets
+
+If you are installing the chart as is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
+1. `postgresql.auth.password`: a password you want to set for the prefect user
+2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
+    1. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
+        - username = `postgresql.auth.username`
+        - hostname = `<release-name>-postgresql.<release-namespace>:<postgresql.containerPorts.postgresql>`
+        - database = `postgresql.auth.database`
+    2. `password`: the same password defined in the `connection-string` above
+
+Two secrets are created when not providing an existing secret name:
+1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
+2. `<release-name>-postgresql-0`: defines the `postgresql.auth.username`'s password on the postgresql server to allow successful authentication from the prefect server.
+
+No secrets are created when providing an existing secret.
+
+### Connecting with SSL configured
+
+1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
+```yaml
+prefect-server:
+  server:
+    extraVolumes:
+      - name: db-ssl-secret
+        secret:
+          secretName: db-ssl-secret
+          defaultMode: 384
+    extraVolumeMounts:
+      - name: db-ssl-secret
+        mountPath: "/home/prefect/.postgresql"
+        readOnly: true
+  postgresql:
+    useSubChart: false
+    auth:
+      existingSecret: external-db-connection-string
+```
+2. Create a secret to hold the ca certificate for the database with the key `root.crt`
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-ssl-secret
+data:
+  root.crt: BASE64ENCODECERTIFICATE=
+type: Opaque
+```
+3. Set the connection string in the existing secret following this format - `?ssl=verify-ca` is cruicial:
+```
+postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
+```
 
 ## Maintainers
 
@@ -15,16 +87,12 @@ Prefect server application bundle
 | parkedwards | <edward@prefect.io> |  |
 | jawnsy | <jonathan@prefect.io> |  |
 
-## Source Code
-
-* <https://github.com/PrefectHQ/prefect-helm>
-
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.2.4 |
-| https://charts.bitnami.com/bitnami | postgresql | 12.4.2 |
+| https://charts.bitnami.com/bitnami | common | 2.6.0 |
+| https://charts.bitnami.com/bitnami | postgresql | 12.6.7 |
 
 ## Values
 
@@ -47,11 +115,11 @@ Prefect server application bundle
 | ingress.tls | bool | `false` | enable TLS configuration for the host defined at `ingress.host.hostname` parameter |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
-| postgresql.auth.database | string | `"server"` | name for a custom database to create |
+| postgresql.auth.database | string | `"server"` | name for a custom database |
 | postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
 | postgresql.auth.existingSecret | string | `nil` | Name of existing secret to use for PostgreSQL credentials. |
-| postgresql.auth.password | string | `""` | password for the custom user to create. Ignored if `auth.existingSecret` with key `password` is provided |
-| postgresql.auth.username | string | `"prefect"` | name for a custom user to create |
+| postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
+| postgresql.auth.username | string | `"prefect"` | name for a custom user |
 | postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
 | postgresql.enabled | bool | `true` |  |
 | postgresql.externalHostname | string | `""` |  |
@@ -94,7 +162,7 @@ Prefect server application bundle
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
 | server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
-| server.publicApiUrl | string | `""` | sets PREFECT_UI_API_URL; should be publicly accessible API URL; UI will not work unless set |
+| server.publicApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; should be publicly accessible API URL |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | server.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |

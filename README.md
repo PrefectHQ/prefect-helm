@@ -6,8 +6,6 @@ This repository contains the official Prefect Helm chart for installing and conf
 
 ### [Prefect Worker](charts/prefect-worker/)
 
-:rotating_light: Workers are a beta feature and are subject to change in future releases. :rotating_light:
-
 [Workers](https://docs.prefect.io/latest/concepts/work-pools/#worker-overview) are lightweight polling services that retrieve scheduled runs from a work pool and execute them.
 
 Workers are similar to agents, but offer greater control over infrastructure configuration and the ability to route work to specific types of execution environments.
