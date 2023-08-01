@@ -28,7 +28,7 @@ Note: If you choose to make modifications to either the `server.publicApiUrl` or
 
 ### Handling Connection Secrets
 
-If you are installing the chart as is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
+If you are installing the chart as-is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
 2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
     1. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
@@ -92,7 +92,7 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.6.0 |
-| https://charts.bitnami.com/bitnami | postgresql | 12.6.7 |
+| https://charts.bitnami.com/bitnami | postgresql | 12.7.3 |
 
 ## Values
 
