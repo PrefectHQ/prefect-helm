@@ -65,7 +65,7 @@ spec:
             - worker
             - start
             - --type
-            - kubernetes
+            - {{ .Values.worker.config.type | quote }}
             - --pool
             - {{ .Values.worker.config.workPool | quote }}
             {{- range .Values.worker.config.workQueues }}
