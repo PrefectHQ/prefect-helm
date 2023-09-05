@@ -27,7 +27,7 @@ Prefect Worker application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.6.0 |
+| https://charts.bitnami.com/bitnami | common | 2.9.2 |
 
 ## Values
 
