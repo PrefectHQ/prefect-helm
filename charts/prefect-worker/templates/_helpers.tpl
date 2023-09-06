@@ -34,8 +34,10 @@ Require Prefect Cloud Workspace ID
 {{- define "worker.apiUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.cloudApiConfig.cloudUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
+{{- else if and (eq .Values.worker.apiConfig "server") .Values.worker.serverConfig.apiUrl.fullyQualifiedEndpoint }}
+    {{- printf .Values.worker.serverConfig.apiUrl.fullyQualifiedEndpoint | quote }}
 {{- else }}
-    {{- .Values.worker.serverApiConfig.apiUrl | quote }}
+    {{- printf "http://%s.%s.svc.cluster.local:%s/api" .Values.worker.serverConfig.apiUrl.prefectServer.serviceName .Values.worker.serverConfig.apiUrl.prefectServer.namespace .Values.worker.serverConfig.apiUrl.prefectServer.servicePort | quote}}
 {{- end }}
 {{- end }}
 
@@ -47,7 +49,7 @@ Require Prefect Cloud Workspace ID
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "https://app.prefect.cloud/account/%s/workspace/%s" (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
-    {{- .Values.worker.serverApiConfig.apiUrl | quote }}
+    {{- .Values.worker.serverConfig.uiUrl | quote }}
 {{- end }}
 {{- end }}
 
