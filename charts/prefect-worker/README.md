@@ -23,7 +23,7 @@ Workers each have a type corresponding to the execution environment to which the
     kubectl create namespace prefect
     ```
 
-### Configuring a Worker for Prefect Cloud:
+### Configuring a Worker for Prefect Cloud
 
 1. Create a Kubernetes secret for a Prefect Cloud API key
 
@@ -76,7 +76,7 @@ Workers each have a type corresponding to the execution environment to which the
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
-### Configuring a Worker for Prefect Server:
+### Configuring a Worker for Prefect Server
 
 1. Configure the Prefect worker values
 
