@@ -1,8 +1,10 @@
 # prefect-worker
 
-Prefect Worker application bundle
+## Overview
 
-**Homepage:** <https://github.com/PrefectHQ>
+[Workers](https://docs.prefect.io/latest/concepts/work-pools/#worker-overview) are lightweight polling services that retrieve scheduled runs from a work pool and execute them.
+
+Workers each have a type corresponding to the execution environment to which they will submit flow runs. Workers are only able to join work pools that match their type. As a result, when deployments are assigned to a work pool, you know in which execution environment scheduled flow runs for that deployment will run.
 
 ## Installing the Chart
 
