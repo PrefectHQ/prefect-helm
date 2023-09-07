@@ -73,7 +73,7 @@ Prefect Worker application bundle
         workPool: <target work pool name>
     ```
 
-    These settings will ensure that the worker connects to the proper account, workspace, and work pool
+    These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
 ### Configuring a Worker for Prefect Server:
@@ -90,6 +90,9 @@ Prefect Worker application bundle
       serverApiConfig:
         apiUrl: <dns or ip address of the prefect-server pod here>
     ```
+
+    These settings will ensure the worker connects with the local deployment of Prefect Server.
+    If the Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `prefect-server.<namespace>.svc.cluster.local`
 
 ### Installing & Verifying Deployment of the Prefect Worker
 
