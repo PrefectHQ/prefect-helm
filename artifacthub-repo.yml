@@ -8,5 +8,3 @@ owners:
     email: edward@prefect.io
   - name: jawnsy
     email: jonathan@prefect.io
-ignore:
-  - name: prefect-orion
