@@ -8,21 +8,21 @@
 
 ## Getting Started
 
-### Using with Prefect Cloud
+### Using a Worker with Prefect Cloud
 
 [Using Prefect Helm Chart for Prefect Workers](https://docs.prefect.io/latest/guides/deployment/helm-worker/)
 
 1. Add the Prefect Helm repository to your Helm client:
 
   ```bash
-  $ helm repo add prefect https://prefecthq.github.io/prefect-helm
-  $ helm repo update
+  helm repo add prefect https://prefecthq.github.io/prefect-helm
+  helm repo update
 ```
 
 2. Create a new namespace in your Kubernetes cluster to deploy the Prefect worker in:
 
   ```bash
-  $ kubectl create namespace prefect
+  kubectl create namespace prefect
   ```
 
 3. Create a Kubernetes secret for a Prefect Cloud API key:
@@ -45,13 +45,13 @@
   You can use the following command to generate the base64-encoded value:
 
   ```bash
-  $ echo -n "your-prefect-cloud-api-key" | base64
+  echo -n "your-prefect-cloud-api-key" | base64
   ```
 
   Apply the `api-key.yaml` file to create the Kubernetes secret:
 
   ```bash
-  $ kubectl apply -f api-key.yaml
+  kubectl apply -f api-key.yaml
   ```
 
   Alternatively, you can create the Kubernetes secret via the cli with the following command. In this case, Kubernetes will take care of base64 encoding the value on your behalf:
@@ -79,7 +79,7 @@
 5. Install the Prefect worker using Helm
 
   ```bash
-  $ helm install prefect-worker prefect/prefect-worker \
+  helm install prefect-worker prefect/prefect-worker \
     --namespace=prefect \
     -f values.yaml
   ```
@@ -89,7 +89,7 @@
   Check the status of your Prefect worker deployment:
 
   ```bash
-  $ kubectl get pods -n prefect
+  kubectl get pods -n prefect
   ```
 
   You should see the Prefect worker pod running.
