@@ -43,17 +43,17 @@ Charts are automatically versioned and released together. The `appVersion` and `
 
 The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_repository/) deployed to the web courtesy of Github Pages.
 
-1. Add the Prefect repository to Helm and list available charts and versions:
+1. Add the Prefect Helm repository to Helm and list available charts and versions:
 
-   ```shell-session
-   $ helm repo add prefect https://prefecthq.github.io/prefect-helm/
+   ```bash
+   $ helm repo add prefect https://prefecthq.github.io/prefect-helm
    $ helm repo update
    $ helm search repo prefect
    ```
 
    **Note**: The repository includes a legacy `prefect-orion` chart, which no longer receives updates and will be removed in June 2023. Please use `prefect-server` instead.
 
-1. Install the Helm chart
+2. Install the Helm chart
 
    Using default options
 
