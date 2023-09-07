@@ -51,8 +51,6 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
     helm search repo prefect
     ```
 
-    **Note**: The repository includes a legacy `prefect-orion` chart, which no longer receives updates and will be removed in June 2023. Please use `prefect-server` instead.
-
 2. Install the Helm chart
 
     Each chart will require some specific configuration values to be provided, see the individual chart Readme's for more information on configuring and installing the chart.
@@ -176,8 +174,6 @@ role:
 ## Version Support Policy
 
 Prefect follows the [upstream Kubernetes support policy](https://kubernetes.io/releases/version-skew-policy/), meaning that we test against the three most recent minor version releases of Kubernetes. The charts may be compatible with older releases of Kubernetes, however, we do not test against those versions and may choose to reject issues or patches to add support.
-
-The chart repository also includes a deprecated `prefect-orion` chart, which no longer receives updates. Please upgrade to `prefect-server` at your earliest convenience. We will remove all published versions of `prefect-server` from our Helm repository, on or after May 31st, 2023.
 
 ## Troubleshooting
 
