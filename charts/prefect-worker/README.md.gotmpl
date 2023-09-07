@@ -24,7 +24,7 @@ kubectl create namespace prefect
 ```
 
 <details>
-  <summary>Using a Worker with Prefect Cloud</summary>
+  <summary>### Using a Worker with Prefect Cloud</summary>
 
   [Using Prefect Helm Chart for Prefect Workers](https://docs.prefect.io/latest/guides/deployment/helm-worker/)
 
