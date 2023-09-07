@@ -23,9 +23,9 @@ helm repo update
 kubectl create namespace prefect
 ```
 
-### Configuring a Worker for Prefect Cloud
+### Configuring a Worker for Prefect Cloud:
 
-**Create a Kubernetes secret for a Prefect Cloud API key:**
+1. Create a Kubernetes secret for a Prefect Cloud API key
 
 First create a file named `api-key.yaml` with the following contents:
 
@@ -60,7 +60,7 @@ Alternatively, you can create the Kubernetes secret via the cli with the followi
 kubectl create secret generic prefect-api-key --from-literal=key=pnu_xxxx
 ```
 
-**Configure the Prefect worker values**
+2. Configure the Prefect worker values
 
 Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
 
@@ -76,9 +76,9 @@ worker:
 These settings will ensure that the worker connects to the proper account, workspace, and work pool
 View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
-### Configuring a Worker for Prefect Server
+### Configuring a Worker for Prefect Server:
 
-**Configure the Prefect worker values**
+1. Configure the Prefect worker values
 
 Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
 
@@ -91,9 +91,9 @@ worker:
     apiUrl: <dns or ip address of the prefect-server pod here>
 ```
 
-## #Installing & Verifying Deployment of the Prefect Worker
+### Installing & Verifying Deployment of the Prefect Worker
 
-**Install the Prefect worker using Helm**
+1. Install the Prefect worker using Helm
 
 ```bash
 helm install prefect-worker prefect/prefect-worker \
@@ -101,7 +101,7 @@ helm install prefect-worker prefect/prefect-worker \
   -f values.yaml
 ```
 
-**Verify the deployment**
+2. Verify the deployment
 
 Check the status of your Prefect worker deployment:
 
