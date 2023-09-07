@@ -80,16 +80,16 @@
 
 1. Configure the Prefect worker values
 
-  Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
+    Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
 
-  ```yaml
-  worker:
-    apiConfig: server
-    config:
-      workPool: <target work pool name>
-    serverApiConfig:
-      apiUrl: <dns or ip address of the prefect-server pod here>
-  ```
+    ```yaml
+    worker:
+      apiConfig: server
+      config:
+        workPool: <target work pool name>
+      serverApiConfig:
+        apiUrl: <dns or ip address of the prefect-server pod here>
+    ```
 
 ### Installing & Verifying Deployment of the Prefect Worker
 
