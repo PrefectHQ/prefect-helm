@@ -73,8 +73,8 @@ worker:
     workPool: <target work pool name>
 ```
 
-These settings will ensure that the worker connects to the proper account, workspace, and work pool.
-View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here.
+These settings will ensure that the worker connects to the proper account, workspace, and work pool
+View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
 ### 5. Install the Prefect worker using Helm
 
@@ -90,9 +90,12 @@ Check the status of your Prefect worker deployment:
 
 ```bash
 kubectl get pods -n prefect
+
+NAME                              READY   STATUS    RESTARTS       AGE
+prefect-worker-658f89bc49-jglvt   1/1     Running   0              25m
 ```
 
-You should see the Prefect worker pod running.
+You should see the Prefect worker pod running
 
 ## Using a Worker with Prefect Server
 
