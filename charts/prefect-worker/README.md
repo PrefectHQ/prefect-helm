@@ -6,95 +6,95 @@ Prefect Worker application bundle
 
 **Homepage:** <https://github.com/PrefectHQ>
 
-## Getting Started
+# Getting Started
 
-### Using a Worker with Prefect Cloud
+## Using a Worker with Prefect Cloud
 
 [Using Prefect Helm Chart for Prefect Workers](https://docs.prefect.io/latest/guides/deployment/helm-worker/)
 
-1. Add the Prefect Helm repository to your Helm client:
+### 1. Add the Prefect Helm repository to your Helm client:
 
-  ```bash
-  helm repo add prefect https://prefecthq.github.io/prefect-helm
-  helm repo update
+```bash
+helm repo add prefect https://prefecthq.github.io/prefect-helm
+helm repo update
 ```
 
-2. Create a new namespace in your Kubernetes cluster to deploy the Prefect worker in:
+### 2. Create a new namespace in your Kubernetes cluster to deploy the Prefect worker in:
 
-  ```bash
-  kubectl create namespace prefect
-  ```
+```bash
+kubectl create namespace prefect
+```
 
-3. Create a Kubernetes secret for a Prefect Cloud API key:
+### 3. Create a Kubernetes secret for a Prefect Cloud API key:
 
-  Create a file named `api-key.yaml` with the following contents:
+Create a file named `api-key.yaml` with the following contents:
 
-  ```yaml
-  apiVersion: v1
-  kind: Secret
-  metadata:
-    name: prefect-api-key
-    namespace: prefect
-  type: Opaque
-  data:
-    key:  <base64-encoded-api-key>
-  ```
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: prefect-api-key
+  namespace: prefect
+type: Opaque
+data:
+  key:  <base64-encoded-api-key>
+```
 
-  Replace `<base64-encoded-api-key>` with your Prefect Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
+Replace `<base64-encoded-api-key>` with your Prefect Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
 
-  You can use the following command to generate the base64-encoded value:
+You can use the following command to generate the base64-encoded value:
 
-  ```bash
-  echo -n "your-prefect-cloud-api-key" | base64
-  ```
+```bash
+echo -n "your-prefect-cloud-api-key" | base64
+```
 
-  Apply the `api-key.yaml` file to create the Kubernetes secret:
+Apply the `api-key.yaml` file to create the Kubernetes secret:
 
-  ```bash
-  kubectl apply -f api-key.yaml
-  ```
+```bash
+kubectl apply -f api-key.yaml
+```
 
-  Alternatively, you can create the Kubernetes secret via the cli with the following command. In this case, Kubernetes will take care of base64 encoding the value on your behalf:
+Alternatively, you can create the Kubernetes secret via the cli with the following command. In this case, Kubernetes will take care of base64 encoding the value on your behalf:
 
-  ```bash
-  kubectl create secret generic prefect-api-key --from-literal=key=pnu_xxxx
-  ```
+```bash
+kubectl create secret generic prefect-api-key --from-literal=key=pnu_xxxx
+```
 
-4. Configure the Prefect worker values
+### 4. Configure the Prefect worker values
 
-  Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
+Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
 
-  ```yaml
-  worker:
-    cloudApiConfig:
-      accountId: <target account ID>
-      workspaceId: <target workspace ID>
-    config:
-      workPool: <target work pool name>
-  ```
+```yaml
+worker:
+  cloudApiConfig:
+    accountId: <target account ID>
+    workspaceId: <target workspace ID>
+  config:
+    workPool: <target work pool name>
+```
 
-  These settings will ensure that the worker connects to the proper account, workspace, and work pool.
-  View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here.
+These settings will ensure that the worker connects to the proper account, workspace, and work pool.
+View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here.
 
-5. Install the Prefect worker using Helm
+### 5. Install the Prefect worker using Helm
 
-  ```bash
-  helm install prefect-worker prefect/prefect-worker \
-    --namespace=prefect \
-    -f values.yaml
-  ```
+```bash
+helm install prefect-worker prefect/prefect-worker \
+  --namespace=prefect \
+  -f values.yaml
+```
 
-6. Verify the deployment
+### 6. Verify the deployment
 
-  Check the status of your Prefect worker deployment:
+Check the status of your Prefect worker deployment:
 
-  ```bash
-  kubectl get pods -n prefect
-  ```
+```bash
+kubectl get pods -n prefect
+```
 
-  You should see the Prefect worker pod running.
+You should see the Prefect worker pod running.
 
-### Using with Prefect Server
+## Using a Worker with Prefect Server
 
 ## Maintainers
 
