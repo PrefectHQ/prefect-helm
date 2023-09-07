@@ -14,7 +14,7 @@ Require Prefect Cloud Account ID
 */}}
 {{- define "cloud.requiredConfig.accountId" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
-    {{- required "A Prefect Cloud Account ID is required (worker.cloudApiConfig.accountId)" .Values.worker.cloudApiConfig.accountId | printf "%s"  -}}
+    {{- required "A Prefect Cloud Account ID is required (worker.cloudApiConfig.accountId)" .Values.worker.cloudApiConfig.accountId -}}
 {{- end -}}
 {{- end -}}
 
@@ -23,7 +23,7 @@ Require Prefect Cloud Workspace ID
 */}}
 {{- define "cloud.requiredConfig.workspaceId" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
-    {{- required "A Prefect Cloud Workspace ID is required (worker.cloudApiConfig.workspaceId)" .Values.worker.cloudApiConfig.workspaceId | printf "%s"  -}}
+    {{- required "A Prefect Cloud Workspace ID is required (worker.cloudApiConfig.workspaceId)" .Values.worker.cloudApiConfig.workspaceId -}}
 {{- end -}}
 {{- end -}}
 
