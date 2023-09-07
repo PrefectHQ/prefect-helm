@@ -79,7 +79,7 @@ worker:
     # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
     # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local/api
     # -- prefect API url (PREFECT_API_URL)
-    apiUrl:
+    apiUrl: ""
     # -- prefect UI url
     uiUrl: http://localhost:4200
 

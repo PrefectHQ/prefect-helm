@@ -28,6 +28,15 @@ Require Prefect Cloud Workspace ID
 {{- end -}}
 
 {{/*
+Require Prefect Server API URL
+*/}}
+{{- define "server.requiredConfig.apiUrl" -}}
+{{- if eq .Values.worker.apiConfig "server" }}
+    {{- required "The Prefect Server API URL is required (worker.serverConfig.apiUrl)" .Values.worker.serverConfig.apiUrl -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
   worker.apiUrl:
     Define API URL for cloud or server worker install
 */}}
@@ -35,7 +44,7 @@ Require Prefect Cloud Workspace ID
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.cloudApiConfig.cloudUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
-    {{- .Values.worker.serverConfig.apiUrl | quote }}
+    {{- include "server.requiredConfig.apiUrl" . | quote }}
 {{- end }}
 {{- end }}
 
