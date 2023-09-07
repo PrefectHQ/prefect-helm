@@ -119,3 +119,6 @@ Chart.lock
 # IDEs
 .vscode/
 .idea/
+
+# macs
+.DS_Store

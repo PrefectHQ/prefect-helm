@@ -67,7 +67,7 @@ spec:
             - --type
             - {{ .Values.worker.config.type | quote }}
             - --pool
-            - {{ .Values.worker.config.workPool | quote }}
+            - {{ required "A Work Pool Name is required (worker.config.workPool)" .Values.worker.config.workPool | quote }}
             {{- range .Values.worker.config.workQueues }}
             - --work-queue
             - {{ . }}

@@ -189,7 +189,8 @@ Workers each have a type corresponding to the execution environment to which the
 | worker.replicaCount | int | `1` | number of worker replicas to deploy |
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
-| worker.serverApiConfig.apiUrl | string | `"http://127.0.0.1:4200/api"` | prefect API url (PREFECT_API_URL); should be in-cluster URL if the worker is deployed in the same cluster as the API |
+| worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
+| worker.serverApiConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
 
 ----------------------------------------------
