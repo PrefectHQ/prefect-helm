@@ -99,9 +99,7 @@ Workers each have a type corresponding to the execution environment to which the
 1. Install the Prefect worker using Helm
 
     ```bash
-    helm install prefect-worker prefect/prefect-worker \
-      --namespace=prefect \
-      -f values.yaml
+    helm install prefect-worker prefect/prefect-worker --namespace=prefect -f values.yaml
     ```
 
 2. Verify the deployment
