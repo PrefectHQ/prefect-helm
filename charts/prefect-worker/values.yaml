@@ -76,22 +76,11 @@ worker:
     cloudUrl: https://api.prefect.cloud/api
 
   serverConfig:
-    # If the API server does not reside in the same cluster as the worker provide the fully qualified endpoint of the server,
-    # otherwise, provide the values nested under prefectServer below
+    # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
+    # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local/api
+    # -- prefect API url (PREFECT_API_URL)
     apiUrl:
-      # -- The fully qualified Prefect API url (PREFECT_API_URL), external to the cluster
-      fullyQualifiedEndpoint: ""
-      # -- The prefect API url (PREFECT_API_URL); the full URL is constructed as http://serviceName.namespace.svc.cluster.local:4200/api
-      prefectServer:
-        # -- The namespace where the prefect server pod is deployed
-        namespace: prefect
-        # -- The name of the prefect server service
-        serviceName: prefect-server
-        # --The service port of the prefect server service
-        servicePort: "4200"
-
-
-    # -- prefect UI url; defaults to localhost
+    # -- prefect UI url
     uiUrl: http://localhost:4200
 
   # -- number of worker replicas to deploy

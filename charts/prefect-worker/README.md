@@ -189,12 +189,8 @@ Workers each have a type corresponding to the execution environment to which the
 | worker.replicaCount | int | `1` | number of worker replicas to deploy |
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
-| worker.serverConfig.apiUrl.fullyQualifiedEndpoint | string | `""` | The fully qualified Prefect API url (PREFECT_API_URL), external to the cluster |
-| worker.serverConfig.apiUrl.prefectServer | object | `{"namespace":"prefect","serviceName":"prefect-server","servicePort":"4200"}` | The prefect API url (PREFECT_API_URL); the full URL is constructed as http://serviceName.namespace.svc.cluster.local:4200/api |
-| worker.serverConfig.apiUrl.prefectServer.namespace | string | `"prefect"` | The namespace where the prefect server pod is deployed |
-| worker.serverConfig.apiUrl.prefectServer.serviceName | string | `"prefect-server"` | The name of the prefect server service |
-| worker.serverConfig.apiUrl.prefectServer.servicePort | string | `"4200"` | The service port of the prefect server service |
-| worker.serverConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url; defaults to localhost |
+| worker.serverConfig.apiUrl | string | `nil` | prefect API url (PREFECT_API_URL) |
+| worker.serverConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
 
 ----------------------------------------------
