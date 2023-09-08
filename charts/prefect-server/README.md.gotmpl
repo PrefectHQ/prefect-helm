@@ -46,37 +46,39 @@ No secrets are created when providing an existing secret.
 ### Connecting with SSL configured
 
 1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
-```yaml
-prefect-server:
-  server:
-    extraVolumes:
-      - name: db-ssl-secret
-        secret:
-          secretName: db-ssl-secret
-          defaultMode: 384
-    extraVolumeMounts:
-      - name: db-ssl-secret
-        mountPath: "/home/prefect/.postgresql"
-        readOnly: true
-  postgresql:
-    useSubChart: false
-    auth:
-      existingSecret: external-db-connection-string
-```
+    ```yaml
+    prefect-server:
+      server:
+        extraVolumes:
+          - name: db-ssl-secret
+            secret:
+              secretName: db-ssl-secret
+              defaultMode: 384
+        extraVolumeMounts:
+          - name: db-ssl-secret
+            mountPath: "/home/prefect/.postgresql"
+            readOnly: true
+      postgresql:
+        useSubChart: false
+        auth:
+          existingSecret: external-db-connection-string
+    ```
+
 2. Create a secret to hold the ca certificate for the database with the key `root.crt`
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: db-ssl-secret
-data:
-  root.crt: BASE64ENCODECERTIFICATE=
-type: Opaque
-```
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: db-ssl-secret
+    data:
+      root.crt: BASE64ENCODECERTIFICATE=
+    type: Opaque
+    ```
+
 3. Set the connection string in the existing secret following this format - `?ssl=verify-ca` is cruicial:
-```
-postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
-```
+    ```
+    postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
+    ```
 
 {{ template "chart.maintainersSection" . }}
 
