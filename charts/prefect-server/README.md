@@ -30,15 +30,19 @@ Note: If you choose to make modifications to either the `server.publicApiUrl` or
 
 If you are installing the chart as-is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
+
 2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
+
     1. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
         - username = `postgresql.auth.username`
         - hostname = `<release-name>-postgresql.<release-namespace>:<postgresql.containerPorts.postgresql>`
         - database = `postgresql.auth.database`
+
     2. `password`: the same password defined in the `connection-string` above
 
 Two secrets are created when not providing an existing secret name:
 1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
+
 2. `<release-name>-postgresql-0`: defines the `postgresql.auth.username`'s password on the postgresql server to allow successful authentication from the prefect server.
 
 No secrets are created when providing an existing secret.
