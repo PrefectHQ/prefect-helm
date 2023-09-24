@@ -1,10 +1,8 @@
 # Prefect Helm Charts
 
-## Description
+This repository contains the official Prefect Helm charts for installing and configuring Prefect on Kubernetes. These charts supports multiple use cases of Prefect on Kubernetes depending on the values provided and chart selected including:
 
-This repository contains the official Prefect Helm chart for installing and configuring Prefect on Kubernetes. This chart supports multiple use cases of Prefect on Kubernetes depending on the values provided and chart selected including:
-
-### [Prefect Worker](charts/prefect-worker/)
+## [Prefect worker](charts/prefect-worker/)
 
 [Workers](https://docs.prefect.io/latest/concepts/work-pools/#worker-overview) are lightweight polling services that retrieve scheduled runs from a work pool and execute them.
 
@@ -12,17 +10,21 @@ Workers are similar to agents, but offer greater control over infrastructure con
 
 Workers each have a type corresponding to the execution environment to which they will submit flow runs. Workers are only able to join work pools that match their type. As a result, when deployments are assigned to a work pool, you know in which execution environment scheduled flow runs for that deployment will run.
 
-### [Prefect Agent](charts/prefect-agent/)
+## [Prefect agent](charts/prefect-agent/)
 
-[Agent](https://docs.prefect.io/latest/concepts/work-pools/#agent-overview) processes are lightweight polling services that get scheduled work from a work pool and deploy the corresponding flow runs.
+### Note: Workers are recommended
+    
+Agents are part of the block-based deployment model. [Work Pools and Workers](/concepts/work-pools/) simplify the specification of a flow's infrastructure and runtime environment. If you have existing agents, you can [upgrade from agents to workers](/guides/upgrade-guide-agents-to-workers/) to significantly enhance the experience of deploying flows.
+
+[Agent](https://docs.prefect.io/latest/concepts/agents/) processes are lightweight polling services that get scheduled work from a work pool and deploy the corresponding flow runs.
 
 Agents poll for work every 15 seconds by default. This interval is configurable in your profile settings with the `PREFECT_AGENT_QUERY_INTERVAL` setting.
 
 It is possible for multiple agent processes to be started for a single work pool. Each agent process sends a unique ID to the server to help disambiguate themselves and let users know how many agents are active.
 
-### [Prefect Server](charts/prefect-server/)
+## [Prefect server](charts/prefect-server/)
 
-[Prefect Server](https://docs.prefect.io/latest/host/#hosting-prefect-server) is an open source backend that makes it easy to observe and orchestrate your Prefect flows.
+[Prefect server](https://docs.prefect.io/latest/guides/host/) is a self-hosted open source backend that makes it easy to observe and orchestrate your Prefect flows. It is an alternative to using the hosted [Prefect Cloud](https://docs.prefect.io/latest/cloud/) platform. Prefect Cloud provides additional features including automations and user management.
 
 ## Usage
 
@@ -41,7 +43,7 @@ helm install my-release prefect/prefect-<chart>
 
 Charts are automatically versioned and released together. The `appVersion` and `prefectTag` version are pinned at package time to the current release of Prefect 2.
 
-The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_repository/) deployed to the web courtesy of Github Pages.
+The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_repository/) deployed to the web courtesy of GitHub Pages.
 
 1. Add the Prefect Helm repository to Helm and list available charts and versions:
 
@@ -53,7 +55,7 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 
 2. Install the Helm chart
 
-    Each chart will require some specific configuration values to be provided, see the individual chart Readme's for more information on configuring and installing the chart.
+    Each chart will require some specific configuration values to be provided, see the individual chart README's for more information on configuring and installing the chart.
 
     If chart installation fails, run the same command with `--debug` to see additional diagnostic information.
 
@@ -119,7 +121,7 @@ Development versions of the Helm chart will always be available directly from th
 
 See comments in `values.yaml`.
 
-### Security Context
+### Security context
 
 By default, the agent, worker, and server run as an unprivileged user with a read-only root filesystem. You can customize the security context settings for both the agent and server in the `values.yaml` file for your use case.
 
@@ -154,7 +156,7 @@ containerSecurityContext:
 
 The other default settings, such as a read-only root filesystem, are suitable for an OpenShift environment.
 
-## Additional Permissions for Prefect Agent
+## Additional permissions for Prefect agents
 
 ### Dask
 
@@ -171,7 +173,7 @@ role:
       verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 ```
 
-## Version Support Policy
+## Version support policy
 
 Prefect follows the [upstream Kubernetes support policy](https://kubernetes.io/releases/version-skew-policy/), meaning that we test against the three most recent minor version releases of Kubernetes. The charts may be compatible with older releases of Kubernetes, however, we do not test against those versions and may choose to reject issues or patches to add support.
 
@@ -190,7 +192,7 @@ tweaking documentation, or anything in between. In order to successfully contrib
 
 Please make sure that your changes have been linted & the chart documentation has been updated.  The easiest way to accomplish this is by installing [`pre-commit`](https://pre-commit.com/).
 
-### Testing & Validation
+### Testing & validation
 
 Make sure that any new functionality is well tested!  You can do this by installing the chart locally, see [above](https://github.com/PrefectHQ/prefect-helm#installing-development-versions) for how to do this.
 
