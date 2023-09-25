@@ -85,7 +85,6 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
-| jawnsy | <jonathan@prefect.io> |  |
 
 ## Requirements
 
