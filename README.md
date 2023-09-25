@@ -1,6 +1,6 @@
 # Prefect Helm Charts
 
-This repository contains the official Prefect Helm charts for installing and configuring Prefect on Kubernetes. These charts supports multiple use cases of Prefect on Kubernetes depending on the values provided and chart selected including:
+This repository contains the official Prefect Helm charts for installing and configuring Prefect on Kubernetes. These charts support multiple use cases of Prefect on Kubernetes depending on the values provided and chart selected including:
 
 ## [Prefect worker](charts/prefect-worker/)
 
