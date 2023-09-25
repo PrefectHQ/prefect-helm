@@ -122,7 +122,6 @@ Workers each have a type corresponding to the execution environment to which the
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
-| jawnsy | <jonathan@prefect.io> |  |
 
 ## Requirements
 
