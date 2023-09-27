@@ -1,8 +1,10 @@
 name: Deploy latest helm releases to internal cluster
 
 "on":
-  release:
-    types: [released]
+  workflow_dispatch:
+    inputs:
+      helm_version:
+        description: Release Tag
 
 jobs:
   update_helm_releases:
