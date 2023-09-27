@@ -139,7 +139,7 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
 
-      - name: Trigger deploy latest helm version workflow
+      - name: Trigger deploy-latest-helm-version workflow
         run: |
           gh workflow run deploy-latest-helm-version.yaml \
             --ref main \
