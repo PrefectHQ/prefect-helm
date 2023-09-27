@@ -1,0 +1,19 @@
+name: Deploy latest helm releases to internal cluster
+
+"on":
+  workflow_dispatch: # for testing - to be removed
+  release:
+    types: [released]
+
+jobs:
+  update_helm_releases:
+    runs-on: ubuntu-latest
+    steps:
+      - name: update helm releases
+        run: |
+          gh workflow run updatecli-helm-integration-tests.yaml \
+            --repo prefecthq/ops-cluster-deployment \
+            --ref main
+            -f helm_version=${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
