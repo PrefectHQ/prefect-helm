@@ -3,85 +3,48 @@ sources:
   common:
     kind: helmchart
     spec:
-      url: "https://charts.bitnami.com/bitnami"
-      name: "common"
-      version: "2.*.*"
+      url: https://charts.bitnami.com/bitnami
+      name: common
+      versionFilter:
+        kind: semver
+        pattern: 2.x.x
     sourceid: common
   postgresql:
     kind: helmchart
     spec:
-      url: "https://charts.bitnami.com/bitnami"
-      name: "postgresql"
-      version: "11.*.*"
+      url: https://charts.bitnami.com/bitnami
+      name: postgresql
+      versionFilter:
+        kind: semver
+        pattern: 11.x.x
     sourceid: postgresql
-  helm:
-    kind: githubRelease
-    spec:
-      owner: helm
-      repository: helm
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
-        kind: semver
-        pattern: "3.x.x"
-    transformers:
-      - trimprefix: "v"
-  kind:
-    kind: githubRelease
-    spec:
-      owner: kubernetes-sigs
-      repository: kind
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      versionFilter:
-        kind: semver
-        pattern: "x.x.x"
 conditions: {}
 targets:
-  agent-common:
+  agent_common:
     name: bump chart dependencies
     kind: yaml
     spec:
-      file: "charts/prefect-agent/Chart.yaml"
-      key: "dependencies[0].version"
+      file: charts/prefect-agent/Chart.yaml
+      key: dependencies[0].version
     sourceid: common
-  server-common:
+  server_common:
     name: bump chart dependencies
     kind: yaml
     spec:
-      file: "charts/prefect-server/Chart.yaml"
-      key: "dependencies[0].version"
+      file: charts/prefect-server/Chart.yaml
+      key: dependencies[0].version
     sourceid: common
-  worker-common:
+  worker_common:
     name: bump chart dependencies
     kind: yaml
     spec:
-      file: "charts/prefect-worker/Chart.yaml"
-      key: "dependencies[0].version"
+      file: charts/prefect-worker/Chart.yaml
+      key: dependencies[0].version
     sourceid: common
-  server-postgresql:
+  server_postgresql:
     name: bump chart dependencies
     kind: yaml
     spec:
-      file: "charts/prefect-server/Chart.yaml"
-      key: "dependencies[1].version"
+      file: charts/prefect-server/Chart.yaml
+      key: dependencies[1].version
     sourceid: postgresql
-  helm-agent:
-    name: bump helm version
-    kind: yaml
-    spec:
-      file: ".github/workflows/agent-lint-and-test.yaml"
-      key: "jobs.lint-test.steps[4].with.version"
-    sourceid: kind
-  helm-server:
-    name: bump helm version
-    kind: yaml
-    spec:
-      file: ".github/workflows/server-lint-and-test.yaml"
-      key: "jobs.lint-test.steps[4].with.version"
-    sourceid: kind
-  helm-worker:
-    name: bump helm version
-    kind: yaml
-    spec:
-      file: ".github/workflows/worker-lint-and-test.yaml"
-      key: "jobs.lint-test.steps[4].with.version"
-    sourceid: kind
