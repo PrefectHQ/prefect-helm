@@ -8,7 +8,7 @@ name: Lint and Test Prefect Server Chart
       - charts/prefect-server/**
 
 jobs:
-  lint-test:
+  lint_test:
     name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
     strategy:

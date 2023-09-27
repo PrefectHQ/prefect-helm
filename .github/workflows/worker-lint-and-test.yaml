@@ -1,12 +1,13 @@
 name: Lint and Test Prefect Worker Chart
-on:
+
+"on":
   pull_request:
     paths:
       - .github/workflows/worker-lint-and-test.yaml
       - .github/linters/worker-ct.yaml
-      - 'charts/prefect-worker/**'
+      - charts/prefect-worker/**
 jobs:
-  lint-test:
+  lint_test:
     name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
     strategy:
@@ -16,6 +17,7 @@ jobs:
           - "1.26.3"
           - "1.27.0"
       fail-fast: false
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -38,5 +40,6 @@ jobs:
         run: |
           kubectl create ns prefect
           kubectl create secret generic prefect-api-key  --from-literal=key=${{ secrets.PREFECT_CLOUD_API_KEY }} -n prefect
+
       - name: Run chart-testing (install)
         run: ct install --config .github/linters/worker-ct.yaml --helm-extra-set-args "--set=worker.config.workPool=test-helm --set=worker.cloudApiConfig.accountId=${{ secrets.PREFECT_CLOUD_ACCOUNT_ID }} --set=worker.cloudApiConfig.workspaceId=${{ secrets.PREFECT_CLOUD_WORKSPACE_ID }}"
