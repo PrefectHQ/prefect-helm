@@ -267,7 +267,7 @@ postgresql:
     ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
     ## The second key-value pair has the key `password` and the value is the {password} used in the connection string
     # -- Name of existing secret to use for PostgreSQL credentials.
-    existingSecret: null
+    existingSecret: ""
 
   # -- PostgreSQL container port
   containerPorts:
