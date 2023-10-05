@@ -32,7 +32,7 @@
       "title": "Common Annotations",
       "description": "annotations to add to all deployed objects",
       "form": true
-    }, 
+    },
     "worker": {
       "type": "object",
       "title": "Worker",
@@ -191,6 +191,59 @@
               "type": "string",
               "title": "Cloud URL",
               "description": "prefect cloud url",
+              "form": true
+            }
+          }
+        },
+        "selfHostedApiConfig": {
+          "type": "object",
+          "title": "Self Hosted API Config",
+          "description": "self hosted api configuration",
+          "form": true,
+          "additionalProperties": false,
+          "properties": {
+            "accountId": {
+              "type": "string",
+              "title": "Account ID",
+              "description": "prefect account ID",
+              "form": true
+            },
+            "workspaceId": {
+              "type": "string",
+              "title": "Workspace ID",
+              "description": "prefect workspace ID",
+              "form": true
+            },
+            "apiKeySecret": {
+              "type": "object",
+              "title": "API Key Secret",
+              "description": "prefect api key secret",
+              "form": true,
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Name",
+                  "description": "prefect API secret name",
+                  "form": true
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key",
+                  "description": "prefect API secret key",
+                  "form": true
+                }
+              }
+            },
+            "uiUrl": {
+              "type": "string",
+              "title": "Self Hosted Cloud URL",
+              "description": "self hosted cloud url",
+              "form": true
+            },
+            "apiUrl": {
+              "type": "string",
+              "title": "Self Hosted API URL",
+              "description": "self hosted API url (PREFECT_API_URL)",
               "form": true
             }
           }
