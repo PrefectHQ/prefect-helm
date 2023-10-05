@@ -234,7 +234,7 @@
                 }
               }
             },
-            "selfHostedUrl": {
+            "uiUrl": {
               "type": "string",
               "title": "Self Hosted Cloud URL",
               "description": "self hosted cloud url",

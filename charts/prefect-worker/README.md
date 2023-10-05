@@ -192,7 +192,7 @@ Workers each have a type corresponding to the execution environment to which the
 | worker.selfHostedApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.selfHostedApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.selfHostedApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
-| worker.selfHostedApiConfig.selfHostedUrl | string | `""` | self hosted UI url |
+| worker.selfHostedApiConfig.uiUrl | string | `""` | self hosted UI url |
 | worker.selfHostedApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.serverApiConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |

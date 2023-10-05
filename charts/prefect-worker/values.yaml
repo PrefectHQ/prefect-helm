@@ -89,7 +89,7 @@ worker:
       # -- prefect API secret key
       key: key
     # -- self hosted UI url
-    selfHostedUrl: ""
+    uiUrl: ""
 
   serverApiConfig:
     # Required when using self hosted to define the cluster endpoints
