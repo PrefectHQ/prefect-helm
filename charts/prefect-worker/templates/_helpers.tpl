@@ -46,10 +46,19 @@ Require Self Hosted Cloud Workspace ID
 {{- end -}}
 
 {{/*
+Require Self Hosted Cloud API URL
+*/}}
+{{- define "selfHosted.requiredConfig.apiUrl" -}}
+{{- if eq .Values.worker.apiConfig "selfHosted" }}
+    {{- required "The Self Hosted Cloud API URL is required (worker.selfHostedApiConfig.apiUrl)" .Values.worker.selfHostedApiConfig.apiUrl -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Require Prefect Server API URL
 */}}
 {{- define "server.requiredConfig.apiUrl" -}}
-{{- if or (eq .Values.worker.apiConfig "server") (eq .Values.worker.apiConfig "selfHosted") }}
+{{- if eq .Values.worker.apiConfig "server" }}
     {{- required "The Prefect Server API URL is required (worker.serverApiConfig.apiUrl)" .Values.worker.serverApiConfig.apiUrl -}}
 {{- end -}}
 {{- end -}}
