@@ -57,7 +57,7 @@ worker:
     type: kubernetes
 
   ## connection settings
-  # -- one of 'cloud' 'selfHosted' or 'server'
+  # -- one of 'cloud', 'selfHosted', or 'server'
   apiConfig: "cloud"
 
   cloudApiConfig:
