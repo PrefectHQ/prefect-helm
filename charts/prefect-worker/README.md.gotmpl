@@ -76,6 +76,62 @@ Workers each have a type corresponding to the execution environment to which the
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
+### Configuring a Worker for Self Hosted Cloud
+
+1. Create a Kubernetes secret for a Prefect Self Hosted Cloud API key
+
+    First create a file named `api-key.yaml` with the following contents:
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: prefect-api-key
+      namespace: prefect
+    type: Opaque
+    data:
+      key:  <base64-encoded-api-key>
+    ```
+
+    Replace `<base64-encoded-api-key>` with your Prefect Self Hosted Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
+
+    You can use the following command to generate the base64-encoded value:
+
+    ```bash
+    echo -n "your-prefect-self-hosted-cloud-api-key" | base64
+    ```
+
+    Then apply the `api-key.yaml` file to create the Kubernetes secret:
+
+    ```bash
+    kubectl apply -f api-key.yaml
+    ```
+
+    Alternatively, you can create the Kubernetes secret via the cli with the following command. In this case, Kubernetes will take care of base64 encoding the value on your behalf:
+
+    ```bash
+    kubectl create secret generic prefect-api-key --from-literal=key=pnu_xxxx
+    ```
+
+2. Configure the Prefect worker values
+
+    Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
+
+    ```yaml
+    worker:
+      apiConfig: selfHosted
+      config:
+        workPool: <target work pool name>
+      selfHostedApiConfig:
+        apiUrl: "https://<DNS of Self Hosted Cloud API>"
+        accountId: <target account ID>
+        workspaceId: <target workspace ID>
+        uiUrl: "https://<DNS of Self Hosted Cloud UI>"
+    ```
+
+    These settings will ensure that the worker connects to the proper account, workspace, and work pool.
+    View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://self-hosted-prefect.company/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
+
 ### Configuring a Worker for Prefect Server
 
 1. Configure the Prefect worker values
