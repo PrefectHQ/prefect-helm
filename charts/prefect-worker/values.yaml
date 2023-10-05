@@ -88,7 +88,7 @@ worker:
       name: prefect-api-key
       # -- prefect API secret key
       key: key
-    # -- self hosted UI url
+    # -- prefect UI url
     selfHostedUrl: ""
 
   serverApiConfig:
