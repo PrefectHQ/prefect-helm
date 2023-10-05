@@ -57,7 +57,7 @@ worker:
     type: kubernetes
 
   ## connection settings
-  # -- one of 'cloud' or 'server'
+  # -- one of 'cloud' 'selfHosted' or 'server'
   apiConfig: "cloud"
 
   cloudApiConfig:
@@ -76,6 +76,7 @@ worker:
     cloudUrl: https://api.prefect.cloud/api
 
   serverApiConfig:
+    # Required when using self hosted to define the cluster endpoints
     # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
     # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
     # -- prefect API url (PREFECT_API_URL)

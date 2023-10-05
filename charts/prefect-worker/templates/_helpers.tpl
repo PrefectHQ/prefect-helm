@@ -13,7 +13,7 @@ Create the name of the service account to use
 Require Prefect Cloud Account ID
 */}}
 {{- define "cloud.requiredConfig.accountId" -}}
-{{- if eq .Values.worker.apiConfig "cloud" }}
+{{- if or (eq .Values.worker.apiConfig "cloud") (eq .Values.worker.apiConfig "selfHosted") }}
     {{- required "A Prefect Cloud Account ID is required (worker.cloudApiConfig.accountId)" .Values.worker.cloudApiConfig.accountId -}}
 {{- end -}}
 {{- end -}}
@@ -22,7 +22,7 @@ Require Prefect Cloud Account ID
 Require Prefect Cloud Workspace ID
 */}}
 {{- define "cloud.requiredConfig.workspaceId" -}}
-{{- if eq .Values.worker.apiConfig "cloud" }}
+{{- if or (eq .Values.worker.apiConfig "cloud") (eq .Values.worker.apiConfig "selfHosted") }}
     {{- required "A Prefect Cloud Workspace ID is required (worker.cloudApiConfig.workspaceId)" .Values.worker.cloudApiConfig.workspaceId -}}
 {{- end -}}
 {{- end -}}
@@ -31,7 +31,7 @@ Require Prefect Cloud Workspace ID
 Require Prefect Server API URL
 */}}
 {{- define "server.requiredConfig.apiUrl" -}}
-{{- if eq .Values.worker.apiConfig "server" }}
+{{- if or (eq .Values.worker.apiConfig "server") (eq .Values.worker.apiConfig "selfHosted") }}
     {{- required "The Prefect Server API URL is required (worker.serverApiConfig.apiUrl)" .Values.worker.serverApiConfig.apiUrl -}}
 {{- end -}}
 {{- end -}}
@@ -43,6 +43,8 @@ Require Prefect Server API URL
 {{- define "worker.apiUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.cloudApiConfig.cloudUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
+{{- else if eq .Values.worker.apiConfig "selfHosted" }}
+    {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.serverApiConfig.apiUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
     {{- include "server.requiredConfig.apiUrl" . | quote }}
 {{- end }}
@@ -55,6 +57,8 @@ Require Prefect Server API URL
 {{- define "worker.appUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "https://app.prefect.cloud/account/%s/workspace/%s" (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
+{{- else if eq .Values.worker.apiConfig "selfHosted" }}
+    {{- printf "%s/account/%s/workspace/%s" .Values.worker.serverApiConfig.uiUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
     {{- .Values.worker.serverApiConfig.uiUrl | quote }}
 {{- end }}
