@@ -71,7 +71,7 @@ Require Prefect Server API URL
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.cloudApiConfig.cloudUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
 {{- else if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.selfHostedApiConfig.apiUrl (include "selfHosted.requiredConfig.accountId" .) (include "selfHosted.requiredConfig.workspaceId" .) | quote }}
+    {{- printf "%s/accounts/%s/workspaces/%s" (include "selfHosted.requiredConfig.apiUrl" .) (include "selfHosted.requiredConfig.accountId" .) (include "selfHosted.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
     {{- include "server.requiredConfig.apiUrl" . | quote }}
 {{- end }}
