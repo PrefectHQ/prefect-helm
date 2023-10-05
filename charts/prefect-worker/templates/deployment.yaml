@@ -99,6 +99,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
+            {{- else if eq .Values.worker.apiConfig "selfHosted" }}
+            - name: PREFECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.worker.selfHostedApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.selfHostedApiConfig.apiKeySecret.key }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
