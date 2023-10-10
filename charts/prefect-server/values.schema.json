@@ -701,7 +701,6 @@
           "title": "Primary",
           "description": "Initdb configuration",
           "form": true,
-
           "properties": {
             "initdb": {
               "type": "object",
