@@ -10,6 +10,10 @@ jobs:
   update_helm_releases:
     runs-on: ubuntu-latest
     steps:
+      - name: Sleep for 3 minutes to allow time for the helm package to be available
+        run: sleep 180s
+        shell: bash
+
       - name: update helm releases
         run: |
           gh workflow run updatecli-helm-integration-tests.yaml \
