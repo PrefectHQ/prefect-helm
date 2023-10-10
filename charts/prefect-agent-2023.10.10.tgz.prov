@@ -1,0 +1,45 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 2.13.5
+dependencies:
+- - name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 2.13.2
+description: Prefect Agent application bundle
+home: https://github.com/PrefectHQ
+maintainers:
+- - email: jamie@prefect.io
+  name: jamiezieziula
+- - email: jimi@prefect.io
+  name: jimid27
+- - email: edward@prefect.io
+  name: parkedwards
+name: prefect-agent
+sources:
+- - https://github.com/PrefectHQ/prefect-helm
+type: application
+version: 2023.10.10
+
+...
+files:
+  prefect-agent-2023.10.10.tgz: sha256:16223804b61111858fc9f8dd82da0693f957948f336fa44f97f8641547395df2
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJlJYrZCRBmvyDZ/AdLeAAAUsIQACLFxNHATcU5lB+tvt6fm190
+c6khgY4FxvmnyAhVcnqFTxmA1YVR6fNNL/BMha+LfgoKdTAUe4wuleX/aJM1ZD97
+JoUrJgcd0sZa0XiOngViUT0ggstuSqaaZURwpwxNaaDqq2tNw6G35rN5+p4jb2CZ
+kg+9u9EjUTqWWM7n5JwJ/rN4dIsD3c4+ZdwD/ysgzhr6/j0A1UEU+/awc6mrV7aQ
+Ah3yxd5I1YineDLEicWGGBk8A6+HYzN0K1CyCoasmYKA6pfluCOeKhw9xDUYUDy/
+0EIcBtQ0nZJM4THd3wgjFHLyxLhBLuRTFVDdLVzOirPPCWqZvopLzShXwxc2RE4V
+iYyRBakNHsupGi73oiw4tT8rZYib4pTrFmxJUG57bSkSmVZZ0rgLGWBUfF64VAQ7
+oB9fZMvACKcGHyF7wdk3He5RpMMSfb8QmLwwGjThABFKpP+SS+wMrfmYplh+72l6
+p/6vYoVv3tpNc44Ts3R9/2zz+c3K7WbURh9ACO/7uO4gYUWT5QCXDOsmGWwYklgR
+jC1mErQvxY6lUyzappRCNonqXVi81rWXdPNax2d6sf0cN9Hhe3GRFvgzKxtKXb7m
+F4tsSXVVv7b+PhrbcdTTjzixBRUUbFCuF5wpfAv+aPFTX4L1MI6spWZjdDJ4VcPs
+YezDS4mYPcM7cXN5XlU3
+=fBkN
+-----END PGP SIGNATURE-----
