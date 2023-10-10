@@ -16,7 +16,7 @@ sources:
       name: postgresql
       versionFilter:
         kind: semver
-        pattern: 11.x.x
+        pattern: 12.x.x
     sourceid: postgresql
 conditions: {}
 targets:
