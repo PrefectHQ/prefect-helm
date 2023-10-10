@@ -493,7 +493,7 @@
           "form": true
         },
         "nodePort": {
-          "type": "string",
+          "type": ["integer","string"],
           "title": "Node Port",
           "description": "service port if defining service as type nodeport",
           "form": true
