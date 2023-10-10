@@ -493,9 +493,15 @@
           "form": true
         },
         "nodePort": {
-          "type": "string",
+          "type": ["integer","string"],
           "title": "Node Port",
           "description": "service port if defining service as type nodeport",
+          "form": true
+        },
+        "targetPort": {
+          "type": "integer",
+          "title": "Target Port",
+          "description": "target port on the server pod",
           "form": true
         },
         "externalTrafficPolicy": {
@@ -619,7 +625,7 @@
       "title": "PostgreSQL",
       "description": "Postgresql configuration",
       "form": true,
-      "properties": {   
+      "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
@@ -695,7 +701,6 @@
           "title": "Primary",
           "description": "Initdb configuration",
           "form": true,
-          
           "properties": {
             "initdb": {
               "type": "object",

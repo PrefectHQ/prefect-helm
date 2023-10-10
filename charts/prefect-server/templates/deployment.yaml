@@ -69,10 +69,10 @@ spec:
             - --log-level
             - WARNING
             - --port
-            - {{ .Values.service.port | quote }}
+            - {{ .Values.service.targetPort | quote }}
           workingDir: /home/prefect
           ports:
-            - containerPort: {{ int .Values.service.port }}
+            - containerPort: {{ int .Values.service.targetPort }}
           env:
             - name: HOME
               value: /home/prefect
@@ -111,14 +111,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /api/health
-              port: {{ .Values.service.port }}
+              port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.livenessProbe.config | nindent 12 }}
           {{- end }}
           {{- if .Values.server.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /api/ready
-              port: {{ .Values.service.port }}
+              port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.readinessProbe.config | nindent 12 }}
           {{- end }}
           volumeMounts:

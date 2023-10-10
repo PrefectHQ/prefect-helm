@@ -177,6 +177,7 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
 | service.nodePort | string | `""` | service port if defining service as type nodeport |
 | service.port | int | `4200` | service port |
+| service.targetPort | int | `4200` | target port of the server pod |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |

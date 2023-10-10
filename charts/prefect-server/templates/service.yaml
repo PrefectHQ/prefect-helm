@@ -30,6 +30,7 @@ spec:
     - name: server-svc-port
       port: {{ .Values.service.port }}
       protocol: TCP
+      targetPort: {{ .Values.service.targetPort }}
       {{- if and (eq .Values.service.type "NodePort") (not (empty .Values.service.nodePort)) }}
       nodePort: {{ .Values.service.nodePort }}
       {{- else if eq .Values.service.type "ClusterIP" }}

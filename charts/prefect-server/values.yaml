@@ -167,6 +167,8 @@ service:
   type: ClusterIP
   # -- service port
   port: 4200
+  # -- target port of the server pod
+  targetPort: 4200
   # -- service Cluster IP
   clusterIP: ""
   # -- service port if defining service as type nodeport
