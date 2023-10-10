@@ -127,7 +127,7 @@ Workers each have a type corresponding to the execution environment to which the
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.13.0 |
+| https://charts.bitnami.com/bitnami | common | 2.13.2 |
 
 ## Values
 

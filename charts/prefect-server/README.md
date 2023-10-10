@@ -90,8 +90,8 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.13.0 |
-| https://charts.bitnami.com/bitnami | postgresql | 11.9.13 |
+| https://charts.bitnami.com/bitnami | common | 2.13.2 |
+| https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
 
 ## Values
 
