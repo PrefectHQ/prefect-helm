@@ -29,24 +29,38 @@ server:
     ##   - myRegistryKeySecretName
     # -- server image pull secrets
     pullSecrets: []
-    # -- enable server image debug mode
-    debug: false
 
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
 
-  # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL
-  publicApiUrl: http://localhost:4200/api
+  # -- enable server debug mode
+  debug: false
 
-  # -- sets PREFECT_UI_URL
-  publicUiUrl: "http://localhost:4200"
+  # sets PREFECT_LOGGING_SERVER_LEVEL
+  loggingLevel: WARNING
 
+  # -- sets PREFECT_API_URL
+  prefectApiUrl: http://localhost:4200/api
+
+  # -- sets PREFECT_SERVER_API_HOST
+  prefectApiHost: 0.0.0.0
+
+  ## If you want to run the UI seperately from the server, you will need to set the UI-specific URLs below
+  uiConfig:
+    # -- set PREFECT_UI_ENABLED; enable the UI on the server
+    enabled: true
+    # -- sets PREFECT_UI_API_URL
+    prefectUiApiUrl: ""
+    # -- sets PREFECT_UI_URL
+    prefectUiUrl: ""
+
+  # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
   # -- array with environment variables to add to server nodes
   env: []
   ## env:
-  ##   - name: PREFECT_LOGGING_SERVER_LEVEL
-  ##     value: WARNING
+  ##   - name: PREFECT_API_ENABLE_HTTP2
+  ##     value: false
 
   # Autoscaling configuration
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
@@ -170,7 +184,7 @@ service:
   type: ClusterIP
   # -- service port
   port: 4200
-  # -- target port of the server pod
+  # -- target port of the server pod; also sets PREFECT_SERVER_API_PORT
   targetPort: 4200
   # -- service Cluster IP
   clusterIP: ""

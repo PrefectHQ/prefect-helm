@@ -72,12 +72,6 @@
               "items": {
                 "type": "string"
               }
-            },
-            "debug": {
-              "type": "boolean",
-              "title": "Debug",
-              "description": "server image debug mode",
-              "form": true
             }
           }
         },
@@ -87,17 +81,55 @@
           "description": "priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class",
           "form": true
         },
-        "publicApiUrl": {
-          "type": "string",
-          "title": "Public API URL",
-          "description": "sets PREFECT_UI_API_URL; should be publicly accessible API URL",
+        "debug": {
+          "type": "boolean",
+          "title": "Debug",
+          "description": "server debug mode",
           "form": true
         },
-        "publicUiUrl": {
+        "loggingLevel": {
           "type": "string",
-          "title": "Public UI URL",
-          "description": "sets PREFECT_UI_URL",
+          "title": "Logging Level",
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL",
           "form": true
+        },
+        "prefectApiUrl": {
+          "type": "string",
+          "title": "Prefect API URL",
+          "description": "sets PREFECT_API_URL",
+          "form": true
+        },
+        "prefectApiHost": {
+          "type": "string",
+          "title": "Prefect API Host",
+          "description": "sets PREFECT_SERVER_API_HOST",
+          "form": true
+        },
+        "uiConfig": {
+          "type": "object",
+          "title": "UI Config",
+          "description": "Prefect UI Config",
+          "form": true,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable Prefect UI",
+              "description": "set PREFECT_UI_ENABLED; enable the UI on the server",
+              "form": true
+            },
+            "prefectUiApiUrl": {
+              "type": "string",
+              "title": "Prefect API URL",
+              "description": "sets PREFECT_UI_API_URL",
+              "form": true
+            },
+            "prefectUiUrl": {
+              "type": "string",
+              "title": "Prefect UI URL",
+              "description": "sets PREFECT_UI_URL",
+              "form": true
+            }
+          }
         },
         "env": {
           "type": "array",

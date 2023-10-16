@@ -137,13 +137,13 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | server.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set server containers' security context readOnlyRootFilesystem |
 | server.containerSecurityContext.runAsNonRoot | bool | `true` | set server containers' security context runAsNonRoot |
 | server.containerSecurityContext.runAsUser | int | `1001` | set server containers' security context runAsUser |
+| server.debug | bool | `false` | enable server debug mode |
 | server.env | list | `[]` | array with environment variables to add to server nodes |
 | server.extraContainers | list | `[]` | additional sidecar containers |
 | server.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to server nodes |
 | server.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to server nodes |
 | server.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the server pod |
 | server.extraVolumes | list | `[]` | array with extra volumes for the server pod |
-| server.image.debug | bool | `false` | enable server image debug mode |
 | server.image.prefectTag | string | `"2-latest"` | prefect image tag (immutable tags are recommended) |
 | server.image.pullPolicy | string | `"IfNotPresent"` | server image pull policy |
 | server.image.pullSecrets | list | `[]` | server image pull secrets |
@@ -154,15 +154,16 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.livenessProbe.enabled | bool | `false` |  |
+| server.loggingLevel | string | `"WARNING"` |  |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
 | server.podLabels | object | `{}` | extra labels for server pod |
 | server.podSecurityContext.fsGroup | int | `1001` | set server pod's security context fsGroup |
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
+| server.prefectApiHost | string | `"0.0.0.0"` | sets PREFECT_SERVER_API_HOST |
+| server.prefectApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_API_URL |
 | server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
-| server.publicApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; should be publicly accessible API URL |
-| server.publicUiUrl | string | `"http://localhost:4200"` | sets PREFECT_UI_URL |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | server.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
@@ -173,12 +174,15 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | server.resources.limits | object | `{}` | the requested limits for the server container |
 | server.resources.requests | object | `{}` | the requested resources for the server container |
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
+| server.uiConfig.enabled | bool | `true` | set PREFECT_UI_ENABLED; enable the UI on the server |
+| server.uiConfig.prefectUiApiUrl | string | `""` | sets PREFECT_UI_API_URL |
+| server.uiConfig.prefectUiUrl | string | `""` | sets PREFECT_UI_URL |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
 | service.nodePort | string | `""` | service port if defining service as type nodeport |
 | service.port | int | `4200` | service port |
-| service.targetPort | int | `4200` | target port of the server pod |
+| service.targetPort | int | `4200` | target port of the server pod; also sets PREFECT_SERVER_API_PORT |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
