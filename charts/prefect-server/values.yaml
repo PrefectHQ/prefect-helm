@@ -39,6 +39,9 @@ server:
   # -- sets PREFECT_UI_API_URL; should be publicly accessible API URL
   publicApiUrl: http://localhost:4200/api
 
+  # -- sets PREFECT_UI_URL
+  publicUiUrl: "http://localhost:4200"
+
   # -- array with environment variables to add to server nodes
   env: []
   ## env:

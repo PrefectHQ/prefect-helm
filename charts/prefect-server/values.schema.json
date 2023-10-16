@@ -93,6 +93,12 @@
           "description": "sets PREFECT_UI_API_URL; should be publicly accessible API URL",
           "form": true
         },
+        "publicUiUrl": {
+          "type": "string",
+          "title": "Public UI URL",
+          "description": "sets PREFECT_UI_URL",
+          "form": true
+        },
         "env": {
           "type": "array",
           "title": "Environment Variables",

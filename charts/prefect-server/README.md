@@ -162,6 +162,7 @@ postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
 | server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
 | server.publicApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; should be publicly accessible API URL |
+| server.publicUiUrl | string | `"http://localhost:4200"` | sets PREFECT_UI_URL |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | server.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
