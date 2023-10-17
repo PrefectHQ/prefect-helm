@@ -13,5 +13,5 @@ http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host.hostname }
 Run the following command to port-forward the UI to your localhost:
 $ kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ template "common.names.fullname" . }} {{ .Values.service.targetPort }}:{{ .Values.service.port }}
 
-Visit http://localhost:4200 to use Prefect!
+Visit {{ include "server.uiUrl" . }} to use Prefect!
 {{- end }}

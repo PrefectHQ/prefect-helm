@@ -53,3 +53,11 @@ Create the name of the service account to use
   {{- printf "%s-%s" $name "postgresql-connection" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "server.uiUrl" -}}
+{{- if .Values.server.uiConfig.prefectUiUrl -}}
+  {{- .Values.server.uiConfig.prefectUiUrl -}}
+{{- else -}}
+  {{- printf "%s" (replace "/api" "" .Values.server.prefectApiUrl) -}}
+{{- end -}}
+{{- end -}}

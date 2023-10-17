@@ -64,10 +64,6 @@ spec:
             - prefect
             - server
             - start
-            - --host
-            - 0.0.0.0
-            - --log-level
-            - WARNING
             - --port
             - {{ .Values.service.targetPort | quote }}
           workingDir: /home/prefect
@@ -76,11 +72,25 @@ spec:
           env:
             - name: HOME
               value: /home/prefect
+            - name: PREFECT_API_URL
+              value: {{ .Values.server.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
-              value: {{ .Values.server.image.debug | quote }}
-            {{- if .Values.server.publicApiUrl }}
+              value: {{ .Values.server.debug | quote }}
+            - name: PREFECT_LOGGING_SERVER_LEVEL
+              value: {{ .Values.server.loggingLevel | quote }}
+            - name: PREFECT_SERVER_API_HOST
+              value: {{ .Values.server.prefectApiHost | quote }}
+            - name: PREFECT_SERVER_API_PORT
+              value: {{ .Values.service.targetPort  | quote }}
+            - name: PREFECT_UI_ENABLED
+              value: {{ .Values.server.uiConfig.enabled | quote }}
+            {{- if .Values.server.uiConfig.prefectUiApiUrl }}
             - name: PREFECT_UI_API_URL
-              value: {{ .Values.server.publicApiUrl | quote }}
+              value: {{ .Values.server.uiConfig.prefectUiApiUrl | quote }}
+            {{- end }}
+            {{- if .Values.server.uiConfig.prefectUiUrl }}
+            - name: PREFECT_UI_URL
+              value: {{ .Values.server.uiConfig.prefectUiUrl | quote }}
             {{- end }}
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
