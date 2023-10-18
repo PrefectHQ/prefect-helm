@@ -22,7 +22,7 @@ Without making any modifications to the `values.yaml` file, you can access the P
 kubectl port-forward svc/prefect-server 4200:4200
 ```
 
-Note: If you choose to make modifications to either the `server.publicApiUrl` or `service.port`, make sure to update the other value with the updated port!
+Note: If you choose to make modifications to either the `server.prefectApiUrl` or `service.port`, make sure to update the other value with the updated port!
 
 ## PostgreSQL Configuration
 
