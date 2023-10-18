@@ -573,6 +573,12 @@
       "title": "Common",
       "description": "common configuration.  Not set by user but required as common vars are passed to all manifests.",
       "form": true
+    },
+    "global": {
+      "type": "object",
+      "title": "Global",
+      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart",
+      "form": true
     }
   }
 }
