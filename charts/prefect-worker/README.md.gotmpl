@@ -171,6 +171,25 @@ Workers each have a type corresponding to the execution environment to which the
 
     You should see the Prefect worker pod running
 
+## FAQ
+
+### Deploying multiple workers to a single namespace
+
+If you want to run more than one worker in a single Kubernetes namespace, you will need to specify the `fullnameOveride` parameter at install time of one of the workers.
+
+```yaml
+fullnameOverride: prefect-worker-2
+```
+
+If you want the workers to share a service account, add the following to your `values.yaml`:
+
+```yaml
+fullnameOverride: prefect-worker-2
+serviceAccount:
+  create: false
+  name: "prefect-worker"
+```
+
 {{ template "chart.maintainersSection" . }}
 
 {{ template "chart.requirementsSection" . }}
