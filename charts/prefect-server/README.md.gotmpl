@@ -29,16 +29,20 @@ Note: If you choose to make modifications to either the `server.prefectApiUrl` o
 
 If you are installing the chart as-is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
+
 2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
+
     1. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
         - username = `postgresql.auth.username`
         - hostname = `<release-name>-postgresql.<release-namespace>:<postgresql.containerPorts.postgresql>`
         - database = `postgresql.auth.database`
+
     2. `password`: the same password defined in the `connection-string` above
 
 
 Two secrets are created when not providing an existing secret name:
 1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
+
 2. `<release-name>-postgresql-0`: defines the `postgresql.auth.username`'s password on the postgresql server to allow successful authentication from the prefect server.
 
 No secrets are created when providing an existing secret.
@@ -46,37 +50,39 @@ No secrets are created when providing an existing secret.
 ### Connecting with SSL configured
 
 1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
-```yaml
-prefect-server:
-  server:
-    extraVolumes:
-      - name: db-ssl-secret
-        secret:
-          secretName: db-ssl-secret
-          defaultMode: 384
-    extraVolumeMounts:
-      - name: db-ssl-secret
-        mountPath: "/home/prefect/.postgresql"
-        readOnly: true
-  postgresql:
-    useSubChart: false
-    auth:
-      existingSecret: external-db-connection-string
-```
+    ```yaml
+    prefect-server:
+      server:
+        extraVolumes:
+          - name: db-ssl-secret
+            secret:
+              secretName: db-ssl-secret
+              defaultMode: 384
+        extraVolumeMounts:
+          - name: db-ssl-secret
+            mountPath: "/home/prefect/.postgresql"
+            readOnly: true
+      postgresql:
+        useSubChart: false
+        auth:
+          existingSecret: external-db-connection-string
+    ```
+
 2. Create a secret to hold the ca certificate for the database with the key `root.crt`
-```yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: db-ssl-secret
-data:
-  root.crt: BASE64ENCODECERTIFICATE=
-type: Opaque
-```
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: db-ssl-secret
+    data:
+      root.crt: BASE64ENCODECERTIFICATE=
+    type: Opaque
+    ```
+
 3. Set the connection string in the existing secret following this format - `?ssl=verify-ca` is cruicial:
-```
-postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
-```
+    ```
+    postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
+    ```
 
 {{ template "chart.maintainersSection" . }}
 
