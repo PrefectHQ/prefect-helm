@@ -134,6 +134,18 @@
               "description": "Maximum number of flow runs to start simultaneously (default: unlimited)",
               "form": true
             },
+            "name": {
+              "type": ["string", "null"],
+              "title": "Name",
+              "description": "The name to give to the started worker. If not provided, a unique name will be generated.",
+              "form": true
+            },
+            "installPolicy": {
+              "type": ["string"],
+              "title": "Install Policy",
+              "description": "Install policy to use workers from Prefect integration packages.",
+              "form": true
+            },
             "type": {
               "type": "string",
               "title": "Type",

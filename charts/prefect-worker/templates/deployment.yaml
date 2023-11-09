@@ -72,12 +72,18 @@ spec:
             - --work-queue
             - {{ . }}
             {{- end }}
+            - --install-policy
+            - {{ .Values.worker.config.installPolicy | quote }}
             {{- if .Values.worker.config.limit }}
             - --limit
             - {{ .Values.worker.config.limit | quote }}
             {{- end }}
             {{- if .Values.worker.livenessProbe.enabled }}
             - --with-healthcheck
+            {{- end }}
+            {{- if .Values.worker.config.name }}
+            - --name
+            - {{ .Values.worker.config.name | quote }}
             {{- end }}
           workingDir: /home/prefect
           env:

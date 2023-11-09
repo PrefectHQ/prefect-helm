@@ -226,7 +226,9 @@ serviceAccount:
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
-| worker.config.limit | string | `nil` | Maximum number of flow runs to start simultaneously (default: unlimited) |
+| worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
+| worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
+| worker.config.name | string | `nil` | the name to give to the started worker. If not provided, a unique name will be generated. |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | worker.config.queryInterval | int | `5` | how often the worker will query for runs |
 | worker.config.type | string | `"kubernetes"` | specify the worker type |
