@@ -152,7 +152,7 @@ spec:
               subPathExpr: tmp
             {{- if .Values.worker.config.baseJobTemplate }}
             - mountPath: /home/prefect/baseJobTemplate.json
-              name: base-template-file
+              name: base-job-template-file
               subPath: baseJobTemplate.json
             {{- end }}
           {{- if .Values.worker.extraVolumeMounts }}
@@ -168,7 +168,7 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
         {{- if .Values.worker.config.baseJobTemplate }}
-        - name: base-template-file
+        - name: base-job-template-file
           configMap:
             name: prefect-worker-base-job-template
         {{- end }}
