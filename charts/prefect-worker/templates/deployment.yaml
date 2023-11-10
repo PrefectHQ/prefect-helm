@@ -87,7 +87,7 @@ spec:
             {{- end }}
             {{- if .Values.worker.config.baseJobTemplate }}
             - --base-job-template
-            - baseTemplate.json
+            - baseJobTemplate.json
             {{- end }}
           workingDir: /home/prefect
           env:
@@ -151,9 +151,9 @@ spec:
               name: scratch
               subPathExpr: tmp
             {{- if .Values.worker.config.baseJobTemplate }}
-            - mountPath: /home/prefect/baseTemplate.json
+            - mountPath: /home/prefect/baseJobTemplate.json
               name: base-template-file
-              subPath: baseTemplate.json
+              subPath: baseJobTemplate.json
             {{- end }}
           {{- if .Values.worker.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumeMounts "context" $) | nindent 12 }}

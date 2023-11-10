@@ -10,5 +10,5 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  baseTemplate.json: {{ .Values.worker.config.baseJobTemplate | toJson }}
+  baseJobTemplate.json: {{ .Values.worker.config.baseJobTemplate | toJson }}
 {{- end }}
