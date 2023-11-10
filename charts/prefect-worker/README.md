@@ -192,7 +192,7 @@ serviceAccount:
 
 ### Configuring a Base Job Template on the Worker
 
-If you want to define the base job template of the worker and pass it as a value in this chart, you will need to do the following. **Note** if the `workPool` already exists, the base job template passed **will** be ignored.
+If you want to define the [base job template](https://docs.prefect.io/concepts/work-pools/#base-job-template) of the worker and pass it as a value in this chart, you will need to do the following. **Note** if the `workPool` already exists, the base job template passed **will** be ignored.
 
 1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`
 
