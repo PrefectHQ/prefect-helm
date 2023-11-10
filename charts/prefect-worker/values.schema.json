@@ -141,7 +141,7 @@
               "form": true
             },
             "installPolicy": {
-              "type": ["string"],
+              "type": "string",
               "title": "Install Policy",
               "description": "Install policy to use workers from Prefect integration packages.",
               "form": true
