@@ -60,6 +60,8 @@ worker:
     name: null
     # -- maximum number of flow runs to start simultaneously (default: unlimited)
     limit: null
+    # -- JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.
+    baseJobTemplate: null
 
   ## connection settings
   # -- one of 'cloud', 'selfHosted', or 'server'

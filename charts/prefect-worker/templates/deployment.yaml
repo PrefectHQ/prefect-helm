@@ -85,6 +85,10 @@ spec:
             - --name
             - {{ .Values.worker.config.name | quote }}
             {{- end }}
+            {{- if .Values.worker.config.baseJobTemplate }}
+            - --base-job-template
+            - baseTemplate.json
+            {{- end }}
           workingDir: /home/prefect
           env:
             - name: HOME
@@ -146,6 +150,11 @@ spec:
             - mountPath: /tmp
               name: scratch
               subPathExpr: tmp
+            {{- if .Values.worker.config.baseJobTemplate }}
+            - mountPath: /home/prefect/baseTemplate.json
+              name: base-template-file
+              subPath: baseTemplate.json
+            {{- end }}
           {{- if .Values.worker.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
@@ -157,4 +166,9 @@ spec:
           emptyDir: {}
         {{- if .Values.worker.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.worker.config.baseJobTemplate }}
+        - name: base-template-file
+          configMap:
+            name: prefect-worker-base-template
         {{- end }}

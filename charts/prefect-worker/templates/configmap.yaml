@@ -1,0 +1,14 @@
+{{- if .Values.worker.config.baseJobTemplate }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prefect-worker-base-template
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
+    app.kubernetes.io/component: worker
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+data:
+  baseTemplate.json: {{ .Values.worker.config.baseJobTemplate | toJson }}
+{{- end }}
