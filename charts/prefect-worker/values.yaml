@@ -47,14 +47,21 @@ worker:
     prefetchSeconds: 10
     # -- connect using HTTP/2 if the server supports it (experimental)
     http2: true
-    # -- Maximum number of flow runs to start simultaneously (default: unlimited)
-    limit: null
     ## You can set the worker type here.
     ## The default image includes only the type "kubernetes".
     ## Custom workers must be properly registered with the prefect cli.
     ## See the guide here: https://docs.prefect.io/2.11.3/guides/deployment/developing-a-new-worker-type/
     # -- specify the worker type
     type: kubernetes
+    ## one of 'always', 'if-not-present', 'never', 'prompt'
+    # --  install policy to use workers from Prefect integration packages.
+    installPolicy: prompt
+    # -- the name to give to the started worker. If not provided, a unique name will be generated.
+    name: null
+    # -- maximum number of flow runs to start simultaneously (default: unlimited)
+    limit: null
+    # -- JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.
+    baseJobTemplate: null
 
   ## connection settings
   # -- one of 'cloud', 'selfHosted', or 'server'

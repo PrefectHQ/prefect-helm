@@ -134,10 +134,28 @@
               "description": "Maximum number of flow runs to start simultaneously (default: unlimited)",
               "form": true
             },
+            "name": {
+              "type": ["string", "null"],
+              "title": "Name",
+              "description": "The name to give to the started worker. If not provided, a unique name will be generated.",
+              "form": true
+            },
+            "installPolicy": {
+              "type": "string",
+              "title": "Install Policy",
+              "description": "Install policy to use workers from Prefect integration packages.",
+              "form": true
+            },
             "type": {
               "type": "string",
               "title": "Type",
               "description": "the type of worker to start i.e kubernetes",
+              "form": true
+            },
+            "baseJobTemplate": {
+              "type": ["string", "null"],
+              "title": "Base Job Template",
+              "description": "JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.",
               "form": true
             }
           }

@@ -190,6 +190,27 @@ serviceAccount:
   name: "prefect-worker"
 ```
 
+### Configuring a Base Job Template on the Worker
+
+If you want to define the [base job template](https://docs.prefect.io/concepts/work-pools/#base-job-template) of the worker and pass it as a value in this chart, you will need to do the following. **Note** if the `workPool` already exists, the base job template passed **will** be ignored.
+
+1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`
+
+```bash
+# you may need to install `prefect-kubernetes` first
+pip install prefect-kubernetes
+
+prefect work-pool get-default-base-job-template --type kubernetes > base-job-template.json
+```
+
+2. Modify the base job template as needed
+
+3. Install the chart as you usually would, making sure to use the `--set-file` command to pass in the `base-job-template.json` file as a paramater:
+
+```bash
+helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate=base-job-template.json
+```
+
 {{ template "chart.maintainersSection" . }}
 
 {{ template "chart.requirementsSection" . }}

@@ -190,6 +190,27 @@ serviceAccount:
   name: "prefect-worker"
 ```
 
+### Configuring a Base Job Template on the Worker
+
+If you want to define the [base job template](https://docs.prefect.io/concepts/work-pools/#base-job-template) of the worker and pass it as a value in this chart, you will need to do the following. **Note** if the `workPool` already exists, the base job template passed **will** be ignored.
+
+1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`
+
+```bash
+# you may need to install `prefect-kubernetes` first
+pip install prefect-kubernetes
+
+prefect work-pool get-default-base-job-template --type kubernetes > base-job-template.json
+```
+
+2. Modify the base job template as needed
+
+3. Install the chart as you usually would, making sure to use the `--set-file` command to pass in the `base-job-template.json` file as a paramater:
+
+```bash
+helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate=base-job-template.json
+```
+
 ## Maintainers
 
 | Name | Email | Url |
@@ -225,8 +246,11 @@ serviceAccount:
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
+| worker.config.baseJobTemplate | string | `nil` | JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored. |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
-| worker.config.limit | string | `nil` | Maximum number of flow runs to start simultaneously (default: unlimited) |
+| worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
+| worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
+| worker.config.name | string | `nil` | the name to give to the started worker. If not provided, a unique name will be generated. |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | worker.config.queryInterval | int | `5` | how often the worker will query for runs |
 | worker.config.type | string | `"kubernetes"` | specify the worker type |
