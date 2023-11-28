@@ -2,8 +2,8 @@ apiVersion: v1
 entries:
   prefect-agent:
   - apiVersion: v2
-    appVersion: v2.14.6
-    created: "2023-11-28T18:59:37.722201283Z"
+    appVersion: 2.14.7
+    created: "2023-11-28T21:59:19.9899552Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -11,7 +11,7 @@ entries:
       - bitnami-common
       version: 2.13.3
     description: Prefect Agent application bundle
-    digest: 258a85d6afc903729f56143cd6dc7dcf7e41856cfbc36990f2c17c942751fa40
+    digest: 776759d79b90d90f8991a91038c2f411aa2f0295da186f84f61e4e032d904d43
     home: https://github.com/PrefectHQ
     maintainers:
     - email: jamie@prefect.io
@@ -2309,8 +2309,8 @@ entries:
     version: 0.2.5
   prefect-server:
   - apiVersion: v2
-    appVersion: v2.14.6
-    created: "2023-11-28T18:59:37.727272642Z"
+    appVersion: 2.14.7
+    created: "2023-11-28T21:59:19.996258382Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -2322,7 +2322,7 @@ entries:
       repository: https://charts.bitnami.com/bitnami
       version: 12.12.10
     description: Prefect server application bundle
-    digest: 68ceb4366f1dce762df3b362ba52f4fe1395280b576de1a31767bc0a394b67c0
+    digest: 19687ec184f27179a2e0219a88e3a271519f7556e53b7377a0530e73b1368d9d
     home: https://github.com/PrefectHQ
     maintainers:
     - email: jamie@prefect.io
@@ -4382,8 +4382,8 @@ entries:
     version: 2023.02.16
   prefect-worker:
   - apiVersion: v2
-    appVersion: v2.14.6
-    created: "2023-11-28T18:59:37.729495633Z"
+    appVersion: 2.14.7
+    created: "2023-11-28T21:59:19.997584849Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -4391,7 +4391,7 @@ entries:
       - bitnami-common
       version: 2.13.3
     description: Prefect Worker application bundle
-    digest: 8357ef02d7727d9fb043541123875c0c0c01fde8c3382ec8646ccb59340b9879
+    digest: b1778ed6cbec066f565a7eaa1a53031b708152e5d0cf38e24a9d7ce992ac5459
     home: https://github.com/PrefectHQ
     maintainers:
     - email: jamie@prefect.io
@@ -5993,4 +5993,4 @@ entries:
     urls:
     - https://prefecthq.github.io/prefect-helm/charts/prefect-worker-2023.03.27.tgz
     version: 2023.03.27
-generated: "2023-11-28T18:59:37.72002595Z"
+generated: "2023-11-28T21:59:19.988694545Z"
