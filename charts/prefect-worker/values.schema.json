@@ -155,7 +155,7 @@
             "baseJobTemplateName": {
               "type": ["string", "null"],
               "title": "Base Job Template Name",
-              "description": "Template name of the base job template. If unspecified, Prefect will use the default base job template name for the given worker type..",
+              "description": "Template name of the base job template. If unspecified, Prefect will use the default base job template name for the given worker type.",
               "form": true
             },
             "baseJobTemplate": {
