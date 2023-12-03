@@ -169,6 +169,9 @@ server:
   # -- array with extra volumeMounts for the server pod
   extraVolumeMounts: []
 
+  # -- array with extra Arguments for the server container to start with
+  extraArgs: []
+
 ## ServiceAccount configuration
 serviceAccount:
   # -- specifies whether a ServiceAccount should be created

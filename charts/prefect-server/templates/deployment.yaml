@@ -66,6 +66,9 @@ spec:
             - start
             - --port
             - {{ .Values.service.targetPort | quote }}
+            {{- range .Values.server.extraArgs }}
+            - {{ . | toString }}
+            {{- end }}
           workingDir: /home/prefect
           ports:
             - containerPort: {{ int .Values.service.targetPort }}
