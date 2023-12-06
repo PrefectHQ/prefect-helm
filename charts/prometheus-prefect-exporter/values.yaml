@@ -28,7 +28,7 @@ serviceAccount:
   name: ""
 
 # -- Prefect API URL to connect to for metrics
-prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200
+prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
 # -- Environment variables to configure application
 env: {}
   # Plain vars
