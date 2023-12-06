@@ -61,7 +61,7 @@ spec:
           {{- end }}
           env:
           - name: PREFECT_API_URL
-            value: {{ .Values.prefectServerApi }}
+            value: {{ .Values.prefectApiUrl }}
           {{- if .Values.env }}
           {{- range $key, $value := .Values.env }}
           - name: {{ $key | upper }}
