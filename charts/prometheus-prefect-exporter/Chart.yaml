@@ -16,4 +16,4 @@ sources:
   - https://github.com/PrefectHQ/prefect-helm
 type: application
 # This version is never actually shipped. github actions will package add the appropriate version at build-time
-version: 2023.11.4
+version: 0.0.0
