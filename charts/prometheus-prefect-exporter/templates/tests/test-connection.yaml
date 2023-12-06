@@ -1,0 +1,17 @@
+{{- if .Values.testConnection }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "prometheus-prefect-exporter.fullname" . }}-test-connection"
+  labels:
+    {{- include "prometheus-prefect-exporter.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "prometheus-prefect-exporter.fullname" . }}:{{ .Values.service.targetPort | default .Values.service.port }}']
+  restartPolicy: Never
+{{- end }}

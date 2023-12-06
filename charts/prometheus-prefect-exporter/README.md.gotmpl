@@ -1,0 +1,51 @@
+{{ template "chart.header" . }}
+
+## Overview
+
+This chart deploys a [Prometheus Exporter](https://github.com/PrefectHQ/prometheus-prefect-exporter) for Prefect Server, providing relevant metrics from your deployed Prefect Server instance.
+Shoutout to @ialejandro for the original work on this chart!
+
+## Installing the Chart
+
+### Prerequisites
+
+1. Add the Prefect Helm repository to your Helm client:
+
+    ```bash
+    helm repo add prefect https://prefecthq.github.io/prefect-helm
+    helm repo update
+    ```
+
+2. Deploy a Prefect Server instance using the [Prefect Server Helm chart](https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-server)
+
+### Install the Prefect Exporter chart
+
+1. Configure the Prefect exporter values as needed
+    Create a `values.yaml` file to customize the Prometheus Prefect Exporter configuration.
+
+2. Install the chart
+    ```bash
+    helm install prometheus-prefect-exporter prefect/prometheus-prefect-exporter --namespace=<PREFECT_SERVER_NAMESPACE> -f values.yaml
+    ```
+
+3. Verify the deployment
+
+    Check the status of your Prometheus Prefect Exporter deployment:
+
+    ```bash
+    kubectl get pods -n prefect
+
+    NAME                                  READY   STATUS    RESTARTS       AGE
+    prometheus-prefect-exporter-76vxqnq   1/1     Running   0              25m
+    ```
+
+    You should see the Prometheus Prefect Exporter pod running
+
+
+{{ template "chart.maintainersSection" . }}
+
+{{ template "chart.requirementsSection" . }}
+
+{{ template "chart.valuesSection" . }}
+
+{{ template "helm-docs.versionFooter" . }}

@@ -1,0 +1,19 @@
+apiVersion: v2
+appVersion: "1.2.4"
+description: A Helm chart to deploy Prometheus Prefect Exporter
+home: https://github.com/PrefectHQ
+keywords:
+  - prometheus-prefect-exporter
+maintainers:
+  - name: jamiezieziula
+    email: jamie@prefect.io
+  - name: jimid27
+    email: jimi@prefect.io
+  - name: parkedwards
+    email: edward@prefect.io
+name: prometheus-prefect-exporter
+sources:
+  - https://github.com/PrefectHQ/prefect-helm
+type: application
+# This version is never actually shipped. github actions will package add the appropriate version at build-time
+version: 0.0.0
