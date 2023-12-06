@@ -57,17 +57,20 @@ Shoutout to @ialejandro for the original work on this chart!
 | autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling with CPU or memory utilization percentage |
 | env | object | `{}` | Environment variables to configure application |
 | fullnameOverride | string | `""` | String to fully override prometheus-prefect-exporter.fullname template |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":""}` | Image registry |
+| image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.0.0"}` | Image registry |
 | imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration to expose app |
+| livenessProbe | bool | `false` | Enable livenessProbe |
 | nameOverride | string | `""` | String to partially override prometheus-prefect-exporter.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podAnnotations | object | `{}` | Pod annotations |
 | podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
 | podSecurityContext | object | `{}` | To specify security settings for a Pod |
+| prefectApiUrl | string | `"http://prefect-server.prefect.svc.cluster.local:4200"` | Prefect API URL to connect to for metrics |
 | prometheusRule.additionalLabels | object | `{}` |  |
 | prometheusRule.enabled | bool | `false` |  |
 | prometheusRule.rules | list | `[]` |  |
+| readinessProbe | bool | `false` | Enable readinessProbe |
 | replicaCount | int | `1` | Number of replicas |
 | resources | object | `{}` | The resources limits and requested |
 | securityContext | object | `{}` | Defines privilege and access control settings for a Pod or Container |
@@ -78,7 +81,6 @@ Shoutout to @ialejandro for the original work on this chart!
 | serviceAccount | object | `{"annotations":{},"create":true,"name":""}` | Enable creation of ServiceAccount |
 | serviceMonitor | object | `{"enabled":false,"interval":"30s","metricRelabelings":[],"relabelings":[],"scrapeTimeout":"10s"}` | Enable ServiceMonitor to get metrics ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor |
 | serviceMonitor.enabled | bool | `false` | Enable or disable |
-| testConnection | bool | `false` | Enable livenessProbe and readinessProbe |
 | tolerations | list | `[]` | Tolerations for pod assignment |
 
 ----------------------------------------------

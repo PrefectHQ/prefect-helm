@@ -79,6 +79,12 @@
         }
       }
     },
+    "prefectApiUrl": {
+      "type": "string",
+      "title": "Prefect API URL",
+      "description": "Prefect API URL",
+      "form": true
+    },
     "env": {
       "type": "object",
       "title": "Environment Variables",

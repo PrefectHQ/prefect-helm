@@ -27,6 +27,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# -- Prefect API URL to connect to for metrics
+prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200
 # -- Environment variables to configure application
 env: {}
   # Plain vars
