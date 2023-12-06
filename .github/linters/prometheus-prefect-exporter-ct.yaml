@@ -2,4 +2,5 @@
 charts:
   - charts/prometheus-prefect-exporter
 helm-extra-args: --timeout 600s
+namespace: default
 release-label: prefect
