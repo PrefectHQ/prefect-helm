@@ -1,4 +1,4 @@
-name: Lint and Test Prefect Server Chart
+name: Lint and Test Prometheus Prefect Exporter Chart
 
 "on":
   pull_request:
@@ -37,7 +37,11 @@ jobs:
         with:
           node_image: "kindest/node:v${{ matrix.kubernetes }}"
 
+      - name: Install Prefect Server
+        run: |
+          helm dependency build ./charts/prefect-server/
+          helm install prefect-server -n default ./charts/prefect-server/ --set=postgresql.auth.password=TESTING
+          
       - name: Run chart-testing (install)
         run: |
-          helm install prefect-server -n default ./charts/prefect-server/ --set=postgresql.auth.password=TESTING
           ct install --config .github/linters/prometheus-prefect-exporter-ct.yaml --helm-extra-set-args "--set=prefectApiUrl=http://prefect-server.default.svc.cluster.local:4200/api"
