@@ -1,6 +1,6 @@
 # See https://github.com/helm/chart-testing#configuration
 charts:
-  - charts/prefect-agent
+  - charts/prometheus-prefect-exporter
 helm-extra-args: --timeout 600s
 namespace: prefect
 release-label: prefect
