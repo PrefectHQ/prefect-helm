@@ -66,7 +66,7 @@ jobs:
             --destination /tmp/chart \
             --dependency-update \
             --version $RELEASE_VERSION \
-            --app-version $PREFECT_VERSION \
+            --app-version $PROMETHEUS_PREFECT_EXPORTER_VERSION \
             --sign --key 'jamie@prefect.io' \
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
