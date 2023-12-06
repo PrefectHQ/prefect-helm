@@ -39,5 +39,5 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          ct install --config .github/linters/server-ct.yaml --helm-extra-set-args "--set=postgresql.auth.password=TESTING"
+          helm install prefect-server -n default ./charts/prefect-server/ --helm-extra-set-args "--set=postgresql.auth.password=TESTING"
           ct install --config .github/linters/prometheus-prefect-exporter-ct.yaml --helm-extra-set-args "--set=prefectApiUrl=http://prefect-server.default.svc.cluster.local:4200/api"
