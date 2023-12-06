@@ -1,0 +1,94 @@
+name: Release Prometheus Prefect Exporter Helm Chart
+
+"on":
+  push:
+    tags:
+      # prefect-prometheus-exporter-2023.9.1, but not prefect-prometheus-exporter-2023.09.01
+      # prefect-prometheus-exporter-2023.11.5, but not prefect-prometheus-exporter-2023.11.05
+      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+      - 'prefect-prometheus-exporter-2[0-9][2-9][3-9].1?[0-9].[1-3]?[0-9]'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get the version tags
+        id: get_version
+        run: |
+          # Enable pipefail so git command failures do not result in null versions downstream
+          set -x
+          export "FULL_RELEASE=$(echo $GITHUB_REF | cut -d / -f 3)"
+          echo "RELEASE_VERSION=$(echo $FULL_RELEASE | cut -d - -f 4)" >> $GITHUB_OUTPUT
+          echo "PROMETHEUS_PREFECT_EXPORTER_VERSION=$(\
+            git ls-remote --tags --refs --sort="v:refname" \
+            https://github.com/PrefectHQ/prometheus-prefect-exporter | tail -n1 | sed 's/.*\///' \
+          )" >> $GITHUB_OUTPUT
+
+      - name: Copy Artifact Hub metadata
+        run: |
+          mkdir -p /tmp/chart
+          cp artifacthub-repo.yml /tmp/chart
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v3.5
+
+      - name: Prepare GPG key for signing
+        run: |
+          gpg_dir=/tmp/.gpg
+          mkdir "$gpg_dir"
+          keyring="$gpg_dir/secring.gpg"
+          base64 -d <<< "$GPG_KEYRING_BASE64" > "$keyring"
+          passphrase_file="$gpg_dir/passphrase"
+          echo "$GPG_PASSPHRASE" > "$passphrase_file"
+          echo "SIGN_PASSPHRASE_FILE=$passphrase_file" >> "$GITHUB_ENV"
+          echo "SIGN_KEYRING=$keyring" >> "$GITHUB_ENV"
+        env:
+          GPG_KEYRING_BASE64: "${{ secrets.GPG_KEYRING_BASE64 }}"
+          GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
+
+      - name: Package Prometheus Exporter helm chart
+        run: |
+          mkdir -p /tmp/chart
+          cd charts
+          # Update the prefect version tag in values.yaml
+          sed -i "s/tag:.*$/tag: $PROMETHEUS_PREFECT_EXPORTER_VERSION/g" prometheus-prefect-exporter/values.yaml
+          helm package prometheus-prefect-exporter \
+            --destination /tmp/chart \
+            --dependency-update \
+            --version $RELEASE_VERSION \
+            --app-version $PROMETHEUS_PREFECT_EXPORTER_VERSION \
+            --sign --key 'jamie@prefect.io' \
+            --keyring $SIGN_KEYRING \
+            --passphrase-file $SIGN_PASSPHRASE_FILE
+        env:
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          PROMETHEUS_PREFECT_EXPORTER_VERSION: ${{ steps.get_version.outputs.PROMETHEUS_PREFECT_EXPORTER_VERSION }}
+          SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
+          SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
+
+      - name: Update chart index
+        run: |
+          git stash  # Stash changes to the values.yaml so checkout doesn't complain
+          git checkout gh-pages
+          helm repo index /tmp/chart --url https://prefecthq.github.io/prefect-helm/charts --merge ./index.yaml
+
+      - name: Commit and push
+        run: |
+          cp /tmp/chart/artifacthub-repo.yml .
+          cp /tmp/chart/index.yaml .
+          cp /tmp/chart/prometheus-prefect-exporter-$RELEASE_VERSION.* ./charts
+          git add ./artifacthub-repo.yml ./index.yaml prometheus-prefect-exporter-$RELEASE_VERSION.*
+          git commit -m "Release $RELEASE_VERSION"
+          git push origin gh-pages
+        env:
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
