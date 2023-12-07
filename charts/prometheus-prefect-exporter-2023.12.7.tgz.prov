@@ -1,0 +1,41 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 1.0.0
+description: A Helm chart to deploy Prometheus Prefect Exporter
+home: https://github.com/PrefectHQ
+keywords:
+- - prometheus-prefect-exporter
+maintainers:
+- - email: jamie@prefect.io
+  name: jamiezieziula
+- - email: jimi@prefect.io
+  name: jimid27
+- - email: edward@prefect.io
+  name: parkedwards
+name: prometheus-prefect-exporter
+sources:
+- - https://github.com/PrefectHQ/prefect-helm
+type: application
+version: 2023.12.7
+
+...
+files:
+  prometheus-prefect-exporter-2023.12.7.tgz: sha256:73e1f357e363c8b48c74a4cfa48acc56e6e2ec991bb9eaeaf45057e8eb911c6d
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJlchqCCRBmvyDZ/AdLeAAAJbgQAIDTr39fvqWSLQbiLHic1xu8
+E0jHfseMlXRNV7eaiZr2DKpxY9rVdkhnfHVMvaWUjMP0fm5AxLxOiW5Q3KHTHxlT
+y7yQfxZadQHocUtPcosLpGuKjbxng5Df/AGJPHX80yP+USFFc1PGi4hdvdqhQGmr
+v8XNyMZyV7IpkMUuNc2HyN119eQgmoHzx+C8QQJ+sd+WcaJx0KDQqYxfuaSDibdS
+K0iUUW4lJ+3F5kChR2lU7NhsEnvVVrrQxrodtUCv4kPdBCA6OFTyUneYqOJtw0md
+rQeqIxQVi9pUrgkLuQxGOkIKQJpkvhcaVuYojmPuuuZJV7lsXOElspMrd4S9SG91
+Q4PR+yzUre5HJ7OR4d4DXq7ISYmfrKxojaWpvhHGcVswtnvdQs9/uR5FZI5oT6RL
+V7rZISiSenFwbRc46JVm6pmTVaLOG3djxp4f2QxbHd0tFAe1tdI2j8gb5tLNGXSd
+hBVtNWRc22GONH/mNAYs5/7N2srHUfc/cCA2CdW5LJR6gFW7WBPa9Q5X7s09WIAQ
+QG+tikCF14Dhsbd2mIHSDy0W07gfM44kMDHI9Na/7do8ofxDdUN0RyVhSMMf/4JI
+q5ezIT4CmtK/Kt3mbpeyLkQMUgXY3TiosUPmKQ65z27wu5RcjrNiD2S8YvDK+VVJ
+CjvEDe0P3lac6BtqXVPn
+=GOW0
+-----END PGP SIGNATURE-----

@@ -5911,4 +5911,27 @@ entries:
     urls:
     - https://prefecthq.github.io/prefect-helm/charts/prefect-worker-2023.03.27.tgz
     version: 2023.03.27
-generated: "2023-11-30T19:59:05.867672809Z"
+  prometheus-prefect-exporter:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2023-12-07T19:18:26.851648249Z"
+    description: A Helm chart to deploy Prometheus Prefect Exporter
+    digest: 73e1f357e363c8b48c74a4cfa48acc56e6e2ec991bb9eaeaf45057e8eb911c6d
+    home: https://github.com/PrefectHQ
+    keywords:
+    - prometheus-prefect-exporter
+    maintainers:
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    - email: jimi@prefect.io
+      name: jimid27
+    - email: edward@prefect.io
+      name: parkedwards
+    name: prometheus-prefect-exporter
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prometheus-prefect-exporter-2023.12.7.tgz
+    version: 2023.12.7
+generated: "2023-12-07T19:18:26.850888023Z"
