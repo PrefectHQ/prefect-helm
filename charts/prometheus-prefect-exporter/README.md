@@ -3,7 +3,7 @@
 ## Overview
 
 This chart deploys a [Prometheus Exporter](https://github.com/PrefectHQ/prometheus-prefect-exporter) for Prefect Server, providing relevant metrics from your deployed Prefect Server instance.
-Shoutout to @ialejandro for the original work on this chart!
+Shoutout to [@ialejandro](https://github.com/ialejandro) for the original work on this chart!
 
 ## Installing the Chart
 

@@ -87,7 +87,7 @@ jobs:
           cp /tmp/chart/artifacthub-repo.yml .
           cp /tmp/chart/index.yaml .
           cp /tmp/chart/prometheus-prefect-exporter-$RELEASE_VERSION.* ./charts
-          git add ./artifacthub-repo.yml ./index.yaml prometheus-prefect-exporter-$RELEASE_VERSION.*
+          git add ./artifacthub-repo.yml ./index.yaml ./charts/prometheus-prefect-exporter-$RELEASE_VERSION.*
           git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
         env:
