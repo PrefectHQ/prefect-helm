@@ -89,6 +89,9 @@ spec:
             - --base-job-template
             - baseJobTemplate.json
             {{- end }}
+            {{- range .Values.worker.extraArgs }}
+            - {{ . | toString }}
+            {{- end }}
           workingDir: /home/prefect
           env:
             - name: HOME

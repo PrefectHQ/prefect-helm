@@ -475,6 +475,12 @@
           "items": {
             "type": "object"
           }
+        },
+        "extraArgs": {
+          "type": "array",
+          "title": "Extra Container Args",
+          "description": "array with extra args for the server container",
+          "form": true
         }
       }
     },

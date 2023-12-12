@@ -81,6 +81,9 @@ spec:
             - --limit
             - {{ .Values.agent.config.limit | quote }}
             {{- end }}
+            {{- range .Values.agent.extraArgs }}
+            - {{ . | toString }}
+            {{- end }}
           workingDir: /home/prefect
           env:
             - name: HOME

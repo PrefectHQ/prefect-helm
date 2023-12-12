@@ -155,6 +155,9 @@ agent:
   # -- array with extra volumeMounts for the agent pod
   extraVolumeMounts: []
 
+  # -- array with extra Arguments for the agent container to start with
+  extraArgs: []
+
 ## ServiceAccount configuration
 serviceAccount:
   # -- specifies whether a ServiceAccount should be created

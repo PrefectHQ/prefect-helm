@@ -512,13 +512,13 @@
         "extraEnvVarsCM": {
           "type": "string",
           "title": "Extra Env Vars ConfigMap",
-          "description": "name of existing ConfigMap containing extra env vars to add to server nodes",
+          "description": "name of existing ConfigMap containing extra env vars to add to worker nodes",
           "form": true
         },
         "extraEnvVarsSecret": {
           "type": "string",
           "title": "Extra Env Vars Secret",
-          "description": "name of existing Secret containing extra env vars to add to server nodes",
+          "description": "name of existing Secret containing extra env vars to add to worker nodes",
           "form": true
         },
         "extraContainers": {
@@ -533,7 +533,7 @@
         "extraVolumes": {
           "type": "array",
           "title": "Extra Volumes",
-          "description": "array with extra volumes for the server pod",
+          "description": "array with extra volumes for the worker pod",
           "form": true,
           "items": {
             "type": "object"
@@ -542,11 +542,17 @@
         "extraVolumeMounts": {
           "type": "array",
           "title": "Extra Volume Mounts",
-          "description": "array with extra volumeMounts for the server pod",
+          "description": "array with extra volumeMounts for the worker pod",
           "form": true,
           "items": {
             "type": "object"
           }
+        },
+        "extraArgs": {
+          "type": "array",
+          "title": "Extra Container Args",
+          "description": "array with extra args for the worker container",
+          "form": true
         }
       }
     },
