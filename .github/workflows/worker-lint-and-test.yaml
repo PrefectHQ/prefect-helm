@@ -1,15 +1,22 @@
 name: Lint and Test Prefect Worker Chart
 
 "on":
-  pull_request:
+  pull_request_target:
     paths:
       - .github/workflows/worker-lint-and-test.yaml
       - .github/linters/worker-ct.yaml
       - charts/prefect-worker/**
+
+# Do not grant jobs any permissions by default
+permissions: {}
+
 jobs:
   lint_test:
     name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
+    permissions:
+      # required to read from the repo
+      contents: read
     strategy:
       matrix:
         kubernetes:
