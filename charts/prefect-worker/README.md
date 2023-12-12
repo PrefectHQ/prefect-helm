@@ -246,6 +246,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
+| worker.config.baseJobTemplateName | string | `nil` | Name for the base job template. If unspecified, Prefect will use the default base job template name for the given worker type. |
 | worker.config.baseJobTemplate | string | `nil` | JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored. |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
 | worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
