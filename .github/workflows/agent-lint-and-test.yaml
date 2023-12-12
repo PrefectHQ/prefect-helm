@@ -10,7 +10,6 @@ name: Lint and Test Prefect Agent Chart
 # Do not grant jobs any permissions by default
 permissions: {}
 
-
 jobs:
   lint_test:
     name: "lint-test (${{ matrix.kubernetes }})"
