@@ -26,6 +26,10 @@ It is possible for multiple agent processes to be started for a single work pool
 
 [Prefect server](https://docs.prefect.io/latest/guides/host/) is a self-hosted open source backend that makes it easy to observe and orchestrate your Prefect flows. It is an alternative to using the hosted [Prefect Cloud](https://docs.prefect.io/latest/cloud/) platform. Prefect Cloud provides additional features including automations and user management.
 
+## [Prometheus Prefect Exporter](charts/prometheus-prefect-exporter/)
+
+The Prometheus Prefect Exporter is a tool to pull relevant Prefect metrics from a hosted Prefect Server instance
+
 ## Usage
 
 [Helm](https://helm.sh) must be installed to use the charts.

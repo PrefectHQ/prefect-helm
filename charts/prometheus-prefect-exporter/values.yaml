@@ -1,0 +1,205 @@
+# -- Number of replicas
+replicaCount: 1
+
+# -- Image registry
+image:
+  repository: prefecthq/prometheus-prefect-exporter
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: 1.0.0
+
+# -- String to partially override prometheus-prefect-exporter.fullname template (will maintain the release name)
+nameOverride: ""
+
+# -- String to fully override prometheus-prefect-exporter.fullname template
+fullnameOverride: ""
+
+# -- Global Docker registry secret names as an array
+imagePullSecrets: []
+
+# -- Enable creation of ServiceAccount
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+# -- Prefect API URL to connect to for metrics
+prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
+# -- Environment variables to configure application
+env: {}
+  # Plain vars
+  # foo: bar
+  # my_env: my_value
+
+# -- Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions
+podDisruptionBudget: {}
+  # maxUnavailable: 0
+
+# -- Pod annotations
+podAnnotations: {}
+
+# -- To specify security settings for a Pod
+podSecurityContext: {}
+  # fsGroup: 2000
+
+# -- Defines privilege and access control settings for a Pod or Container
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+# -- Kubernetes servide to expose Pod
+service:
+  # -- Kubernetes Service type. Allowed values: NodePort, LoadBalancer or ClusterIP
+  type: ClusterIP
+  # -- Kubernetes Service port
+  port: 80
+  # -- Pod expose port
+  targetPort: 8000
+
+# -- Enable ServiceMonitor to get metrics
+# ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor
+serviceMonitor:
+  # -- Enable or disable
+  enabled: false
+  interval: 30s
+  scrapeTimeout: 10s
+  metricRelabelings: []
+  relabelings: []
+
+## -- Custom PrometheusRules to be defined
+# ref: https://github.com/coreos/prometheus-operator#customresourcedefinitions
+prometheusRule:
+  enabled: false
+  additionalLabels: {}
+  rules: []
+  # - alert: PrefectServerDown
+  #   expr: sum by (pod, namespace) (kube_pod_info{namespace="prefect", pod=~"prefect-server.*"}) == 0
+  #   for: 0m
+  #   labels:
+  #     severity: critical
+  #   annotations:
+  #     summary: Flow Run {{ $labels.flow_name }} {{ $labels.state_name }} (Flow {{ $labels.flow_name }})
+  #     description: "Flow Run failed or crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectDeploymentsAllPaused
+  #   expr: (count by (namespace) (prefect_info_deployment) == bool count by (namespace) (prefect_info_deployment{is_schedule_active="False"})) == 1
+  #   for: 0m
+  #   labels:
+  #     severity: warning
+  #   annotations:
+  #     summary: All deployments are paused
+  #     description: "All deployments are paused\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectAgentWorkersNotRunning
+  #   expr: sum(kube_deployment_status_replicas{deployment=~".*agent|.*worker"}) == 0
+  #   for: 0m
+  #   labels:
+  #     severity: critical
+  #   annotations:
+  #     summary: All agent and worker are not running
+  #     description: "All agent and worker are not running\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectWorkPoolNotAllow
+  #   expr: prefect_work_pools_total == 0
+  #   for: 0m
+  #   labels:
+  #     severity: critical
+  #   annotations:
+  #     summary: Worker pool not allowed
+  #     description: "Worker pool not allowed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectWorkPoolsAllPaused
+  #   expr: (count by (namespace) (prefect_work_pools_total) == bool count by (namespace) (prefect_info_work_pools{is_paused="True"})) == 1
+  #   for: 0m
+  #   labels:
+  #     severity: warning
+  #   annotations:
+  #     summary: All work pools are paused
+  #     description: "All work pools are paused\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectWorkQueueNotAllow
+  #   expr: prefect_work_queues_total == 0
+  #   for: 0m
+  #   labels:
+  #     severity: critical
+  #   annotations:
+  #     summary: Worker queue not allowed
+  #     description: "Worker queue not allowed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectWorkQueuesAllPaused
+  #   expr: (count by (namespace) (prefect_work_queues_total) == bool count by (namespace) (prefect_info_work_queues{is_paused="True"})) == 1
+  #   for: 0m
+  #   labels:
+  #     severity: warning
+  #   annotations:
+  #     summary: All work queues are paused
+  #     description: "All work queues are paused\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+  # - alert: PrefectFlowRunCrashedOrFailed
+  #   expr: group by (flow_name, flow_run_name, namespace) (count_over_time(prefect_info_flow_runs{state_name=~"Failed|Crashed"}[1m]))
+  #   for: 0m
+  #   labels:
+  #     severity: critical
+  #   annotations:
+  #     summary: Flow Run {{ $labels.flow_name }} {{ $labels.state_name }} (Flow {{ $labels.flow_name }})
+  #     description: "Flow Run failed or crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+
+
+# -- Enable livenessProbe
+livenessProbe: false
+# -- Enable readinessProbe
+readinessProbe: false
+# -- Ingress configuration to expose app
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+# -- The resources limits and requested
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+# -- Autoscaling with CPU or memory utilization percentage
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Node labels for pod assignment
+nodeSelector: {}
+
+# -- Tolerations for pod assignment
+tolerations: []
+
+# -- Affinity for pod assignment
+affinity: {}
