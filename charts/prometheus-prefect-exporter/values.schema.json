@@ -1,0 +1,316 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "replicaCount" : {
+      "type": "integer",
+      "title": "Replica Count",
+      "description": "Number of replicas to deploy",
+      "form": true
+    },
+    "image": {
+      "type": "object",
+      "title": "Image",
+      "description": "Image to deploy",
+      "form": true,
+      "properties": {
+        "repository": {
+          "type": "string",
+          "title": "Repository",
+          "description": "Image repository",
+          "form": true
+        },
+        "tag": {
+          "type": "string",
+          "title": "Tag",
+          "description": "Image tag",
+          "form": true
+        },
+        "pullPolicy": {
+          "type": "string",
+          "title": "Pull Policy",
+          "description": "Image pull policy",
+          "form": true
+        }
+      }
+    },
+    "nameOverride": {
+      "type": "string",
+      "title": "Name Override",
+      "description": "Override the name of the chart",
+      "form": true
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "title": "Fullname Override",
+      "description": "Override the fullname of the chart",
+      "form": true
+    },
+    "imagePullSecrets": {
+      "type": "array",
+      "title": "Image Pull Secrets",
+      "description": "Image pull secrets",
+      "form": true
+    },
+    "serviceAccount": {
+      "type": "object",
+      "title": "Service Account",
+      "description": "Service account",
+      "form": true,
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "title": "Create",
+          "description": "Create service account",
+          "form": true
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "Service account annotations",
+          "form": true
+        },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "Service account name",
+          "form": true
+        }
+      }
+    },
+    "prefectApiUrl": {
+      "type": "string",
+      "title": "Prefect API URL",
+      "description": "Prefect API URL",
+      "form": true
+    },
+    "env": {
+      "type": "object",
+      "title": "Environment Variables",
+      "description": "Environment variables",
+      "form": true
+    },
+    "podDisruptionBudget": {
+      "type": "object",
+      "title": "Pod Disruption Budget",
+      "description": "Pod disruption budget",
+      "form": true
+    },
+    "podAnnotations": {
+      "type": "object",
+      "title": "Pod Annotations",
+      "description": "Pod annotations",
+      "form": true
+    },
+    "podSecurityContext": {
+      "type": "object",
+      "title": "Pod Security Context",
+      "description": "Pod security context",
+      "form": true
+    },
+    "securityContext": {
+      "type": "object",
+      "title": "Security Context",
+      "description": "Security context",
+      "form": true
+    },
+    "service": {
+      "type": "object",
+      "additionalProperties": true,
+      "title": "Service",
+      "description": "Service",
+      "form": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "description": "Service type",
+          "form": true
+        },
+        "port": {
+          "type": "integer",
+          "title": "Port",
+          "description": "Service port",
+          "form": true
+        },
+        "targetPort": {
+          "type": "integer",
+          "title": "Target Port",
+          "description": "Service target port",
+          "form": true
+        }
+      }
+    },
+    "serviceMonitor": {
+      "type": "object",
+      "title": "Service Monitor",
+      "description": "Service monitor",
+      "form": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "Enable service monitor",
+          "form": true
+        },
+        "interval": {
+          "type": "string",
+          "title": "Interval",
+          "description": "Service monitor interval",
+          "form": true
+        },
+        "scrapeTimeout": {
+          "type": "string",
+          "title": "Timeout",
+          "description": "Service monitor timeout",
+          "form": true
+        },
+        "metricRelabelings" : {
+          "type": "array",
+          "title": "Metric Relabelings",
+          "description": "Service monitor metric relabelings",
+          "form": true
+        },
+        "relabelings" : {
+          "type": "array",
+          "title": "Relabelings",
+          "description": "Service monitor relabelings",
+          "form": true
+        }
+      }
+    },
+    "prometheusRule": {
+      "type": "object",
+      "title": "Prometheus Rule",
+      "description": "Prometheus rule",
+      "form": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "Enable prometheus rule",
+          "form": true
+        },
+        "additionalLabels": {
+          "type": "object",
+          "title": "Additional Labels",
+          "description": "Prometheus rule additional labels",
+          "form": true
+        },
+        "rules": {
+          "type": "array",
+          "title": "Rules",
+          "description": "Prometheus rule rules",
+          "form": true
+        }
+      }
+    },
+    "livenessProbe": {
+      "type": "boolean",
+      "title": "Liveness Probe",
+      "description": "Enable liveness probe",
+      "form": true
+    },
+    "readinessProbe": {
+      "type": "boolean",
+      "title": "Readiness Probe",
+      "description": "Enable readiness probe",
+      "form": true
+    },
+    "ingress": {
+      "type": "object",
+      "title": "Ingress",
+      "description": "Ingress",
+      "form": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "Enable ingress",
+          "form": true
+        },
+        "className": {
+          "type": "string",
+          "title": "Class Name",
+          "description": "Ingress class name",
+          "form": true
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "Ingress annotations",
+          "form": true
+        },
+        "hosts": {
+          "type": "array",
+          "title": "Hosts",
+          "description": "Ingress hosts",
+          "form": true
+        },
+        "tls": {
+          "type": "array",
+          "title": "TLS",
+          "description": "Ingress TLS",
+          "form": true
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "title": "Resources",
+      "description": "Resources",
+      "form": true
+    },
+    "autoscaling": {
+      "type": "object",
+      "title": "Autoscaling",
+      "description": "Autoscaling",
+      "form": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "Enable autoscaling",
+          "form": true
+        },
+        "minReplicas": {
+          "type": "integer",
+          "title": "Min Replicas",
+          "description": "Autoscaling min replicas",
+          "form": true
+        },
+        "maxReplicas": {
+          "type": "integer",
+          "title": "Max Replicas",
+          "description": "Autoscaling max replicas",
+          "form": true
+        },
+        "targetCPUUtilizationPercentage": {
+          "type": "integer",
+          "title": "Target CPU Utilization Percentage",
+          "description": "Autoscaling target CPU utilization percentage",
+          "form": true
+        }
+      }
+    },
+    "nodeSelector": {
+      "type": "object",
+      "title": "Node Selector",
+      "description": "Node selector",
+      "form": true
+    },
+    "tolerations": {
+      "type": "array",
+      "title": "Tolerations",
+      "description": "Tolerations",
+      "form": true
+    },
+    "affinity": {
+      "type": "object",
+      "title": "Affinity",
+      "description": "Affinity",
+      "form": true
+    }
+  }
+}

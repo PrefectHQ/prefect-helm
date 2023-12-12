@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "prometheus-prefect-exporter.fullname" . }}
+  labels:
+    {{- include "prometheus-prefect-exporter.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort | default .Values.service.port }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "prometheus-prefect-exporter.selectorLabels" . | nindent 4 }}
