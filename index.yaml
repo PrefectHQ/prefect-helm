@@ -2,6 +2,32 @@ apiVersion: v1
 entries:
   prefect-agent:
   - apiVersion: v2
+    appVersion: 2.14.13
+    created: "2024-01-04T22:05:10.989809553Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.13.3
+    description: Prefect Agent application bundle
+    digest: 21d34e7c1538f74fa9148d22a206c2790a02e829c658c1220601e9bc20388b25
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    - email: jimi@prefect.io
+      name: jimid27
+    - email: edward@prefect.io
+      name: parkedwards
+    name: prefect-agent
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-agent-2024.1.4.tgz
+    version: 2024.1.4
+  - apiVersion: v2
     appVersion: 2.14.12
     created: "2023-12-20T22:59:58.43611408Z"
     dependencies:
@@ -2361,6 +2387,36 @@ entries:
     version: 0.2.5
   prefect-server:
   - apiVersion: v2
+    appVersion: 2.14.13
+    created: "2024-01-04T22:05:10.996015739Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.13.3
+    - condition: postgresql.useSubChart
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 12.12.10
+    description: Prefect server application bundle
+    digest: d68d9cb4f6a72cda366e775d9844e13c5f55ad4bbe9dbf4065a929d506b26085
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    - email: jimi@prefect.io
+      name: jimid27
+    - email: edward@prefect.io
+      name: parkedwards
+    name: prefect-server
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-server-2024.1.4.tgz
+    version: 2024.1.4
+  - apiVersion: v2
     appVersion: 2.14.12
     created: "2023-12-20T22:59:58.442344957Z"
     dependencies:
@@ -4494,6 +4550,32 @@ entries:
     version: 2023.02.16
   prefect-worker:
   - apiVersion: v2
+    appVersion: 2.14.13
+    created: "2024-01-04T22:05:10.997189438Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.13.3
+    description: Prefect Worker application bundle
+    digest: 79884a68f3749dc009500e26a62c7368d6b57b3a5fd23ae507dbec246268ebc6
+    home: https://github.com/PrefectHQ
+    maintainers:
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    - email: jimi@prefect.io
+      name: jimid27
+    - email: edward@prefect.io
+      name: parkedwards
+    name: prefect-worker
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prefect-worker-2024.1.4.tgz
+    version: 2024.1.4
+  - apiVersion: v2
     appVersion: 2.14.12
     created: "2023-12-20T22:59:58.443662026Z"
     dependencies:
@@ -6180,4 +6262,4 @@ entries:
     urls:
     - https://prefecthq.github.io/prefect-helm/charts/prometheus-prefect-exporter-2023.12.7.tgz
     version: 2023.12.7
-generated: "2023-12-20T22:59:58.434828208Z"
+generated: "2024-01-04T22:05:10.988566704Z"
