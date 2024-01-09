@@ -3,7 +3,7 @@
 ## Overview
 
 This chart deploys a [Prometheus Exporter](https://github.com/PrefectHQ/prometheus-prefect-exporter) for Prefect Server, providing relevant metrics from your deployed Prefect Server instance.
-Shoutout to [@ialejandro](https://github.com/ialejandro) for the original work on this chart!
+Shoutout to @ialejandro for the original work on this chart!
 
 ## Installing the Chart
 
@@ -66,7 +66,7 @@ Shoutout to [@ialejandro](https://github.com/ialejandro) for the original work o
 | podAnnotations | object | `{}` | Pod annotations |
 | podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
 | podSecurityContext | object | `{}` | To specify security settings for a Pod |
-| prefectApiUrl | string | `"http://prefect-server.prefect.svc.cluster.local:4200"` | Prefect API URL to connect to for metrics |
+| prefectApiUrl | string | `"http://prefect-server.prefect.svc.cluster.local:4200/api"` | Prefect API URL to connect to for metrics |
 | prometheusRule.additionalLabels | object | `{}` |  |
 | prometheusRule.enabled | bool | `false` |  |
 | prometheusRule.rules | list | `[]` |  |
