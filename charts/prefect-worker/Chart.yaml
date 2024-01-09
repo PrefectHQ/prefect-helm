@@ -5,7 +5,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.13.3
+    version: 2.14.1
 description: Prefect Worker application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
