@@ -14,11 +14,11 @@ metadata:
   {{- end }}
 rules:
 - apiGroups: [""]
-  resources: ["pods", "pods/log", "pods/status"]
+  resources: ["events", "pods", "pods/log", "pods/status"]
   verbs: ["get", "watch", "list"]
 - apiGroups: ["batch"]
   resources: ["jobs"]
-  verbs: [ "get", "list", "watch", "create", "update", "patch", "delete" ]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 {{- if .Values.role.extraPermissions }}
 {{- include "common.tplvalues.render" (dict "value" .Values.role.extraPermissions "context" $) | nindent 0 }}
 {{- end }}
