@@ -95,6 +95,8 @@ spec:
             - name: PREFECT_UI_URL
               value: {{ .Values.server.uiConfig.prefectUiUrl | quote }}
             {{- end }}
+            - name: PREFECT_UI_STATIC_DIRECTORY
+              value: {{ .Values.server.uiConfig.prefectUiStaticDirectory | quote }}
             {{- if .Values.postgresql.enabled }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
               valueFrom:
@@ -141,6 +143,9 @@ spec:
             - mountPath: /tmp
               name: scratch
               subPathExpr: tmp
+            - mountPath: {{ .Values.server.uiConfig.prefectUiStaticDirectory }}
+              name: scratch
+              subPathExpr: ui-build
           {{- if .Values.server.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
