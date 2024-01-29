@@ -123,6 +123,8 @@ Workers each have a type corresponding to the execution environment to which the
       config:
         workPool: <target work pool name>
       selfHostedApiConfig:
+        # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
+        # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
         apiUrl: "https://<DNS of Self Hosted Cloud API>"
         accountId: <target account ID>
         workspaceId: <target workspace ID>
