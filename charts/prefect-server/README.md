@@ -183,6 +183,7 @@ No secrets are created when providing an existing secret.
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
 | server.uiConfig.enabled | bool | `true` | set PREFECT_UI_ENABLED; enable the UI on the server |
 | server.uiConfig.prefectUiApiUrl | string | `""` | sets PREFECT_UI_API_URL |
+| server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |
 | server.uiConfig.prefectUiUrl | string | `""` | sets PREFECT_UI_URL |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
