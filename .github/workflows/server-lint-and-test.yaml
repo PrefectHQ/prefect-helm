@@ -46,3 +46,6 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --config .github/linters/server-ct.yaml --helm-extra-set-args "--set=postgresql.auth.password=TESTING"
+
+
+        # test

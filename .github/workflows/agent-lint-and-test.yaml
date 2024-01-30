@@ -51,3 +51,6 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --config .github/linters/agent-ct.yaml --helm-extra-set-args "--set=agent.config.workQueueName=agent --set=agent.cloudApiConfig.accountId=${{ secrets.PREFECT_CLOUD_ACCOUNT_ID }} --set=agent.cloudApiConfig.workspaceId=${{ secrets.PREFECT_CLOUD_WORKSPACE_ID }}"
+
+
+        # test
