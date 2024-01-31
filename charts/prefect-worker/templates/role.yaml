@@ -1,3 +1,4 @@
+{{- if .Values.role.create }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
@@ -21,4 +22,5 @@ rules:
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
 {{- if .Values.role.extraPermissions }}
 {{- include "common.tplvalues.render" (dict "value" .Values.role.extraPermissions "context" $) | nindent 0 }}
+{{- end }}
 {{- end }}

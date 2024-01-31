@@ -590,10 +590,31 @@
       "form": true,
       "additionalProperties": false,
       "properties": {
+        "create": {
+          "type": "boolean",
+          "title": "Create",
+          "description": "create role",
+          "form": true
+        },
         "extraPermissions": {
           "type": "array",
           "title": "Extra Permissions",
           "description": "extra permissions to add to the role",
+          "form": true
+        }
+      }
+    },
+    "rolebinding": {
+      "type": "object",
+      "title": "RoleBinding",
+      "description": "rolebinding configuration",
+      "form": true,
+      "additionalProperties": false,
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "title": "Create",
+          "description": "create role binding",
           "form": true
         }
       }
