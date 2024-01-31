@@ -12,4 +12,3 @@ metadata:
 data:
   baseJobTemplate.json: {{ .Values.worker.config.baseJobTemplate | toJson }}
 {{- end }}
-
