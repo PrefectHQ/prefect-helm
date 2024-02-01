@@ -2,7 +2,7 @@
 Hash: SHA512
 
 apiVersion: v2
-appVersion: 2.14.19
+appVersion: 2.14.20
 dependencies:
 - - name: common
   repository: https://charts.bitnami.com/bitnami
@@ -26,20 +26,20 @@ version: 2024.2.1
 
 ...
 files:
-  prefect-agent-2024.2.1.tgz: sha256:3224ecb7a65242e8a45c414db2dff647ffddb4c2240d713c8293f887bf4ae0f3
+  prefect-agent-2024.2.1.tgz: sha256:42bffbf68c6c8c8544b634d47f24fbbab887525a7bf7bf8211741e8853572bf2
 -----BEGIN PGP SIGNATURE-----
 
-wsFcBAEBCgAQBQJlvA3LCRBmvyDZ/AdLeAAAGhwQAInguGmxhOf3eGORkaeJKUZ5
-By/HlfG4tcMYlc45p4c5sHKBTDCAj9eCmY8tc4L5zJjF8zrtg26Ju/hCZIDTqxgw
-Ay6cH0bgqsij70mM+fLCrtMc609gSz1rGOQ2KDFBlu60QOuw5VfuBof6qlAHm8B8
-i++h4JllvlYWDCuQYHCb6qMnCywb7AC4+3z/n+lctolFK+OzMwejeHwwqhf1VkVs
-uZlTvx+XIAHxeSTd1MAwGBciAhHLXZXJPooWZxfeNMPcgjNSKZ5K0aKjb4Fbfykf
-LqyNGNr8gmdYkKKMSRYT/dEeR5qA3WZbJMKHzpsxOK+/JvIcd5SJRl1MGeRDQeVY
-qu8ELq49BlIedke8sq7x/ShsBf4Efphjri0uXan1UmYN82gQKzD8tM36io+LoVjp
-iiFc77NpvjnOSSYAe7BhAIP1C7o8+lJ8SlAbB8DUmBdqMAW4MCYHGVauAKUzpNoZ
-UlWgheOJOL8SVUF37tHQ2uxD+YSdlSNclclqAgdml3NQPWQ+Fyy9bWJvvM7QBRFZ
-Xszw+9s6sTRstf4SBBO5rxo91/KKK45ej9zNNZrXJZBC4klhH3zHeqbiwzeLPg+X
-p9tcifEA698U11sf4F+1MlkirJEbrWzLizsPVhX3kNXCpPa6FFQjZ2nW+HADPBE8
-pomyMRDcoakKONUVfV11
-=fadq
+wsFcBAEBCgAQBQJlvCyFCRBmvyDZ/AdLeAAAHjEQALFghhvBqh94d1X39F3CWLVf
+u1LtRdozNieDDshOQVCZJLB37ACxjVV+lW5Yk18mrREvu1gxYXhbL0azoylxRTZs
+RbuzVoxBdoCu1fTwYdWbLruQVKtZuXlgwxxin6lWqAlRdLcfGh7oPwMRBe+lVRI5
+2Hgn6bKOKRwS05H/pYfmOHGnqBntWOODNtgKnf7pnYfqHQwyB2xn8kHY8V8MG3OC
+gPZh+E4LdKXHMozOlc54bkxrZp+5dxkbBto0ZJYRZXSxT8LosxQ8t54DLmhrgKoa
+T0oM6/WJ/57VPMs0EK+xzY3cbjn6hgQwlrW6kZ6HarPCjU4N/hrO1K4CL5e2ZKSa
+NPqBXUJOtztjCsSwKQSZ3B2VLpYi04U/AfCTq7b22JrVWnDFI+eLe9EZFzwyRTt5
+CTVfH8gJjpHG4MbfPnE11iWyazimV26d9ip6MMFkU9oYac7GlszMCUtwG3eUdqwT
+aAp3e4KJ1ia9/btOEhojpAMa8CGsjhsqNDM3H3m4c9N6JXQPkXRdqxomJAd3+j/u
+h2Js/P0Iv8tySSoa21pPMI5tfym5T0uSFMrtGSQoniDMcfpEgYLyYs8UXEF5O4aU
+AVabqZ5QA4fYph+EMp0Zkg9r6JlhnntDty0lE10tK4d6IzhuYAbT76zRYKb8Ss6u
+v99HUwKswElfVYS+n03l
+=+TLT
 -----END PGP SIGNATURE-----

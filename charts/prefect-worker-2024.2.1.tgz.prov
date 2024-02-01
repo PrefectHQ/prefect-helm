@@ -2,7 +2,7 @@
 Hash: SHA512
 
 apiVersion: v2
-appVersion: 2.14.19
+appVersion: 2.14.20
 dependencies:
 - - name: common
   repository: https://charts.bitnami.com/bitnami
@@ -26,20 +26,20 @@ version: 2024.2.1
 
 ...
 files:
-  prefect-worker-2024.2.1.tgz: sha256:ca742cadc728314bd47a1d2a73742a8c28838733d49dfcd5daeb3798bec19f1f
+  prefect-worker-2024.2.1.tgz: sha256:1c3b625889a2df4f02102c4a9a0284ede890cb187abfcd12ba7e83ac671e01b7
 -----BEGIN PGP SIGNATURE-----
 
-wsFcBAEBCgAQBQJlvA3PCRBmvyDZ/AdLeAAAmywQAJRacAEmz5yam0SCmJa9U+BP
-dvPmqKBFgC/Wu5OTDaKwUtjCTuWBj1XFSpki/2fCGiRF3EenDU32DlrmA7SphhzH
-/VXSKQjLmT5TBWLL1f9xrl9KvqjF3dZGfnUip+5IvzJ9T1wd3ttGMsFZfp/mKtSx
-x7MvBkfM61RhbfjxDfnab/3Ud5OsId2mwPLpeoaDdT2rQYXuVp4aqenl8ekMmwm/
-uI1hcZfrFadafEHaX8xvVVApzsNqhH3KtPXrYjHka6Klmq8Fwm2gdJ+dhUJXRKOX
-YwcrY18gJ9DAmEivID4YZw89CI79KgYouvP9V+QQodZobPok8pco+W4/vjj/JReL
-XHB4LrygCC4nElIqzwmy/AJqjawvSmiOIulWBVSaV1XkOl1Flmx4B9f9o4ix9etF
-FHWdIt47jOFKyuELZbd4OhIfTckkxNgGyZgmHUvyMztECrdrnXZQqo31tud89y3a
-Q+oxkr2UP7Orqdn0Lg2caxYAKZNZg7owYbGYSZtg5PWVGVptFG50/zPTFFReyJMa
-3zA2UTGfmCbH3hGQOm3auZ3zvOKrq0EhFpDv2v5EdN77vqJJLCrHMq/Xzcfm6hbq
-74aOUofoE9jQD/Zba3KdZNSX/XqBpMTVEDzXii4Fp3FLLWPUVRfw3ImfWzPX6Unn
-vj2YHG8p6tDessQCUGvD
-=O/vL
+wsFcBAEBCgAQBQJlvCyJCRBmvyDZ/AdLeAAAV7MQAItJyEFwBJbjJIXemDV9lp5J
+x++uwPgnuITN7yGihkehmXKA9jjFg7wRiBe/6NkhbOhCGvN6drUdrDWAdRslN1o7
+WEt4N7T+NFBe9oWIM72PQaZ9qOS/Coeh6vJZ1FR7m+QIi4YTOqtNoGYsaFXJwCr7
+K4W9zShcTFhPF9NzTBrElo1uOZAxxzdpF2ySArwoAqwrhEsmZTKEutcTGU6vh1op
+gU9IR0Q+MGOybfei6LwAyQdigCguBEmUyQmIQKoR4h3IUpYPUXI6b4lM1po09/Gp
+NHIjrLxcmE0pvawCjXNfs6UexbXZ689xxt6qpyJQ+pOOPDOncNyimK7ZzIysCUfy
+7QX87o3gep1gPRcGXSoKJmEvDM496MtOFdjcxNSWU+dXzQqoy8UmUxNLyt3zDZKx
+VemtXFYICDq3Ctu10ZVwqZCmnOdz2f5ajT5jX7FGHpUNo58dnRbB1Hei8X9TKIU4
+ATHq656uSJdtFW36QyUuuIqmPsKXVxN1w2bHoVGhaluDygC7svJMaaPdwJeLiUVM
+Bl1miIAOMmaU78prVmeEK29VOynBTCyFtqBpfAg88P1eEM+JVEiGaTYvXZ0U6mXO
+/WQMHtLSTrTifChfy+FTlxq4oj9Dywfgvqd6qRSQg5iUbthwH+b6wmQHjfensQz+
+7D/Kctlg8dp8wUsynTr2
+=aCpQ
 -----END PGP SIGNATURE-----
