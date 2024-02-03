@@ -76,7 +76,7 @@ Workers each have a type corresponding to the execution environment to which the
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
-### Configuring a Worker for Self Hosted Cloud (not to be confused with Prefect Server)
+### Configuring a Worker for Self Hosted Cloud (not to be confused with [Prefect Server](https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker#configuring-a-worker-for-prefect-server))
 
 1. Create a Kubernetes secret for a Prefect Self Hosted Cloud API key
 
