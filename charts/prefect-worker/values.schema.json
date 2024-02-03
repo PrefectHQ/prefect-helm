@@ -219,7 +219,7 @@
             }
           }
         },
-        "selfHostedApiConfig": {
+        "selfHostedCloudApiConfig": {
           "type": "object",
           "title": "Self Hosted API Config",
           "description": "self hosted api configuration",

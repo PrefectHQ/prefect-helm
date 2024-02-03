@@ -32,7 +32,7 @@ Require Self Hosted Cloud Account ID
 */}}
 {{- define "selfHosted.requiredConfig.accountId" -}}
 {{- if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- required "A Prefect Cloud Account ID is required (worker.selfHostedApiConfig.accountId)" .Values.worker.selfHostedApiConfig.accountId -}}
+    {{- required "A Prefect Cloud Account ID is required (worker.selfHostedCloudApiConfig.accountId)" .Values.worker.selfHostedCloudApiConfig.accountId -}}
 {{- end -}}
 {{- end -}}
 
@@ -41,7 +41,7 @@ Require Self Hosted Cloud Workspace ID
 */}}
 {{- define "selfHosted.requiredConfig.workspaceId" -}}
 {{- if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- required "A Prefect Cloud Workspace ID is required (worker.selfHostedApiConfig.workspaceId)" .Values.worker.selfHostedApiConfig.workspaceId -}}
+    {{- required "A Prefect Cloud Workspace ID is required (worker.selfHostedCloudApiConfig.workspaceId)" .Values.worker.selfHostedCloudApiConfig.workspaceId -}}
 {{- end -}}
 {{- end -}}
 
@@ -50,7 +50,7 @@ Require Self Hosted Cloud API URL
 */}}
 {{- define "selfHosted.requiredConfig.apiUrl" -}}
 {{- if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- required "The Self Hosted Cloud API URL is required (worker.selfHostedApiConfig.apiUrl)" .Values.worker.selfHostedApiConfig.apiUrl -}}
+    {{- required "The Self Hosted Cloud API URL is required (worker.selfHostedCloudApiConfig.apiUrl)" .Values.worker.selfHostedCloudApiConfig.apiUrl -}}
 {{- end -}}
 {{- end -}}
 
@@ -85,7 +85,7 @@ Require Prefect Server API URL
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "https://app.prefect.cloud/account/%s/workspace/%s" (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
 {{- else if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- printf "%s/account/%s/workspace/%s" .Values.worker.selfHostedApiConfig.uiUrl (include "selfHosted.requiredConfig.accountId" .) (include "selfHosted.requiredConfig.workspaceId" .) | quote }}
+    {{- printf "%s/account/%s/workspace/%s" .Values.worker.selfHostedCloudApiConfig.uiUrl (include "selfHosted.requiredConfig.accountId" .) (include "selfHosted.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
     {{- .Values.worker.serverApiConfig.uiUrl | quote }}
 {{- end }}

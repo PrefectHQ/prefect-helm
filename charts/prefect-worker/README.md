@@ -122,7 +122,7 @@ Workers each have a type corresponding to the execution environment to which the
       apiConfig: selfHosted
       config:
         workPool: <target work pool name>
-      selfHostedApiConfig:
+      selfHostedCloudApiConfig:
         # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
         # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
         apiUrl: "https://<DNS of Self Hosted Cloud API>"
@@ -290,12 +290,12 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | worker.replicaCount | int | `1` | number of worker replicas to deploy |
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
-| worker.selfHostedApiConfig.accountId | string | `""` | prefect account ID |
-| worker.selfHostedApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
-| worker.selfHostedApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
-| worker.selfHostedApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
-| worker.selfHostedApiConfig.uiUrl | string | `""` | self hosted UI url |
-| worker.selfHostedApiConfig.workspaceId | string | `""` | prefect workspace ID |
+| worker.selfHostedCloudApiConfig.accountId | string | `""` | prefect account ID |
+| worker.selfHostedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
+| worker.selfHostedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
+| worker.selfHostedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
+| worker.selfHostedCloudApiConfig.uiUrl | string | `""` | self hosted UI url |
+| worker.selfHostedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.serverApiConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
