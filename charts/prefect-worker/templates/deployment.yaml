@@ -116,8 +116,8 @@ spec:
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.selfHostedApiConfig.apiKeySecret.name }}
-                  key:  {{ .Values.worker.selfHostedApiConfig.apiKeySecret.key }}
+                  name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
