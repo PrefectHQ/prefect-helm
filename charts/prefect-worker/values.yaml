@@ -215,6 +215,8 @@ serviceAccount:
 
 ## Role configuration
 role:
+  # -- specifies whether a Role should be created
+  create: true
   ## List of extra role permissions
   ## e.g:
   ## extraPermissions:
@@ -223,3 +225,8 @@ role:
   ##    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
   # -- array with extra permissions to add to the worker role
   extraPermissions: []
+
+## RoleBinding configuration
+rolebinding:
+  # -- specifies whether a RoleBinding should be created
+  create: true

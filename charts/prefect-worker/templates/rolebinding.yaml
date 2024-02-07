@@ -1,3 +1,4 @@
+{{- if .Values.rolebinding.create }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
 metadata:
@@ -20,3 +21,4 @@ subjects:
   - kind: ServiceAccount
     name: {{ template "worker.serviceAccountName" . }}
     namespace: {{ include "common.names.namespace" . | quote }}
+{{- end }}
