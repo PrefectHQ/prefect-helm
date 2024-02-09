@@ -49,4 +49,4 @@ jobs:
 
       - name: Run chart-testing (install)
         run: |
-          ct install --config .github/linters/worker-ct.yaml --helm-extra-set-args "--set=worker.config.workPool=repo-prefect-helm-gha-workflow-tests --set=worker.cloudApiConfig.accountId=${{ secrets.PREFECT_CLOUD_ACCOUNT_ID }} --set=worker.cloudApiConfig.workspaceId=${{ secrets.PREFECT_CLOUD_WORKSPACE_ID }}" --set=worker.cloudApiConfig.cloudUrl=${{ secrets.PREFECT_CLOUD_API_URL }}"
+          ct install --config .github/linters/worker-ct.yaml --helm-extra-set-args "--set=worker.config.workPool=repo-prefect-helm-gha-workflow-tests --set=worker.cloudApiConfig.accountId=${{ secrets.PREFECT_CLOUD_ACCOUNT_ID }} --set=worker.cloudApiConfig.workspaceId=${{ secrets.PREFECT_CLOUD_WORKSPACE_ID }} --set=worker.cloudApiConfig.cloudUrl=${{ secrets.PREFECT_CLOUD_API_URL }}"
