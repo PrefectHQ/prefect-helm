@@ -14,7 +14,8 @@ jobs:
 
       # We set the chart release version here - the version schema
       # is a SemVer adherent date-based versioning scheme that looks like:
-      # 2024.1.1-123456
+      # 2024.2.9125019
+      # which equates to a release on 2/9/24 at 12:50:19
       - name: Get the version tags
         id: get_version
         run: |
