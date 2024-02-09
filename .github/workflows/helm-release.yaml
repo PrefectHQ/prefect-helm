@@ -1,12 +1,7 @@
 name: Release Helm Chart
 
 "on":
-  push:
-    tags:
-      # 2023.9.1, but not 2023.09.01
-      # 2023.11.5, but not 2023.11.05
-      # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
-      - '2[0-9][2-9][3-9].1?[0-9].[1-3]?[0-9]'
+  workflow_dispatch:
 
 jobs:
   release:
@@ -17,13 +12,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      # We set the chart release version here - the version schema
+      # is a SemVer adherent date-based versioning scheme that looks like:
+      # 2024.1.1-123456
       - name: Get the version tags
         id: get_version
         run: |
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo "RELEASE_VERSION=$(echo $GITHUB_REF | cut -d / -f 3)" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d-%H%M%S')" >> $GITHUB_OUTPUT
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prefect.git '*.*.*' | tail -n1 | sed 's/.*\///' \
@@ -147,3 +145,14 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+
+      - name: Create Github Release + Tag
+        run: |
+          gh release create $RELEASE_VERSION \
+            --generate-notes \
+            --notes "Packaged with Prefect version \
+            [$PREFECT_VERSION](https://github.com/PrefectHQ/prefect/releases/tag/$PREFECT_VERSION)"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
