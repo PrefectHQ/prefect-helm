@@ -14,14 +14,15 @@ jobs:
 
       # We set the chart release version here - the version schema
       # is a SemVer adherent date-based versioning scheme that looks like:
-      # 2024.1.1-123456
+      # 2024.2.9125019
+      # which equates to a release on 2/9/24 at 12:50:19
       - name: Get the version tags
         id: get_version
         run: |
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d-%H%M%S')" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prefect.git '*.*.*' | tail -n1 | sed 's/.*\///' \
