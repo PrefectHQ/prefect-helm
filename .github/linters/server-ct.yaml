@@ -3,4 +3,4 @@ charts:
   - charts/prefect-server
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
-helm-extra-args: --timeout 600s
+helm-extra-args: --timeout 90s
