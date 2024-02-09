@@ -53,7 +53,7 @@ spec:
       {{- end }}
       containers:
         - name: prefect-worker
-          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.prefectTag }}"
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.wrongtag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           command:
             - /usr/bin/tini
