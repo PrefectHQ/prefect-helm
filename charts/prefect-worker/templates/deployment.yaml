@@ -63,6 +63,7 @@ spec:
           args:
             - prefect
             - worker
+            - start
             - --type
             - {{ .Values.worker.config.type | quote }}
             - --pool
