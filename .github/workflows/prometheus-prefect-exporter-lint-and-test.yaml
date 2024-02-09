@@ -2,10 +2,6 @@ name: Lint and Test Prometheus Prefect Exporter Chart
 
 "on":
   pull_request:
-    paths:
-      - .github/workflows/prometheus-prefect-exporter-lint-and-test.yaml
-      - .github/linters/prometheus-prefect-exporter-ct.yaml
-      - charts/prometheus-prefect-exporter/**
 
 jobs:
   lint_test:

@@ -2,10 +2,6 @@ name: Lint and Test Prefect Server Chart
 
 "on":
   pull_request:
-    paths:
-      - .github/workflows/server-lint-and-test.yaml
-      - .github/linters/server-ct.yaml
-      - charts/prefect-server/**
 
 # Do not grant jobs any permissions by default
 permissions: {}
