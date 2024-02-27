@@ -65,6 +65,8 @@ The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_reposito
 
     Refer to the [Helm `install` documentation](https://helm.sh/docs/helm/helm_install/) for all options.
 
+The helm charts are tested against Kubernetes 1.26.0 and newer minor versions.
+
 ### Installing development versions
 
 Development versions of the Helm chart will always be available directly from this Github repository.
@@ -127,7 +129,7 @@ See comments in `values.yaml`.
 
 ### Security context
 
-By default, the agent, worker, and server run as an unprivileged user with a read-only root filesystem. You can customize the security context settings for both the agent and server in the `values.yaml` file for your use case.
+By default, the worker (or agent), and server run as an unprivileged user with a read-only root filesystem. You can customize the security context settings for both the worker and server in the `values.yaml` file for your use case.
 
 If you need to install system packages or configure other settings at runtime, you can configure a writable filesystem and run as root by configuring the pod and container security context accordingly:
 
@@ -164,7 +166,7 @@ The other default settings, such as a read-only root filesystem, are suitable fo
 
 ### Dask
 
-If you are running flows on your agent’s pod (i.e. with Process infrastructure), and using the Dask task runner to create Dask Kubernetes clusters, you will need to grant the following permissions within `values.yaml`.
+If you are running flows on your worker’s pod (i.e. with Process infrastructure), and using the Dask task runner to create Dask Kubernetes clusters, you will need to grant the following permissions within `values.yaml`.
 
 ```yaml
 role:
