@@ -5,7 +5,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.14.1
+    version: 2.16.1
   - name: postgresql
     condition: postgresql.useSubChart
     repository: https://charts.bitnami.com/bitnami
