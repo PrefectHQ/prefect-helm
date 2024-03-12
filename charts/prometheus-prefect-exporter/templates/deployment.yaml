@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "prometheus-prefect-exporter.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "prometheus-prefect-exporter.labels" . | nindent 4 }}
 spec:

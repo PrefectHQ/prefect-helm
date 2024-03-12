@@ -311,6 +311,12 @@
       "title": "Affinity",
       "description": "Affinity",
       "form": true
+    },
+    "common": {
+      "type": "object",
+      "title": "Common",
+      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests.",
+      "form": true
     }
   }
 }
