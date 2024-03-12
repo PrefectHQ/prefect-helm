@@ -2,6 +2,12 @@ apiVersion: v2
 appVersion: "latest"
 description: A Helm chart to deploy Prometheus Prefect Exporter
 home: https://github.com/PrefectHQ
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 2.16.1
 keywords:
   - prometheus-prefect-exporter
 maintainers:

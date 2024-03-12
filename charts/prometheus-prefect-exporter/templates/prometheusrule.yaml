@@ -3,6 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: {{ template "prometheus-prefect-exporter.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "prometheus-prefect-exporter.labels" . | nindent 4 }}
     {{- with .Values.prometheusRule.additionalLabels -}}

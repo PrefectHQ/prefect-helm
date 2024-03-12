@@ -49,6 +49,12 @@ Shoutout to @ialejandro for the original work on this chart!
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://charts.bitnami.com/bitnami | common | 2.16.1 |
+
 ## Values
 
 | Key | Type | Default | Description |
