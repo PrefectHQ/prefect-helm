@@ -177,7 +177,7 @@ Workers each have a type corresponding to the execution environment to which the
 
 ### Deploying multiple workers to a single namespace
 
-If you want to run more than one worker in a single Kubernetes namespace, you will need to specify the `fullnameOveride` parameter at install time of one of the workers.
+If you want to run more than one worker in a single Kubernetes namespace, you will need to specify the `fullnameOverride` parameter at install time of one of the workers.
 
 ```yaml
 fullnameOverride: prefect-worker-2
