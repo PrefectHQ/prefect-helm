@@ -22,7 +22,7 @@ Prefect Agent application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.16.1 |
+| https://charts.bitnami.com/bitnami | common | 2.19.1 |
 
 ## Values
 
