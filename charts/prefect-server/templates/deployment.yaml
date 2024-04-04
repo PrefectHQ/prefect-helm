@@ -65,13 +65,13 @@ spec:
             - server
             - start
             - --port
-            - {{ .Values.service.targetPort | quote }}
+            - {{ include  "target-port" (dict "ports" .Values.service.ports "name" "server-svc-port") | quote }}
             {{- range .Values.server.extraArgs }}
             - {{ . | toString }}
             {{- end }}
           workingDir: /home/prefect
           ports:
-            - containerPort: {{ int .Values.service.targetPort }}
+            - containerPort: {{ include  "target-port" (dict "ports" .Values.service.ports "name" "server-svc-port") }}
           env:
             - name: HOME
               value: /home/prefect
@@ -84,7 +84,7 @@ spec:
             - name: PREFECT_SERVER_API_HOST
               value: {{ .Values.server.prefectApiHost | quote }}
             - name: PREFECT_SERVER_API_PORT
-              value: {{ .Values.service.targetPort  | quote }}
+              value: {{ include  "target-port" (dict "ports" .Values.service.ports "name" "server-svc-port") | quote }} 
             - name: PREFECT_UI_ENABLED
               value: {{ .Values.server.uiConfig.enabled | quote }}
             {{- if .Values.server.uiConfig.prefectUiApiUrl }}
@@ -126,14 +126,14 @@ spec:
           livenessProbe:
             httpGet:
               path: /api/health
-              port: {{ .Values.service.targetPort }}
+              port: {{ include  "target-port" (dict "ports" .Values.service.ports "name" "server-svc-port") }}
           {{- toYaml .Values.server.livenessProbe.config | nindent 12 }}
           {{- end }}
           {{- if .Values.server.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /api/ready
-              port: {{ .Values.service.targetPort }}
+              port: {{ include  "target-port" (dict "ports" .Values.service.ports "name" "server-svc-port") }}
           {{- toYaml .Values.server.readinessProbe.config | nindent 12 }}
           {{- end }}
           volumeMounts:

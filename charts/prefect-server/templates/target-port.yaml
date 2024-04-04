@@ -1,0 +1,14 @@
+{{- define "target-port" }}
+{{- $ports := .ports }}
+{{- $targetPortName := .name }}
+{{- $targetPortNumber := 0 }}
+
+{{- range $ports }}
+  {{- if eq .name $targetPortName }}
+    {{- $targetPortNumber = .targetPort }}
+  {{- end }}
+{{- end }}
+
+{{- $targetPortNumber }}
+
+{{- end }}

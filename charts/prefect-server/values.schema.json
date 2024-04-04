@@ -524,11 +524,23 @@
           "description": "service type",
           "form": true
         },
-        "port": {
-          "type": "integer",
-          "title": "Port",
-          "description": "service port",
-          "form": true
+        "ports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "port": {
+                "type": "integer"
+              },
+              "targetPort": {
+                "type": "integer"
+              }
+            },
+            "required": ["name", "port", "targetPort"]
+          }
         },
         "clusterIP": {
           "type": "string",
@@ -573,6 +585,12 @@
           "type": "boolean",
           "title": "Enabled",
           "description": "enable ingress record generation for server",
+          "form": true
+        },
+        "servicePort": {
+          "type": "string",
+          "title": "Service Port Name",
+          "description": "service port name",
           "form": true
         },
         "className": {
