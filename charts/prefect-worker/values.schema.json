@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema#",
   "type": "object",
-  "additionalProperties": false,
+  "additionalProperties": true,
   "properties": {
     "nameOverride": {
       "type": "string",
@@ -38,7 +38,7 @@
       "title": "Worker",
       "description": "worker configuration",
       "form": true,
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "clusterUid": {
           "type": "string",
@@ -51,7 +51,7 @@
           "title": "Image",
           "description": "worker image configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "repository": {
               "type": "string",
@@ -93,7 +93,7 @@
           "title": "Config",
           "description": "general configuration of the worker",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "workPool": {
               "type": "string",
@@ -177,7 +177,7 @@
           "title": "Cloud API Config",
           "description": "cloud api configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "accountId": {
               "type": "string",
@@ -224,7 +224,7 @@
           "title": "Self Hosted API Config",
           "description": "self hosted api configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "accountId": {
               "type": "string",
@@ -277,7 +277,7 @@
           "title": "Server API Config",
           "description": "server api configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "apiUrl": {
               "type": "string",
@@ -304,14 +304,14 @@
           "title": "Resources",
           "description": "worker resource configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "requests": {
               "type": "object",
               "title": "Requests",
               "description": "the requested resources for the worker container",
               "form": true,
-              "additionalProperties": false,
+              "additionalProperties": true,
               "properties": {
                 "cpu": {
                   "type": "string",
@@ -332,7 +332,7 @@
               "title": "Limits",
               "description": "the requested limits for the worker container",
               "form": true,
-              "additionalProperties": false,
+              "additionalProperties": true,
               "properties": {
                 "cpu": {
                   "type": "string",
@@ -355,7 +355,7 @@
           "title": "Liveness Probe",
           "description": "worker liveness probe configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "enabled": {
               "type": "boolean",
@@ -368,7 +368,7 @@
               "title": "Config",
               "description": "worker liveness probe configuration",
               "form": true,
-              "additionalProperties": false,
+              "additionalProperties": true,
               "properties": {
                 "initialDelaySeconds": {
                   "type": "integer",
@@ -409,7 +409,7 @@
           "title": "Pod Security Context",
           "description": "worker pod security context configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "fsGroup": {
               "type": "integer",
@@ -442,7 +442,7 @@
           "title": "Container Security Context",
           "description": "worker container security context configuration",
           "form": true,
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "allowPrivilegeEscalation": {
               "type": "boolean",
@@ -561,7 +561,7 @@
       "title": "Service Account",
       "description": "service account configuration",
       "form": true,
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "create": {
           "type": "boolean",
@@ -588,7 +588,7 @@
       "title": "Role",
       "description": "role configuration",
       "form": true,
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "create": {
           "type": "boolean",
@@ -609,7 +609,7 @@
       "title": "RoleBinding",
       "description": "rolebinding configuration",
       "form": true,
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "create": {
           "type": "boolean",
