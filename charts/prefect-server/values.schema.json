@@ -721,7 +721,7 @@
           "form": true,
           "properties": {
             "postgresql": {
-              "type": "integer",
+              "type": ["integer","string"],
               "title": "Postgres",
               "description": "PostgreSQL container port",
               "form": true
