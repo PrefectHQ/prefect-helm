@@ -524,7 +524,13 @@
           "description": "service type",
           "form": true
         },
-        "ports": {
+        "port": {
+          "type": "integer",
+          "title": "Port",
+          "description": "service port",
+          "form": true
+        },
+        "extraPorts": {
           "type": "array",
           "items": {
             "type": "object",

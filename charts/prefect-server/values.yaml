@@ -185,14 +185,22 @@ serviceAccount:
 
 ## Service configuration
 service:
-  ports:
-    - name: server-svc-port
-      # -- service port
-      port: 4200
-      # -- target port of the server pod; also sets PREFECT_SERVER_API_PORT
-      targetPort: 4200
-      # -- service port if defining service as type nodeport
-      nodePort: ""
+  # -- service port
+  port: 4200
+  # -- target port of the server pod; also sets PREFECT_SERVER_API_PORT
+  targetPort: 4200
+  # -- service port if defining service as type nodeport
+  nodePort: ""
+
+  extraPorts:
+    # # example extra ports
+    # - name: sample-svc-port
+    #   # -- service port
+    #   port: 8080
+    #   # -- target port
+    #   targetPort: 8080
+    #   # -- service port if defining service as type nodeport
+    #   nodePort: ""
       
   # -- service type
   type: ClusterIP
