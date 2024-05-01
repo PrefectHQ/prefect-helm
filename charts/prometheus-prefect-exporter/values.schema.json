@@ -117,7 +117,7 @@
     },
     "service": {
       "type": "object",
-      "additionalProperties": true,
+      "additionalProperties": false,
       "title": "Service",
       "description": "Service",
       "form": true,

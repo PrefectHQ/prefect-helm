@@ -38,7 +38,7 @@
       "title": "Server",
       "description": "server configuration",
       "form": true,
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "image": {
           "type": "object",
@@ -145,7 +145,7 @@
           "title": "Autoscaling",
           "description": "server autoscaling configuration",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
@@ -190,14 +190,14 @@
           "title": "Resources",
           "description": "server resource requests and limits",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "requests": {
               "type": "object",
               "title": "Requests",
               "description": "server resource requests",
               "form": true,
-              "additionalProperties": true,
+              "additionalProperties": false,
               "properties": {
                 "cpu": {
                   "type": "string",
@@ -218,7 +218,7 @@
               "title": "Limits",
               "description": "server resource limits",
               "form": true,
-              "additionalProperties": true,
+              "additionalProperties": false,
               "properties": {
                 "cpu": {
                   "type": "string",
@@ -241,7 +241,7 @@
           "title": "Liveness Probe",
           "description": "server liveness probe configuration",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
@@ -254,7 +254,7 @@
               "title": "Liveness Probe",
               "description": "server liveness probe configuration",
               "form": true,
-              "additionalProperties": true,
+              "additionalProperties": false,
               "properties": {
                 "initialDelaySeconds": {
                   "type": "integer",
@@ -295,7 +295,7 @@
           "title": "Readiness Probe",
           "description": "server readiness probe configuration",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
@@ -308,7 +308,7 @@
               "title": "Readiness Probe",
               "description": "server readiness probe configuration",
               "form": true,
-              "additionalProperties": true,
+              "additionalProperties": false,
               "properties": {
                 "initialDelaySeconds": {
                   "type": "integer",
@@ -349,7 +349,7 @@
           "title": "Pod Security Context",
           "description": "server pod security context",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "runAsUser": {
               "type": "integer",
@@ -376,7 +376,7 @@
           "title": "Container Security Context",
           "description": "server container security context",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "runAsUser": {
               "type": "integer",
@@ -489,7 +489,7 @@
       "title": "Service Account",
       "description": "server service account configuration",
       "form": true,
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "create": {
           "type": "boolean",
@@ -516,7 +516,7 @@
       "title": "Service",
       "description": "server service configuration",
       "form": true,
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "type": {
           "type": "string",
@@ -567,7 +567,7 @@
       "title": "Ingress",
       "description": "server ingress configuration",
       "form": true,
-      "additionalProperties": true,
+      "additionalProperties": false,
       "properties": {
         "enabled": {
           "type": "boolean",
@@ -586,7 +586,7 @@
           "title": "Host",
           "description": "server ingress host configuration",
           "form": true,
-          "additionalProperties": true,
+          "additionalProperties": false,
           "properties": {
             "hostname": {
               "type": "string",
