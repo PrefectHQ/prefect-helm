@@ -33,6 +33,12 @@
       "description": "annotations to add to all deployed objects",
       "form": true
     },
+    "enable": {
+      "type": "boolean",
+      "title": "Enable chart",
+      "description": "determines whether to enable chart",
+      "form": true
+    },
     "worker": {
       "type": "object",
       "title": "Worker",
