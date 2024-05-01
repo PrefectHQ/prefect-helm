@@ -9,6 +9,8 @@ namespaceOverride: ""
 commonLabels: {}
 # -- annotations to add to all deployed objects
 commonAnnotations: {}
+# -- determines whether to enable the chart
+enable: true
 
 ## Deployment Configuration
 agent:
