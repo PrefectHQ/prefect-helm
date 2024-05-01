@@ -25,7 +25,7 @@ jobs:
           echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
-            https://github.com/PrefectHQ/prefect.git '*.*.*' | tail -n1 | sed 's/.*\///' \
+            https://github.com/PrefectHQ/prefect.git '[!prefect-]*.*.*' | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_OUTPUT
 
       - name: Copy Artifact Hub metadata
@@ -39,7 +39,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Set up Helm
-        uses: azure/setup-helm@v3.5
+        uses: azure/setup-helm@v4
 
       - name: Prepare GPG key for signing
         run: |
