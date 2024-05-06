@@ -192,7 +192,7 @@ service:
   # -- service port if defining service as type nodeport
   nodePort: ""
 
-  extraPorts:
+  extraPorts: []
     # # example extra ports
     # - name: sample-svc-port
     #   # -- service port
