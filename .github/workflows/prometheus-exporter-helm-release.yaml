@@ -23,7 +23,7 @@ jobs:
           set -x
 
           echo "CHART_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
-          echo "RELEASE_VERSION=prefect-prometheus-exporter-$CHART_VERSION" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=prometheus-prefect-exporter-$CHART_VERSION" >> $GITHUB_OUTPUT
           echo "PROMETHEUS_PREFECT_EXPORTER_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prometheus-prefect-exporter | tail -n1 | sed 's/.*\///' \
