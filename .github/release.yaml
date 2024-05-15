@@ -20,6 +20,9 @@ changelog:
     - title: Exciting New Features 🎉
       labels:
         - feature
+    - title: Prometheus Exporter
+      labels:
+        - exporter
     - title: Fixes
       labels:
         - fix
