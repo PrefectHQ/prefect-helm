@@ -141,7 +141,8 @@ jobs:
       - name: Trigger deploy-latest-helm-version workflow
         run: |
           gh workflow run deploy-latest-helm-version.yaml \
-            --ref main -f release_version=$RELEASE_VERSION
+            --ref main \
+            -f release_version=$RELEASE_VERSION
         env:
           GITHUB_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
