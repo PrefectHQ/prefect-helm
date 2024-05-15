@@ -3,8 +3,8 @@ name: Deploy latest helm releases to internal cluster
 "on":
   workflow_dispatch:
     inputs:
-      helm_version:
-        description: Release Tag
+      release_version:
+        description: Release tag
 
 jobs:
   update_helm_releases:
@@ -19,6 +19,6 @@ jobs:
           gh workflow run updatecli-helm-integration-tests.yaml \
             --repo prefecthq/ops-cluster-deployment \
             --ref main \
-            -f helm_version=${{ github.ref_name }}
+            -f release_version=${{ github.event.inputs.release_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
