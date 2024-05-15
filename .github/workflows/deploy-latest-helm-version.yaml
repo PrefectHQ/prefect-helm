@@ -19,6 +19,6 @@ jobs:
           gh workflow run updatecli-helm-integration-tests.yaml \
             --repo prefecthq/ops-cluster-deployment \
             --ref main \
-            -f release_version=${{ github.release_version }}
+            -f release_version=${{ github.event.inputs.release_version }}
         env:
           GITHUB_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
