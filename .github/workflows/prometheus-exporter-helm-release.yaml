@@ -97,7 +97,7 @@ jobs:
         run: |
           gh workflow run deploy-latest-helm-version.yaml \
             --ref main \
-            -f chart=prometheus-prefect-exporter
+            -f release_version=$RELEASE_VERSION
         env:
           GITHUB_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
