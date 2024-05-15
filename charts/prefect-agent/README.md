@@ -79,3 +79,4 @@ Prefect Agent application bundle
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
+
