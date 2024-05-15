@@ -100,7 +100,7 @@ jobs:
             -f chart=prometheus-prefect-exporter
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          CHART_VERSION: ${{ steps.get_version.outputs.CHART_VERSION }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
 
       - name: Create Github Release + Tag
         run: |
