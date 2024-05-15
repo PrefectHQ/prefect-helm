@@ -301,3 +301,4 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.serverApiConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
+

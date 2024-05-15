@@ -63,7 +63,7 @@ Shoutout to @ialejandro for the original work on this chart!
 | autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling with CPU or memory utilization percentage |
 | env | object | `{}` | Environment variables to configure application |
 | fullnameOverride | string | `""` | String to fully override prometheus-prefect-exporter.fullname template |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.0.0"}` | Image registry |
+| image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.1.0"}` | Image registry |
 | imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration to expose app |
 | livenessProbe | bool | `false` | Enable livenessProbe |
@@ -88,3 +88,4 @@ Shoutout to @ialejandro for the original work on this chart!
 | serviceMonitor | object | `{"enabled":false,"interval":"30s","metricRelabelings":[],"relabelings":[],"scrapeTimeout":"10s"}` | Enable ServiceMonitor to get metrics ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor |
 | serviceMonitor.enabled | bool | `false` | Enable or disable |
 | tolerations | list | `[]` | Tolerations for pod assignment |
+

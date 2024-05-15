@@ -6,7 +6,7 @@ image:
   repository: prefecthq/prometheus-prefect-exporter
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 1.0.0
+  tag: 1.1.0
 
 # -- String to partially override prometheus-prefect-exporter.fullname template (will maintain the release name)
 nameOverride: ""
