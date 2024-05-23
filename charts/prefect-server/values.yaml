@@ -84,9 +84,13 @@ server:
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
   resources:
     # -- the requested resources for the server container
-    requests: {}
+    requests:
+      cpu: 500m
+      memory: 512Mi
     # -- the requested limits for the server container
-    limits: {}
+    limits:
+      cpu: "1"
+      memory: 1Gi
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
