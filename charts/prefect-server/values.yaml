@@ -185,16 +185,28 @@ serviceAccount:
 
 ## Service configuration
 service:
-  # -- service type
-  type: ClusterIP
   # -- service port
   port: 4200
   # -- target port of the server pod; also sets PREFECT_SERVER_API_PORT
   targetPort: 4200
-  # -- service Cluster IP
-  clusterIP: ""
   # -- service port if defining service as type nodeport
   nodePort: ""
+
+  extraPorts: []
+    # # example extra ports
+    # - name: sample-svc-port
+    #   # -- service port
+    #   port: 8080
+    #   # -- target port
+    #   targetPort: 8080
+    #   # -- service port if defining service as type nodeport
+    #   nodePort: ""
+
+  # -- service type
+  type: ClusterIP
+  # -- service Cluster IP
+  clusterIP: ""
+
 
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   # -- service external traffic policy
@@ -206,6 +218,10 @@ service:
 ingress:
   # -- enable ingress record generation for server
   enabled: false
+
+  # -- port for the ingress' main path
+  servicePort: server-svc-port
+
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
   ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
   # -- IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)
