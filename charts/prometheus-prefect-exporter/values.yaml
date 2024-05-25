@@ -69,6 +69,7 @@ service:
 serviceMonitor:
   # -- Enable or disable
   enabled: false
+  additionalLabels: {}
   interval: 30s
   scrapeTimeout: 10s
   metricRelabelings: []
