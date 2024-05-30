@@ -3,7 +3,7 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "replicaCount" : {
+    "replicaCount": {
       "type": "integer",
       "title": "Replica Count",
       "description": "Number of replicas to deploy",
@@ -154,6 +154,12 @@
           "description": "Enable service monitor",
           "form": true
         },
+        "additionalLabels": {
+          "type": "object",
+          "title": "Additional Labels",
+          "description": "Prometheus rule additional labels",
+          "form": true
+        },
         "interval": {
           "type": "string",
           "title": "Interval",
@@ -166,13 +172,13 @@
           "description": "Service monitor timeout",
           "form": true
         },
-        "metricRelabelings" : {
+        "metricRelabelings": {
           "type": "array",
           "title": "Metric Relabelings",
           "description": "Service monitor metric relabelings",
           "form": true
         },
-        "relabelings" : {
+        "relabelings": {
           "type": "array",
           "title": "Relabelings",
           "description": "Service monitor relabelings",
