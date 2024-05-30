@@ -244,6 +244,11 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | worker.affinity | object | `{}` | affinity for worker pods assignment |
 | worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfHosted', or 'server' |
+| worker.autoscaling.enabled | bool | `true` | enable autoscaling for the worker |
+| worker.autoscaling.maxReplicas | int | `1` | maximum number of replicas to scale up to |
+| worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
+| worker.autoscaling.targetCPUUtilizationPercentage | int | `80` | target CPU utilization percentage for scaling the worker |
+| worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` | target memory utilization percentage for scaling the worker |
 | worker.cloudApiConfig.accountId | string | `""` | prefect account ID |
 | worker.cloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |

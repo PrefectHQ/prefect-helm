@@ -40,6 +40,45 @@
       "form": true,
       "additionalProperties": false,
       "properties": {
+        "autoscaling": {
+          "type": "object",
+          "title": "Autoscaling",
+          "description": "autoscaling configuration for the worker",
+          "form": true,
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enabled",
+              "description": "enable autoscaling for the worker",
+              "form": true
+            },
+            "minReplicas": {
+              "type": "integer",
+              "title": "Min Replicas",
+              "description": "minimum number of replicas to scale down to",
+              "form": true
+            },
+            "maxReplicas": {
+              "type": "integer",
+              "title": "Max Replicas",
+              "description": "maximum number of replicas to scale up to",
+              "form": true
+            },
+            "targetCPUUtilizationPercentage": {
+              "type": "integer",
+              "title": "Target CPU Utilization Percentage",
+              "description": "target CPU utilization percentage for scaling the worker",
+              "form": true
+            },
+            "targetMemoryUtilizationPercentage": {
+              "type": "integer",
+              "title": "Target Memory Utilization Percentage",
+              "description": "target memory utilization percentage for scaling the worker",
+              "form": true
+            }
+          }
+        },
         "clusterUid": {
           "type": "string",
           "title": "Cluster UID",
