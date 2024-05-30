@@ -1,0 +1,49 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 2.19.3
+dependencies:
+- - name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 2.19.1
+- - condition: postgresql.useSubChart
+  name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 12.12.10
+description: Prefect server application bundle
+home: https://github.com/PrefectHQ
+maintainers:
+- - email: jamie@prefect.io
+  name: jamiezieziula
+- - email: jimi@prefect.io
+  name: jimid27
+- - email: edward@prefect.io
+  name: parkedwards
+name: prefect-server
+sources:
+- - https://github.com/PrefectHQ/prefect-helm
+type: application
+version: 2024.5.30190018
+
+...
+files:
+  prefect-server-2024.5.30190018.tgz: sha256:bbd22ebb6cd8d0178e5e398345638010a80dd3fdfbd969702058647a65f43482
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJmWMzYCRBmvyDZ/AdLeAAADZ4QAAH3kpYhugNCSoK6KRMM1y+C
+Ne3fy1aOdZGxmwt2/EI+m8gwIm+s1k+ZXxPHoVKCUihU6Y3dPW8gS+2Ph7QUc481
+82SY6WeHOJQvPI7nJbqF4jpaJ6Nd48RQwLDscKs2VDncKUDb1Iq3jDHJ1kgXonVy
+P35eD3k24HcilpzzJr4/tMV82kJOGmLHq2KkIOvkb/FYq92XHM3AcNUu1j03qorp
+k9a0ryMrJP8O+6o9JQjf1/vFktJLjquRVf6tbW7J92AVi+NVq97V7QkoFyIId0AG
+/nN96SnQqPWEa1aqXnkeYH8imCSur8zzL9+lihHM/0WjiSpTEk6IcC6oxuSrEssy
+UDcoosQ9yF6ZgkdXTdNs1rUtB8uJyQ9p+bFSkYbMZZ7cd2t1ojYCLRD2X4/X8aN6
+m869s9lT+ehzpkHS6hrAnIfX+SHiX4Z6xH7caRib76EGHikdTiK2UcaIvcK6xiJH
+YkltlBrtGlnF6GqTyNSOK3AH94RmeXiP6aEn9CEYoDt9Oxj0QNmOtZJhPyCylWHs
+gfZcmkhcS7L0s/mjWyVGV51PRoZ9UQ5EuuGePbvP8r0WBGtbOLCNeXPwdvf0WgC/
+GLRQCebSsEY8Qnp43LhviEoLN3quWN+LEYLnr7Q/7AxJRZ1DP4jz7SsHx2lm4Llk
+gM+X4NXz9hcK7140mP4U
+=W/i4
+-----END PGP SIGNATURE-----
