@@ -6,69 +6,58 @@
     "nameOverride": {
       "type": "string",
       "title": "Name Override",
-      "description": "partially overrides common.names.name",
-      "form": true
+      "description": "partially overrides common.names.name"
     },
     "fullnameOverride": {
       "type": "string",
       "title": "Fullname Override",
-      "description": "fully override common.names.fullname",
-      "form": true
+      "description": "fully override common.names.fullname"
     },
     "namespaceOverride": {
       "type": "string",
       "title": "Namespace Override",
-      "description": "fully override common.names.namespace",
-      "form": true
+      "description": "fully override common.names.namespace"
     },
     "commonLabels": {
       "type": "object",
       "title": "Common Labels",
-      "description": "labels to add to all deployed objects",
-      "form": true
+      "description": "labels to add to all deployed objects"
     },
     "commonAnnotations": {
       "type": "object",
       "title": "Common Annotations",
-      "description": "annotations to add to all deployed objects",
-      "form": true
+      "description": "annotations to add to all deployed objects"
     },
     "server": {
       "type": "object",
       "title": "Server",
       "description": "server configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "image": {
           "type": "object",
           "title": "Image",
           "description": "server image configuration",
-          "form": true,
           "properties": {
             "repository": {
               "type": "string",
               "title": "Repository",
-              "description": "server image repository",
-              "form": true
+              "description": "server image repository"
             },
             "prefectTag": {
               "type": "string",
               "title": "Tag",
-              "description": "server image tag",
-              "form": true
+              "description": "server image tag"
             },
             "pullPolicy": {
               "type": "string",
               "title": "Pull Policy",
-              "description": "server image pull policy",
-              "form": true
+              "description": "server image pull policy"
             },
             "pullSecrets": {
               "type": "array",
               "title": "Pull Secrets",
               "description": "server image pull secrets",
-              "form": true,
               "items": {
                 "type": "string"
               }
@@ -78,56 +67,47 @@
         "priorityClassName": {
           "type": "string",
           "title": "Priority Class Name",
-          "description": "priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class",
-          "form": true
+          "description": "priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class"
         },
         "debug": {
           "type": "boolean",
           "title": "Debug",
-          "description": "server debug mode",
-          "form": true
+          "description": "server debug mode"
         },
         "loggingLevel": {
           "type": "string",
           "title": "Logging Level",
-          "description": "sets PREFECT_LOGGING_SERVER_LEVEL",
-          "form": true
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
         },
         "prefectApiUrl": {
           "type": "string",
           "title": "Prefect API URL",
-          "description": "sets PREFECT_API_URL",
-          "form": true
+          "description": "sets PREFECT_API_URL"
         },
         "prefectApiHost": {
           "type": "string",
           "title": "Prefect API Host",
-          "description": "sets PREFECT_SERVER_API_HOST",
-          "form": true
+          "description": "sets PREFECT_SERVER_API_HOST"
         },
         "uiConfig": {
           "type": "object",
           "title": "UI Config",
           "description": "Prefect UI Config",
-          "form": true,
           "properties": {
             "enabled": {
               "type": "boolean",
               "title": "Enable Prefect UI",
-              "description": "set PREFECT_UI_ENABLED; enable the UI on the server",
-              "form": true
+              "description": "set PREFECT_UI_ENABLED; enable the UI on the server"
             },
             "prefectUiApiUrl": {
               "type": "string",
               "title": "Prefect API URL",
-              "description": "sets PREFECT_UI_API_URL",
-              "form": true
+              "description": "sets PREFECT_UI_API_URL"
             },
             "prefectUiUrl": {
               "type": "string",
               "title": "Prefect UI URL",
-              "description": "sets PREFECT_UI_URL",
-              "form": true
+              "description": "sets PREFECT_UI_URL"
             }
           }
         },
@@ -135,7 +115,6 @@
           "type": "array",
           "title": "Environment Variables",
           "description": "array with environment variables to add to server nodes",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -144,72 +123,61 @@
           "type": "object",
           "title": "Autoscaling",
           "description": "server autoscaling configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "title": "Enabled",
-              "description": "enable server autoscaling",
-              "form": true
+              "description": "enable server autoscaling"
             },
             "minReplicas": {
               "type": "integer",
               "title": "Min Replicas",
-              "description": "minimum number of server replicas",
-              "form": true
+              "description": "minimum number of server replicas"
             },
             "maxReplicas": {
               "type": "integer",
               "title": "Max Replicas",
-              "description": "maximum number of server replicas",
-              "form": true
+              "description": "maximum number of server replicas"
             },
             "targetCPU": {
               "type": "integer",
               "title": "Target CPU Utilization Percentage",
-              "description": "target CPU utilization percentage",
-              "form": true
+              "description": "target CPU utilization percentage"
             },
             "targetMemory": {
               "type": "integer",
               "title": "Target Memory Utilization Percentage",
-              "description": "target Memory utilization percentage",
-              "form": true
+              "description": "target Memory utilization percentage"
             }
           }
         },
         "replicaCount": {
           "type": "integer",
           "title": "Replica Count",
-          "description": "number of server replicas to deploy",
-          "form": true
+          "description": "number of server replicas to deploy"
         },
         "resources": {
           "type": "object",
           "title": "Resources",
           "description": "server resource requests and limits",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "requests": {
               "type": "object",
               "title": "Requests",
               "description": "server resource requests",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "cpu": {
                   "type": "string",
                   "title": "CPU",
-                  "description": "server CPU request",
-                  "form": true
+                  "description": "server CPU request"
                 },
                 "memory": {
                   "type": "string",
                   "title": "Memory",
-                  "description": "server memory request",
-                  "form": true
+                  "description": "server memory request"
                 }
               }
             },
@@ -217,20 +185,17 @@
               "type": "object",
               "title": "Limits",
               "description": "server resource limits",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "cpu": {
                   "type": "string",
                   "title": "CPU",
-                  "description": "server CPU limit",
-                  "form": true
+                  "description": "server CPU limit"
                 },
                 "memory": {
                   "type": "string",
                   "title": "Memory",
-                  "description": "server memory limit",
-                  "form": true
+                  "description": "server memory limit"
                 }
               }
             }
@@ -240,51 +205,43 @@
           "type": "object",
           "title": "Liveness Probe",
           "description": "server liveness probe configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "title": "Enabled",
-              "description": "enable server liveness probe",
-              "form": true
+              "description": "enable server liveness probe"
             },
             "config": {
               "type": "object",
               "title": "Liveness Probe",
               "description": "server liveness probe configuration",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "initialDelaySeconds": {
                   "type": "integer",
                   "title": "Initial Delay Seconds",
-                  "description": "The number of seconds to wait before starting the first probe.",
-                  "form": true
+                  "description": "The number of seconds to wait before starting the first probe."
                 },
                 "periodSeconds": {
                   "type": "integer",
                   "title": "Period Seconds",
-                  "description": "The number of seconds to wait between consecutive probes.",
-                  "form": true
+                  "description": "The number of seconds to wait between consecutive probes."
                 },
                 "timeoutSeconds": {
                   "type": "integer",
                   "title": "Timeout Seconds",
-                  "description": "The number of seconds to wait for a probe response before considering it as failed.",
-                  "form": true
+                  "description": "The number of seconds to wait for a probe response before considering it as failed."
                 },
                 "successThreshold": {
                   "type": "integer",
                   "title": "Success Threshold",
-                  "description": "The number of consecutive failures allowed before considering the probe as failed.",
-                  "form": true
+                  "description": "The number of consecutive failures allowed before considering the probe as failed."
                 },
                 "failureThreshold": {
                   "type": "integer",
                   "title": "Failure Threshold",
-                  "description": "The minimum consecutive successes required to consider the probe successful.",
-                  "form": true
+                  "description": "The minimum consecutive successes required to consider the probe successful."
                 }
               }
             }
@@ -294,51 +251,43 @@
           "type": "object",
           "title": "Readiness Probe",
           "description": "server readiness probe configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "title": "Enabled",
-              "description": "enable server readiness probe",
-              "form": true
+              "description": "enable server readiness probe"
             },
             "config": {
               "type": "object",
               "title": "Readiness Probe",
               "description": "server readiness probe configuration",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "initialDelaySeconds": {
                   "type": "integer",
                   "title": "Initial Delay Seconds",
-                  "description": "The number of seconds to wait before starting the first probe.",
-                  "form": true
+                  "description": "The number of seconds to wait before starting the first probe."
                 },
                 "periodSeconds": {
                   "type": "integer",
                   "title": "Period Seconds",
-                  "description": "The number of seconds to wait between consecutive probes.",
-                  "form": true
+                  "description": "The number of seconds to wait between consecutive probes."
                 },
                 "timeoutSeconds": {
                   "type": "integer",
                   "title": "Timeout Seconds",
-                  "description": "The number of seconds to wait for a probe response before considering it as failed.",
-                  "form": true
+                  "description": "The number of seconds to wait for a probe response before considering it as failed."
                 },
                 "successThreshold": {
                   "type": "integer",
                   "title": "Success Threshold",
-                  "description": "The number of consecutive failures allowed before considering the probe as failed.",
-                  "form": true
+                  "description": "The number of consecutive failures allowed before considering the probe as failed."
                 },
                 "failureThreshold": {
                   "type": "integer",
                   "title": "Failure Threshold",
-                  "description": "The minimum consecutive successes required to consider the probe successful.",
-                  "form": true
+                  "description": "The minimum consecutive successes required to consider the probe successful."
                 }
               }
             }
@@ -348,26 +297,22 @@
           "type": "object",
           "title": "Pod Security Context",
           "description": "server pod security context",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "runAsUser": {
               "type": "integer",
               "title": "Run As User",
-              "description": "set server pod's security context runAsUser",
-              "form": true
+              "description": "set server pod's security context runAsUser"
             },
             "runAsNonRoot": {
               "type": "boolean",
               "title": "Run As Non Root",
-              "description": "set server pods security context runAsNonRoot",
-              "form": true
+              "description": "set server pods security context runAsNonRoot"
             },
             "fsGroup": {
               "type": "integer",
               "title": "FS Group",
-              "description": "set server pod's security context fsGroup",
-              "form": true
+              "description": "set server pod's security context fsGroup"
             }
           }
         },
@@ -375,64 +320,54 @@
           "type": "object",
           "title": "Container Security Context",
           "description": "server container security context",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "runAsUser": {
               "type": "integer",
               "title": "Run As User",
-              "description": "set server container's security context runAsUser",
-              "form": true
+              "description": "set server container's security context runAsUser"
             },
             "runAsNonRoot": {
               "type": "boolean",
               "title": "Run As Non Root",
-              "description": "set server container's security context runAsNonRoot",
-              "form": true
+              "description": "set server container's security context runAsNonRoot"
             },
             "readOnlyRootFilesystem": {
               "type": "boolean",
               "title": "Read Only Root Filesystem",
-              "description": "set server container's security context readOnlyRootFilesystem",
-              "form": true
+              "description": "set server container's security context readOnlyRootFilesystem"
             },
             "allowPrivilegeEscalation": {
               "type": "boolean",
               "title": "Allow Privilege Escalation",
-              "description": "set server container's security context allowPrivilegeEscalation",
-              "form": true
+              "description": "set server container's security context allowPrivilegeEscalation"
             }
           }
         },
         "podLabels": {
           "type": "object",
           "title": "Pod Labels",
-          "description": "extra labels for server pod",
-          "form": true
+          "description": "extra labels for server pod"
         },
         "podAnnotations": {
           "type": "object",
           "title": "Pod Annotations",
-          "description": "extra annotations for server pod",
-          "form": true
+          "description": "extra annotations for server pod"
         },
         "affinity": {
           "type": "object",
           "title": "Affinity",
-          "description": "affinity for server pods assignment",
-          "form": true
+          "description": "affinity for server pods assignment"
         },
         "nodeSelector": {
           "type": "object",
           "title": "Node Selector",
-          "description": "node labels for server pods assignment",
-          "form": true
+          "description": "node labels for server pods assignment"
         },
         "tolerations": {
           "type": "array",
           "title": "Tolerations",
           "description": "tolerations for server pods assignment",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -440,20 +375,17 @@
         "extraEnvVarsCM": {
           "type": "string",
           "title": "Extra Env Vars ConfigMap",
-          "description": "name of existing ConfigMap containing extra env vars to add to server nodes",
-          "form": true
+          "description": "name of existing ConfigMap containing extra env vars to add to server nodes"
         },
         "extraEnvVarsSecret": {
           "type": "string",
           "title": "Extra Env Vars Secret",
-          "description": "name of existing Secret containing extra env vars to add to server nodes",
-          "form": true
+          "description": "name of existing Secret containing extra env vars to add to server nodes"
         },
         "extraContainers": {
           "type": "array",
           "title": "Extra Containers",
           "description": "additional sidecar containers",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -462,7 +394,6 @@
           "type": "array",
           "title": "Extra Volumes",
           "description": "array with extra volumes for the server pod",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -471,7 +402,6 @@
           "type": "array",
           "title": "Extra Volume Mounts",
           "description": "array with extra volumeMounts for the server pod",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -479,8 +409,7 @@
         "extraArgs": {
           "type": "array",
           "title": "Extra Container Args",
-          "description": "array with extra args for the server container",
-          "form": true
+          "description": "array with extra args for the server container"
         }
       }
     },
@@ -488,26 +417,22 @@
       "type": "object",
       "title": "Service Account",
       "description": "server service account configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "create": {
           "type": "boolean",
           "title": "Create",
-          "description": "create server service account",
-          "form": true
+          "description": "create server service account"
         },
         "name": {
           "type": "string",
           "title": "Name",
-          "description": "the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template",
-          "form": true
+          "description": "the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template"
         },
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "annotations to add to the server service account",
-          "form": true
+          "description": "annotations to add to the server service account"
         }
       }
     },
@@ -515,20 +440,17 @@
       "type": "object",
       "title": "Service",
       "description": "server service configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "type": {
           "type": "string",
           "title": "Type",
-          "description": "service type",
-          "form": true
+          "description": "service type"
         },
         "port": {
           "type": "integer",
           "title": "Port",
-          "description": "service port",
-          "form": true
+          "description": "service port"
         },
         "extraPorts": {
           "type": "array",
@@ -551,32 +473,27 @@
         "clusterIP": {
           "type": "string",
           "title": "Cluster IP",
-          "description": "service Cluster IP",
-          "form": true
+          "description": "service Cluster IP"
         },
         "nodePort": {
           "type": ["integer","string"],
           "title": "Node Port",
-          "description": "service port if defining service as type nodeport",
-          "form": true
+          "description": "service port if defining service as type nodeport"
         },
         "targetPort": {
           "type": "integer",
           "title": "Target Port",
-          "description": "target port on the server pod",
-          "form": true
+          "description": "target port on the server pod"
         },
         "externalTrafficPolicy": {
           "type": "string",
           "title": "External Traffic Policy",
-          "description": "service external traffic policy",
-          "form": true
+          "description": "service external traffic policy"
         },
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "annotations to add to the server service",
-          "form": true
+          "description": "annotations to add to the server service"
         }
       }
     },
@@ -584,77 +501,65 @@
       "type": "object",
       "title": "Ingress",
       "description": "server ingress configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
-          "description": "enable ingress record generation for server",
-          "form": true
+          "description": "enable ingress record generation for server"
         },
         "servicePort": {
           "type": "string",
           "title": "Service Port Name",
-          "description": "service port name",
-          "form": true
+          "description": "service port name"
         },
         "className": {
           "type": "string",
           "title": "Class Name",
-          "description": "IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)",
-          "form": true
+          "description": "IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)"
         },
         "host": {
           "type": "object",
           "title": "Host",
           "description": "server ingress host configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "hostname": {
               "type": "string",
               "title": "Hostname",
-              "description": "default host for the ingress record",
-              "form": true
+              "description": "default host for the ingress record"
             },
             "path": {
               "type": "string",
               "title": "Path",
-              "description": "default path for the ingress record",
-              "form": true
+              "description": "default path for the ingress record"
             },
             "pathType": {
               "type": "string",
               "title": "Path Type",
-              "description": "ingress path type",
-              "form": true
+              "description": "ingress path type"
             }
           }
         },
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.",
-          "form": true
+          "description": "additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations."
         },
         "tls": {
           "type": "boolean",
           "title": "TLS",
-          "description": "enable TLS configuration for the host defined at `ingress.host.hostname` parameter",
-          "form": true
+          "description": "enable TLS configuration for the host defined at `ingress.host.hostname` parameter"
         },
         "selfSigned": {
           "type": "boolean",
           "title": "Self Signed",
-          "description": "create a TLS secret for this ingress record using self-signed certificates generated by Helm",
-          "form": true
+          "description": "create a TLS secret for this ingress record using self-signed certificates generated by Helm"
         },
         "extraHosts": {
           "type": "array",
           "title": "Extra Hosts",
           "description": "an array with additional hostname(s) to be covered with the ingress record",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -663,7 +568,6 @@
           "type": "array",
           "title": "Extra Paths",
           "description": "an array with additional arbitrary paths that may need to be added to the ingress under the main host",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -672,7 +576,6 @@
           "type": "array",
           "title": "Extra TLS",
           "description": "an array with additional tls configuration to be added to the ingress record",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -681,7 +584,6 @@
           "type": "array",
           "title": "Extra Rules",
           "description": "additional rules to be covered with this ingress record",
-          "form": true,
           "items": {
             "type": "object"
           }

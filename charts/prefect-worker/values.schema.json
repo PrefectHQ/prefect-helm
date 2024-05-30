@@ -6,76 +6,64 @@
     "nameOverride": {
       "type": "string",
       "title": "Name Override",
-      "description": "partially overrides common.names.name",
-      "form": true
+      "description": "partially overrides common.names.name"
     },
     "fullnameOverride": {
       "type": "string",
       "title": "Fullname Override",
-      "description": "fully override common.names.fullname",
-      "form": true
+      "description": "fully override common.names.fullname"
     },
     "namespaceOverride": {
       "type": "string",
       "title": "Namespace Override",
-      "description": "fully override common.names.namespace",
-      "form": true
+      "description": "fully override common.names.namespace"
     },
     "commonLabels": {
       "type": "object",
       "title": "Common Labels",
-      "description": "labels to add to all deployed objects",
-      "form": true
+      "description": "labels to add to all deployed objects"
     },
     "commonAnnotations": {
       "type": "object",
       "title": "Common Annotations",
-      "description": "annotations to add to all deployed objects",
-      "form": true
+      "description": "annotations to add to all deployed objects"
     },
     "worker": {
       "type": "object",
       "title": "Worker",
       "description": "worker configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "clusterUid": {
           "type": "string",
           "title": "Cluster UID",
-          "description": "unique cluster identifier, if none is provided this value will be infered at time of helm install",
-          "form": true
+          "description": "unique cluster identifier, if none is provided this value will be infered at time of helm install"
         },
         "image": {
           "type": "object",
           "title": "Image",
           "description": "worker image configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "repository": {
               "type": "string",
               "title": "Repository",
-              "description": "worker image repository",
-              "form": true
+              "description": "worker image repository"
             },
             "prefectTag": {
               "type": "string",
               "title": "Tag",
-              "description": "worker image tag",
-              "form": true
+              "description": "worker image tag"
             },
             "pullPolicy": {
               "type": "string",
               "title": "Pull Policy",
-              "description": "worker image pull policy",
-              "form": true
+              "description": "worker image pull policy"
             },
             "pullSecrets": {
               "type": "array",
               "title": "Pull Secrets",
               "description": "worker image pull secrets",
-              "form": true,
               "items": {
                 "type": "string"
               }
@@ -83,8 +71,7 @@
             "debug": {
               "type": "boolean",
               "title": "Debug",
-              "description": "worker image debug mode",
-              "form": true
+              "description": "worker image debug mode"
             }
           }
         },
@@ -92,20 +79,17 @@
           "type": "object",
           "title": "Config",
           "description": "general configuration of the worker",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "workPool": {
               "type": "string",
               "title": "Work Pool",
-              "description": "the work pool that your started worker will poll.",
-              "form": true
+              "description": "the work pool that your started worker will poll."
             },
             "workQueues": {
               "type": "array",
               "title": "Work Queues",
               "description": "one or more work queue names for the worker to pull from. if not provided, the worker will pull from all work queues in the work pool",
-              "form": true,
               "items": {
                 "type": "string"
               }
@@ -113,109 +97,92 @@
             "queryInterval": {
               "type": "integer",
               "title": "Query Interval",
-              "description": "how often the worker will query for runs",
-              "form": true
+              "description": "how often the worker will query for runs"
             },
             "prefetchSeconds": {
               "type": "integer",
               "title": "Prefetch Seconds",
-              "description": "when querying for runs, how many seconds in the future can they be scheduled",
-              "form": true
+              "description": "when querying for runs, how many seconds in the future can they be scheduled"
             },
             "http2": {
               "type": "boolean",
               "title": "HTTP2",
-              "description": "connect using HTTP/2 if the server supports it (experimental)",
-              "form": true
+              "description": "connect using HTTP/2 if the server supports it (experimental)"
             },
             "limit": {
               "type": ["integer", "null"],
               "title": "Limit",
-              "description": "Maximum number of flow runs to start simultaneously (default: unlimited)",
-              "form": true
+              "description": "Maximum number of flow runs to start simultaneously (default: unlimited)"
             },
             "name": {
               "type": ["string", "null"],
               "title": "Name",
-              "description": "The name to give to the started worker. If not provided, a unique name will be generated.",
-              "form": true
+              "description": "The name to give to the started worker. If not provided, a unique name will be generated."
             },
             "installPolicy": {
               "type": "string",
               "title": "Install Policy",
-              "description": "Install policy to use workers from Prefect integration packages.",
-              "form": true
+              "description": "Install policy to use workers from Prefect integration packages."
             },
             "type": {
               "type": "string",
               "title": "Type",
-              "description": "the type of worker to start i.e kubernetes",
-              "form": true
+              "description": "the type of worker to start i.e kubernetes"
             },
             "baseJobTemplateName": {
               "type": ["string", "null"],
               "title": "Base Job Template Name",
-              "description": "Template name of the base job template. If unspecified, Prefect will use the default base job template name for the given worker type.",
-              "form": true
+              "description": "Template name of the base job template. If unspecified, Prefect will use the default base job template name for the given worker type."
             },
             "baseJobTemplate": {
               "type": ["string", "null"],
               "title": "Base Job Template",
-              "description": "JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.",
-              "form": true
+              "description": "JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored."
             }
           }
         },
         "apiConfig": {
           "type": "string",
           "title": "API Config",
-          "description": "one of 'cloud' or 'server'",
-          "form": true
+          "description": "one of 'cloud' or 'server'"
         },
         "cloudApiConfig": {
           "type": "object",
           "title": "Cloud API Config",
           "description": "cloud api configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "accountId": {
               "type": "string",
               "title": "Account ID",
-              "description": "prefect account ID",
-              "form": true
+              "description": "prefect account ID"
             },
             "workspaceId": {
               "type": "string",
               "title": "Workspace ID",
-              "description": "prefect workspace ID",
-              "form": true
+              "description": "prefect workspace ID"
             },
             "apiKeySecret": {
               "type": "object",
               "title": "API Key Secret",
               "description": "prefect api key secret",
-              "form": true,
               "properties": {
                 "name": {
                   "type": "string",
                   "title": "Name",
-                  "description": "prefect API secret name",
-                  "form": true
+                  "description": "prefect API secret name"
                 },
                 "key": {
                   "type": "string",
                   "title": "Key",
-                  "description": "prefect API secret key",
-                  "form": true
+                  "description": "prefect API secret key"
                 }
               }
             },
             "cloudUrl": {
               "type": "string",
               "title": "Cloud URL",
-              "description": "prefect cloud url",
-              "form": true
+              "description": "prefect cloud url"
             }
           }
         },
@@ -223,52 +190,44 @@
           "type": "object",
           "title": "Self Hosted API Config",
           "description": "self hosted api configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "accountId": {
               "type": "string",
               "title": "Account ID",
-              "description": "prefect account ID",
-              "form": true
+              "description": "prefect account ID"
             },
             "workspaceId": {
               "type": "string",
               "title": "Workspace ID",
-              "description": "prefect workspace ID",
-              "form": true
+              "description": "prefect workspace ID"
             },
             "apiKeySecret": {
               "type": "object",
               "title": "API Key Secret",
               "description": "prefect api key secret",
-              "form": true,
               "properties": {
                 "name": {
                   "type": "string",
                   "title": "Name",
-                  "description": "prefect API secret name",
-                  "form": true
+                  "description": "prefect API secret name"
                 },
                 "key": {
                   "type": "string",
                   "title": "Key",
-                  "description": "prefect API secret key",
-                  "form": true
+                  "description": "prefect API secret key"
                 }
               }
             },
             "uiUrl": {
               "type": "string",
               "title": "Self Hosted Cloud URL",
-              "description": "self hosted cloud url",
-              "form": true
+              "description": "self hosted cloud url"
             },
             "apiUrl": {
               "type": "string",
               "title": "Self Hosted API URL",
-              "description": "self hosted API url (PREFECT_API_URL)",
-              "form": true
+              "description": "self hosted API url (PREFECT_API_URL)"
             }
           }
         },
@@ -276,54 +235,46 @@
           "type": "object",
           "title": "Server API Config",
           "description": "server api configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "apiUrl": {
               "type": "string",
               "title": "API",
-              "description": "prefect API url (PREFECT_API_URL)",
-              "form": true
+              "description": "prefect API url (PREFECT_API_URL)"
             },
             "uiUrl": {
               "type": "string",
               "title": "UI",
-              "description": "prefect UI url",
-              "form": true
+              "description": "prefect UI url"
             }
           }
         },
         "replicaCount": {
           "type": "integer",
           "title": "Replica Count",
-          "description": "number of worker replicas to deploy",
-          "form": true
+          "description": "number of worker replicas to deploy"
         },
         "resources": {
           "type": "object",
           "title": "Resources",
           "description": "worker resource configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "requests": {
               "type": "object",
               "title": "Requests",
               "description": "the requested resources for the worker container",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "cpu": {
                   "type": "string",
                   "title": "CPU",
-                  "description": "worker resource request cpu",
-                  "form": true
+                  "description": "worker resource request cpu"
                 },
                 "memory": {
                   "type": "string",
                   "title": "Memory",
-                  "description": "worker resource request memory",
-                  "form": true
+                  "description": "worker resource request memory"
                 }
               }
             },
@@ -331,20 +282,17 @@
               "type": "object",
               "title": "Limits",
               "description": "the requested limits for the worker container",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "cpu": {
                   "type": "string",
                   "title": "CPU",
-                  "description": "worker resource limit cpu",
-                  "form": true
+                  "description": "worker resource limit cpu"
                 },
                 "memory": {
                   "type": "string",
                   "title": "Memory",
-                  "description": "worker resource limit memory",
-                  "form": true
+                  "description": "worker resource limit memory"
                 }
               }
             }
@@ -354,51 +302,43 @@
           "type": "object",
           "title": "Liveness Probe",
           "description": "worker liveness probe configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "title": "Enabled",
-              "description": "enable worker liveness probe",
-              "form": true
+              "description": "enable worker liveness probe"
             },
             "config": {
               "type": "object",
               "title": "Config",
               "description": "worker liveness probe configuration",
-              "form": true,
               "additionalProperties": false,
               "properties": {
                 "initialDelaySeconds": {
                   "type": "integer",
                   "title": "Initial Delay Seconds",
-                  "description": "The number of seconds to wait before starting the first probe.",
-                  "form": true
+                  "description": "The number of seconds to wait before starting the first probe."
                 },
                 "periodSeconds": {
                   "type": "integer",
                   "title": "Period Seconds",
-                  "description": "The number of seconds to wait between consecutive probes.",
-                  "form": true
+                  "description": "The number of seconds to wait between consecutive probes."
                 },
                 "timeoutSeconds": {
                   "type": "integer",
                   "title": "Timeout Seconds",
-                  "description": "number of seconds after which the probe times out",
-                  "form": true
+                  "description": "number of seconds after which the probe times out"
                 },
                 "successThreshold": {
                   "type": "integer",
                   "title": "Success Threshold",
-                  "description": "The minimum consecutive successes required to consider the probe successful.",
-                  "form": true
+                  "description": "The minimum consecutive successes required to consider the probe successful."
                 },
                 "failureThreshold": {
                   "type": "integer",
                   "title": "Failure Threshold",
-                  "description": "The number of consecutive failures allowed before considering the probe as failed.",
-                  "form": true
+                  "description": "The number of consecutive failures allowed before considering the probe as failed."
                 }
               }
             }
@@ -408,97 +348,82 @@
           "type": "object",
           "title": "Pod Security Context",
           "description": "worker pod security context configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "fsGroup": {
               "type": "integer",
               "title": "FS Group",
-              "description": "set worker pod's security context fsGroup",
-              "form": true
+              "description": "set worker pod's security context fsGroup"
             },
             "runAsNonRoot": {
               "type": "boolean",
               "title": "Run As Non Root",
-              "description": "set worker pod's security context runAsNonRoot",
-              "form": true
+              "description": "set worker pod's security context runAsNonRoot"
             },
             "runAsUser": {
               "type": "integer",
               "title": "Run As User",
-              "description": "set worker pod's security context runAsUser",
-              "form": true
+              "description": "set worker pod's security context runAsUser"
             }
           }
         },
         "priorityClassName": {
           "type": "string",
           "title": "Priority Class Name",
-          "description": "priority class name to use for the worker pods; if the priority class is empty or doesn't exist, the worker pods are scheduled without a priority class",
-          "form": true
+          "description": "priority class name to use for the worker pods; if the priority class is empty or doesn't exist, the worker pods are scheduled without a priority class"
         },
         "containerSecurityContext": {
           "type": "object",
           "title": "Container Security Context",
           "description": "worker container security context configuration",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "allowPrivilegeEscalation": {
               "type": "boolean",
               "title": "Allow Privilege Escalation",
-              "description": "set worker containers' security context allowPrivilegeEscalation",
-              "form": true
+              "description": "set worker containers' security context allowPrivilegeEscalation"
             },
             "readOnlyRootFilesystem": {
               "type": "boolean",
               "title": "Read Only Root Filesystem",
-              "description": "set worker containers' security context readOnlyRootFilesystem",
-              "form": true
+              "description": "set worker containers' security context readOnlyRootFilesystem"
             },
             "runAsNonRoot": {
               "type": "boolean",
               "title": "Run As Non Root",
-              "description": "set worker containers' security context runAsNonRoot",
-              "form": true
+              "description": "set worker containers' security context runAsNonRoot"
             },
             "runAsUser": {
               "type": "integer",
               "title": "Run As User",
-              "description": "set worker containers' security context runAsUser",
-              "form": true
+              "description": "set worker containers' security context runAsUser"
             }
           }
         },
         "podLabels": {
           "type": "object",
           "title": "Pod Labels",
-          "description": "extra labels for worker pod",
-          "form": true
+          "description": "extra labels for worker pod"
         },
         "podAnnotations": {
           "type": "object",
           "title": "Pod Annotations",
-          "description": "extra annotations for worker pod",
-          "form": true
+          "description": "extra annotations for worker pod"
         },
         "affinity": {
           "type": "object",
           "title": "Affinity",
-          "description": "affinity for worker pods assignment",
-          "form": true
+          "description": "affinity for worker pods assignment"
         },
         "nodeSelector": {
           "type": "object",
           "title": "Node Selector",
-          "description": "node labels for worker pods assignment",
-          "form": true
+          "description": "node labels for worker pods assignment"
         },
         "tolerations": {
           "type": "array",
           "title": "Tolerations",
           "description": "tolerations for worker pods assignment",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -506,26 +431,22 @@
         "extraEnvVars": {
           "type": "array",
           "title": "Extra Env Vars",
-          "description": "extra environment variables to add to worker pods",
-          "form": true
+          "description": "extra environment variables to add to worker pods"
         },
         "extraEnvVarsCM": {
           "type": "string",
           "title": "Extra Env Vars ConfigMap",
-          "description": "name of existing ConfigMap containing extra env vars to add to worker nodes",
-          "form": true
+          "description": "name of existing ConfigMap containing extra env vars to add to worker nodes"
         },
         "extraEnvVarsSecret": {
           "type": "string",
           "title": "Extra Env Vars Secret",
-          "description": "name of existing Secret containing extra env vars to add to worker nodes",
-          "form": true
+          "description": "name of existing Secret containing extra env vars to add to worker nodes"
         },
         "extraContainers": {
           "type": "array",
           "title": "Extra Containers",
           "description": "additional sidecar containers",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -534,7 +455,6 @@
           "type": "array",
           "title": "Extra Volumes",
           "description": "array with extra volumes for the worker pod",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -543,7 +463,6 @@
           "type": "array",
           "title": "Extra Volume Mounts",
           "description": "array with extra volumeMounts for the worker pod",
-          "form": true,
           "items": {
             "type": "object"
           }
@@ -551,8 +470,7 @@
         "extraArgs": {
           "type": "array",
           "title": "Extra Container Args",
-          "description": "array with extra args for the worker container",
-          "form": true
+          "description": "array with extra args for the worker container"
         }
       }
     },
@@ -560,26 +478,22 @@
       "type": "object",
       "title": "Service Account",
       "description": "service account configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "create": {
           "type": "boolean",
           "title": "Create",
-          "description": "create service account",
-          "form": true
+          "description": "create service account"
         },
         "name": {
           "type": "string",
           "title": "Name",
-          "description": "name of the service account to use",
-          "form": true
+          "description": "name of the service account to use"
         },
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "annotations to add to the service account",
-          "form": true
+          "description": "annotations to add to the service account"
         }
       }
     },
@@ -587,20 +501,17 @@
       "type": "object",
       "title": "Role",
       "description": "role configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "create": {
           "type": "boolean",
           "title": "Create",
-          "description": "create role",
-          "form": true
+          "description": "create role"
         },
         "extraPermissions": {
           "type": "array",
           "title": "Extra Permissions",
-          "description": "extra permissions to add to the role",
-          "form": true
+          "description": "extra permissions to add to the role"
         }
       }
     },
@@ -608,28 +519,25 @@
       "type": "object",
       "title": "RoleBinding",
       "description": "rolebinding configuration",
-      "form": true,
       "additionalProperties": false,
       "properties": {
         "create": {
           "type": "boolean",
           "title": "Create",
-          "description": "create role binding",
-          "form": true
+          "description": "create role binding"
         }
       }
     },
     "common": {
       "type": "object",
       "title": "Common",
-      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests.",
-      "form": true
+      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
     },
     "global": {
       "type": "object",
       "title": "Global",
-      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart",
-      "form": true
+      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart"
     }
+  }
   }
 }
