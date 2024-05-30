@@ -14,7 +14,7 @@ commonAnnotations: {}
 worker:
   autoscaling:
     # -- enable autoscaling for the worker
-    enabled: true
+    enabled: false
     # -- minimum number of replicas to scale down to
     minReplicas: 1
     # -- maximum number of replicas to scale up to

@@ -244,7 +244,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | worker.affinity | object | `{}` | affinity for worker pods assignment |
 | worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfHosted', or 'server' |
-| worker.autoscaling.enabled | bool | `true` | enable autoscaling for the worker |
+| worker.autoscaling.enabled | bool | `false` | enable autoscaling for the worker |
 | worker.autoscaling.maxReplicas | int | `1` | maximum number of replicas to scale up to |
 | worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` | target CPU utilization percentage for scaling the worker |
