@@ -177,6 +177,11 @@
                   "type": ["string", "null"],
                   "title": "Base Job Template Configuration",
                   "description": "JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod"
+                },
+                "name": {
+                  "type": ["string", "null"],
+                  "title": "Name",
+                  "description": "optionally override the default name of the generated configmap."
                 }
               }
             }

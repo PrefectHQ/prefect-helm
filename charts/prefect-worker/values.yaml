@@ -93,6 +93,8 @@ worker:
       existingConfigMapName: ""
       # -- JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod
       configuration: null
+      # -- optionally override the default name of the generated configmap
+      # name: ""
 
   ## connection settings
   # -- one of 'cloud', 'selfHosted', or 'server'

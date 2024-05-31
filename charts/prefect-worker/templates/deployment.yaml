@@ -173,5 +173,5 @@ spec:
         {{- if or .Values.worker.config.baseJobTemplate.configuration .Values.worker.config.baseJobTemplate.existingConfigMapName }}
         - name: base-job-template-file
           configMap:
-            name: {{ default "prefect-worker-base-job-template" .Values.worker.config.baseJobTemplate.existingConfigMapName . }}
+            name: {{ include "worker.baseJobTemplateName" . }}
         {{- end }}

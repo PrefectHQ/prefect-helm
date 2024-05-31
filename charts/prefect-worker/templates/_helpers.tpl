@@ -103,3 +103,15 @@ Require Prefect Server API URL
     {{- (lookup "v1" "Namespace" "" "kube-system" | default $defaultDict).metadata.uid | quote }}
 {{- end }}
 {{- end }}
+
+{{/*
+Determine the name of the ConfigMap for the baseJobTemplate
+*/}}
+{{- define "worker.baseJobTemplateName" -}}
+{{- if .Values.worker.config.baseJobTemplate.configuration -}}
+    {{ default "prefect-worker-base-job-template" .Values.worker.config.baseJobTemplate.name . }}
+{{- else if .Values.worker.config.baseJobTemplate.existingConfigMapName -}}
+    {{ .Values.worker.config.baseJobTemplate.existingConfigMapName }}
+{{- else -}}
+{{- end -}}
+{{- end -}}
