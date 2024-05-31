@@ -17,7 +17,7 @@ Create the name of the service account to use
     Otherwise, the configured external hostname will be returned
 */}}
 {{- define "server.postgres-hostname" -}}
-{{- if .Values.postgresql.useSubChart -}}
+{{- if .Values.postgresql.enabled -}}
   {{- $subchart_overrides := .Values.postgresql -}}
   {{- $name := include "postgresql.v1.primary.fullname" (dict "Values" $subchart_overrides "Chart" (dict "Name" "postgresql") "Release" .Release) -}}
   {{- printf "%s.%s" $name .Release.Namespace -}}

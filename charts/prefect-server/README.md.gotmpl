@@ -63,7 +63,7 @@ No secrets are created when providing an existing secret.
             mountPath: "/home/prefect/.postgresql"
             readOnly: true
       postgresql:
-        useSubChart: false
+        enabled: false
         auth:
           existingSecret: external-db-connection-string
     ```

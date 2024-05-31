@@ -7,7 +7,7 @@ dependencies:
       - bitnami-common
     version: 2.19.1
   - name: postgresql
-    condition: postgresql.useSubChart
+    condition: postgresql.enabled
     repository: https://charts.bitnami.com/bitnami
     version: 12.12.10
 description: Prefect server application bundle
