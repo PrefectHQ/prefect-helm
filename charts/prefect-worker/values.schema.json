@@ -168,24 +168,14 @@
               "description": "If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.",
               "additionalProperties": false,
               "properties": {
-                "enabled": {
-                  "type": "boolean",
-                  "title": "Enabled",
-                  "description": "enable passing a base job template configuration to the worker via a configmap"
-                },
-                "name": {
+                "existingConfigMapName": {
                   "type": "string",
-                  "title": "Name",
-                  "description": "the name of the ConfigMap to create OR the name of an existing ConfigMap to use"
+                  "title": "Existing ConfigMap Name",
+                  "description": "the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json'"
                 },
-                "key": {
-                  "type": "string",
-                  "title": "Key",
-                  "description": "the key to reference in the ConfigMap"
-                },
-                "data": {
+                "configuration": {
                   "type": ["string", "null"],
-                  "title": "Base Job Template Data",
+                  "title": "Base Job Template Configuration",
                   "description": "JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod"
                 }
               }

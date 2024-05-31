@@ -255,10 +255,8 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
-| worker.config.baseJobTemplate.data | string | `nil` | JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod |
-| worker.config.baseJobTemplate.enabled | bool | `false` | enable passing a base job template configuration to the worker via a configmap |
-| worker.config.baseJobTemplate.key | string | `"baseJobTemplate.json"` | the key to reference in the ConfigMap |
-| worker.config.baseJobTemplate.name | string | `"prefect-worker-base-job-template"` | the name of the ConfigMap to create OR the name of an existing ConfigMap to use |
+| worker.config.baseJobTemplate.configuration | string | `nil` | JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod |
+| worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
 | worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
 | worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
