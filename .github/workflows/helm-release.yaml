@@ -28,6 +28,11 @@ jobs:
             https://github.com/PrefectHQ/prefect.git '[!prefect-]*.*.*' | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_OUTPUT
 
+          if [[ $PREFECT_VERSION == 3.0rc* ]]; then
+            echo "Skipping chart releases for the 3.0rc builds"
+            exit 1
+          fi
+
       - name: Copy Artifact Hub metadata
         run: |
           mkdir -p /tmp/chart
