@@ -85,7 +85,7 @@ spec:
             - --name
             - {{ .Values.worker.config.name | quote }}
             {{- end }}
-            {{- if or .Values.worker.config.baseJobTemplate.configuration .Values.worker.config.baseJobTemplate.existingConfigMapName }}
+            {{- if include "worker.baseJobTemplateName" . }}
             - --base-job-template
             - baseJobTemplate.json
             {{- end }}
@@ -153,7 +153,7 @@ spec:
             - mountPath: /tmp
               name: scratch
               subPathExpr: tmp
-            {{- if or .Values.worker.config.baseJobTemplate.configuration .Values.worker.config.baseJobTemplate.existingConfigMapName }}
+            {{- if include "worker.baseJobTemplateName" . }}
             - mountPath: /home/prefect/baseJobTemplate.json
               name: base-job-template-file
               subPath: baseJobTemplate.json
@@ -170,7 +170,7 @@ spec:
         {{- if .Values.worker.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
-        {{- if or .Values.worker.config.baseJobTemplate.configuration .Values.worker.config.baseJobTemplate.existingConfigMapName }}
+        {{ if include "worker.baseJobTemplateName" . }}
         - name: base-job-template-file
           configMap:
             name: {{ include "worker.baseJobTemplateName" . }}
