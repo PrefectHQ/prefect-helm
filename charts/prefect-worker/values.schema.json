@@ -38,38 +38,32 @@
           "type": "object",
           "title": "Autoscaling",
           "description": "autoscaling configuration for the worker",
-          "form": true,
           "additionalProperties": false,
           "properties": {
             "enabled": {
               "type": "boolean",
               "title": "Enabled",
-              "description": "enable autoscaling for the worker",
-              "form": true
+              "description": "enable autoscaling for the worker"
             },
             "minReplicas": {
               "type": "integer",
               "title": "Min Replicas",
-              "description": "minimum number of replicas to scale down to",
-              "form": true
+              "description": "minimum number of replicas to scale down to"
             },
             "maxReplicas": {
               "type": "integer",
               "title": "Max Replicas",
-              "description": "maximum number of replicas to scale up to",
-              "form": true
+              "description": "maximum number of replicas to scale up to"
             },
             "targetCPUUtilizationPercentage": {
               "type": "integer",
               "title": "Target CPU Utilization Percentage",
-              "description": "target CPU utilization percentage for scaling the worker",
-              "form": true
+              "description": "target CPU utilization percentage for scaling the worker"
             },
             "targetMemoryUtilizationPercentage": {
               "type": "integer",
               "title": "Target Memory Utilization Percentage",
-              "description": "target memory utilization percentage for scaling the worker",
-              "form": true
+              "description": "target memory utilization percentage for scaling the worker"
             }
           }
         },
@@ -168,15 +162,28 @@
               "title": "Type",
               "description": "the type of worker to start i.e kubernetes"
             },
-            "baseJobTemplateName": {
-              "type": ["string", "null"],
-              "title": "Base Job Template Name",
-              "description": "Template name of the base job template. If unspecified, Prefect will use the default base job template name for the given worker type."
-            },
             "baseJobTemplate": {
-              "type": ["string", "null"],
+              "type": "object",
               "title": "Base Job Template",
-              "description": "JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored."
+              "description": "If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.",
+              "additionalProperties": false,
+              "properties": {
+                "existingConfigMapName": {
+                  "type": "string",
+                  "title": "Existing ConfigMap Name",
+                  "description": "the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json'"
+                },
+                "configuration": {
+                  "type": ["string", "null"],
+                  "title": "Base Job Template Configuration",
+                  "description": "JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod"
+                },
+                "name": {
+                  "type": ["string", "null"],
+                  "title": "Name",
+                  "description": "optionally override the default name of the generated configmap."
+                }
+              }
             }
           }
         },
