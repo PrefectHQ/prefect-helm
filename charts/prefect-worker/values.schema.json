@@ -585,5 +585,4 @@
       "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart"
     }
   }
-  }
 }
