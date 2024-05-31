@@ -3,142 +3,120 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
-    "replicaCount" : {
+    "replicaCount": {
       "type": "integer",
       "title": "Replica Count",
-      "description": "Number of replicas to deploy",
-      "form": true
+      "description": "Number of replicas to deploy"
     },
     "image": {
       "type": "object",
       "title": "Image",
       "description": "Image to deploy",
-      "form": true,
       "properties": {
         "repository": {
           "type": "string",
           "title": "Repository",
-          "description": "Image repository",
-          "form": true
+          "description": "Image repository"
         },
         "tag": {
           "type": "string",
           "title": "Tag",
-          "description": "Image tag",
-          "form": true
+          "description": "Image tag"
         },
         "pullPolicy": {
           "type": "string",
           "title": "Pull Policy",
-          "description": "Image pull policy",
-          "form": true
+          "description": "Image pull policy"
         }
       }
     },
     "nameOverride": {
       "type": "string",
       "title": "Name Override",
-      "description": "Override the name of the chart",
-      "form": true
+      "description": "Override the name of the chart"
     },
     "fullnameOverride": {
       "type": "string",
       "title": "Fullname Override",
-      "description": "Override the fullname of the chart",
-      "form": true
+      "description": "Override the fullname of the chart"
     },
     "imagePullSecrets": {
       "type": "array",
       "title": "Image Pull Secrets",
-      "description": "Image pull secrets",
-      "form": true
+      "description": "Image pull secrets"
     },
     "serviceAccount": {
       "type": "object",
       "title": "Service Account",
       "description": "Service account",
-      "form": true,
       "properties": {
         "create": {
           "type": "boolean",
           "title": "Create",
-          "description": "Create service account",
-          "form": true
+          "description": "Create service account"
         },
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "Service account annotations",
-          "form": true
+          "description": "Service account annotations"
         },
         "name": {
           "type": "string",
           "title": "Name",
-          "description": "Service account name",
-          "form": true
+          "description": "Service account name"
         }
       }
     },
     "prefectApiUrl": {
       "type": "string",
       "title": "Prefect API URL",
-      "description": "Prefect API URL",
-      "form": true
+      "description": "Prefect API URL"
     },
     "env": {
       "type": "object",
       "title": "Environment Variables",
-      "description": "Environment variables",
-      "form": true
+      "description": "Environment variables"
     },
     "podDisruptionBudget": {
       "type": "object",
       "title": "Pod Disruption Budget",
-      "description": "Pod disruption budget",
-      "form": true
+      "description": "Pod disruption budget"
     },
     "podAnnotations": {
       "type": "object",
       "title": "Pod Annotations",
-      "description": "Pod annotations",
-      "form": true
+      "description": "Pod annotations"
     },
     "podSecurityContext": {
       "type": "object",
       "title": "Pod Security Context",
-      "description": "Pod security context",
-      "form": true
+      "description": "Pod security context"
     },
     "securityContext": {
       "type": "object",
       "title": "Security Context",
-      "description": "Security context",
-      "form": true
+      "description": "Security context"
     },
     "service": {
       "type": "object",
       "additionalProperties": true,
       "title": "Service",
       "description": "Service",
-      "form": true,
       "properties": {
         "type": {
           "type": "string",
           "title": "Type",
-          "description": "Service type",
-          "form": true
+          "description": "Service type"
         },
         "port": {
           "type": "integer",
           "title": "Port",
-          "description": "Service port",
-          "form": true
+          "description": "Service port"
         },
         "targetPort": {
           "type": "integer",
           "title": "Target Port",
-          "description": "Service target port",
-          "form": true
+          "description": "Service target port"
         }
       }
     },
@@ -146,37 +124,36 @@
       "type": "object",
       "title": "Service Monitor",
       "description": "Service monitor",
-      "form": true,
       "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
-          "description": "Enable service monitor",
-          "form": true
+          "description": "Enable service monitor"
+        },
+        "additionalLabels": {
+          "type": "object",
+          "title": "Additional Labels",
+          "description": "Prometheus rule additional labels"
         },
         "interval": {
           "type": "string",
           "title": "Interval",
-          "description": "Service monitor interval",
-          "form": true
+          "description": "Service monitor interval"
         },
         "scrapeTimeout": {
           "type": "string",
           "title": "Timeout",
-          "description": "Service monitor timeout",
-          "form": true
+          "description": "Service monitor timeout"
         },
-        "metricRelabelings" : {
+        "metricRelabelings": {
           "type": "array",
           "title": "Metric Relabelings",
-          "description": "Service monitor metric relabelings",
-          "form": true
+          "description": "Service monitor metric relabelings"
         },
-        "relabelings" : {
+        "relabelings": {
           "type": "array",
           "title": "Relabelings",
-          "description": "Service monitor relabelings",
-          "form": true
+          "description": "Service monitor relabelings"
         }
       }
     },
@@ -184,145 +161,122 @@
       "type": "object",
       "title": "Prometheus Rule",
       "description": "Prometheus rule",
-      "form": true,
       "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
-          "description": "Enable prometheus rule",
-          "form": true
+          "description": "Enable prometheus rule"
         },
         "additionalLabels": {
           "type": "object",
           "title": "Additional Labels",
-          "description": "Prometheus rule additional labels",
-          "form": true
+          "description": "Prometheus rule additional labels"
         },
         "rules": {
           "type": "array",
           "title": "Rules",
-          "description": "Prometheus rule rules",
-          "form": true
+          "description": "Prometheus rule rules"
         }
       }
     },
     "livenessProbe": {
       "type": "boolean",
       "title": "Liveness Probe",
-      "description": "Enable liveness probe",
-      "form": true
+      "description": "Enable liveness probe"
     },
     "readinessProbe": {
       "type": "boolean",
       "title": "Readiness Probe",
-      "description": "Enable readiness probe",
-      "form": true
+      "description": "Enable readiness probe"
     },
     "ingress": {
       "type": "object",
       "title": "Ingress",
       "description": "Ingress",
-      "form": true,
       "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
-          "description": "Enable ingress",
-          "form": true
+          "description": "Enable ingress"
         },
         "className": {
           "type": "string",
           "title": "Class Name",
-          "description": "Ingress class name",
-          "form": true
+          "description": "Ingress class name"
         },
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "Ingress annotations",
-          "form": true
+          "description": "Ingress annotations"
         },
         "hosts": {
           "type": "array",
           "title": "Hosts",
-          "description": "Ingress hosts",
-          "form": true
+          "description": "Ingress hosts"
         },
         "tls": {
           "type": "array",
           "title": "TLS",
-          "description": "Ingress TLS",
-          "form": true
+          "description": "Ingress TLS"
         }
       }
     },
     "resources": {
       "type": "object",
       "title": "Resources",
-      "description": "Resources",
-      "form": true
+      "description": "Resources"
     },
     "autoscaling": {
       "type": "object",
       "title": "Autoscaling",
       "description": "Autoscaling",
-      "form": true,
       "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
-          "description": "Enable autoscaling",
-          "form": true
+          "description": "Enable autoscaling"
         },
         "minReplicas": {
           "type": "integer",
           "title": "Min Replicas",
-          "description": "Autoscaling min replicas",
-          "form": true
+          "description": "Autoscaling min replicas"
         },
         "maxReplicas": {
           "type": "integer",
           "title": "Max Replicas",
-          "description": "Autoscaling max replicas",
-          "form": true
+          "description": "Autoscaling max replicas"
         },
         "targetCPUUtilizationPercentage": {
           "type": "integer",
           "title": "Target CPU Utilization Percentage",
-          "description": "Autoscaling target CPU utilization percentage",
-          "form": true
+          "description": "Autoscaling target CPU utilization percentage"
         }
       }
     },
     "nodeSelector": {
       "type": "object",
       "title": "Node Selector",
-      "description": "Node selector",
-      "form": true
+      "description": "Node selector"
     },
     "tolerations": {
       "type": "array",
       "title": "Tolerations",
-      "description": "Tolerations",
-      "form": true
+      "description": "Tolerations"
     },
     "affinity": {
       "type": "object",
       "title": "Affinity",
-      "description": "Affinity",
-      "form": true
+      "description": "Affinity"
     },
     "common": {
       "type": "object",
       "title": "Common",
-      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests.",
-      "form": true
+      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
     },
     "global": {
       "type": "object",
       "title": "Global",
-      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart",
-      "form": true
+      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart"
     }
   }
 }
