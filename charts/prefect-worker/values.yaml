@@ -12,6 +12,18 @@ commonAnnotations: {}
 
 ## Deployment Configuration
 worker:
+  autoscaling:
+    # -- enable autoscaling for the worker
+    enabled: false
+    # -- minimum number of replicas to scale down to
+    minReplicas: 1
+    # -- maximum number of replicas to scale up to
+    maxReplicas: 1
+    # -- target CPU utilization percentage for scaling the worker
+    targetCPUUtilizationPercentage: 80
+    # -- target memory utilization percentage for scaling the worker
+    targetMemoryUtilizationPercentage: 80
+
   # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
   clusterUid: ""
 
