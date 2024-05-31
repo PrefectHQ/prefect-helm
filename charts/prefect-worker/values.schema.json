@@ -152,17 +152,33 @@
               "description": "the type of worker to start i.e kubernetes",
               "form": true
             },
-            "baseJobTemplateName": {
-              "type": ["string", "null"],
-              "title": "Base Job Template Name",
-              "description": "Template name of the base job template. If unspecified, Prefect will use the default base job template name for the given worker type.",
-              "form": true
-            },
             "baseJobTemplate": {
-              "type": ["string", "null"],
+              "type": "object",
               "title": "Base Job Template",
-              "description": "JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.",
-              "form": true
+              "description": "If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.",
+              "additionalProperties": false,
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "title": "Enabled",
+                  "description": "enable passing a base job template configuration to the worker via a configmap"
+                },
+                "name": {
+                  "type": "string",
+                  "title": "Name",
+                  "description": "the name of the ConfigMap to create OR the name of an existing ConfigMap to use"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key",
+                  "description": "the key to reference in the ConfigMap"
+                },
+                "data": {
+                  "type": ["string", "null"],
+                  "title": "Base Job Template Data",
+                  "description": "JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod"
+                }
+              }
             }
           }
         },

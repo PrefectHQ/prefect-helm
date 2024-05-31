@@ -60,8 +60,35 @@ worker:
     name: null
     # -- maximum number of flow runs to start simultaneously (default: unlimited)
     limit: null
-    # -- JSON formatted base job template. If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.
-    baseJobTemplate: null
+
+    ##  If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.
+    ## e.g.:
+    ## baseJobTemplate:
+    ##   enabled: true
+    ##   name: "prefect-worker-base-job-template"
+    ##   data: |
+    ##    {
+    ##      "variables": {
+    ##        ...
+    ##      },
+    ##      "job_configuration": {
+    ##        ...
+    ##      }
+    ##    }
+    ## OR
+    ## baseJobTemplate:
+    ##   enabled: false
+    ##   name: "my-existing-config-map"
+    ##   data: null
+    baseJobTemplate:
+      # -- enable passing a base job template configuration to the worker via a configmap
+      enabled: false
+      # -- the name of the ConfigMap to create OR the name of an existing ConfigMap to use
+      name: prefect-worker-base-job-template
+      # -- the key to reference in the ConfigMap
+      key: baseJobTemplate.json
+      # -- JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod
+      data: null
 
   ## connection settings
   # -- one of 'cloud', 'selfHosted', or 'server'

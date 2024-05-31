@@ -1,8 +1,8 @@
-{{- if .Values.worker.config.baseJobTemplate }}
+{{- if and .Values.worker.config.baseJobTemplate.enabled .Values.worker.config.baseJobTemplate.data }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ default "prefect-worker-base-job-template" .Values.worker.config.baseJobTemplateName . }}
+  name: {{.Values.worker.config.baseJobTemplate.name }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
     app.kubernetes.io/component: worker
@@ -10,5 +10,5 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 data:
-  baseJobTemplate.json: {{ .Values.worker.config.baseJobTemplate | toJson }}
+  {{ .Values.worker.config.baseJobTemplate.key }}: {{ .Values.worker.config.baseJobTemplate.data | toJson }}
 {{- end }}
