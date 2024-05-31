@@ -97,13 +97,11 @@ spec:
             {{- end }}
             - name: PREFECT_UI_STATIC_DIRECTORY
               value: {{ .Values.server.uiConfig.prefectUiStaticDirectory | quote }}
-            {{- if .Values.postgresql.enabled }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
               valueFrom:
                 secretKeyRef:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
-            {{- end }}
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
