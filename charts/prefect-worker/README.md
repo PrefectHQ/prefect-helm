@@ -225,7 +225,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.19.1 |
+| https://charts.bitnami.com/bitnami | common | 2.19.3 |
 
 ## Values
 
