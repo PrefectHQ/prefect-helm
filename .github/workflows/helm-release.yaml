@@ -25,13 +25,8 @@ jobs:
           echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
-            https://github.com/PrefectHQ/prefect.git '[!prefect-]*.*.*' | tail -n1 | sed 's/.*\///' \
+            https://github.com/PrefectHQ/prefect.git '[!prefect-]*.*.[!rc]' | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_OUTPUT
-
-          if [[ $PREFECT_VERSION == 3.0rc* ]]; then
-            echo "Skipping chart releases for the 3.0rc builds"
-            exit 1
-          fi
 
       - name: Copy Artifact Hub metadata
         run: |
