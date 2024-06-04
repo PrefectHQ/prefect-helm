@@ -660,12 +660,6 @@
           "description": "external hostname for the postgresql service",
           "form": true
         },
-        "enabled": {
-          "type": "boolean",
-          "title": "Enabled",
-          "description": "enable use of bitnami/postgresql subchart",
-          "form": true
-        },
         "primary": {
           "type": "object",
           "title": "Primary",
