@@ -39,6 +39,17 @@ If you are installing the chart as-is (and therefore installing PostgreSQL) - yo
 
     2. `password`: the same password defined in the `connection-string` above
 
+If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
+
+```yaml
+prefect-server:
+  postgresql:
+    # Disable the objects from the bundled PostgreSQL chart
+    enabled: false
+    auth:
+      # Provide the name of an existing secret following the instructions above.
+      existingSecret: <existing secret name>
+```
 
 Two secrets are created when not providing an existing secret name:
 1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
