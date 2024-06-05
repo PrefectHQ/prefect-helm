@@ -594,49 +594,41 @@
       "type": "object",
       "title": "PostgreSQL",
       "description": "Postgresql configuration",
-      "form": true,
       "properties": {
         "enabled": {
           "type": "boolean",
           "title": "Enabled",
-          "description": "enable postgresql",
-          "form": true
+          "description": "enable postgresql"
         },
         "auth": {
           "type": "object",
           "title": "Auth",
           "description": "postgresql authentication configuration",
-          "form": true,
           "properties": {
             "enablePostgresUser": {
               "type": "boolean",
               "title": "Enable Postgres User",
-              "description": "determines whether an admin user is created within postgres",
-              "form": true
+              "description": "determines whether an admin user is created within postgres"
             },
             "database": {
               "type": "string",
               "title": "Database",
-              "description": "name for a custom database",
-              "form": true
+              "description": "name for a custom database"
             },
             "username": {
               "type": "string",
               "title": "Username",
-              "description": "name for a custom user",
-              "form": true
+              "description": "name for a custom user"
             },
             "password": {
               "type": "string",
               "title": "Password",
-              "description": "password for the custom user",
-              "form": true
+              "description": "password for the custom user"
             },
             "existingSecret": {
               "type": "string",
               "title": "Existing Secret",
-              "description": "name of an existing secret containing the postgresql password",
-              "form": true
+              "description": "name of an existing secret containing the postgresql password"
             }
           }
         },
@@ -644,45 +636,33 @@
           "type": "object",
           "title": "Container Ports",
           "description": "PostgreSQL container port",
-          "form": true,
           "properties": {
             "postgresql": {
               "type": ["integer","string"],
               "title": "Postgres",
-              "description": "PostgreSQL container port",
-              "form": true
+              "description": "PostgreSQL container port"
             }
           }
         },
         "externalHostname": {
           "type": "string",
           "title": "External Hostname",
-          "description": "external hostname for the postgresql service",
-          "form": true
-        },
-        "useSubChart": {
-          "type": "boolean",
-          "title": "Use Sub Chart",
-          "description": "enable use of bitnami/postgresql subchart",
-          "form": true
+          "description": "external hostname for the postgresql service"
         },
         "primary": {
           "type": "object",
           "title": "Primary",
           "description": "Initdb configuration",
-          "form": true,
           "properties": {
             "initdb": {
               "type": "object",
               "title": "Initdb",
               "description": "Initdb configuration",
-              "form": true,
               "properties": {
                 "user": {
                   "type": "string",
                   "title": "User",
-                  "description": "specify the PostgreSQL username to execute the initdb scripts",
-                  "form": true
+                  "description": "specify the PostgreSQL username to execute the initdb scripts"
                 }
               }
             },
@@ -690,19 +670,16 @@
               "type": "object",
               "title": "Persistence",
               "description": "Primary persistence configuration",
-              "form": true,
               "properties": {
                 "enabled": {
                   "type": "boolean",
                   "title": "Enabled",
-                  "description": "enable PostgreSQL Primary data persistence using PVC",
-                  "form": true
+                  "description": "enable PostgreSQL Primary data persistence using PVC"
                 },
                 "size": {
                   "type": "string",
                   "title": "Size",
-                  "description": "PVC Storage Request for PostgreSQL volume",
-                  "form": true
+                  "description": "PVC Storage Request for PostgreSQL volume"
                 }
               }
             },
@@ -710,13 +687,11 @@
               "type": "object",
               "title": "Image",
               "description": "Postgres image configuration",
-              "form": true,
               "properties": {
                 "tag": {
                   "type": "string",
                   "title": "Tag",
-                  "description": " Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/",
-                  "form": true
+                  "description": " Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/"
                 }
               }
             }
@@ -727,14 +702,12 @@
     "common": {
       "type": "object",
       "title": "Common",
-      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests.",
-      "form": true
+      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
     },
     "global": {
       "type": "object",
       "title": "Global",
-      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart",
-      "form": true
+      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart"
     }
   }
 }

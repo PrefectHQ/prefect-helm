@@ -31,14 +31,24 @@ Note: If you choose to make modifications to either the `server.prefectApiUrl` o
 If you are installing the chart as-is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
 1. `postgresql.auth.password`: a password you want to set for the prefect user
 
-2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following fields:
+2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following field:
 
-    1. `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
+    - `connection-string`: fully-quallified connection string in the format of `postgresql+asyncpg://{username}:{password}@{hostname}/{database}`
         - username = `postgresql.auth.username`
         - hostname = `<release-name>-postgresql.<release-namespace>:<postgresql.containerPorts.postgresql>`
         - database = `postgresql.auth.database`
 
-    2. `password`: the same password defined in the `connection-string` above
+If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
+
+```yaml
+prefect-server:
+  postgresql:
+    # Disable the objects from the bundled PostgreSQL chart
+    enabled: false
+    auth:
+      # Provide the name of an existing secret following the instructions above.
+      existingSecret: <existing secret name>
+```
 
 Two secrets are created when not providing an existing secret name:
 1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
@@ -63,7 +73,7 @@ No secrets are created when providing an existing secret.
             mountPath: "/home/prefect/.postgresql"
             readOnly: true
       postgresql:
-        useSubChart: false
+        enabled: false
         auth:
           existingSecret: external-db-connection-string
     ```
@@ -127,13 +137,12 @@ No secrets are created when providing an existing secret.
 | postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user |
 | postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
-| postgresql.enabled | bool | `true` |  |
+| postgresql.enabled | bool | `true` | enable use of bitnami/postgresql subchart |
 | postgresql.externalHostname | string | `""` |  |
 | postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
 | postgresql.primary.persistence.size | string | `"8Gi"` | PVC Storage Request for PostgreSQL volume |
-| postgresql.useSubChart | bool | `true` | enable use of bitnami/postgresql subchart |
 | server.affinity | object | `{}` | affinity for server pods assignment |
 | server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
 | server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |

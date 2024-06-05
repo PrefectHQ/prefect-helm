@@ -293,6 +293,7 @@ ingress:
 
 # Postgresql configuration
 postgresql:
+  # -- enable use of bitnami/postgresql subchart
   enabled: true
   auth:
     # -- determines whether an admin user is created within postgres
@@ -321,9 +322,6 @@ postgresql:
   # managed postgres database instance at. This is not required if
   # `internalPostgres` is `true`
   externalHostname: ""
-
-  # -- enable use of bitnami/postgresql subchart
-  useSubChart: true
 
   ## postgresql configuration below here is only used if using the subchart
 
