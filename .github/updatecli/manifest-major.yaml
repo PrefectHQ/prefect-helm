@@ -27,6 +27,13 @@ targets:
       file: charts/prefect-agent/Chart.yaml
       key: dependencies[0].version
     sourceid: common
+  prometheus_prefect_exporter_common:
+    name: bump chart dependencies
+    kind: yaml
+    spec:
+      file: charts/prometheus-prefect-exporter/Chart.yaml
+      key: dependencies[0].version
+    sourceid: common
   server_common:
     name: bump chart dependencies
     kind: yaml
