@@ -68,15 +68,15 @@ server:
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
   autoscaling:
     # -- enable autoscaling for server
-    enabled: false
+    enabled: true
     # -- minimum number of server replicas
     minReplicas: 1
     # -- maximum number of server replicas
     maxReplicas: 100
     # -- target CPU utilization percentage
-    targetCPU: 80
+    targetCPU: 90
     # -- target Memory utilization percentage
-    targetMemory: 80
+    targetMemory: 90
 
   # -- number of server replicas to deploy
   replicaCount: 1
@@ -86,11 +86,11 @@ server:
     # -- the requested resources for the server container
     requests:
       cpu: 500m
-      memory: 512Mi
+      memory: 256Mi
     # -- the requested limits for the server container
     limits:
       cpu: "1"
-      memory: 1Gi
+      memory: 512Mi
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
