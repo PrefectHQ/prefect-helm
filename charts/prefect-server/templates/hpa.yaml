@@ -20,14 +20,6 @@ spec:
   minReplicas: {{ .Values.server.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.server.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.server.autoscaling.targetMemory }}
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: {{ .Values.server.autoscaling.targetMemory }}
-    {{- end }}
     {{- if .Values.server.autoscaling.targetCPU }}
     - type: Resource
       resource:
@@ -35,5 +27,13 @@ spec:
         target:
           type: Utilization
           averageUtilization: {{ .Values.server.autoscaling.targetCPU }}
+    {{- end }}
+    {{- if .Values.server.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.server.autoscaling.targetMemory }}
     {{- end }}
 {{- end }}
