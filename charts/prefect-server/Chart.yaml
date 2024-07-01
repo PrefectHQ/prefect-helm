@@ -5,7 +5,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.19.3
+    version: 2.20.3
   - name: postgresql
     condition: postgresql.enabled
     repository: https://charts.bitnami.com/bitnami
