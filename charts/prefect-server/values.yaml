@@ -139,6 +139,8 @@ server:
     readOnlyRootFilesystem: true
     # -- set server containers' security context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
+    # -- set server container's security context capabilities
+    capabilities: {}
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for server pod

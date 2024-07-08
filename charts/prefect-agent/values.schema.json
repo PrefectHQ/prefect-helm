@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "nameOverride": {
+      "type": "string",
+      "title": "Name Override",
+      "description": "partially overrides common.names.name"
+    },
+    "fullnameOverride": {
+      "type": "string",
+      "title": "Fullname Override",
+      "description": "fully override common.names.fullname"
+    },
+    "namespaceOverride": {
+      "type": "string",
+      "title": "Namespace Override",
+      "description": "fully override common.names.namespace"
+    },
+    "commonLabels": {
+      "type": "object",
+      "title": "Common Labels",
+      "description": "labels to add to all deployed objects"
+    },
+    "commonAnnotations": {
+      "type": "object",
+      "title": "Common Annotations",
+      "description": "annotations to add to all deployed objects"
+    },
+    "server": {
+      "type": "object",
+      "title": "Server",
+      "description": "server configuration",
+      "additionalProperties": false,
+      "properties": {
+        "containerSecurityContext": {
+          "type": "object",
+          "title": "Container Security Context",
+          "description": "server container security context",
+          "additionalProperties": false,
+          "properties": {
+            "runAsUser": {
+              "type": "integer",
+              "title": "Run As User",
+              "description": "set agent container's security context runAsUser"
+            },
+            "runAsNonRoot": {
+              "type": "boolean",
+              "title": "Run As Non Root",
+              "description": "set agent container's security context runAsNonRoot"
+            },
+            "readOnlyRootFilesystem": {
+              "type": "boolean",
+              "title": "Read Only Root Filesystem",
+              "description": "set agent container's security context readOnlyRootFilesystem"
+            },
+            "allowPrivilegeEscalation": {
+              "type": "boolean",
+              "title": "Allow Privilege Escalation",
+              "description": "set agent container's security context allowPrivilegeEscalation"
+            },
+            "capabilities": {
+              "type": "object",
+              "title": "Configure Linux capabilities",
+              "description": "set agent container's security context capabilities",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "title": "Added capabilities",
+                  "description": "set agent container's security context capabilities to add",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "drop": {
+                  "type": "array",
+                  "title": "Removed capabilities",
+                  "description": "set agent container's security context capabilities to remove",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

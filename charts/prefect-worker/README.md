@@ -267,6 +267,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | worker.config.workPool | string | `""` | the work pool that your started worker will poll. |
 | worker.config.workQueues | list | `[]` | one or more work queue names for the worker to pull from. if not provided, the worker will pull from all work queues in the work pool |
 | worker.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set worker containers' security context allowPrivilegeEscalation |
+| worker.containerSecurityContext.capabilities | object | `{}` | set worker container's security context capabilities |
 | worker.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set worker containers' security context readOnlyRootFilesystem |
 | worker.containerSecurityContext.runAsNonRoot | bool | `true` | set worker containers' security context runAsNonRoot |
 | worker.containerSecurityContext.runAsUser | int | `1001` | set worker containers' security context runAsUser |
