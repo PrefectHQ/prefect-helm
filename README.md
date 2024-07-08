@@ -194,6 +194,15 @@ If you are using the subchart deployed database with persistence enabled, it is 
 Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality,
 tweaking documentation, or anything in between. In order to successfully contribute, you'll need to fork this repository and commit changes to your local prefect-helm repo. You can then open a PR against this upstream repo that the team will review!
 
+To get started, ensure you have the required dependencies installed:
+
+```shell
+mise install
+```
+
+Be sure to run `pre-commit install` before starting any development. [`pre-commit`](https://pre-commit.com/)
+will help catch simple issues before committing.
+
 ### Documentation
 
 Please make sure that your changes have been linted & the chart documentation has been updated.  The easiest way to accomplish this is by installing [`pre-commit`](https://pre-commit.com/).
