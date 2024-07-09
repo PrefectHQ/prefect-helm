@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "prometheus-prefect-exporter.fullname" . }}
+  name: {{ include "common.names.fullname" . }}
   namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "prometheus-prefect-exporter.labels" . | nindent 4 }}

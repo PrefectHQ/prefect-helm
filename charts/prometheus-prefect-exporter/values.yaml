@@ -8,10 +8,10 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: 1.1.0
 
-# -- String to partially override prometheus-prefect-exporter.fullname template (will maintain the release name)
+# -- String to partially override common.names.fullname template (will maintain the release name)
 nameOverride: ""
 
-# -- String to fully override prometheus-prefect-exporter.fullname template
+# -- String to fully override common.names.fullname template
 fullnameOverride: ""
 
 # -- Global Docker registry secret names as an array

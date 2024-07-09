@@ -62,12 +62,12 @@ Shoutout to @ialejandro for the original work on this chart!
 | affinity | object | `{}` | Affinity for pod assignment |
 | autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling with CPU or memory utilization percentage |
 | env | object | `{}` | Environment variables to configure application |
-| fullnameOverride | string | `""` | String to fully override prometheus-prefect-exporter.fullname template |
+| fullnameOverride | string | `""` | String to fully override common.names.fullname template |
 | image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.1.0"}` | Image registry |
 | imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration to expose app |
 | livenessProbe | bool | `false` | Enable livenessProbe |
-| nameOverride | string | `""` | String to partially override prometheus-prefect-exporter.fullname template (will maintain the release name) |
+| nameOverride | string | `""` | String to partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podAnnotations | object | `{}` | Pod annotations |
 | podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
