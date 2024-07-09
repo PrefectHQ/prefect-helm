@@ -13,7 +13,7 @@ spec:
   jobLabel: "{{ .Release.Name }}"
   selector:
     matchLabels:
-      {{- include "prometheus-prefect-exporter.selectorLabels" . | nindent 8 }}
+      {{- include "common.labels.matchLabels" . | nindent 8 }}
   endpoints:
   - port: http
     interval: {{ .Values.serviceMonitor.interval | quote }}

@@ -13,4 +13,4 @@ spec:
       protocol: TCP
       name: http
   selector:
-    {{- include "prometheus-prefect-exporter.selectorLabels" . | nindent 4 }}
+    {{- include "common.labels.matchLabels" . | nindent 4 }}

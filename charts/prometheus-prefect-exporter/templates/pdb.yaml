@@ -9,6 +9,6 @@ metadata:
 spec:
   selector:
     matchLabels:
-      {{- include "prometheus-prefect-exporter.selectorLabels" . | nindent 6 }}
+      {{- include "common.labels.matchLabels" . | nindent 6 }}
 {{ toYaml .Values.podDisruptionBudget | indent 2 }}
 {{- end }}
