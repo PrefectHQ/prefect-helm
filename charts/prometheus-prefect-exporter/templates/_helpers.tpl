@@ -1,15 +1,8 @@
 {{/*
-Create chart name and version as used by the chart label.
-*/}}
-{{- define "prometheus-prefect-exporter.chart" -}}
-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
-{{/*
 Common labels
 */}}
 {{- define "prometheus-prefect-exporter.labels" -}}
-helm.sh/chart: {{ include "prometheus-prefect-exporter.chart" . }}
+helm.sh/chart: {{ include "common.names.chart" . }}
 {{ include "prometheus-prefect-exporter.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
