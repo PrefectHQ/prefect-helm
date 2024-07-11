@@ -341,6 +341,29 @@
               "type": "boolean",
               "title": "Allow Privilege Escalation",
               "description": "set server container's security context allowPrivilegeEscalation"
+            },
+            "capabilities": {
+              "type": "object",
+              "title": "Configure Linux capabilities",
+              "description": "set server container's security context capabilities",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "title": "Added capabilities",
+                  "description": "set server container's security context capabilities to add",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "drop": {
+                  "type": "array",
+                  "title": "Removed capabilities",
+                  "description": "set server container's security context capabilities to remove",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         },

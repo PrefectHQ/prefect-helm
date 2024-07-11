@@ -136,8 +136,8 @@ spec:
           {{- if .Values.worker.resources }}
           resources: {{- toYaml .Values.worker.resources | nindent 12 }}
           {{- end }}
-          {{- if .Values.worker.containerSecurityContext }}
-          securityContext: {{- .Values.worker.containerSecurityContext | toYaml | nindent 12 }}
+          {{- with .Values.worker.containerSecurityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.worker.livenessProbe.enabled }}
           livenessProbe:

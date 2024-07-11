@@ -443,6 +443,29 @@
               "type": "integer",
               "title": "Run As User",
               "description": "set worker containers' security context runAsUser"
+            },
+            "capabilities": {
+              "type": "object",
+              "title": "Configure Linux capabilities",
+              "description": "set worker container's security context capabilities",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "title": "Added capabilities",
+                  "description": "set worker container's security context capabilities to add",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "drop": {
+                  "type": "array",
+                  "title": "Removed capabilities",
+                  "description": "set worker container's security context capabilities to remove",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         },

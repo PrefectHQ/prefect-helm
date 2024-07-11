@@ -43,6 +43,7 @@ Prefect Agent application bundle
 | agent.config.workPool | string | `""` | name of prefect workpool the agent will poll; if workpool or workqueues is not provided, we use the default queue |
 | agent.config.workQueues | list | `[]` | names of prefect workqueues the agent will poll; if workpool or workqueues is not provided, we use the default queue |
 | agent.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set agent containers' security context allowPrivilegeEscalation |
+| agent.containerSecurityContext.capabilities | object | `{}` | set agent containers' security context capabilities |
 | agent.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set agent containers' security context readOnlyRootFilesystem |
 | agent.containerSecurityContext.runAsNonRoot | bool | `true` | set agent containers' security context runAsNonRoot |
 | agent.containerSecurityContext.runAsUser | int | `1001` | set agent containers' security context runAsUser |

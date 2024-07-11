@@ -6,7 +6,9 @@ metadata:
   namespace: {{ include "common.names.namespace" . | quote }}
   labels:
     {{- include "prometheus-prefect-exporter.labels" . | nindent 4 }}
-    {{- toYaml .Values.serviceMonitor.additionalLabels | nindent 4 }}
+    {{- with .Values.serviceMonitor.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   jobLabel: "{{ .Release.Name }}"
   selector:
