@@ -215,7 +215,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 
 #### Updating the Base Job Template
 
-If a base job template is set via Helm (via either `.Values.worker.config.baseJobTemplate.configuration` or `.Values.worker.config.baseJobTemplate.existingConfigMapName`), we'll run an optional `initContainer` that will sync the template configuration to the work pool named in `.Values.worker.config.workPool`.
+If a base job template is set through Helm (via either `.Values.worker.config.baseJobTemplate.configuration` or `.Values.worker.config.baseJobTemplate.existingConfigMapName`), we'll run an optional `initContainer` that will sync the template configuration to the work pool named in `.Values.worker.config.workPool`.
 
 Any time the base job template is updated, the subsequent `initContainer` run will run `prefect work-pool update <work-pool-name> --base-job-template <template-json>` and sync this template to the API.
 
