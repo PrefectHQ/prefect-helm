@@ -292,6 +292,7 @@ Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapNam
 | worker.image.pullPolicy | string | `"IfNotPresent"` | worker image pull policy |
 | worker.image.pullSecrets | list | `[]` | worker image pull secrets |
 | worker.image.repository | string | `"prefecthq/prefect"` | worker image repository |
+| worker.initContainer.resources | object | `{}` | the resource specifications for the sync-base-job-template initContainer Defaults to the resources defined for the worker container |
 | worker.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | worker.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | worker.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
