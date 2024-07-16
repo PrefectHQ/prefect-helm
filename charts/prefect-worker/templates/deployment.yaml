@@ -118,6 +118,9 @@ spec:
                   name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
+          {{- with .Values.worker }}
+          resources: {{ coalesce .initContainer.resources .resources | toYaml | nindent 12 }}
+          {{- end }}
       {{- end }}
       containers:
         - name: prefect-worker

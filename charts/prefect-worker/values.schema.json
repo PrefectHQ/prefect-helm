@@ -72,6 +72,58 @@
           "title": "Cluster UID",
           "description": "unique cluster identifier, if none is provided this value will be infered at time of helm install"
         },
+        "initContainer": {
+          "type": "object",
+          "title": "initContainer",
+          "description": "sync-base-job-template initContainer configuration",
+          "additionalProperties": false,
+          "properties": {
+            "resources": {
+              "type": "object",
+              "title": "Resources",
+              "description": "initContainer resource configuration",
+              "additionalProperties": false,
+              "properties": {
+                "requests": {
+                  "type": "object",
+                  "title": "Requests",
+                  "description": "the requested resources for the worker container",
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "title": "CPU",
+                      "description": "worker resource request cpu"
+                    },
+                    "memory": {
+                      "type": "string",
+                      "title": "Memory",
+                      "description": "worker resource request memory"
+                    }
+                  }
+                },
+                "limits": {
+                  "type": "object",
+                  "title": "Limits",
+                  "description": "the requested limits for the worker container",
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "title": "CPU",
+                      "description": "worker resource limit cpu"
+                    },
+                    "memory": {
+                      "type": "string",
+                      "title": "Memory",
+                      "description": "worker resource limit memory"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "image": {
           "type": "object",
           "title": "Image",
