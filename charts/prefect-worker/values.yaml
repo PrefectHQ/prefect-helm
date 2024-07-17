@@ -39,6 +39,19 @@ worker:
       # limits:
       #   memory: 1Gi
       #   cpu: 1000m
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- security context for the sync-base-job-template initContainer
+    containerSecurityContext:
+      # -- set init containers' security context runAsUser
+      runAsUser: 1001
+      # -- set init containers' security context runAsNonRoot
+      runAsNonRoot: true
+      # -- set init containers' security context readOnlyRootFilesystem
+      readOnlyRootFilesystem: true
+      # -- set init containers' security context allowPrivilegeEscalation
+      allowPrivilegeEscalation: false
+      # -- set init container's security context capabilities
+      capabilities: {}
 
   image:
     # -- worker image repository

@@ -87,36 +87,87 @@
                 "requests": {
                   "type": "object",
                   "title": "Requests",
-                  "description": "the requested resources for the worker container",
+                  "description": "the requested resources for the init container",
                   "additionalProperties": false,
                   "properties": {
                     "cpu": {
                       "type": "string",
                       "title": "CPU",
-                      "description": "worker resource request cpu"
+                      "description": "init resource request cpu"
                     },
                     "memory": {
                       "type": "string",
                       "title": "Memory",
-                      "description": "worker resource request memory"
+                      "description": "init resource request memory"
                     }
                   }
                 },
                 "limits": {
                   "type": "object",
                   "title": "Limits",
-                  "description": "the requested limits for the worker container",
+                  "description": "the requested limits for the init container",
                   "additionalProperties": false,
                   "properties": {
                     "cpu": {
                       "type": "string",
                       "title": "CPU",
-                      "description": "worker resource limit cpu"
+                      "description": "init resource limit cpu"
                     },
                     "memory": {
                       "type": "string",
                       "title": "Memory",
-                      "description": "worker resource limit memory"
+                      "description": "init resource limit memory"
+                    }
+                  }
+                }
+              }
+            },
+            "containerSecurityContext": {
+              "type": "object",
+              "title": "Container Security Context",
+              "description": "init container security context configuration",
+              "additionalProperties": false,
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean",
+                  "title": "Allow Privilege Escalation",
+                  "description": "set init containers' security context allowPrivilegeEscalation"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean",
+                  "title": "Read Only Root Filesystem",
+                  "description": "set init containers' security context readOnlyRootFilesystem"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean",
+                  "title": "Run As Non Root",
+                  "description": "set init containers' security context runAsNonRoot"
+                },
+                "runAsUser": {
+                  "type": "integer",
+                  "title": "Run As User",
+                  "description": "set init containers' security context runAsUser"
+                },
+                "capabilities": {
+                  "type": "object",
+                  "title": "Configure Linux capabilities",
+                  "description": "set init container's security context capabilities",
+                  "properties": {
+                    "add": {
+                      "type": "array",
+                      "title": "Added capabilities",
+                      "description": "set init container's security context capabilities to add",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "drop": {
+                      "type": "array",
+                      "title": "Removed capabilities",
+                      "description": "set init container's security context capabilities to remove",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
