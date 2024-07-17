@@ -213,13 +213,22 @@ prefect work-pool get-default-base-job-template --type kubernetes > base-job-tem
 helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate=base-job-template.json
 ```
 
+#### Updating the Base Job Template
+
+If a base job template is set through Helm (via either `.Values.worker.config.baseJobTemplate.configuration` or `.Values.worker.config.baseJobTemplate.existingConfigMapName`), we'll run an optional `initContainer` that will sync the template configuration to the work pool named in `.Values.worker.config.workPool`.
+
+Any time the base job template is updated, the subsequent `initContainer` run will run `prefect work-pool update <work-pool-name> --base-job-template <template-json>` and sync this template to the API.
+
+Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapName` will require a manual restart of the `prefect-worker` Deployment in order to kick off the `initContainer`.  However, updating the `baseJobTemplate.configuration` value will automatically roll the Deployment.
+
 ## Maintainers
 
-| Name | Email | Url |
-| ---- | ------ | --- |
-| jamiezieziula | <jamie@prefect.io> |  |
-| jimid27 | <jimi@prefect.io> |  |
-| parkedwards | <edward@prefect.io> |  |
+| Name          | Email                 | Url |
+|---------------|-----------------------|-----|
+| jamiezieziula | <jamie@prefect.io>    |     |
+| jimid27       | <jimi@prefect.io>     |     |
+| parkedwards   | <edward@prefect.io>   |     |
+| mitchnielsen  | <mitchell@prefect.io> |     |
 
 ## Requirements
 
@@ -283,6 +292,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | worker.image.pullPolicy | string | `"IfNotPresent"` | worker image pull policy |
 | worker.image.pullSecrets | list | `[]` | worker image pull secrets |
 | worker.image.repository | string | `"prefecthq/prefect"` | worker image repository |
+| worker.initContainer.resources | object | `{}` | the resource specifications for the sync-base-job-template initContainer Defaults to the resources defined for the worker container |
 | worker.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | worker.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | worker.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |

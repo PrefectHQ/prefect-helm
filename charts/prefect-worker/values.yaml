@@ -27,6 +27,19 @@ worker:
   # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
   clusterUid: ""
 
+  initContainer:
+    # -- the resource specifications for the sync-base-job-template initContainer
+    # Defaults to the resources defined for the worker container
+    resources: {}
+      # -- the requested resources for the sync-base-job-template initContainer
+      # requests:
+      #   memory: 256Mi
+      #   cpu: 100m
+      # -- the requested limits for the sync-base-job-template initContainer
+      # limits:
+      #   memory: 1Gi
+      #   cpu: 1000m
+
   image:
     # -- worker image repository
     repository: prefecthq/prefect
