@@ -292,6 +292,12 @@ Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapNam
 | worker.image.pullPolicy | string | `"IfNotPresent"` | worker image pull policy |
 | worker.image.pullSecrets | list | `[]` | worker image pull secrets |
 | worker.image.repository | string | `"prefecthq/prefect"` | worker image repository |
+| worker.initContainer.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{},"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1001}` | security context for the sync-base-job-template initContainer |
+| worker.initContainer.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set init containers' security context allowPrivilegeEscalation |
+| worker.initContainer.containerSecurityContext.capabilities | object | `{}` | set init container's security context capabilities |
+| worker.initContainer.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set init containers' security context readOnlyRootFilesystem |
+| worker.initContainer.containerSecurityContext.runAsNonRoot | bool | `true` | set init containers' security context runAsNonRoot |
+| worker.initContainer.containerSecurityContext.runAsUser | int | `1001` | set init containers' security context runAsUser |
 | worker.initContainer.resources | object | `{}` | the resource specifications for the sync-base-job-template initContainer Defaults to the resources defined for the worker container |
 | worker.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | worker.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
