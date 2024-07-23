@@ -44,9 +44,15 @@ prefect-server:
   postgresql:
     # Disable the objects from the bundled PostgreSQL chart
     enabled: false
+
     auth:
-      # Provide the name of an existing secret following the instructions above.
+      # Option 1: provide the name of an existing secret following the instructions above.
       existingSecret: <existing secret name>
+
+      # Option 2: provide the connection string details directly
+      username: myuser
+      password: mypass
+      database: mydb
 ```
 
 Two secrets are created when not providing an existing secret name:
