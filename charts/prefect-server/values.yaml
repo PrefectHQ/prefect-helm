@@ -295,6 +295,12 @@ ingress:
 
 # Secret configuration
 secret:
+  # -- whether to create a Secret containing the PostgreSQL connection string
+  create: true
+  # -- name for the Secret containing the PostgreSQL connection string
+  # To provide an existing Secret, provide a name and set `create=false`
+  name: ""
+
   # -- username for the PostgreSQL connection string
   username: ""
   # -- password for the PostgreSQL connection string

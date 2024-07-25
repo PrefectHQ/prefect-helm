@@ -108,6 +108,8 @@ Create the name of the service account to use
 {{- define "server.postgres-string-secret-name" -}}
 {{- if .Values.postgresql.auth.existingSecret -}}
   {{- .Values.postgresql.auth.existingSecret -}}
+{{- else if .Values.secret.name -}}
+  {{- .Values.secret.name -}}
 {{- else -}}
   {{- $name := include "common.names.fullname" . -}}
   {{- printf "%s-%s" $name "postgresql-connection" -}}
