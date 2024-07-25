@@ -139,16 +139,12 @@ No secrets are created when providing an existing secret.
 | namespaceOverride | string | `""` | fully override common.names.namespace |
 | postgresql.auth.database | string | `"server"` | name for a custom database |
 | postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
-| postgresql.auth.existingSecret | string | `""` | Name of existing secret to use for PostgreSQL credentials. |
 | postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user |
-| postgresql.containerPorts | object | `{"postgresql":5432}` | PostgreSQL container port |
 | postgresql.enabled | bool | `true` | enable use of bitnami/postgresql subchart |
-| postgresql.externalHostname | string | `""` |  |
 | postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
-| postgresql.primary.persistence.size | string | `"8Gi"` | PVC Storage Request for PostgreSQL volume |
 | server.affinity | object | `{}` | affinity for server pods assignment |
 | server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
 | server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |
