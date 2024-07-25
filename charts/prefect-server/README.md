@@ -145,6 +145,11 @@ No secrets are created when providing an existing secret.
 | postgresql.image.tag | string | `"14.3.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
+| secret.database | string | `""` | database for the PostgreSQL connection string |
+| secret.host | string | `""` | host for the PostgreSQL connection string |
+| secret.password | string | `""` | password for the PostgreSQL connection string |
+| secret.port | string | `""` | port for the PostgreSQL connection string |
+| secret.username | string | `""` | username for the PostgreSQL connection string |
 | server.affinity | object | `{}` | affinity for server pods assignment |
 | server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
 | server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |
