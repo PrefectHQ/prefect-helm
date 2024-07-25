@@ -27,8 +27,14 @@ Note: If you choose to make modifications to either the `server.prefectApiUrl` o
 
 ### Handling Connection Secrets
 
-If you are installing the chart as-is (and therefore installing PostgreSQL) - you'll need to update one of two fields:
-1. `postgresql.auth.password`: a password you want to set for the prefect user
+#### Using the bundled PostgreSQL chart
+
+By default, Bitnami's PostgreSQL Helm Chart will be deployed. This is **not intended for production use**, and is only
+included to provide a functional proof of concept installation.
+
+In this scenario, you'll need to provide _either one_ of the following fields:
+
+1. `postgresql.auth.password`: a password you want to set for the prefect user (default: `prefect-rocks`)
 
 2. `postgresql.auth.existingSecret`: name of an existing secret in your cluster with the following field:
 
@@ -37,30 +43,33 @@ If you are installing the chart as-is (and therefore installing PostgreSQL) - yo
         - hostname = `<release-name>-postgresql.<release-namespace>:<postgresql.containerPorts.postgresql>`
         - database = `postgresql.auth.database`
 
-If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
-
-```yaml
-prefect-server:
-  postgresql:
-    # Disable the objects from the bundled PostgreSQL chart
-    enabled: false
-
-    auth:
-      # Option 1: provide the name of an existing secret following the instructions above.
-      existingSecret: <existing secret name>
-
-      # Option 2: provide the connection string details directly
-      username: myuser
-      password: mypass
-      database: mydb
-```
-
 Two secrets are created when not providing an existing secret name:
 1. `prefect-server-postgresql-connection`: used by the prefect-server deployment to connect to the postgresql database.
 
 2. `<release-name>-postgresql-0`: defines the `postgresql.auth.username`'s password on the postgresql server to allow successful authentication from the prefect server.
 
-No secrets are created when providing an existing secret.
+#### Using an external instance of PostgreSQL
+
+If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
+
+```yaml
+prefect-server:
+  postgresql:
+    enabled: false
+
+  secret:
+    # Option 1: provide the name of an existing secret following the instructions above.
+    create: false
+    name: <existing secret name>
+
+    # Option 2: provide the connection string details directly
+    create: true
+    username: myuser
+    password: mypass
+    host: myhost.com
+    port: 1234
+    database: mydb
+```
 
 ### Connecting with SSL configured
 
