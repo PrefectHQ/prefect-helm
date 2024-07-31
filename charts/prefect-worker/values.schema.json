@@ -72,6 +72,109 @@
           "title": "Cluster UID",
           "description": "unique cluster identifier, if none is provided this value will be infered at time of helm install"
         },
+        "initContainer": {
+          "type": "object",
+          "title": "initContainer",
+          "description": "sync-base-job-template initContainer configuration",
+          "additionalProperties": false,
+          "properties": {
+            "resources": {
+              "type": "object",
+              "title": "Resources",
+              "description": "initContainer resource configuration",
+              "additionalProperties": false,
+              "properties": {
+                "requests": {
+                  "type": "object",
+                  "title": "Requests",
+                  "description": "the requested resources for the init container",
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "title": "CPU",
+                      "description": "init resource request cpu"
+                    },
+                    "memory": {
+                      "type": "string",
+                      "title": "Memory",
+                      "description": "init resource request memory"
+                    }
+                  }
+                },
+                "limits": {
+                  "type": "object",
+                  "title": "Limits",
+                  "description": "the requested limits for the init container",
+                  "additionalProperties": false,
+                  "properties": {
+                    "cpu": {
+                      "type": "string",
+                      "title": "CPU",
+                      "description": "init resource limit cpu"
+                    },
+                    "memory": {
+                      "type": "string",
+                      "title": "Memory",
+                      "description": "init resource limit memory"
+                    }
+                  }
+                }
+              }
+            },
+            "containerSecurityContext": {
+              "type": "object",
+              "title": "Container Security Context",
+              "description": "init container security context configuration",
+              "additionalProperties": false,
+              "properties": {
+                "allowPrivilegeEscalation": {
+                  "type": "boolean",
+                  "title": "Allow Privilege Escalation",
+                  "description": "set init containers' security context allowPrivilegeEscalation"
+                },
+                "readOnlyRootFilesystem": {
+                  "type": "boolean",
+                  "title": "Read Only Root Filesystem",
+                  "description": "set init containers' security context readOnlyRootFilesystem"
+                },
+                "runAsNonRoot": {
+                  "type": "boolean",
+                  "title": "Run As Non Root",
+                  "description": "set init containers' security context runAsNonRoot"
+                },
+                "runAsUser": {
+                  "type": "integer",
+                  "title": "Run As User",
+                  "description": "set init containers' security context runAsUser"
+                },
+                "capabilities": {
+                  "type": "object",
+                  "title": "Configure Linux capabilities",
+                  "description": "set init container's security context capabilities",
+                  "properties": {
+                    "add": {
+                      "type": "array",
+                      "title": "Added capabilities",
+                      "description": "set init container's security context capabilities to add",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "drop": {
+                      "type": "array",
+                      "title": "Removed capabilities",
+                      "description": "set init container's security context capabilities to remove",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "image": {
           "type": "object",
           "title": "Image",
@@ -443,6 +546,29 @@
               "type": "integer",
               "title": "Run As User",
               "description": "set worker containers' security context runAsUser"
+            },
+            "capabilities": {
+              "type": "object",
+              "title": "Configure Linux capabilities",
+              "description": "set worker container's security context capabilities",
+              "properties": {
+                "add": {
+                  "type": "array",
+                  "title": "Added capabilities",
+                  "description": "set worker container's security context capabilities to add",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "drop": {
+                  "type": "array",
+                  "title": "Removed capabilities",
+                  "description": "set worker container's security context capabilities to remove",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         },

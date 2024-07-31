@@ -111,6 +111,8 @@ agent:
     readOnlyRootFilesystem: true
     # -- set agent containers' security context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
+    # -- set agent containers' security context capabilities
+    capabilities: {}
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for agent pod

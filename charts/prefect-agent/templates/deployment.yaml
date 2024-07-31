@@ -122,8 +122,8 @@ spec:
           {{- if .Values.agent.resources }}
           resources: {{- toYaml .Values.agent.resources | nindent 12 }}
           {{- end }}
-          {{- if .Values.agent.containerSecurityContext }}
-          securityContext: {{- .Values.agent.containerSecurityContext | toYaml | nindent 12 }}
+          {{- with .Values.agent.containerSecurityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect

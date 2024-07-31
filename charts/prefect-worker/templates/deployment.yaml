@@ -19,9 +19,11 @@ spec:
       app.kubernetes.io/component: worker
   template:
     metadata:
-      {{- if .Values.worker.podAnnotations }}
-      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.worker.podAnnotations "context" $) | nindent 8 }}
-      {{- end }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- if .Values.worker.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.worker.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: worker
         prefect-version: {{ .Chart.AppVersion }}
@@ -50,6 +52,78 @@ spec:
       {{- end }}
       {{- if .Values.worker.priorityClassName }}
       priorityClassName: {{ .Values.worker.priorityClassName }}
+      {{- end }}
+      {{- if include "worker.baseJobTemplateName" . }}
+      initContainers:
+        - name: sync-base-job-template
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.prefectTag }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - |
+              work_pool_name={{ required "A Work Pool Name is required (worker.config.workPool)" .Values.worker.config.workPool | quote }}
+
+              # suppress work-pool inspect output, as we're just
+              # calling it to check the existence of the work-pool.
+
+              if ! prefect work-pool inspect $work_pool_name > /dev/null; then
+                echo ""
+                echo "Work pool $work_pool_name does not yet exist, meaning this is the initial run."
+                echo "The prefect-worker container will create the work pool on the initial run."
+                echo ""
+                echo "Exiting now!"
+                exit 0
+              fi
+
+              echo ""
+              echo "Work pool $work_pool_name exists; syncing the base job template now..."
+
+              echo ""
+              echo "Work pool $work_pool_name now updating with the following Base Job Template:"
+              echo ""
+              cat ./baseJobTemplate.json
+              echo ""
+
+              prefect work-pool update $work_pool_name --base-job-template ./baseJobTemplate.json
+          workingDir: /home/prefect
+          volumeMounts:
+            - mountPath: /home/prefect
+              name: scratch
+              subPathExpr: home
+            - mountPath: /tmp
+              name: scratch
+              subPathExpr: tmp
+            - mountPath: /home/prefect/baseJobTemplate.json
+              name: base-job-template-file
+              subPath: baseJobTemplate.json
+          env:
+            - name: HOME
+              value: /home/prefect
+            - name: PREFECT_API_URL
+              value: {{ template "worker.apiUrl" . }}
+            - name: PREFECT_KUBERNETES_CLUSTER_UID
+              value: {{ template "worker.clusterUUID" . }}
+            {{- if eq .Values.worker.apiConfig "cloud" }}
+            - name: PREFECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
+            {{- else if eq .Values.worker.apiConfig "selfHosted" }}
+            - name: PREFECT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
+            {{- end }}
+          {{- with .Values.worker }}
+          resources: {{ coalesce .initContainer.resources .resources | toYaml | nindent 12 }}
+          {{- end }}
+          {{- with .Values.worker.initContainer.containerSecurityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- end }}
       containers:
         - name: prefect-worker
@@ -136,8 +210,8 @@ spec:
           {{- if .Values.worker.resources }}
           resources: {{- toYaml .Values.worker.resources | nindent 12 }}
           {{- end }}
-          {{- if .Values.worker.containerSecurityContext }}
-          securityContext: {{- .Values.worker.containerSecurityContext | toYaml | nindent 12 }}
+          {{- with .Values.worker.containerSecurityContext }}
+          securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           {{- if .Values.worker.livenessProbe.enabled }}
           livenessProbe:

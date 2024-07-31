@@ -27,6 +27,32 @@ worker:
   # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
   clusterUid: ""
 
+  initContainer:
+    # -- the resource specifications for the sync-base-job-template initContainer
+    # Defaults to the resources defined for the worker container
+    resources: {}
+      # -- the requested resources for the sync-base-job-template initContainer
+      # requests:
+      #   memory: 256Mi
+      #   cpu: 100m
+      # -- the requested limits for the sync-base-job-template initContainer
+      # limits:
+      #   memory: 1Gi
+      #   cpu: 1000m
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    # -- security context for the sync-base-job-template initContainer
+    containerSecurityContext:
+      # -- set init containers' security context runAsUser
+      runAsUser: 1001
+      # -- set init containers' security context runAsNonRoot
+      runAsNonRoot: true
+      # -- set init containers' security context readOnlyRootFilesystem
+      readOnlyRootFilesystem: true
+      # -- set init containers' security context allowPrivilegeEscalation
+      allowPrivilegeEscalation: false
+      # -- set init container's security context capabilities
+      capabilities: {}
+
   image:
     # -- worker image repository
     repository: prefecthq/prefect
@@ -190,6 +216,8 @@ worker:
     readOnlyRootFilesystem: true
     # -- set worker containers' security context allowPrivilegeEscalation
     allowPrivilegeEscalation: false
+    # -- set worker container's security context capabilities
+    capabilities: {}
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for worker pod

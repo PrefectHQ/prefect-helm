@@ -150,6 +150,7 @@ No secrets are created when providing an existing secret.
 | server.autoscaling.targetCPU | int | `80` | target CPU utilization percentage |
 | server.autoscaling.targetMemory | int | `80` | target Memory utilization percentage |
 | server.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set server containers' security context allowPrivilegeEscalation |
+| server.containerSecurityContext.capabilities | object | `{}` | set server container's security context capabilities |
 | server.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set server containers' security context readOnlyRootFilesystem |
 | server.containerSecurityContext.runAsNonRoot | bool | `true` | set server containers' security context runAsNonRoot |
 | server.containerSecurityContext.runAsUser | int | `1001` | set server containers' security context runAsUser |
