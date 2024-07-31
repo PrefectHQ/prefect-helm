@@ -7,7 +7,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.20.3
+    version: 2.20.5
 keywords:
   - prometheus-prefect-exporter
 maintainers:
