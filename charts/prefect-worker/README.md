@@ -223,12 +223,11 @@ Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapNam
 
 ## Maintainers
 
-| Name          | Email                 | Url |
-|---------------|-----------------------|-----|
-| jamiezieziula | <jamie@prefect.io>    |     |
-| jimid27       | <jimi@prefect.io>     |     |
-| parkedwards   | <edward@prefect.io>   |     |
-| mitchnielsen  | <mitchell@prefect.io> |     |
+| Name | Email | Url |
+| ---- | ------ | --- |
+| jamiezieziula | <jamie@prefect.io> |  |
+| jimid27 | <jimi@prefect.io> |  |
+| parkedwards | <edward@prefect.io> |  |
 
 ## Requirements
 
