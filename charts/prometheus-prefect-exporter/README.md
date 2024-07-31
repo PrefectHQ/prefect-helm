@@ -53,7 +53,7 @@ Shoutout to @ialejandro for the original work on this chart!
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.16.1 |
+| https://charts.bitnami.com/bitnami | common | 2.20.5 |
 
 ## Values
 

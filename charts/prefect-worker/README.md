@@ -234,7 +234,7 @@ Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapNam
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.19.3 |
+| https://charts.bitnami.com/bitnami | common | 2.20.5 |
 
 ## Values
 

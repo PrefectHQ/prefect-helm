@@ -106,7 +106,7 @@ No secrets are created when providing an existing secret.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.19.3 |
+| https://charts.bitnami.com/bitnami | common | 2.20.5 |
 | https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
 
 ## Values
