@@ -101,6 +101,7 @@ No secrets are created when providing an existing secret.
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Requirements
 

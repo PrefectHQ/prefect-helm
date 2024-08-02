@@ -48,6 +48,7 @@ Shoutout to @ialejandro for the original work on this chart!
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Requirements
 
