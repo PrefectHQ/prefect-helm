@@ -17,6 +17,8 @@ maintainers:
     email: jimi@prefect.io
   - name: parkedwards
     email: edward@prefect.io
+  - name: mitchnielsen
+    email: mitchell@prefect.io
 name: prometheus-prefect-exporter
 sources:
   - https://github.com/PrefectHQ/prefect-helm

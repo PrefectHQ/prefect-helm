@@ -210,7 +210,7 @@ prefect work-pool get-default-base-job-template --type kubernetes > base-job-tem
 3. Install the chart as you usually would, making sure to use the `--set-file` command to pass in the `base-job-template.json` file as a paramater:
 
 ```bash
-helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate=base-job-template.json
+helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate.configuration=base-job-template.json
 ```
 
 #### Updating the Base Job Template
@@ -228,6 +228,7 @@ Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapNam
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Requirements
 

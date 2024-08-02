@@ -16,6 +16,8 @@ maintainers:
     email: jimi@prefect.io
   - name: parkedwards
     email: edward@prefect.io
+  - name: mitchnielsen
+    email: mitchell@prefect.io
 name: prefect-worker
 sources:
   - https://github.com/PrefectHQ/prefect-helm
