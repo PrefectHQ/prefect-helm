@@ -220,6 +220,7 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Requirements
 

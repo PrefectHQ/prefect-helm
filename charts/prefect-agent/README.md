@@ -13,6 +13,7 @@ Prefect Agent application bundle
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Source Code
 
