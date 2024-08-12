@@ -215,6 +215,15 @@ You can also create and run test suites via [helm-unittest](https://github.com/h
 Related test files are stored under `./charts/<chart>/tests/*_test.yaml`.
 Refer to the `helm-unittest` repository for more information.
 
+The following helper script will run the tests via the `helm-unittest` Docker image in case you don't have the binary installed locally:
+
+```shell
+./scripts/helm_unittest.sh
+```
+
+When `helm-unittest` is available via the [`mise` registry](https://mise.jdx.dev/registry.html), we'll add it to `.mise.toml`
+for easy local installation.
+
 ### Opening a PR
 
 A helpful PR explains WHAT changed and WHY the change is important. Please take time to make your PR descriptions as helpful as possible. If you are opening a PR from a forked repository - please follow [these](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) docs to allow `prefect-helm` maintainers to push commits to your local branch.
