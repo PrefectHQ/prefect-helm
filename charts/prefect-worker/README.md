@@ -210,7 +210,7 @@ prefect work-pool get-default-base-job-template --type kubernetes > base-job-tem
 3. Install the chart as you usually would, making sure to use the `--set-file` command to pass in the `base-job-template.json` file as a paramater:
 
 ```bash
-helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate=base-job-template.json
+helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate.configuration=base-job-template.json
 ```
 
 #### Updating the Base Job Template
@@ -223,18 +223,18 @@ Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapNam
 
 ## Maintainers
 
-| Name          | Email                 | Url |
-|---------------|-----------------------|-----|
-| jamiezieziula | <jamie@prefect.io>    |     |
-| jimid27       | <jimi@prefect.io>     |     |
-| parkedwards   | <edward@prefect.io>   |     |
-| mitchnielsen  | <mitchell@prefect.io> |     |
+| Name | Email | Url |
+| ---- | ------ | --- |
+| jamiezieziula | <jamie@prefect.io> |  |
+| jimid27 | <jimi@prefect.io> |  |
+| parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.19.3 |
+| https://charts.bitnami.com/bitnami | common | 2.20.5 |
 
 ## Values
 

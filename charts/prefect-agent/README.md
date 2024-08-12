@@ -13,6 +13,7 @@ Prefect Agent application bundle
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Source Code
 
@@ -22,7 +23,7 @@ Prefect Agent application bundle
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.19.3 |
+| https://charts.bitnami.com/bitnami | common | 2.20.5 |
 
 ## Values
 

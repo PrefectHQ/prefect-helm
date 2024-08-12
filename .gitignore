@@ -122,3 +122,6 @@ Chart.lock
 
 # macs
 .DS_Store
+
+# for private values.yaml files
+*.private.y*ml

@@ -116,12 +116,13 @@ prefect-server:
 | jamiezieziula | <jamie@prefect.io> |  |
 | jimid27 | <jimi@prefect.io> |  |
 | parkedwards | <edward@prefect.io> |  |
+| mitchnielsen | <mitchell@prefect.io> |  |
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.19.3 |
+| https://charts.bitnami.com/bitnami | common | 2.20.5 |
 | https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
 
 ## Values

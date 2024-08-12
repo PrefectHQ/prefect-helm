@@ -5,7 +5,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.19.3
+    version: 2.20.5
 description: Prefect Agent application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
@@ -16,6 +16,8 @@ maintainers:
     email: jimi@prefect.io
   - name: parkedwards
     email: edward@prefect.io
+  - name: mitchnielsen
+    email: mitchell@prefect.io
 name: prefect-agent
 sources:
   - https://github.com/PrefectHQ/prefect-helm

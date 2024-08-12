@@ -7,7 +7,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.16.1
+    version: 2.20.5
 keywords:
   - prometheus-prefect-exporter
 maintainers:
@@ -17,6 +17,8 @@ maintainers:
     email: jimi@prefect.io
   - name: parkedwards
     email: edward@prefect.io
+  - name: mitchnielsen
+    email: mitchell@prefect.io
 name: prometheus-prefect-exporter
 sources:
   - https://github.com/PrefectHQ/prefect-helm
