@@ -2,3 +2,4 @@
 helm-docs = '1.13.1'
 pre-commit = '3.7.1'
 helm = '3.15'
+helm-ct = '3.11.0'
