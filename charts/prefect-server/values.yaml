@@ -293,7 +293,26 @@ ingress:
   ##           port:
   ##             name: http
 
-# Postgresql configuration
+# Secret configuration
+secret:
+  # -- whether to create a Secret containing the PostgreSQL connection string
+  create: true
+  # -- name for the Secret containing the PostgreSQL connection string
+  # To provide an existing Secret, provide a name and set `create=false`
+  name: ""
+
+  # -- username for the PostgreSQL connection string
+  username: ""
+  # -- password for the PostgreSQL connection string
+  password: ""
+  # -- host for the PostgreSQL connection string
+  host: ""
+  # -- port for the PostgreSQL connection string
+  port: ""
+  # -- database for the PostgreSQL connection string
+  database: ""
+
+# PostgreSQL subchart - default overrides
 postgresql:
   # -- enable use of bitnami/postgresql subchart
   enabled: true
@@ -310,23 +329,6 @@ postgresql:
     # -- password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided
     password: prefect-rocks
 
-    ## This secret must contain two key-value pairs where the first key is `connection-string` and the value is the
-    ## connection string containing your password (e.g. postgresql+asyncpg://{username}:{password}@{hostname}/{database}).
-    ## The second key-value pair has the key `password` and the value is the {password} used in the connection string
-    # -- Name of existing secret to use for PostgreSQL credentials.
-    existingSecret: ""
-
-  # -- PostgreSQL container port
-  containerPorts:
-    postgresql: 5432
-
-  # externalHostname defines the address to contact an externally
-  # managed postgres database instance at. This is not required if
-  # `internalPostgres` is `true`
-  externalHostname: ""
-
-  ## postgresql configuration below here is only used if using the subchart
-
   ## Initdb configuration
   ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#specifying-initdb-arguments
   primary:
@@ -340,8 +342,6 @@ postgresql:
     persistence:
       # -- enable PostgreSQL Primary data persistence using PVC
       enabled: false
-      # -- PVC Storage Request for PostgreSQL volume
-      size: 8Gi
 
   image:
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/

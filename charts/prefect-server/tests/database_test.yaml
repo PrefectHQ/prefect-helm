@@ -1,0 +1,108 @@
+suite: Database configuration
+release:
+  name: test
+  namespace: prefect
+
+# Anchors to reuse in the tests
+envSecretPath: &envSecretPath .spec.template.spec.containers[?(@.name == "prefect-server")].env[?(@.name == "PREFECT_API_DATABASE_CONNECTION_URL")].valueFrom.secretKeyRef.name
+defaultSecretName: &defaultSecretName prefect-server-postgresql-connection
+
+tests:
+  # Bundled PostgreSQL chart tests
+
+  - it: Should produce the expected secret name and content with the defaults
+    asserts:
+      - template: secret.yaml
+        equal:
+          path: .metadata.name
+          value: *defaultSecretName
+      - template: secret.yaml
+        equal:
+          path: .data.connection-string
+          decodeBase64: true
+          value: postgresql+asyncpg://prefect:prefect-rocks@test-postgresql.prefect:5432/server
+      - template: deployment.yaml
+        equal:
+          path: *envSecretPath
+          value: *defaultSecretName
+
+  - it: Should inject custom connection auth info
+    set:
+      postgresql:
+        primary:
+          service:
+            ports:
+              postgresql: 1234
+        auth:
+          username: myuser
+          password: mypass
+          database: mydb
+    asserts:
+      - template: secret.yaml
+        equal:
+          path: .data.connection-string
+          decodeBase64: true
+          value: postgresql+asyncpg://myuser:mypass@test-postgresql.prefect:1234/mydb
+
+  - it: Should configure an external secret name correctly
+    set:
+      postgresql:
+        auth:
+          existingSecret: my-pg-secret
+    asserts:
+      - template: secret.yaml
+        equal:
+          path: .metadata.name
+          value: my-pg-secret
+      - template: deployment.yaml
+        equal:
+          path: *envSecretPath
+          value: my-pg-secret
+
+
+  # External PostgreSQL instance tests
+
+  - it: Should inject custom connection auth info
+    set:
+      postgresql:
+        enabled: false
+      secret:
+        username: foo
+        password: bar
+        host: mypghost.com
+        port: 1234
+        database: mydb
+    asserts:
+      - template: secret.yaml
+        equal:
+          path: .data.connection-string
+          decodeBase64: true
+          value: postgresql+asyncpg://foo:bar@mypghost.com:1234/mydb
+
+  - it: Should fail if connection info is incomplete
+    set:
+      postgresql:
+        enabled: false
+      secret:
+        username: foo
+        password: bar
+        # Not configured:
+        # host:
+        # port:
+        # database:
+    asserts:
+      - failedTemplate:
+          errorPattern: is required
+
+  - it: Should configure an existing secret name correctly
+    set:
+      postgresql:
+        enabled: false
+      secret:
+        create: false
+        name: my-pg-secret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: *envSecretPath
+          value: my-pg-secret
