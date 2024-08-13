@@ -219,7 +219,7 @@ If a base job template is set through Helm (via either `.Values.worker.config.ba
 
 Any time the base job template is updated, the subsequent `initContainer` run will run `prefect work-pool update <work-pool-name> --base-job-template <template-json>` and sync this template to the API.
 
-Please note that updating JSON inside of a `baseJobTemplate.existingConfigMapName` will require a manual restart of the `prefect-worker` Deployment in order to kick off the `initContainer`.  However, updating the `baseJobTemplate.configuration` value will automatically roll the Deployment.
+Please note that configuring the template via `baseJobTemplate.existingConfigMapName` will require a manual restart of the `prefect-worker` Deployment in order to kick off the `initContainer` - alternatively, you can use a tool like [reloader](https://github.com/stakater/Reloader) to automatically restart an associated Deployment.  However, configuring the template via `baseJobTemplate.configuration` value will automatically roll the Deployment on any update.
 
 {{ template "chart.maintainersSection" . }}
 
