@@ -63,6 +63,10 @@ spec:
           env:
           - name: PREFECT_API_URL
             value: {{ .Values.prefectApiUrl }}
+          {{- if .Values.csrfAuth }}
+          - name: PREFECT_CSRF_ENABLED
+            value: "True"
+          {{- end }}
           {{- if .Values.env }}
           {{- range $key, $value := .Values.env }}
           - name: {{ $key | upper }}

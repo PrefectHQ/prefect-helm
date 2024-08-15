@@ -72,6 +72,11 @@
       "title": "Prefect API URL",
       "description": "Prefect API URL"
     },
+    "csrfAuth": {
+      "type": "boolean",
+      "title": "CSRF Auth",
+      "description": "Enable CSRF auth"
+    },
     "env": {
       "type": "object",
       "title": "Environment Variables",

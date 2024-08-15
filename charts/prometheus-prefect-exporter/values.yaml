@@ -29,6 +29,9 @@ serviceAccount:
 
 # -- Prefect API URL to connect to for metrics
 prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
+
+# -- Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled)
+csrfAuth: false
 # -- Environment variables to configure application
 env: {}
   # Plain vars
