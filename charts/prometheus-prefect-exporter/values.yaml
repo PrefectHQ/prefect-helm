@@ -88,7 +88,7 @@ prometheusRule:
   #     severity: critical
   #   annotations:
   #     summary: Prefect server is down
-  #     description: The total number of Prefect server pods in the Prefect namespace is zero
+  #     description: There are no Prefect server pods in the "prefect" namespace
 
   # - alert: PrefectDeploymentsAllPaused
   #   expr: (count by (namespace) (prefect_info_deployment) == bool count by (namespace) (prefect_info_deployment{is_schedule_active="False"})) == 1
