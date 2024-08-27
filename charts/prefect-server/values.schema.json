@@ -313,6 +313,16 @@
               "type": "integer",
               "title": "FS Group",
               "description": "set server pod's security context fsGroup"
+            },
+            "seccompProfile": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Localhost"]
+                }
+              },
+              "required": ["type"]
             }
           }
         },
