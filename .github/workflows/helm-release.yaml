@@ -104,7 +104,7 @@ jobs:
           mkdir -p /tmp/chart
           cd charts
           # Update the prefect version tag in values.yaml
-          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-server/values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.11/g" prefect-server/values.yaml
           helm package prefect-server \
             --destination /tmp/chart \
             --dependency-update \

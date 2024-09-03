@@ -18,7 +18,7 @@ server:
     ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
     ## override pinned tag
     # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 2-latest
+    prefectTag: 3-latest
     # -- server image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
