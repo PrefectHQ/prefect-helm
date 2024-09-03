@@ -59,7 +59,7 @@ worker:
     ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
     ## override pinned tag
     # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 2-python3.11-kubernetes
+    prefectTag: 3-latest-kubernetes
     # -- worker image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
