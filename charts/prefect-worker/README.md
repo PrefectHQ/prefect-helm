@@ -288,7 +288,7 @@ Please note that configuring the template via `baseJobTemplate.existingConfigMap
 | worker.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the worker pod |
 | worker.extraVolumes | list | `[]` | array with extra volumes for the worker pod |
 | worker.image.debug | bool | `false` | enable worker image debug mode |
-| worker.image.prefectTag | string | `"3-latest-kubernetes"` | prefect image tag (immutable tags are recommended) |
+| worker.image.prefectTag | string | `"3-python3.11-kubernetes"` | prefect image tag (immutable tags are recommended) |
 | worker.image.pullPolicy | string | `"IfNotPresent"` | worker image pull policy |
 | worker.image.pullSecrets | list | `[]` | worker image pull secrets |
 | worker.image.repository | string | `"prefecthq/prefect"` | worker image repository |
