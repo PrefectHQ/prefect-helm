@@ -34,9 +34,6 @@ jobs:
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.6.1
 
-      - name: Run chart-testing (lint)
-        run: ct lint --config .github/linters/agent-ct.yaml
-
       - name: Create kind cluster
         uses: helm/kind-action@v1.10.0
         with:

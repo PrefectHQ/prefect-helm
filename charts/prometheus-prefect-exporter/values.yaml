@@ -102,15 +102,6 @@ prometheusRule:
   #     summary: All deployments are paused
   #     description: "All deployments are paused\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
-  # - alert: PrefectAgentWorkersNotRunning
-  #   expr: sum(kube_deployment_status_replicas{deployment=~".*agent|.*worker"}) == 0
-  #   for: 0m
-  #   labels:
-  #     severity: critical
-  #   annotations:
-  #     summary: All agent and worker are not running
-  #     description: "All agent and worker are not running\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-
   # - alert: PrefectWorkPoolNotAllow
   #   expr: prefect_work_pools_total == 0
   #   for: 0m
