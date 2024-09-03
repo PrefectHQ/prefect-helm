@@ -90,8 +90,8 @@ prometheusRule:
   #   labels:
   #     severity: critical
   #   annotations:
-  #     summary: Flow Run {{ $labels.flow_name }} {{ $labels.state_name }} (Flow {{ $labels.flow_name }})
-  #     description: "Flow Run failed or crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  #     summary: Prefect server is down
+  #     description: There are no Prefect server pods in the "prefect" namespace
 
   # - alert: PrefectDeploymentsAllPaused
   #   expr: (count by (namespace) (prefect_info_deployment) == bool count by (namespace) (prefect_info_deployment{is_schedule_active="False"})) == 1
