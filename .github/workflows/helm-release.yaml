@@ -25,7 +25,7 @@ jobs:
           echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
-            https://github.com/PrefectHQ/prefect.git '[3].*.*[!rc]' | tail -n1 | sed 's/.*\///' \
+            https://github.com/PrefectHQ/prefect.git '[3].*.[!rc]' | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_OUTPUT
 
       - name: Copy Artifact Hub metadata
