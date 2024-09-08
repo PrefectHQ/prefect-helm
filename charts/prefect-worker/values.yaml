@@ -165,6 +165,9 @@ worker:
     # -- prefect UI url
     uiUrl: http://localhost:4200
 
+  # -- the number of old ReplicaSets to retain to allow rollback
+  revisionHistoryLimit: 10
+
   # -- number of worker replicas to deploy
   replicaCount: 1
 

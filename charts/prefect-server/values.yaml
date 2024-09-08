@@ -64,6 +64,9 @@ server:
   ##   - name: PREFECT_API_ENABLE_HTTP2
   ##     value: false
 
+  # -- the number of old ReplicaSets to retain to allow rollback
+  revisionHistoryLimit: 10
+
   # Autoscaling configuration
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
   autoscaling:
