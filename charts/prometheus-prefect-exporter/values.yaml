@@ -1,3 +1,6 @@
+# -- the number of old ReplicaSets to retain to allow rollback
+revisionHistoryLimit: 10
+
 # -- Number of replicas
 replicaCount: 1
 

@@ -13,6 +13,7 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+  revisionHistoryLimit: {{ .Values.server.revisionHistoryLimit }}
   replicas: {{ .Values.server.replicaCount }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
