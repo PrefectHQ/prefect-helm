@@ -1,7 +1,9 @@
 name: Lint and Test Prometheus Prefect Exporter Chart
 
 "on":
-  pull_request:
+  pull_request_target:
+    branches:
+      - main
 
 jobs:
   lint_test:
