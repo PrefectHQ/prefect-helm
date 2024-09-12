@@ -1,7 +1,9 @@
 name: Lint and Test Prefect Server Chart
 
 "on":
-  pull_request:
+  pull_request_target:
+    branches:
+      - main
 
 # Do not grant jobs any permissions by default
 permissions: {}
