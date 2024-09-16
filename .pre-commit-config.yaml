@@ -15,3 +15,7 @@ repos:
     rev: v0.1.17
     hooks:
       - id: helmlint
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.1
+    hooks:
+      - id: actionlint
