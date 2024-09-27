@@ -23,6 +23,80 @@ tests:
           path: .spec.template.spec.containers[0].image
           value: custom/prefect:v2.0.0
 
+  - it: Should set the correct pull policy
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+
+  - it: Should set custom pull policy
+    set:
+      server:
+        image:
+          pullPolicy: Always
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+
+  - it: Should set image pull secrets
+    set:
+      server:
+        image:
+          pullSecrets:
+            - my-secret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.imagePullSecrets[0].name
+          value: my-secret
+
+  - it: Should set the correct priority class name
+    set:
+      server:
+        priorityClassName: high-priority
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.priorityClassName
+          value: high-priority
+
+  - it: Should set the correct debug mode
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
+          value: "false"
+
+  - it: Should enable debug mode
+    set:
+      server:
+        debug: true
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
+          value: "true"
+
+  - it: Should set the correct logging level
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
+          value: WARNING
+
+  - it: Should set a custom logging level
+    set:
+      server:
+        loggingLevel: DEBUG
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
+          value: DEBUG
+
   - it: Should set the correct API URL
     asserts:
       - template: deployment.yaml
@@ -56,40 +130,6 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
           value: "127.0.0.1"
-
-  - it: Should set the correct debug mode
-    asserts:
-      - template: deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
-          value: "false"
-
-  - it: Should enable debug mode
-    set:
-      server:
-        debug: true
-    asserts:
-      - template: deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
-          value: "true"
-
-  - it: Should set the correct logging level
-    asserts:
-      - template: deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
-          value: "WARNING"
-
-  - it: Should set a custom logging level
-    set:
-      server:
-        loggingLevel: "DEBUG"
-    asserts:
-      - template: deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
-          value: "DEBUG"
 
   - it: Should set the correct UI configuration
     asserts:
@@ -129,6 +169,99 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_URL")].value
           value: "https://custom-ui.example.com"
 
+  - it: Should set custom environment variables
+    set:
+      server:
+        env:
+          - name: CUSTOM_ENV
+            value: custom_value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
+          value: custom_value
+
+  - it: Should set the correct revision history limit
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.revisionHistoryLimit
+          value: 10
+
+  - it: Should set a custom revision history limit
+    set:
+      server:
+        revisionHistoryLimit: 5
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.revisionHistoryLimit
+          value: 5
+
+  - it: Should set the correct replica count
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 1
+
+  - it: Should set a custom replica count
+    set:
+      server:
+        replicaCount: 3
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 3
+
+  - it: Should set the correct resource requests and limits
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.cpu
+          value: 500m
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.memory
+          value: 512Mi
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.cpu
+          value: "1"
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.memory
+          value: 1Gi
+
+  - it: Should set custom resource requests and limits
+    set:
+      server:
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.cpu
+          value: 250m
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.memory
+          value: 256Mi
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.cpu
+          value: 500m
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.memory
+          value: 512Mi
+
   - it: Should set the correct security context
     asserts:
       - template: deployment.yaml
@@ -164,3 +297,287 @@ tests:
         equal:
           path: .spec.template.spec.securityContext.fsGroup
           value: 3000
+
+  - it: Should set the correct container security context
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 1001
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+
+  - it: Should set custom container security context
+    set:
+      server:
+        containerSecurityContext:
+          runAsUser: 2000
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          allowPrivilegeEscalation: true
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 2000
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: false
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: true
+
+  - it: Should set pod labels
+    set:
+      server:
+        podLabels:
+          custom-label: custom-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.labels.custom-label
+          value: custom-value
+
+  - it: Should set pod annotations
+    set:
+      server:
+        podAnnotations:
+          custom-annotation: custom-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.annotations.custom-annotation
+          value: custom-value
+
+  - it: Should set affinity
+    set:
+      server:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/e2e-az-name
+                      operator: In
+                      values:
+                        - e2e-az1
+                        - e2e-az2
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
+          value: kubernetes.io/e2e-az-name
+
+  - it: Should set node selector
+    set:
+      server:
+        nodeSelector:
+          disktype: ssd
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.nodeSelector.disktype
+          value: ssd
+
+  - it: Should set tolerations
+    set:
+      server:
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.tolerations[0].key
+          value: key1
+
+  - it: Should set extra environment variables from ConfigMap
+    set:
+      server:
+        extraEnvVarsCM: my-config-map
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
+          value: my-config-map
+
+  - it: Should set extra environment variables from Secret
+    set:
+      server:
+        extraEnvVarsSecret: my-secret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: my-secret
+
+  - it: Should set extra containers
+    set:
+      server:
+        extraContainers:
+          - name: sidecar
+            image: nginx:latest
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[1].name
+          value: sidecar
+
+  - it: Should set extra volumes
+    set:
+      server:
+        extraVolumes:
+          - name: config
+            configMap:
+              name: my-config
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.volumes[1].name
+          value: config
+
+  - it: Should set extra volume mounts
+    set:
+      server:
+        extraVolumeMounts:
+          - name: config
+            mountPath: /app/config
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].volumeMounts[3].name
+          value: config
+
+  - it: Should set extra arguments
+    set:
+      server:
+        extraArgs:
+          - --debug
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args[-1]
+          value: --debug
+
+  - it: Should set the correct service configuration
+    asserts:
+      - template: service.yaml
+        equal:
+          path: .spec.type
+          value: ClusterIP
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].port
+          value: 4200
+
+  - it: Should set custom service configuration
+    set:
+      service:
+        type: NodePort
+        port: 8080
+        nodePort: 30080
+    asserts:
+      - template: service.yaml
+        equal:
+          path: .spec.type
+          value: NodePort
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].port
+          value: 8080
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].nodePort
+          value: 30080
+
+  - it: Should set ingress configuration when enabled
+    set:
+      ingress:
+        enabled: true
+        className: nginx
+        annotations:
+          # The usual annotation has a period "." in it, and helm-unittest
+          # currently can't work with that properly. In the meantime,
+          # we will use a simpler path.
+          # See https://github.com/helm-unittest/helm-unittest?tab=readme-ov-file#yaml-jsonpath-support.
+          ingress-class: nginx
+        host:
+          hostname: prefect.example.com
+    asserts:
+      - template: ingress.yaml
+        equal:
+          path: .spec.ingressClassName
+          value: nginx
+      - template: ingress.yaml
+        equal:
+          path: .metadata.annotations.ingress-class
+          value: nginx
+      - template: ingress.yaml
+        equal:
+          path: .spec.rules[0].host
+          value: prefect.example.com
+
+  - it: Should set TLS configuration for ingress
+    set:
+      ingress:
+        enabled: true
+        tls: true
+        host:
+          hostname: prefect.example.com
+        # Had to add 'selfSigned' here to populate the `tls` field.
+        # May want to revisit the logic here.
+        selfSigned: true
+    asserts:
+      - template: ingress.yaml
+        equal:
+          path: .spec.tls[0].hosts[0]
+          value: prefect.example.com
+      - template: ingress.yaml
+        equal:
+          path: .spec.tls[0].secretName
+          value: prefect.example.com-tls
+
+  - it: Should set autoscaling configuration when enabled
+    set:
+      server:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 5
+          targetCPU: 70
+          targetMemory: 80
+    asserts:
+      - template: hpa.yaml
+        equal:
+          path: .spec.minReplicas
+          value: 2
+      - template: hpa.yaml
+        equal:
+          path: .spec.maxReplicas
+          value: 5
+      - template: hpa.yaml
+        equal:
+          path: .spec.metrics[0].resource.target.averageUtilization
+          value: 70
+      - template: hpa.yaml
+        equal:
+          path: .spec.metrics[1].resource.target.averageUtilization
+          value: 80
