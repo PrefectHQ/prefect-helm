@@ -18,4 +18,4 @@ version=${VERSION:-3.15.4-0.6.1}
 docker run \
   -it --rm \
   -v $(pwd):/apps \
-  helmunittest/helm-unittest:${version} charts/prefect-server
+  helmunittest/helm-unittest:${version} charts/*
