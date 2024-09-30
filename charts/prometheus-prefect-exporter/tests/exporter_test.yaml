@@ -1,0 +1,243 @@
+suite: Prometheus Prefect Exporter configuration
+release:
+  name: test
+  namespace: default
+
+tests:
+  - it: Should set the correct image and tag
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].image
+          value: prefecthq/prometheus-prefect-exporter:1.1.0
+
+  - it: Should set custom image and tag
+    set:
+      image:
+        repository: custom/exporter
+        tag: v1.0.0
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].image
+          value: custom/exporter:v1.0.0
+
+  - it: Should set the correct pull policy
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+
+  - it: Should set custom pull policy
+    set:
+      image:
+        pullPolicy: Always
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+
+  - it: Should set image pull secrets
+    set:
+      imagePullSecrets:
+        - name: my-secret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.imagePullSecrets[0].name
+          value: my-secret
+
+  - it: Should set the correct revision history limit
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.revisionHistoryLimit
+          value: 10
+
+  - it: Should set a custom revision history limit
+    set:
+      revisionHistoryLimit: 5
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.revisionHistoryLimit
+          value: 5
+
+  - it: Should set the correct replica count
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 1
+
+  - it: Should set a custom replica count
+    set:
+      replicaCount: 3
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 3
+
+  - it: Should set the correct Prefect API URL
+    set:
+      prefectApiUrl: "http://prefect-server:4200/api"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
+          value: "http://prefect-server:4200/api"
+
+  - it: Should enable CSRF authentication
+    set:
+      csrfAuth: true
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_CSRF_ENABLED")].value
+          value: "True"
+
+  - it: Should set custom environment variables
+    set:
+      env:
+        CUSTOM_ENV: custom_value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
+          value: custom_value
+
+  - it: Should set the correct pod security context
+    set:
+      podSecurityContext:
+        fsGroup: 2000
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.fsGroup
+          value: 2000
+
+  - it: Should set the correct container security context
+    set:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 1000
+
+  - it: Should set pod annotations
+    set:
+      podAnnotations:
+        custom-annotation: custom-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.annotations.custom-annotation
+          value: custom-value
+
+  - it: Should set the correct service configuration
+    asserts:
+      - template: service.yaml
+        equal:
+          path: .spec.type
+          value: ClusterIP
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].port
+          value: 80
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].targetPort
+          value: 8000
+
+  - it: Should set custom service configuration
+    set:
+      service:
+        type: LoadBalancer
+        port: 8080
+        targetPort: 30080
+    asserts:
+      - template: service.yaml
+        equal:
+          path: .spec.type
+          value: LoadBalancer
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].port
+          value: 8080
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].targetPort
+          value: 30080
+
+  - it: Should set the correct container arguments
+    set:
+      containerArgs:
+        - --log-level=debug
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args[0]
+          value: "--log-level=debug"
+
+  - it: Should enable liveness probe
+    set:
+      livenessProbe: true
+    asserts:
+      - template: deployment.yaml
+        isNotEmpty:
+          path: .spec.template.spec.containers[0].livenessProbe
+
+  - it: Should enable readiness probe
+    set:
+      readinessProbe: true
+    asserts:
+      - template: deployment.yaml
+        isNotEmpty:
+          path: .spec.template.spec.containers[0].readinessProbe
+
+  - it: Should set the correct service account name
+    set:
+      serviceAccount:
+        create: true
+        name: custom-sa
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.serviceAccountName
+          value: custom-sa
+
+  - it: Should set the correct prometheus rules
+    set:
+      prometheusRule:
+        enabled: true
+        additionalLabels:
+          custom-label: custom-value
+        rules:
+          - alert: PrefectServerDown
+            expr: sum by (pod, namespace) (kube_pod_info{namespace="prefect", pod=~"prefect-server.*"}) == 0
+            for: 0m
+            labels:
+              severity: critical
+            annotations:
+              summary: Prefect server is down
+              description: There are no Prefect server pods in the "prefect" namespace
+
+    asserts:
+      - template: prometheusrule.yaml
+        equal:
+          path: .metadata.labels.custom-label
+          value: custom-value
+      - template: prometheusrule.yaml
+        equal:
+          path: .spec.groups[0].rules[0].alert
+          value: PrefectServerDown
