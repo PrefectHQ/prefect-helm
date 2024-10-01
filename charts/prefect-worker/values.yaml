@@ -52,6 +52,9 @@ worker:
       allowPrivilegeEscalation: false
       # -- set init container's security context capabilities
       capabilities: {}
+    
+    # -- additional sidecar containers
+    extraContainers: []
 
   image:
     # -- worker image repository
