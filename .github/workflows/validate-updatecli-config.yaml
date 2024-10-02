@@ -14,6 +14,7 @@ jobs:
   validate_updatecli_configs:
     runs-on: ubuntu-latest
     permissions:
+      # required to read from the repo
       contents: read
     steps:
       - name: checkout

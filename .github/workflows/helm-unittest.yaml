@@ -10,6 +10,7 @@ jobs:
   unittest:
     runs-on: ubuntu-latest
     permissions:
+      # required to read from the repo
       contents: read
     steps:
       - uses: actions/checkout@v4
