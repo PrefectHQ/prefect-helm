@@ -24,12 +24,6 @@ jobs:
 
       - name: validate manifest-minor
         run: updatecli diff --config .github/updatecli/manifest-minor.yaml
-        env:
-          # required since we reference `GITHUB_TOKEN` in the updatecli config
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: validate manifest-major
         run: updatecli diff --config .github/updatecli/manifest-major.yaml
-        env:
-          # required since we reference `GITHUB_TOKEN` in the updatecli config
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

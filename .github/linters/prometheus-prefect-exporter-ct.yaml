@@ -4,5 +4,5 @@ charts:
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
 helm-extra-args: --timeout 600s
-namespace: default
+namespace: prefect
 release-label: prefect
