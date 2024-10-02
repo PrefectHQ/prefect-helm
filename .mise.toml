@@ -1,5 +1,6 @@
 [tools]
 actionlint = '1.7.1'
+github-cli = '2.52.0'
 helm = '3.15'
 helm-ct = '3.11.0'
 helm-docs = '1.13.1'
