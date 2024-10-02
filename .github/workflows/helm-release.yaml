@@ -1,7 +1,8 @@
-name: Release Helm Chart
+---
+name: Release Prefect Server and Worker Helm Charts
 
 "on":
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   release:

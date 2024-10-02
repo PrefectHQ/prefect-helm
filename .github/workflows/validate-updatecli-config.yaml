@@ -1,23 +1,20 @@
 ---
-name: Validate updatecli config
+name: Validate Updatecli Config
 
-on:
+"on":
   pull_request:
     branches:
       - main
     paths:
       - .github/updatecli/**
 
-# Do not grant jobs any permissions by default
 permissions: {}
 
 jobs:
-  validate_updatecli_config:
+  validate_updatecli_configs:
     runs-on: ubuntu-latest
     permissions:
-      # required to read from the repo
       contents: read
-
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -25,9 +22,14 @@ jobs:
       - name: install updatecli
         uses: updatecli/updatecli-action@v2
 
-      - name: run updatecli diff to validate config
-        run: |
-          updatecli diff --config .github/updatecli/manifest-minor.yaml
-          updatecli diff --config .github/updatecli/manifest-major.yaml
+      - name: validate manifest-minor
+        run: updatecli diff --config .github/updatecli/manifest-minor.yaml
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          # required since we reference `GITHUB_TOKEN` in the updatecli config
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: validate manifest-major
+        run: updatecli diff --config .github/updatecli/manifest-major.yaml
+        env:
+          # required since we reference `GITHUB_TOKEN` in the updatecli config
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
