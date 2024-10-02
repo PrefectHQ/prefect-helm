@@ -48,3 +48,4 @@ targets:
       file: charts/prefect-server/Chart.yaml
       key: dependencies[1].version
     sourceid: postgresql
+# test
