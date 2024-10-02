@@ -3,19 +3,39 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.1.0
     hooks:
+      - id: check-merge-conflict
+      - id: detect-private-key
       - id: no-commit-to-branch
       - id: trailing-whitespace
+
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.11.0
     hooks:
       - id: helm-docs
         args:
           - --template-files=README.md.gotmpl
+
   - repo: https://github.com/gruntwork-io/pre-commit
     rev: v0.1.17
     hooks:
       - id: helmlint
+
   - repo: https://github.com/rhysd/actionlint
     rev: v1.7.1
     hooks:
       - id: actionlint
+        args:
+          - -shellcheck=
+
+  - repo: https://github.com/koalaman/shellcheck-precommit
+    rev: v0.7.2
+    hooks:
+      - id: shellcheck
+        args: ["--severity=error"]
+
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.28.0
+    hooks:
+      - id: yamllint
+        args:
+          - --strict
