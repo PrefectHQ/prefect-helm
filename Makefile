@@ -34,26 +34,24 @@ tools: mise .git/hooks/pre-commit
 tools-list:
 	@mise list --current
 
-.PHONY: helmbuildworker
-helmbuildworker: ## Build Worker Helm dependencies
-	helm repo add bitnami https://charts.bitnami.com/bitnami
-	helm dependency build $(WORKER_CHART_PATH)
-
-.PHONY: helmbuildserver
-helmbuildserver: ## Build Server Helm dependencies
-	helm repo add bitnami https://charts.bitnami.com/bitnami
-	helm dependency build $(SERVER_CHART_PATH)
-
-.PHONY: helmbuildprom
-helmbuildprom: ## Build Prometheus Prefect Exporter Helm dependencies
+.PHONY: buildprom
+buildprom: ## Build Prometheus Prefect Exporter Helm dependencies
 	helm repo add bitnami https://charts.bitnami.com/bitnami
 	helm dependency build $(PROMETHEUS_PREFECT_EXPORTER_CHART_PATH)
 
-.PHONY: helmbuild
-helmbuild: helmbuildworker helmbuildserver helmbuildprom
+.PHONY: buildserver
+buildserver: ## Build Server Helm dependencies
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm dependency build $(SERVER_CHART_PATH)
 
-.PHONY: helmunittest
-helmunittest: ## Run Helm unittest
-	helm unittest $(WORKER_CHART_PATH)
-	helm unittest $(SERVER_CHART_PATH)
-	helm unittest $(PROMETHEUS_PREFECT_EXPORTER_CHART_PATH)
+.PHONY: buildworker
+buildworker: ## Build Worker Helm dependencies
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm dependency build $(WORKER_CHART_PATH)
+
+.PHONY: buildall
+buildall: buildworker buildserver buildprom
+
+.PHONY: helmtest
+helmtest: ## Run Helm unittest
+	./scripts/helm_unittest.sh
