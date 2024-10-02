@@ -1,7 +1,7 @@
 ---
 name: Run Helm Unit Tests
 
-"on": 
+"on":
   pull_request: {}
 
 permissions: {}
@@ -13,7 +13,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: d3adb5/helm-unittest-action@v2
         with:
           helm-version: v3.15.3
