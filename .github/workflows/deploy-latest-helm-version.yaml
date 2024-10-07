@@ -1,10 +1,14 @@
-name: Deploy latest helm releases to internal cluster
+---
+name: Deploy Latest Helm Releases to Internal Cluster
 
 "on":
   workflow_dispatch:
     inputs:
       release_version:
-        description: Release tag
+        description: The latest release tag
+        required: true
+
+permissions: {}
 
 jobs:
   update_helm_releases:
@@ -21,4 +25,4 @@ jobs:
             --ref main \
             -f release_version=${{ github.event.inputs.release_version }}
         env:
-          GITHUB_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
+          GH_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}

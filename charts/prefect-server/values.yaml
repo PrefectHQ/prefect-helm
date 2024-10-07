@@ -18,7 +18,7 @@ server:
     ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
     ## override pinned tag
     # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 2-latest
+    prefectTag: 3-latest
     # -- server image pull policy
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -63,6 +63,9 @@ server:
   ## env:
   ##   - name: PREFECT_API_ENABLE_HTTP2
   ##     value: false
+
+  # -- the number of old ReplicaSets to retain to allow rollback
+  revisionHistoryLimit: 10
 
   # Autoscaling configuration
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event

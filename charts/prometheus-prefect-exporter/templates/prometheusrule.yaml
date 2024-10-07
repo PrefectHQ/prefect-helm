@@ -12,7 +12,7 @@ metadata:
 spec:
   {{- with .Values.prometheusRule.rules }}
   groups:
-    - name: {{ template "prometheus-prefect-exporter.name" $ }}
+    - name: {{ template "common.names.fullname" $ }}
       rules: {{ toYaml . | nindent 8 }}
   {{- end }}
 {{- end }}

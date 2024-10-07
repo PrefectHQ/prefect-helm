@@ -1,9 +1,11 @@
+---
 name: Lint and Test Prefect Worker Chart
 
 "on":
   pull_request_target:
+    branches:
+      - main
 
-# Do not grant jobs any permissions by default
 permissions: {}
 
 jobs:

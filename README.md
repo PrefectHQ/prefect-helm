@@ -6,21 +6,7 @@ This repository contains the official Prefect Helm charts for installing and con
 
 [Workers](https://docs.prefect.io/latest/concepts/work-pools/#worker-overview) are lightweight polling services that retrieve scheduled runs from a work pool and execute them.
 
-Workers are similar to agents, but offer greater control over infrastructure configuration and the ability to route work to specific types of execution environments.
-
 Workers each have a type corresponding to the execution environment to which they will submit flow runs. Workers are only able to join work pools that match their type. As a result, when deployments are assigned to a work pool, you know in which execution environment scheduled flow runs for that deployment will run.
-
-## [Prefect agent](charts/prefect-agent/)
-
-### Note: Workers are recommended
-
-Agents are part of the block-based deployment model. [Work Pools and Workers](https://docs.prefect.io/latest/concepts/work-pools/) simplify the specification of a flow's infrastructure and runtime environment. If you have existing agents, you can [upgrade from agents to workers](https://docs.prefect.io/latest/guides/upgrade-guide-agents-to-workers/) to significantly enhance the experience of deploying flows.
-
-[Agent](https://docs.prefect.io/latest/concepts/agents/) processes are lightweight polling services that get scheduled work from a work pool and deploy the corresponding flow runs.
-
-Agents poll for work every 15 seconds by default. This interval is configurable in your profile settings with the `PREFECT_AGENT_QUERY_INTERVAL` setting.
-
-It is possible for multiple agent processes to be started for a single work pool. Each agent process sends a unique ID to the server to help disambiguate themselves and let users know how many agents are active.
 
 ## [Prefect server](charts/prefect-server/)
 
@@ -29,6 +15,10 @@ It is possible for multiple agent processes to be started for a single work pool
 ## [Prometheus Prefect Exporter](charts/prometheus-prefect-exporter/)
 
 The Prometheus Prefect Exporter is a tool to pull relevant Prefect metrics from a hosted Prefect Server instance
+
+## Prefect agent
+
+Prefect Agents have been deprecated. `prefect-helm` version `2024.8.30163822` and earlier will contain the `prefect-agent` chart.
 
 ## Usage
 
@@ -129,7 +119,7 @@ See comments in `values.yaml`.
 
 ### Security context
 
-By default, the worker (or agent), and server run as an unprivileged user with a read-only root filesystem. You can customize the security context settings for both the worker and server in the `values.yaml` file for your use case.
+By default, the worker, and server run as an unprivileged user with a read-only root filesystem. You can customize the security context settings for both the worker and server in the `values.yaml` file for your use case.
 
 If you need to install system packages or configure other settings at runtime, you can configure a writable filesystem and run as root by configuring the pod and container security context accordingly:
 
@@ -162,23 +152,6 @@ containerSecurityContext:
 
 The other default settings, such as a read-only root filesystem, are suitable for an OpenShift environment.
 
-## Additional permissions for Prefect agents
-
-### Dask
-
-If you are running flows on your worker’s pod (i.e. with Process infrastructure), and using the Dask task runner to create Dask Kubernetes clusters, you will need to grant the following permissions within `values.yaml`.
-
-```yaml
-role:
-  extraPermissions:
-    - apiGroups: [""]
-      resources: ["pods", "services"]
-      verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-    - apiGroups: ["policy"]
-      resources: ["poddisruptionbudgets"]
-      verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
-```
-
 ## Version support policy
 
 Prefect follows the [upstream Kubernetes support policy](https://kubernetes.io/releases/version-skew-policy/), meaning that we test against the three most recent minor version releases of Kubernetes. The charts may be compatible with older releases of Kubernetes, however, we do not test against those versions and may choose to reject issues or patches to add support.
@@ -191,21 +164,28 @@ If you are using the subchart deployed database with persistence enabled, it is 
 
 ## Contributing
 
-Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality,
-tweaking documentation, or anything in between. In order to successfully contribute, you'll need to fork this repository and commit changes to your local prefect-helm repo. You can then open a PR against this upstream repo that the team will review!
+Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality, echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrctweaking documentation, or anything in between. In order to successfully contribute, you'll need to fork this repository and commit changes to your local prefect-helm repo. You can then open a PR against this upstream repo that the team will review!
 
-To get started, ensure you have the required dependencies installed:
+To get started, install the required dependencies by running:
 
 ```shell
-mise install
+make all
 ```
 
-Be sure to run `pre-commit install` before starting any development. [`pre-commit`](https://pre-commit.com/)
-will help catch simple issues before committing.
+This will install tools like `helm`, `pre-commit`, and `mise`.
 
-### Documentation
+You'll also need to install dependencies for the charts you're working on. You can use the following commands to install dependencies for each chart:
 
-Please make sure that your changes have been linted & the chart documentation has been updated.  The easiest way to accomplish this is by installing [`pre-commit`](https://pre-commit.com/).
+```shell
+# Server Chart
+make buildserver
+# Worker Chart
+make buildworker
+# Prometheus Prefect Exporter Chart
+make buildprom
+# All Charts
+make buildall
+```
 
 ### Testing & validation
 
@@ -218,7 +198,7 @@ Refer to the `helm-unittest` repository for more information.
 The following helper script will run the tests via the `helm-unittest` Docker image in case you don't have the binary installed locally:
 
 ```shell
-./scripts/helm_unittest.sh
+make helmtest
 ```
 
 When `helm-unittest` is available via the [`mise` registry](https://mise.jdx.dev/registry.html), we'll add it to `.mise.toml`

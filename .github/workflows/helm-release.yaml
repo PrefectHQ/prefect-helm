@@ -1,11 +1,17 @@
-name: Release Helm Chart
+---
+name: Release Prefect Server and Worker Helm Charts
 
 "on":
-  workflow_dispatch:
+  workflow_dispatch: {}
+
+permissions: {}
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      # GitHub considers creating releases and uploading assets as writing contents.
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,7 +31,7 @@ jobs:
           echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
-            https://github.com/PrefectHQ/prefect.git '[!prefect-]*.*.[!rc]' | tail -n1 | sed 's/.*\///' \
+            https://github.com/PrefectHQ/prefect.git '[3].*.[!rc]' | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_OUTPUT
 
       - name: Copy Artifact Hub metadata
@@ -59,26 +65,6 @@ jobs:
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      - name: Package Agent helm chart
-        run: |
-          mkdir -p /tmp/chart
-          cd charts
-          # Update the prefect version tag in values.yaml
-          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-agent/values.yaml
-          helm package prefect-agent \
-            --destination /tmp/chart \
-            --dependency-update \
-            --version $RELEASE_VERSION \
-            --app-version $PREFECT_VERSION \
-            --sign --key 'jamie@prefect.io' \
-            --keyring $SIGN_KEYRING \
-            --passphrase-file $SIGN_PASSPHRASE_FILE
-        env:
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
-          SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
-          SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
-
       - name: Package Worker helm chart
         run: |
           mkdir -p /tmp/chart
@@ -104,7 +90,7 @@ jobs:
           mkdir -p /tmp/chart
           cd charts
           # Update the prefect version tag in values.yaml
-          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.10/g" prefect-server/values.yaml
+          sed -i "s/prefectTag:.*$/prefectTag: $PREFECT_VERSION-python3.11/g" prefect-server/values.yaml
           helm package prefect-server \
             --destination /tmp/chart \
             --dependency-update \
@@ -129,10 +115,9 @@ jobs:
         run: |
           cp /tmp/chart/artifacthub-repo.yml .
           cp /tmp/chart/index.yaml .
-          cp /tmp/chart/prefect-agent-$RELEASE_VERSION.* ./charts
           cp /tmp/chart/prefect-server-$RELEASE_VERSION.* ./charts
           cp /tmp/chart/prefect-worker-$RELEASE_VERSION.* ./charts
-          git add ./artifacthub-repo.yml ./index.yaml ./charts/prefect-agent-$RELEASE_VERSION.* ./charts/prefect-server-$RELEASE_VERSION.* ./charts/prefect-worker-$RELEASE_VERSION.*
+          git add ./artifacthub-repo.yml ./index.yaml ./charts/prefect-server-$RELEASE_VERSION.* ./charts/prefect-worker-$RELEASE_VERSION.*
           git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
         env:

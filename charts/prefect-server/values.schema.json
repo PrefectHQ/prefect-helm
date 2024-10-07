@@ -119,6 +119,11 @@
             "type": "object"
           }
         },
+        "revisionHistoryLimit": {
+          "type": "integer",
+          "title": "Revision History Limit",
+          "description": "the number of old ReplicaSets to retain to allow rollback"
+        },
         "autoscaling": {
           "type": "object",
           "title": "Autoscaling",
