@@ -24,4 +24,5 @@ jobs:
         uses: prefecthq/actions-updatecli-apply@main
         with:
           manifest-path: .github/updatecli/manifest-major.yaml
+          run-helm-docs: true
           run-type: major
