@@ -31,10 +31,10 @@ jobs:
           set -x
 
           echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_ENV
-          echo "PREFECT_VERSION=$(\
+          echo "PROMETHEUS_PREFECT_EXPORTER_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
-            https://github.com/PrefectHQ/prefect.git '[3].*.[!rc]' | tail -n1 | sed 's/.*\///' \
-          )" >> $GITHUB_ENV
+            https://github.com/PrefectHQ/prometheus-prefect-exporter | tail -n1 | sed 's/.*\///' \
+          )" >> $GITHUB_OUTPUT
 
       - name: Output version as GitHub Output
         id: output_version
