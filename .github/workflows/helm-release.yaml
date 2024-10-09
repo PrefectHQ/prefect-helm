@@ -13,7 +13,7 @@ jobs:
       # GitHub considers creating releases and uploading assets as writing contents.
       contents: write
     outputs:
-      releaseVersion: ${{ steps.get_version.outputs.releaseVersion }}
+      releaseVersion: ${{ steps.output_version.outputs.releaseVersion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
