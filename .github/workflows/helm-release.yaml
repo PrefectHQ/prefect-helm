@@ -86,9 +86,6 @@ jobs:
             --sign --key 'jamie@prefect.io' \
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
-        env:
-          SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
-          SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
       - name: Package Server helm chart
         run: |
@@ -104,9 +101,6 @@ jobs:
             --sign --key 'jamie@prefect.io' \
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
-        env:
-          SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
-          SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
       - name: Update chart index
         run: |
