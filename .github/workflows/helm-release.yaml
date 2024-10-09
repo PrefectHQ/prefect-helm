@@ -12,6 +12,8 @@ jobs:
     permissions:
       # GitHub considers creating releases and uploading assets as writing contents.
       contents: write
+    outputs:
+      releaseVersion: ${{ steps.get_version.outputs.releaseVersion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,7 +34,7 @@ jobs:
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prefect.git '[3].*.[!rc]' | tail -n1 | sed 's/.*\///' \
-          )" >> $GITHUB_OUTPUT
+          )" >> $GITHUB_ENV
 
       - name: Copy Artifact Hub metadata
         run: |
@@ -55,11 +57,11 @@ jobs:
           base64 -d <<< "$GPG_KEYRING_BASE64" > "$keyring"
           passphrase_file="$gpg_dir/passphrase"
           echo "$GPG_PASSPHRASE" > "$passphrase_file"
-          echo "SIGN_PASSPHRASE_FILE=$passphrase_file" >> "$GITHUB_ENV"
-          echo "SIGN_KEYRING=$keyring" >> "$GITHUB_ENV"
+          echo "SIGN_PASSPHRASE_FILE=$passphrase_file" >> $GITHUB_ENV
+          echo "SIGN_KEYRING=$keyring" >> $GITHUB_ENV
         env:
-          GPG_KEYRING_BASE64: "${{ secrets.GPG_KEYRING_BASE64 }}"
-          GPG_PASSPHRASE: "${{ secrets.GPG_PASSPHRASE }}"
+          GPG_KEYRING_BASE64: ${{ secrets.GPG_KEYRING_BASE64 }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Add dependency chart repos
         run: |
@@ -81,7 +83,6 @@ jobs:
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
@@ -101,7 +102,6 @@ jobs:
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
@@ -123,15 +123,6 @@ jobs:
         env:
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
 
-      - name: Trigger deploy-latest-helm-version workflow
-        run: |
-          gh workflow run deploy-latest-helm-version.yaml \
-            --ref main \
-            -f release_version=$RELEASE_VERSION
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-
       - name: Create Github Release + Tag
         run: |
           gh release create $RELEASE_VERSION \
@@ -141,4 +132,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-          PREFECT_VERSION: ${{ steps.get_version.outputs.PREFECT_VERSION }}
+
+  update_helm_chart_versions_downstream:
+    name: Update Helm Chart versions in `ops-cluster-deployment`
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run workflow
+        run: |
+          gh workflow run update-prefect-helm-chart-versions.yaml \
+            --repo prefecthq/ops-cluster-deployment \
+            --ref main \
+            -f chart_version=${{ needs.release.outputs.releaseVersion }} \
+        env:
+          GH_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
