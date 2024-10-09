@@ -12,6 +12,8 @@ jobs:
     permissions:
       # GitHub considers creating releases and uploading assets as writing contents.
       contents: write
+    outputs:
+      releaseVersion: ${{ steps.get_version.outputs.releaseVersion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,12 +30,16 @@ jobs:
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo "CHART_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
-          echo "RELEASE_VERSION=prometheus-prefect-exporter-$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
-          echo "PROMETHEUS_PREFECT_EXPORTER_VERSION=$(\
+          echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_ENV
+          echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
-            https://github.com/PrefectHQ/prometheus-prefect-exporter | tail -n1 | sed 's/.*\///' \
-          )" >> $GITHUB_OUTPUT
+            https://github.com/PrefectHQ/prefect.git '[3].*.[!rc]' | tail -n1 | sed 's/.*\///' \
+          )" >> $GITHUB_ENV
+
+      - name: Output version as GitHub Output
+        id: output_version
+        run: |
+          echo "releaseVersion=$RELEASE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Copy Artifact Hub metadata
         run: |
@@ -77,8 +83,6 @@ jobs:
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
-          CHART_VERSION: ${{ steps.get_version.outputs.CHART_VERSION }}
-          PROMETHEUS_PREFECT_EXPORTER_VERSION: ${{ steps.get_version.outputs.PROMETHEUS_PREFECT_EXPORTER_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
@@ -96,17 +100,6 @@ jobs:
           git add ./artifacthub-repo.yml ./index.yaml ./charts/prometheus-prefect-exporter-$CHART_VERSION.*
           git commit -m "Release $CHART_VERSION"
           git push origin gh-pages
-        env:
-          CHART_VERSION: ${{ steps.get_version.outputs.CHART_VERSION }}
-
-      - name: Trigger deploy-latest-helm-version workflow
-        run: |
-          gh workflow run deploy-latest-helm-version.yaml \
-            --ref main \
-            -f release_version=$RELEASE_VERSION
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
 
       - name: Create Github Release + Tag
         run: |
@@ -115,6 +108,19 @@ jobs:
             --notes "Packaged with Prometheus Prefect Exporter version \
             [$PROMETHEUS_PREFECT_EXPORTER_VERSION](https://github.com/PrefectHQ/prometheus-prefect-exporter/releases/tag/$PROMETHEUS_PREFECT_EXPORTER_VERSION)"
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
-          PROMETHEUS_PREFECT_EXPORTER_VERSION: ${{ steps.get_version.outputs.PROMETHEUS_PREFECT_EXPORTER_VERSION }}
+          GH_TOKEN: ${{ github.token }}
+
+  update_helm_chart_version_downstream:
+    name: Update Helm Chart version in `ops-cluster-deployment`
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run workflow
+        run: |
+          gh workflow run update-prefect-helm-chart-versions.yaml \
+            --repo prefecthq/ops-cluster-deployment \
+            --ref main \
+            -f chart_version=${{ needs.release.outputs.releaseVersion }} \
+            -f type=exporter
+        env:
+          GH_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}

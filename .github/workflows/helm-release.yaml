@@ -30,11 +30,16 @@ jobs:
           # Enable pipefail so git command failures do not result in null versions downstream
           set -x
 
-          echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_OUTPUT
+          echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_ENV
           echo "PREFECT_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prefect.git '[3].*.[!rc]' | tail -n1 | sed 's/.*\///' \
           )" >> $GITHUB_ENV
+
+      - name: Output version as GitHub Output
+        id: output_version
+        run: |
+          echo "releaseVersion=$RELEASE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Copy Artifact Hub metadata
         run: |
@@ -82,7 +87,6 @@ jobs:
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
@@ -101,7 +105,6 @@ jobs:
             --keyring $SIGN_KEYRING \
             --passphrase-file $SIGN_PASSPHRASE_FILE
         env:
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
           SIGN_KEYRING: ${{ env.SIGN_KEYRING }}
           SIGN_PASSPHRASE_FILE: ${{ env.SIGN_PASSPHRASE_FILE }}
 
@@ -120,8 +123,6 @@ jobs:
           git add ./artifacthub-repo.yml ./index.yaml ./charts/prefect-server-$RELEASE_VERSION.* ./charts/prefect-worker-$RELEASE_VERSION.*
           git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
-        env:
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
 
       - name: Create Github Release + Tag
         run: |
@@ -130,8 +131,7 @@ jobs:
             --notes "Packaged with Prefect version \
             [$PREFECT_VERSION](https://github.com/PrefectHQ/prefect/releases/tag/$PREFECT_VERSION)"
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          RELEASE_VERSION: ${{ steps.get_version.outputs.RELEASE_VERSION }}
+          GH_TOKEN: ${{ github.token }}
 
   update_helm_chart_versions_downstream:
     name: Update Helm Chart versions in `ops-cluster-deployment`
@@ -144,5 +144,6 @@ jobs:
             --repo prefecthq/ops-cluster-deployment \
             --ref main \
             -f chart_version=${{ needs.release.outputs.releaseVersion }} \
+            -f type=main
         env:
           GH_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
