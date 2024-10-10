@@ -4,7 +4,6 @@ name: Notify on Failure
 "on":
   workflow_run:
     workflows:
-      - Deploy Latest Helm Releases to Internal Cluster
       - Release Prefect Server and Worker Helm Charts
       - Release Prometheus Prefect Exporter Helm Chart
       - Updatecli Major Dependency Updates
