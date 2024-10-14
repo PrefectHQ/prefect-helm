@@ -181,6 +181,7 @@ worker:
       memory: 1Gi
       cpu: 1000m
 
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
   topologySpreadConstraints:
     enabled: false
     constraints:
