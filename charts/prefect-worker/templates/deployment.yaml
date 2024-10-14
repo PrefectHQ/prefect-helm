@@ -221,6 +221,17 @@ spec:
               port: 8080
           {{- toYaml .Values.worker.livenessProbe.config | nindent 12 }}
           {{- end }}
+          {{- if .Values.worker.topologySpreadConstraints.enabled }}
+          topologySpreadConstraints:
+            {{- range .Values.worker.topologySpreadConstraints.constraints }}
+            - maxSkew: {{ .maxSkew }}
+              topologyKey: {{ .topologyKey }}
+              whenUnsatisfiable: {{ .whenUnsatisfiable }}
+              labelSelector:
+                matchLabels:
+                  {{- toYaml .labelSelector.matchLabels | nindent 12 }}
+            {{- end }}
+          {{- end }}
           volumeMounts:
             - mountPath: /home/prefect
               name: scratch
