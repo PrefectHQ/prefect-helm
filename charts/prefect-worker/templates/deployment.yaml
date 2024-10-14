@@ -222,7 +222,8 @@ spec:
           {{- toYaml .Values.worker.livenessProbe.config | nindent 12 }}
           {{- end }}
           {{- if .Values.worker.topologySpreadConstraints.enabled }}
-          topologySpreadConstraints:
+          {{- /*
+ topologySpreadConstraints:
             {{- range .Values.worker.topologySpreadConstraints.constraints }}
             - maxSkew: {{ .maxSkew }}
               topologyKey: {{ .topologyKey }}
@@ -231,7 +232,8 @@ spec:
                 matchLabels:
                   {{- toYaml .labelSelector.matchLabels | nindent 12 }}
             {{- end }}
-          {{- end }}
+          {{- end }} 
+*/ -}}
           volumeMounts:
             - mountPath: /home/prefect
               name: scratch
