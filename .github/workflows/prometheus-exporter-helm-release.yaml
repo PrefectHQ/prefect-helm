@@ -34,7 +34,7 @@ jobs:
           echo "PROMETHEUS_PREFECT_EXPORTER_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prometheus-prefect-exporter | tail -n1 | sed 's/.*\///' \
-          )" >> $GITHUB_OUTPUT
+          )" >> $GITHUB_ENV
 
       - name: Output version as GitHub Output
         id: output_version
