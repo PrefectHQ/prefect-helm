@@ -31,6 +31,7 @@ jobs:
           set -x
 
           echo "RELEASE_VERSION=$(date +'%Y.%-m.%-d%H%M%S')" >> $GITHUB_ENV
+
           echo "PROMETHEUS_PREFECT_EXPORTER_VERSION=$(\
             git ls-remote --tags --refs --sort="v:refname" \
             https://github.com/PrefectHQ/prometheus-prefect-exporter | tail -n1 | sed 's/.*\///' \
@@ -77,7 +78,7 @@ jobs:
           helm package prometheus-prefect-exporter \
             --destination /tmp/chart \
             --dependency-update \
-            --version $CHART_VERSION \
+            --version $RELEASE_VERSION \
             --app-version $PROMETHEUS_PREFECT_EXPORTER_VERSION \
             --sign --key 'jamie@prefect.io' \
             --keyring $SIGN_KEYRING \
@@ -93,9 +94,9 @@ jobs:
         run: |
           cp /tmp/chart/artifacthub-repo.yml .
           cp /tmp/chart/index.yaml .
-          cp /tmp/chart/prometheus-prefect-exporter-$CHART_VERSION.* ./charts
-          git add ./artifacthub-repo.yml ./index.yaml ./charts/prometheus-prefect-exporter-$CHART_VERSION.*
-          git commit -m "Release $CHART_VERSION"
+          cp /tmp/chart/prometheus-prefect-exporter-$RELEASE_VERSION.* ./charts
+          git add ./artifacthub-repo.yml ./index.yaml ./charts/prometheus-prefect-exporter-$RELEASE_VERSION.*
+          git commit -m "Release $RELEASE_VERSION"
           git push origin gh-pages
 
       - name: Create Github Release + Tag
