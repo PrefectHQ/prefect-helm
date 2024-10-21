@@ -229,7 +229,7 @@ spec:
               whenUnsatisfiable: {{ .whenUnsatisfiable }}
               labelSelector:
                 matchLabels:
-                  {{- toYaml .labelSelector.matchLabels | nindent 12 }}
+                  {{- toYaml .labelSelector.matchLabels | nindent 18 }}
             {{- end }}
           {{- end }}
           volumeMounts:
