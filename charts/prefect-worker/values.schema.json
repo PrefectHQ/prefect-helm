@@ -462,6 +462,8 @@
             },
             "constraints": {
               "type": "array",
+              "description": "Array of constraints for topology spread of the pods.",
+              "required": ["maxSkew", "topologyKey", "whenUnsatisfiable", "labelSelector"],
               "items": {
                 "type": "object",
                 "properties": {
@@ -493,10 +495,8 @@
                     }
                   }
                 }
-              },
-              "required": ["maxSkew", "topologyKey", "whenUnsatisfiable", "labelSelector"]
-            },
-            "description": "Array of constraints for topology spread of the pods."
+              }
+            }
           }
         },
         "livenessProbe": {
