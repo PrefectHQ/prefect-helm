@@ -8,6 +8,23 @@ values:
   - ./required_values.yaml
 
 tests:
+  - it: Should set extra init containers
+    set:
+      worker:
+        initContainer:
+          extraContainers:
+            - name: code-init
+              image: custom/prefect-init:v2.0.0
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].name
+          value: code-init
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].image
+          value: custom/prefect-init:v2.0.0
+
   - it: Should set the correct image and tag
     asserts:
       - template: deployment.yaml
