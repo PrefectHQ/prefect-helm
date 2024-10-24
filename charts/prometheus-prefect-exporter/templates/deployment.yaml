@@ -68,6 +68,13 @@ spec:
           - name: PREFECT_CSRF_ENABLED
             value: "True"
           {{- end }}
+          {{- if .Values.pagination.enabled }}
+          - name: PAGINATION_LIMIT
+            value: {{ .Values.pagination.limit | quote }}
+          - name: PAGINATION_ENABLED
+            value: "True"
+          {{- end }}
+
           {{- if .Values.env }}
           {{- range $key, $value := .Values.env }}
           - name: {{ $key | upper }}

@@ -35,6 +35,10 @@ prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
 
 # -- Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled)
 csrfAuth: false
+# -- Pagination settings
+pagination:
+  enabled: true
+  limit: 200
 # -- Environment variables to configure application
 env: {}
   # Plain vars

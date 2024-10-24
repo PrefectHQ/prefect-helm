@@ -82,6 +82,23 @@
       "title": "CSRF Auth",
       "description": "Enable CSRF auth"
     },
+    "pagination": {
+      "type": "object",
+      "title": "Pagination",
+      "description": "Pagination settings",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "Enable pagination"
+        },
+        "limit": {
+          "type": "integer",
+          "title": "Limit",
+          "description": "Pagination limit"
+        }
+      }
+    },
     "env": {
       "type": "object",
       "title": "Environment Variables",
