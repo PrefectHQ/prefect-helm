@@ -74,7 +74,10 @@ spec:
           - name: PAGINATION_ENABLED
             value: "True"
           {{- end }}
-
+          {{- if not .Values.pagination.enabled }}
+          - name: PAGINATION_ENABLED
+            value: "False"
+          {{- end }}
           {{- if .Values.env }}
           {{- range $key, $value := .Values.env }}
           - name: {{ $key | upper }}
