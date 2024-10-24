@@ -71,7 +71,7 @@ Shoutout to @ialejandro for the original work on this chart!
 | livenessProbe | bool | `false` | Enable livenessProbe |
 | nameOverride | string | `""` | String to partially override common.names.fullname template (will maintain the release name) |
 | nodeSelector | object | `{}` | Node labels for pod assignment |
-| pagination | object | `{"enabled":true,"limit":200}` | Pagination settings |
+| pagination | object | `{"enabled":true,"limit":200}` | Pagination settings. If enabled, the exporter will paginate the API requests to Prefect Server which uses more resources.  Remember to increase the resources for the exporter if enabled. |
 | podAnnotations | object | `{}` | Pod annotations |
 | podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
 | podSecurityContext | object | `{}` | To specify security settings for a Pod |

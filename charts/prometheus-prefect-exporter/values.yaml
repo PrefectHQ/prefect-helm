@@ -35,7 +35,7 @@ prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
 
 # -- Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled)
 csrfAuth: false
-# -- Pagination settings
+# -- Pagination settings. If enabled, the exporter will paginate the API requests to Prefect Server which uses more resources.  Remember to increase the resources for the exporter if enabled.
 pagination:
   enabled: true
   limit: 200
