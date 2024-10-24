@@ -172,6 +172,14 @@
                   }
                 }
               }
+            },
+            "extraContainers": {
+              "type": "array",
+              "title": "Extra Containers",
+              "description": "additional init containers",
+              "items": {
+                "type": "object"
+              }
             }
           }
         },
