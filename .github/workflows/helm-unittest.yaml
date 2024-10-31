@@ -1,10 +1,9 @@
-# https://github.com/marketplace/actions/helm-unit-tests
+---
+name: Run Helm Unit Tests
 
-name: Run Helm unit tests
+"on":
+  pull_request: {}
 
-on: pull_request
-
-# Do not grant jobs any permissions by default
 permissions: {}
 
 jobs:
@@ -15,6 +14,7 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
+
       - uses: d3adb5/helm-unittest-action@v2
         with:
           helm-version: v3.15.3

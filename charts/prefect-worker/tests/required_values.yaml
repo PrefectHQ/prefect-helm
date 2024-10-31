@@ -1,0 +1,6 @@
+worker:
+  config:
+    workPool: my-work-pool
+  cloudApiConfig:
+    accountId: my-account-id
+    workspaceId: my-workspace-id

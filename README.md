@@ -166,18 +166,26 @@ If you are using the subchart deployed database with persistence enabled, it is 
 
 Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality, echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrctweaking documentation, or anything in between. In order to successfully contribute, you'll need to fork this repository and commit changes to your local prefect-helm repo. You can then open a PR against this upstream repo that the team will review!
 
-To get started, ensure you have the required dependencies installed:
+To get started, install the required dependencies by running:
 
 ```shell
-mise install
+make all
 ```
 
-Be sure to run `pre-commit install` before starting any development. [`pre-commit`](https://pre-commit.com/)
-will help catch simple issues before committing.
+This will install tools like `helm`, `pre-commit`, and `mise`.
 
-### Documentation
+You'll also need to install dependencies for the charts you're working on. You can use the following commands to install dependencies for each chart:
 
-Please make sure that your changes have been linted & the chart documentation has been updated.  The easiest way to accomplish this is by installing [`pre-commit`](https://pre-commit.com/).
+```shell
+# Server Chart
+make buildserver
+# Worker Chart
+make buildworker
+# Prometheus Prefect Exporter Chart
+make buildprom
+# All Charts
+make buildall
+```
 
 ### Testing & validation
 
@@ -190,7 +198,7 @@ Refer to the `helm-unittest` repository for more information.
 The following helper script will run the tests via the `helm-unittest` Docker image in case you don't have the binary installed locally:
 
 ```shell
-./scripts/helm_unittest.sh
+make helmtest
 ```
 
 When `helm-unittest` is available via the [`mise` registry](https://mise.jdx.dev/registry.html), we'll add it to `.mise.toml`

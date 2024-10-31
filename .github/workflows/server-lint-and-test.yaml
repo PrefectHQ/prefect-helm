@@ -1,3 +1,4 @@
+---
 name: Lint and Test Prefect Server Chart
 
 "on":
@@ -5,7 +6,6 @@ name: Lint and Test Prefect Server Chart
     branches:
       - main
 
-# Do not grant jobs any permissions by default
 permissions: {}
 
 jobs:

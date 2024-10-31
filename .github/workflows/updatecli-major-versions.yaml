@@ -1,0 +1,28 @@
+---
+name: Updatecli Major Dependency Updates
+
+"on":
+  schedule:
+    - cron: 0 15 1 * *  # First of the month @ 3pm UTC
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  updatecli_major:
+    runs-on: ubuntu-latest
+    permissions:
+      # required to write to the repo
+      contents: write
+      # required to open a pr with updatecli changes
+      pull-requests: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: updatecli-major-apply
+        uses: prefecthq/actions-updatecli-apply@main
+        with:
+          manifest-path: .github/updatecli/manifest-major.yaml
+          run-helm-docs: true
+          run-type: major

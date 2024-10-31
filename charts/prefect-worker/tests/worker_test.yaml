@@ -1,0 +1,399 @@
+suite: Worker configuration
+release:
+  name: test
+  namespace: prefect
+
+# Common required values to use in all tests.
+values:
+  - ./required_values.yaml
+
+tests:
+  - it: Should set extra init containers
+    set:
+      worker:
+        initContainer:
+          extraContainers:
+            - name: code-init
+              image: custom/prefect-init:v2.0.0
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].name
+          value: code-init
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].image
+          value: custom/prefect-init:v2.0.0
+
+  - it: Should set the correct image and tag
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].image
+          value: prefecthq/prefect:3-python3.11-kubernetes
+
+  - it: Should set custom image and tag
+    set:
+      worker:
+        image:
+          repository: custom/prefect
+          prefectTag: v2.0.0
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].image
+          value: custom/prefect:v2.0.0
+
+  - it: Should set the correct pull policy
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+
+  - it: Should set custom pull policy
+    set:
+      worker:
+        image:
+          pullPolicy: Always
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+
+  - it: Should set image pull secrets
+    set:
+      worker:
+        image:
+          pullSecrets:
+            - my-secret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.imagePullSecrets[0].name
+          value: my-secret
+
+  - it: Should set the correct work queue
+    set:
+      worker:
+        config:
+          workQueues:
+          - one
+          - two
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args[8]
+          value: one
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args[10]
+          value: two
+
+  - it: Should set the correct worker type
+    set:
+      worker:
+        config:
+          type: process
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args[4]
+          value: process
+
+  - it: Should set the correct API configuration for Prefect Cloud
+    set:
+      worker:
+        cloudApiConfig:
+          accountId: "my-account-id"
+          workspaceId: "my-workspace-id"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
+          value: "https://api.prefect.cloud/api/accounts/my-account-id/workspaces/my-workspace-id"
+
+  - it: Should set the correct API configuration for self-hosted cloud
+    set:
+      worker:
+        apiConfig: "selfHosted"
+        selfHostedCloudApiConfig:
+          apiUrl: "https://my-prefect-api.com/api"
+          accountId: "my-account-id"
+          workspaceId: "my-workspace-id"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
+          value: "https://my-prefect-api.com/api/accounts/my-account-id/workspaces/my-workspace-id"
+
+  - it: Should set the correct API configuration for Prefect server
+    set:
+      worker:
+        apiConfig: "server"
+        serverApiConfig:
+          apiUrl: "http://prefect-server:4200/api"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
+          value: "http://prefect-server:4200/api"
+
+  - it: Should set the correct API key secret
+    set:
+      worker:
+        cloudApiConfig:
+          apiKeySecret:
+            name: my-api-key-secret
+            key: api-key
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_KEY")].valueFrom.secretKeyRef.name
+          value: my-api-key-secret
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_KEY")].valueFrom.secretKeyRef.key
+          value: api-key
+
+  - it: Should set the correct replica count
+    set:
+      worker:
+        replicaCount: 3
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 3
+
+  - it: Should set the correct resource requests and limits
+    set:
+      worker:
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.cpu
+          value: 250m
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.memory
+          value: 256Mi
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.cpu
+          value: 500m
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.memory
+          value: 512Mi
+
+  - it: Should set the correct security context
+    set:
+      worker:
+        podSecurityContext:
+          runAsUser: 1002
+          fsGroup: 1002
+          runAsNonRoot: false
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.runAsUser
+          value: 1002
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.fsGroup
+          value: 1002
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.runAsNonRoot
+          value: false
+
+  - it: Should set the correct container security context
+    set:
+      worker:
+        containerSecurityContext:
+          runAsUser: 1002
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          allowPrivilegeEscalation: true
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 1002
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: false
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: true
+
+  - it: Should set pod annotations
+    set:
+      worker:
+        podAnnotations:
+          custom-annotation: custom-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.annotations.custom-annotation
+          value: custom-value
+
+  - it: Should set affinity
+    set:
+      worker:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/e2e-az-name
+                      operator: In
+                      values:
+                        - e2e-az1
+                        - e2e-az2
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
+          value: kubernetes.io/e2e-az-name
+
+  - it: Should set node selector
+    set:
+      worker:
+        nodeSelector:
+          disktype: ssd
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.nodeSelector.disktype
+          value: ssd
+
+  - it: Should set tolerations
+    set:
+      worker:
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.tolerations[0].key
+          value: key1
+
+  - it: Should set extra environment variables
+    set:
+      worker:
+        extraEnvVars:
+          - name: CUSTOM_ENV
+            value: custom_value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
+          value: custom_value
+
+  - it: Should set extra environment variables from ConfigMap
+    set:
+      worker:
+        extraEnvVarsCM: my-config-map
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
+          value: my-config-map
+
+  - it: Should set extra volumes
+    set:
+      worker:
+        extraVolumes:
+          - name: config
+            configMap:
+              name: my-config
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.volumes[1].name
+          value: config
+
+  - it: Should set extra volume mounts
+    set:
+      worker:
+        extraVolumeMounts:
+          - name: config
+            mountPath: /app/config
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].volumeMounts[2].name
+          value: config
+
+  - it: Should set the correct service account name
+    set:
+      serviceAccount:
+        create: true
+        name: custom-sa
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.serviceAccountName
+          value: custom-sa
+
+  - it: Should set the correct priority class name
+    set:
+      worker:
+        priorityClassName: high-priority
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.priorityClassName
+          value: high-priority
+
+  - it: Should set the correct liveness probe
+    set:
+      worker:
+        livenessProbe:
+          enabled: true
+          config:
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+            successThreshold: 1
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.initialDelaySeconds
+          value: 30
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.periodSeconds
+          value: 10
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.timeoutSeconds
+          value: 5
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.failureThreshold
+          value: 6
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.successThreshold
+          value: 1

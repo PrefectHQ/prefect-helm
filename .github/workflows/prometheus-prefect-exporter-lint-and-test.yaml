@@ -1,3 +1,4 @@
+---
 name: Lint and Test Prometheus Prefect Exporter Chart
 
 "on":
@@ -5,10 +6,15 @@ name: Lint and Test Prometheus Prefect Exporter Chart
     branches:
       - main
 
+permissions: {}
+
 jobs:
   lint_test:
     name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
+    permissions:
+      # required to read from the repo
+      contents: read
     strategy:
       matrix:
         kubernetes:
