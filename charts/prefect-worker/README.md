@@ -242,7 +242,7 @@ Set this value to an arbitrary, unique ID - this bypasses the `kube-system` name
 
 ```yaml
 worker:
-  # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
+  # -- unique cluster identifier, if none is provided this value will be inferred at time of helm install
   clusterUid: "my-unique-cluster-id"
 ```
 
@@ -288,7 +288,7 @@ worker:
 | worker.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
-| worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
+| worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be inferred at time of helm install |
 | worker.config.baseJobTemplate.configuration | string | `nil` | JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod |
 | worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
