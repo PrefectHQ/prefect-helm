@@ -225,7 +225,7 @@ Please note that configuring the template via `baseJobTemplate.existingConfigMap
 
 ### Setting `.Values.worker.clusterUid`
 
-The Prefect worker attempts to generate a unique identifier for the cluster it is running on to use as metadata for your runs. Since Kubernetes [does not provide a "cluster ID" API](https://github.com/kubernetes/kubernetes/issues/44954), the worker in this chart will do so by reading the `kube-system` namespace and parsing the immutable UID. [This mimics the functionality in the `prefect-kubernetes` library]([the `prefect-kubernetes` library](https://github.com/PrefectHQ/prefect/blob/5f5427c410cd04505d7b2c701e2003f856044178/src/integrations/prefect-kubernetes/prefect_kubernetes/worker.py#L835-L859).
+The Prefect worker attempts to generate a unique identifier for the cluster it is running on to use as metadata for your runs. Since Kubernetes [does not provide a "cluster ID" API](https://github.com/kubernetes/kubernetes/issues/44954), the worker in this chart will do so by reading the `kube-system` namespace and parsing the immutable UID. [This mimics the functionality in the `prefect-kubernetes` library](https://github.com/PrefectHQ/prefect/blob/5f5427c410cd04505d7b2c701e2003f856044178/src/integrations/prefect-kubernetes/prefect_kubernetes/worker.py#L835-L859).
 
 > [!NOTE]
 > Reading the `kube-system` namespace requires a `ClusterRole` with `get` permissions on `namespaces`, as well as a `ClusterRoleBinding` to attach it to the `ServiceAccount` used by the Prefect worker.
