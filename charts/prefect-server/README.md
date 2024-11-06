@@ -123,7 +123,7 @@ prefect-server:
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.26.0 |
-| https://charts.bitnami.com/bitnami | postgresql | 16.1.0 |
+| https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
 
 ## Values
 
