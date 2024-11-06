@@ -232,7 +232,11 @@ The Prefect worker attempts to generate a unique identifier for the cluster it i
 >
 > A `Role` / `RoleBinding` may also be used, but it must exist in the `kube-system` namespace.
 
-In many cases, these role additions may not be possible due to access limitations. The `prefect-kubernetes` library offers an override via the `PREFECT_KUBERNETES_CLUSTER_UID` environment variable, which is set in this chart through the `.Values.worker.clusterUid` value.
+This chart does not offer a built-in way to assign these roles, as it does not make assumptions about your cluster's access controls to the `kube-system` namespace. If these permissions are not granted, you may see this error:
+
+> HTTP response body: {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"namespaces \"kube-system\" is forbidden: User \"system:serviceaccount:prefect:prefect-worker\" cannot get resource \"namespaces\" in API group \"\" in the namespace \"kube-system\"","reason":"Forbidden","details":{"name":"kube-system","kind":"namespaces"},"code":403}
+
+In many cases, these role additions may be entirely infeasible due to overall access limitations. The `prefect-kubernetes` library offers an override via the `PREFECT_KUBERNETES_CLUSTER_UID` environment variable, which is set in this chart through the `.Values.worker.clusterUid` value.
 
 Set this value to an arbitrary, unique ID - this bypasses the `kube-system` namespace read and utilizes your provided value as the cluster ID instead. Be sure to set this value consistently across your Prefect deployments that interact with the same cluster
 
