@@ -221,6 +221,27 @@ Any time the base job template is updated, the subsequent `initContainer` run wi
 
 Please note that configuring the template via `baseJobTemplate.existingConfigMapName` will require a manual restart of the `prefect-worker` Deployment in order to kick off the `initContainer` - alternatively, you can use a tool like [reloader](https://github.com/stakater/Reloader) to automatically restart an associated Deployment.  However, configuring the template via `baseJobTemplate.configuration` value will automatically roll the Deployment on any update.
 
+## Troubleshooting
+
+### Setting `.Values.worker.clusterUid`
+
+The Prefect worker attempts to generate a unique identifier for the cluster it is running on to use as metadata for your runs. Since Kubernetes [does not provide a "cluster ID"](https://github.com/kubernetes/kubernetes/issues/44954), the worker (via [the `prefect-kubernetes` library](https://github.com/PrefectHQ/prefect/blob/5f5427c410cd04505d7b2c701e2003f856044178/src/integrations/prefect-kubernetes/prefect_kubernetes/worker.py#L835-L859)) will do so by reading the `kube-system` namespace and parsing the immutable UID.
+
+> [!NOTE]
+> Reading the `kube-system` namespace requires a `ClusterRole` with `get` permissions on `namespaces`, as well as a `ClusterRoleBinding` to attach it to the `ServiceAccount` used by the Prefect worker.
+>
+> A `Role` / `RoleBinding` may also be used, but it must exist in the `kube-system` namespace.
+
+In many cases, these role additions may not be possible due to access limitations. The `prefect-kubernetes` library offers an override via the `PREFECT_KUBERNETES_CLUSTER_UID` environment variable, which is set in this chart through the `.Values.worker.clusterUid` value.
+
+Set this value to an arbitrary, unique ID - this bypasses the `kube-system` namespace read and utilizes your provided value as the cluster ID instead. Be sure to set this value consistently across your Prefect deployments that interact with the same cluster
+
+```yaml
+worker:
+  # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
+  clusterUid: "my-unique-cluster-id"
+```
+
 {{ template "chart.maintainersSection" . }}
 
 {{ template "chart.requirementsSection" . }}
