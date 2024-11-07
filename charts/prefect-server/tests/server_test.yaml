@@ -488,7 +488,7 @@ tests:
           path: .spec.ports[0].port
           value: 4200
 
-  - it: Should set custom service configuration
+  - it: Should set custom service configuration for NodePort type
     set:
       service:
         type: NodePort
@@ -499,6 +499,26 @@ tests:
         equal:
           path: .spec.type
           value: NodePort
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].port
+          value: 8080
+      - template: service.yaml
+        equal:
+          path: .spec.ports[0].nodePort
+          value: 30080
+
+  - it: Should set custom service configuration for LoadBalancer type
+    set:
+      service:
+        type: LoadBalancer
+        port: 8080
+        nodePort: 30080
+    asserts:
+      - template: service.yaml
+        equal:
+          path: .spec.type
+          value: LoadBalancer
       - template: service.yaml
         equal:
           path: .spec.ports[0].port
