@@ -24,7 +24,7 @@ worker:
     # -- target memory utilization percentage for scaling the worker
     targetMemoryUtilizationPercentage: 80
 
-  # -- unique cluster identifier, if none is provided this value will be infered at time of helm install
+  # -- unique cluster identifier, if none is provided this value will be inferred at time of helm install
   clusterUid: ""
 
   initContainer:

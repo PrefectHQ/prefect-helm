@@ -221,6 +221,31 @@ Any time the base job template is updated, the subsequent `initContainer` run wi
 
 Please note that configuring the template via `baseJobTemplate.existingConfigMapName` will require a manual restart of the `prefect-worker` Deployment in order to kick off the `initContainer` - alternatively, you can use a tool like [reloader](https://github.com/stakater/Reloader) to automatically restart an associated Deployment.  However, configuring the template via `baseJobTemplate.configuration` value will automatically roll the Deployment on any update.
 
+## Troubleshooting
+
+### Setting `.Values.worker.clusterUid`
+
+This chart attempts to generate a unique identifier for the cluster it is installing the worker on to use as metadata for your runs. Since Kubernetes [does not provide a "cluster ID" API](https://github.com/kubernetes/kubernetes/issues/44954), this chart will do so by [reading the `kube-system` namespace and parsing the immutable UID](https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-worker/templates/_helpers.tpl#L94-L105). [This mimics the functionality in the `prefect-kubernetes` library](https://github.com/PrefectHQ/prefect/blob/5f5427c410cd04505d7b2c701e2003f856044178/src/integrations/prefect-kubernetes/prefect_kubernetes/worker.py#L835-L859).
+
+> [!NOTE]
+> Reading the `kube-system` namespace requires a `ClusterRole` with `get` permissions on `namespaces`, as well as a `ClusterRoleBinding` to attach it to the actor running the helm install.
+>
+> A `Role` / `RoleBinding` may also be used, but it must exist in the `kube-system` namespace.
+
+This chart does not offer a built-in way to assign these roles, as it does not make assumptions about your cluster's access controls to the `kube-system` namespace. If these permissions are not granted, you may see this error:
+
+> HTTP response body: {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"namespaces \"kube-system\" is forbidden: User \"system:serviceaccount:prefect:prefect-worker\" cannot get resource \"namespaces\" in API group \"\" in the namespace \"kube-system\"","reason":"Forbidden","details":{"name":"kube-system","kind":"namespaces"},"code":403}
+
+In many cases, these role additions may be entirely infeasible due to overall access limitations. As an alternative, this chart offers a hard-coded override via the `.Values.worker.clusterUid` value.
+
+Set this value to a user-provided unique ID - this bypasses the `kube-system` namespace lookup and utilizes your provided value as the cluster ID instead. Be sure to set this value consistently across your Prefect deployments that interact with the same cluster
+
+```yaml
+worker:
+  # -- unique cluster identifier, if none is provided this value will be inferred at time of helm install
+  clusterUid: "my-unique-cluster-id"
+```
+
 ## Maintainers
 
 | Name | Email | Url |
@@ -263,7 +288,7 @@ Please note that configuring the template via `baseJobTemplate.existingConfigMap
 | worker.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
-| worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be infered at time of helm install |
+| worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be inferred at time of helm install |
 | worker.config.baseJobTemplate.configuration | string | `nil` | JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod |
 | worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |

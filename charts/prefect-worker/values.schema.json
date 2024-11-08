@@ -70,7 +70,7 @@
         "clusterUid": {
           "type": "string",
           "title": "Cluster UID",
-          "description": "unique cluster identifier, if none is provided this value will be infered at time of helm install"
+          "description": "unique cluster identifier, if none is provided this value will be inferred at time of helm install"
         },
         "initContainer": {
           "type": "object",
