@@ -225,10 +225,10 @@ Please note that configuring the template via `baseJobTemplate.existingConfigMap
 
 ### Setting `.Values.worker.clusterUid`
 
-The Prefect worker attempts to generate a unique identifier for the cluster it is running on to use as metadata for your runs. Since Kubernetes [does not provide a "cluster ID" API](https://github.com/kubernetes/kubernetes/issues/44954), the worker in this chart will do so by reading the `kube-system` namespace and parsing the immutable UID. [This mimics the functionality in the `prefect-kubernetes` library](https://github.com/PrefectHQ/prefect/blob/5f5427c410cd04505d7b2c701e2003f856044178/src/integrations/prefect-kubernetes/prefect_kubernetes/worker.py#L835-L859).
+This chart attempts to generate a unique identifier for the cluster it is installing the worker on to use as metadata for your runs. Since Kubernetes [does not provide a "cluster ID" API](https://github.com/kubernetes/kubernetes/issues/44954), this chart will do so by [reading the `kube-system` namespace and parsing the immutable UID](https://github.com/PrefectHQ/prefect-helm/blob/main/charts/prefect-worker/templates/_helpers.tpl#L94-L105). [This mimics the functionality in the `prefect-kubernetes` library](https://github.com/PrefectHQ/prefect/blob/5f5427c410cd04505d7b2c701e2003f856044178/src/integrations/prefect-kubernetes/prefect_kubernetes/worker.py#L835-L859).
 
 > [!NOTE]
-> Reading the `kube-system` namespace requires a `ClusterRole` with `get` permissions on `namespaces`, as well as a `ClusterRoleBinding` to attach it to the `ServiceAccount` used by the Prefect worker.
+> Reading the `kube-system` namespace requires a `ClusterRole` with `get` permissions on `namespaces`, as well as a `ClusterRoleBinding` to attach it to the actor running the helm installactor running the helm installactor running the helm installactor running the helm installactor running the helm installactor running the helm installactor running the helm installactor running the helm install.
 >
 > A `Role` / `RoleBinding` may also be used, but it must exist in the `kube-system` namespace.
 
@@ -236,7 +236,7 @@ This chart does not offer a built-in way to assign these roles, as it does not m
 
 > HTTP response body: {"kind":"Status","apiVersion":"v1","metadata":{},"status":"Failure","message":"namespaces \"kube-system\" is forbidden: User \"system:serviceaccount:prefect:prefect-worker\" cannot get resource \"namespaces\" in API group \"\" in the namespace \"kube-system\"","reason":"Forbidden","details":{"name":"kube-system","kind":"namespaces"},"code":403}
 
-In many cases, these role additions may be entirely infeasible due to overall access limitations. This chart offers a hard-coded override via the `.Values.worker.clusterUid` value.
+In many cases, these role additions may be entirely infeasible due to overall access limitations. As an alternative, this chart offers a hard-coded override via the `.Values.worker.clusterUid` value.
 
 Set this value to a user-provided unique ID - this bypasses the `kube-system` namespace lookup and utilizes your provided value as the cluster ID instead. Be sure to set this value consistently across your Prefect deployments that interact with the same cluster
 
