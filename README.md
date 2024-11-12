@@ -164,7 +164,7 @@ If you are using the subchart deployed database with persistence enabled, it is 
 
 ## Contributing
 
-Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality, echo 'eval "$(~/.local/bin/mise activate zsh)"' >> ~/.zshrctweaking documentation, or anything in between. In order to successfully contribute, you'll need to fork this repository and commit changes to your local prefect-helm repo. You can then open a PR against this upstream repo that the team will review!
+Contributions to the Prefect Helm Charts are always welcome! We welcome your help - whether it's adding new functionality, tweaking documentation, or anything in between. In order to successfully contribute, you'll need to fork this repository and commit changes to your local prefect-helm repo. You can then open a PR against this upstream repo that the team will review!
 
 To get started, install the required dependencies by running:
 
