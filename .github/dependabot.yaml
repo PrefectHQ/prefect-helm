@@ -3,5 +3,13 @@ version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
+    commit-message:
+      prefix: chore
+    groups:
+      all:
+        patterns:
+          - "*"
+    labels:
+      - automated-dependency-updates
     schedule:
-      interval: weekly
+      interval: monthly
