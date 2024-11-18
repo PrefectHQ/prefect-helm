@@ -348,4 +348,4 @@ postgresql:
 
   image:
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
-    tag: 14.3.0
+    tag: 14.13.0
