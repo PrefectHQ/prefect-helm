@@ -113,6 +113,54 @@ Development versions of the Helm chart will always be available directly from th
   helm upgrade ... --set postgresql.postgresqlPassword=$POSTGRESQL_PASSWORD
   ```
 
+## Chart Provenance
+
+You can verify the integrity and origin of Prefect Helm charts by using [Helm provenance](https://helm.sh/docs/topics/provenance/).
+
+The official Prefect Helm Chart public signing key must be used to verify the provenance of the Prefect Helm charts. Prefect uses [Keybase](https://keybase.io/) to host the public signing key. The key must first be downloaded and then imported into a local keyring.
+
+### Download the Public Signing Key
+
+```bash
+curl https://keybase.io/prefecthq/pgp_keys.asc | gpg --import
+```
+
+### Verify a Chart
+
+A Prefect Helm chart can be verified either by:
+- Downloading the chart and running `helm verify`.
+- Using the `--verify` option during chart installation.
+
+#### Verify a Downloaded Chart
+
+You can use the `helm verify` command to verify a downloaded chart. To download a verifiable chart, use the `helm pull --prov` command. For example:
+
+```bash
+helm pull --prov prefect/prefect-worker
+```
+
+You can then use the `helm verify` command to verify the downloaded chart.
+
+```bash
+helm verify prefect-worker-<version>.tgz
+Signed by: Jamie Zieziula <jamie@prefect.io>
+Signed by: Jamie Zieziula <marvin@prefect.io>
+Using Key With Fingerprint: 062AA2CFEFB2A02D54975B528DBDDA7074C40C6A
+Chart Hash Verified: sha256:90eecaf6650ec08045b82c1f3dbf75529105de1a7fb0e64927ab648752746cea
+```
+
+#### Verify a Chart During Installation
+
+You can verify a chart during installation by using the `--verify` option to either the `helm install` or `helm upgrade` command.
+
+```bash
+# During installation
+helm install prefect-worker --verify prefect/prefect-worker
+
+# During upgrade
+helm upgrade prefect-worker --verify prefect/prefect-worker
+```
+
 ## Options:
 
 See comments in `values.yaml`.
