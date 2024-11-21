@@ -149,7 +149,7 @@ Using Key With Fingerprint: 062AA2CFEFB2A02D54975B528DBDDA7074C40C6A
 Chart Hash Verified: sha256:90eecaf6650ec08045b82c1f3dbf75529105de1a7fb0e64927ab648752746cea
 ```
 
-#### Verify a Chart during Installation
+#### Verify a Chart During Installation
 
 You can verify a chart during installation by using the `--verify` option to either the `helm install` or `helm upgrade` command.
 
