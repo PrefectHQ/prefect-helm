@@ -1,13 +1,16 @@
-{{- if .Values.sqlite.enabled }}
+{{- if and .Values.sqlite.enabled .Values.sqlite.persistence.enabled }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: sqlite-pvc
   namespace: {{.Release.Namespace}}
 spec:
+  {{- with .Values.sqlite.persistence.storageClassName }}
+  storageClassName: {{.}}
+  {{- end }}
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: {{.Values.sqlite.persistence.size}}
 {{- end }}

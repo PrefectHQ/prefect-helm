@@ -317,10 +317,17 @@ secret:
 
 # SQLite configuration
 # Recommended for lightweight, single-server deployments.
-# Note that in-memory databases can not be accessed from multiple processes and should only be used for simple tests.
 sqlite:
   # -- enable use of the embedded SQLite database
   enabled: false
+
+  persistence:
+    # -- enable SQLite data persistence using PVC
+    enabled: true
+    # -- size for the PVC
+    size: 1Gi
+    # -- storage class name for the PVC
+    storageClassName: ""
 
 # PostgreSQL subchart - default overrides
 postgresql:
