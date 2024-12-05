@@ -1,4 +1,4 @@
-{{- if and .Values.server.autoscaling.enabled .Values.server.resources.requests }}
+{{- if and .Values.server.autoscaling.enabled .Values.server.resources.requests (not .Values.sqlite.enabled) }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
