@@ -165,7 +165,7 @@ spec:
         {{- if .Values.sqlite.enabled }}
         - name: sqlite-storage
           persistentVolumeClaim:
-            claimName: sqlite-pvc
+            claimName: {{ template "common.names.fullname" . }}-sqlite
         {{- end }}
         {{- if .Values.server.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumes "context" $) | nindent 8 }}

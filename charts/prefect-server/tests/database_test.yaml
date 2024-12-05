@@ -37,7 +37,7 @@ tests:
           content:
             name: sqlite-storage
             persistentVolumeClaim:
-              claimName: sqlite-pvc
+              claimName: prefect-server-sqlite
       - template: deployment.yaml
         contains:
           path: .spec.template.spec.containers[0].volumeMounts
@@ -48,7 +48,7 @@ tests:
         containsDocument:
           kind: PersistentVolumeClaim
           apiVersion: v1
-          name: sqlite-pvc
+          name: prefect-server-sqlite
           namespace: prefect
 
   - it: Should not allow an HPA
