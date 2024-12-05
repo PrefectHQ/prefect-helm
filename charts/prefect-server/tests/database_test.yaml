@@ -8,6 +8,82 @@ envSecretPath: &envSecretPath .spec.template.spec.containers[?(@.name == "prefec
 defaultSecretName: &defaultSecretName prefect-server-postgresql-connection
 
 tests:
+  # SQLite embedded database tests
+
+  - it: Should correctly configure SQLite connection string
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: true
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_API_DATABASE_CONNECTION_URL
+            value: sqlite+aiosqlite:///home/prefect/prefect.db?cache=shared&uri=true&check_same_thread=false
+
+  - it: Should correctly configure SQLite storage settings
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: true
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.volumes
+          content:
+            name: sqlite-storage
+            persistentVolumeClaim:
+              claimName: sqlite-pvc
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].volumeMounts
+          content:
+            mountPath: /home/prefect/prefect.db
+            name: sqlite-storage
+            subPath: prefect.db
+      - template: pvc.yaml
+        containsDocument:
+          kind: PersistentVolumeClaim
+          apiVersion: v1
+          name: sqlite-pvc
+          namespace: prefect
+
+  - it: Should not allow an HPA
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: true
+      server:
+        autoscaling:
+          enabled: true
+    asserts:
+      - template: hpa.yaml
+        not: true
+        containsDocument:
+          apiVersion: autoscaling/v2
+          kind: HorizontalPodAutoscaler
+          name: prefect-server
+          namespace: prefect
+
+  - it: Should not allow more than 1 replica
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: true
+      server:
+        replicaCount: 5
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 1
+
   # Bundled PostgreSQL chart tests
 
   - it: Should produce the expected secret name and content with the defaults
