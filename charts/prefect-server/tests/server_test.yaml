@@ -462,9 +462,11 @@ tests:
             mountPath: /app/config
     asserts:
       - template: deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].volumeMounts[3].name
-          value: config
+        contains:
+          path: .spec.template.spec.containers[0].volumeMounts
+          content:
+            name: config
+            mountPath: /app/config
 
   - it: Should set extra arguments
     set:
