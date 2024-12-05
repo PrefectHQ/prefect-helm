@@ -22,7 +22,7 @@ tests:
           path: .spec.template.spec.containers[0].env
           content:
             name: PREFECT_API_DATABASE_CONNECTION_URL
-            value: sqlite+aiosqlite:///home/prefect/prefect.db?cache=shared&uri=true&check_same_thread=false
+            value: sqlite+aiosqlite:////data/prefect.db
 
   - it: Should correctly configure SQLite storage settings
     set:
@@ -42,9 +42,8 @@ tests:
         contains:
           path: .spec.template.spec.containers[0].volumeMounts
           content:
-            mountPath: /home/prefect/prefect.db
+            mountPath: /data
             name: sqlite-storage
-            subPath: prefect.db
       - template: pvc.yaml
         containsDocument:
           kind: PersistentVolumeClaim

@@ -100,7 +100,7 @@ spec:
               value: {{ .Values.server.uiConfig.prefectUiStaticDirectory | quote }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
               {{- if .Values.sqlite.enabled }}
-              value: "sqlite+aiosqlite:///home/prefect/prefect.db?cache=shared&uri=true&check_same_thread=false"
+              value: "sqlite+aiosqlite:////data/prefect.db"
               {{- else }}
               valueFrom:
                 secretKeyRef:
@@ -150,9 +150,8 @@ spec:
               name: scratch
               subPathExpr: ui-build
             {{- if .Values.sqlite.enabled }}
-            - mountPath: /home/prefect/prefect.db
+            - mountPath: /data
               name: sqlite-storage
-              subPath: prefect.db
             {{- end }}
           {{- if .Values.server.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
