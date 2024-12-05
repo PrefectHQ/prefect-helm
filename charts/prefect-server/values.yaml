@@ -315,6 +315,13 @@ secret:
   # -- database for the PostgreSQL connection string
   database: ""
 
+# SQLite configuration
+# Recommended for lightweight, single-server deployments.
+# Note that in-memory databases can not be accessed from multiple processes and should only be used for simple tests.
+sqlite:
+  # -- enable use of the embedded SQLite database
+  enabled: false
+
 # PostgreSQL subchart - default overrides
 postgresql:
   # -- enable use of bitnami/postgresql subchart

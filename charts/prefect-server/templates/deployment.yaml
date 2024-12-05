@@ -14,7 +14,7 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.server.revisionHistoryLimit }}
-  replicas: {{ .Values.server.replicaCount }}
+  replicas: {{ .Values.sqlite.enabled | ternary 1 .Values.server.replicaCount }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: server
@@ -99,10 +99,14 @@ spec:
             - name: PREFECT_UI_STATIC_DIRECTORY
               value: {{ .Values.server.uiConfig.prefectUiStaticDirectory | quote }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
+              {{- if .Values.sqlite.enabled }}
+              value: "sqlite+aiosqlite:///home/prefect/prefect.db?cache=shared&uri=true&check_same_thread=false"
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
+              {{- end }}
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
@@ -145,6 +149,11 @@ spec:
             - mountPath: {{ .Values.server.uiConfig.prefectUiStaticDirectory }}
               name: scratch
               subPathExpr: ui-build
+            {{- if .Values.sqlite.enabled }}
+            - mountPath: /home/prefect/prefect.db
+              name: sqlite-storage
+              subPath: prefect.db
+            {{- end }}
           {{- if .Values.server.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
@@ -154,6 +163,11 @@ spec:
       volumes:
         - name: scratch
           emptyDir: {}
+        {{- if .Values.sqlite.enabled }}
+        - name: sqlite-storage
+          persistentVolumeClaim:
+            claimName: sqlite-pvc
+        {{- end }}
         {{- if .Values.server.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
