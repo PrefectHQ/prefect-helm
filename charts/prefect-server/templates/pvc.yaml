@@ -1,0 +1,16 @@
+{{- if and .Values.sqlite.enabled .Values.sqlite.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "common.names.fullname" . }}-sqlite
+  namespace: {{.Release.Namespace}}
+spec:
+  {{- with .Values.sqlite.persistence.storageClassName }}
+  storageClassName: {{.}}
+  {{- end }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{.Values.sqlite.persistence.size}}
+{{- end }}

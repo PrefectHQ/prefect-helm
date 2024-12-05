@@ -14,7 +14,7 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.server.revisionHistoryLimit }}
-  replicas: {{ .Values.server.replicaCount }}
+  replicas: {{ .Values.sqlite.enabled | ternary 1 .Values.server.replicaCount }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: server
@@ -99,10 +99,14 @@ spec:
             - name: PREFECT_UI_STATIC_DIRECTORY
               value: {{ .Values.server.uiConfig.prefectUiStaticDirectory | quote }}
             - name: PREFECT_API_DATABASE_CONNECTION_URL
+              {{- if .Values.sqlite.enabled }}
+              value: "sqlite+aiosqlite:////data/prefect.db"
+              {{- else }}
               valueFrom:
                 secretKeyRef:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
+              {{- end }}
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
@@ -145,6 +149,10 @@ spec:
             - mountPath: {{ .Values.server.uiConfig.prefectUiStaticDirectory }}
               name: scratch
               subPathExpr: ui-build
+            {{- if .Values.sqlite.enabled }}
+            - mountPath: /data
+              name: sqlite-storage
+            {{- end }}
           {{- if .Values.server.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
@@ -154,6 +162,11 @@ spec:
       volumes:
         - name: scratch
           emptyDir: {}
+        {{- if .Values.sqlite.enabled }}
+        - name: sqlite-storage
+          persistentVolumeClaim:
+            claimName: {{ template "common.names.fullname" . }}-sqlite
+        {{- end }}
         {{- if .Values.server.extraVolumes }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumes "context" $) | nindent 8 }}
         {{- end }}

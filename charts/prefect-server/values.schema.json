@@ -441,6 +441,42 @@
         }
       }
     },
+    "sqlite": {
+      "type": "object",
+      "title": "SQLite",
+      "description": "sqlite configuration",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "enable sqlite database"
+        },
+        "persistence": {
+          "type": "object",
+          "title": "Persistence",
+          "description": "persistence settings for sqlite",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enabled",
+              "description": "enable sqlite database persistence"
+            },
+            "size": {
+              "type": "string",
+              "title": "Size",
+              "description": "size of the persistent volume claim"
+            },
+            "storageClassName": {
+              "type": "string",
+              "title": "Storage class name",
+              "description": "storage class name for the persistent volume claim"
+            }
+          }
+        }
+      }
+    },
     "serviceAccount": {
       "type": "object",
       "title": "Service Account",

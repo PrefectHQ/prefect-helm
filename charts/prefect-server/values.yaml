@@ -315,6 +315,20 @@ secret:
   # -- database for the PostgreSQL connection string
   database: ""
 
+# SQLite configuration
+# Recommended for lightweight, single-server deployments.
+sqlite:
+  # -- enable use of the embedded SQLite database
+  enabled: false
+
+  persistence:
+    # -- enable SQLite data persistence using PVC
+    enabled: true
+    # -- size for the PVC
+    size: 1Gi
+    # -- storage class name for the PVC
+    storageClassName: ""
+
 # PostgreSQL subchart - default overrides
 postgresql:
   # -- enable use of bitnami/postgresql subchart
