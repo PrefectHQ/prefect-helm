@@ -109,29 +109,6 @@ prefect-server:
     postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
     ```
 
-## SQLite Configuration
-
-SQLite can be used as an alternative to PostgreSQL. As mentioned in the
-[documentation on hosting Prefect](https://docs-3.prefect.io/v3/manage/self-host),
-SQLite is only recommended for lightweight, single-server deployments.
-
-To use SQLite for the database, provide the following configuration values:
-
-```yaml
-postgresql:
-  enabled: false
-sqlite:
-  enabled: true
-```
-
-More configuration options are available in [`values.yaml`](./values.yaml).
-
-By default, a PersistentVolumeClaim persists the SQLite database file between
-Pod restarts.
-
-Note that enabling SQLite enforces 1 replica in the Deployment, and disables
-the HorizontalPodAutoscaler.
-
 ## Maintainers
 
 | Name | Email | Url |
@@ -146,7 +123,7 @@ the HorizontalPodAutoscaler.
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.27.0 |
-| https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
+| https://charts.bitnami.com/bitnami | postgresql | 16.3.4 |
 
 ## Values
 
