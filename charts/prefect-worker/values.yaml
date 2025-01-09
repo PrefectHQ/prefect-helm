@@ -258,8 +258,11 @@ worker:
   # -- names of existing ConfigMaps containing extra env vars to add to worker nodes
   extraEnvVarsCMs: []
 
-  # -- name of existing Secret containing extra env vars to add to worker nodes
+  # -- name of existing Secret containing extra env vars to add to worker nodes (deprecated, use extraEnvVarsSecrets)
   extraEnvVarsSecret: ""
+
+  # -- names of existing Secrets containing extra env vars to add to worker nodes
+  extraEnvVarsSecrets: []
 
   # -- additional sidecar containers
   extraContainers: []
