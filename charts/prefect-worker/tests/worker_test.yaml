@@ -319,6 +319,26 @@ tests:
           path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
           value: my-config-map
 
+  - it: Should set extra environment variables from ConfigMaps
+    set:
+      worker:
+        extraEnvVarsCMs:
+          - my-config-map
+          - my-other-config-map
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: my-config-map
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: my-other-config-map
+
   - it: Should set extra volumes
     set:
       worker:

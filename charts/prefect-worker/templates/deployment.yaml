@@ -209,6 +209,10 @@ spec:
             - configMapRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVarsCM "context" $) }}
             {{- end }}
+            {{- range .Values.worker.extraEnvVarsCMs }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" . "context" $) }}
+            {{- end }}
             {{- if .Values.worker.extraEnvVarsSecret }}
             - secretRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVarsSecret "context" $) }}

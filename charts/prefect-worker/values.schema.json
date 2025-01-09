@@ -621,7 +621,12 @@
         "extraEnvVarsCM": {
           "type": "string",
           "title": "Extra Env Vars ConfigMap",
-          "description": "name of existing ConfigMap containing extra env vars to add to worker nodes"
+          "description": "name of existing ConfigMap containing extra env vars to add to worker nodes (deprecated, use extraEnvVarsCMs)"
+        },
+        "extraEnvVarsCMs": {
+          "type": "array",
+          "title": "Extra Env Vars ConfigMaps",
+          "description": "names of existing ConfigMaps containing extra env vars to add to worker nodes"
         },
         "extraEnvVarsSecret": {
           "type": "string",
