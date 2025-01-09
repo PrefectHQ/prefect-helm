@@ -319,6 +319,58 @@ tests:
           path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
           value: my-config-map
 
+  - it: Should set extra environment variables from ConfigMaps
+    set:
+      worker:
+        extraEnvVarsCMs:
+          - my-config-map
+          - my-other-config-map
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: my-config-map
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            configMapRef:
+              name: my-other-config-map
+
+  - it: Should set extra environment variables from Secret
+    set:
+      worker:
+        extraEnvVarsSecret: my-secret
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: my-secret
+
+  - it: Should set extra environment variables from Secrets
+    set:
+      worker:
+        extraEnvVarsSecrets:
+          - my-secret
+          - my-other-secret
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: my-secret
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].envFrom
+          content:
+            secretRef:
+              name: my-other-secret
+
   - it: Should set extra volumes
     set:
       worker:

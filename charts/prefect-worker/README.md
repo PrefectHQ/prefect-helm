@@ -308,8 +308,10 @@ worker:
 | worker.extraArgs | list | `[]` | array with extra Arguments for the worker container to start with |
 | worker.extraContainers | list | `[]` | additional sidecar containers |
 | worker.extraEnvVars | list | `[]` | array with extra environment variables to add to worker nodes |
-| worker.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to worker nodes |
-| worker.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to worker nodes |
+| worker.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to worker nodes (deprecated, use extraEnvVarsCMs) |
+| worker.extraEnvVarsCMs | list | `[]` | names of existing ConfigMaps containing extra env vars to add to worker nodes |
+| worker.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to worker nodes (deprecated, use extraEnvVarsSecrets) |
+| worker.extraEnvVarsSecrets | list | `[]` | names of existing Secrets containing extra env vars to add to worker nodes |
 | worker.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the worker pod |
 | worker.extraVolumes | list | `[]` | array with extra volumes for the worker pod |
 | worker.image.debug | bool | `false` | enable worker image debug mode |
