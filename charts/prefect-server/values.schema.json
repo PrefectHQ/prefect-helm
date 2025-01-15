@@ -438,6 +438,52 @@
           "type": "array",
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
+        },
+        "services": {
+          "type": "object",
+          "title": "Services",
+          "description": "configuration for running services separately",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enable Services",
+              "description": "enable running services in a separate deployment"
+            },
+            "replicaCount": {
+              "type": "integer",
+              "title": "Replica Count",
+              "description": "number of services replicas to deploy"
+            },
+            "resources": {
+              "type": "object",
+              "title": "Resources",
+              "description": "resources for the services container",
+              "properties": {
+                "requests": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": "string"
+                    },
+                    "memory": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "limits": {
+                  "type": "object",
+                  "properties": {
+                    "cpu": {
+                      "type": "string"
+                    },
+                    "memory": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -531,7 +577,11 @@
                 "type": "integer"
               }
             },
-            "required": ["name", "port", "targetPort"]
+            "required": [
+              "name",
+              "port",
+              "targetPort"
+            ]
           }
         },
         "clusterIP": {
@@ -540,7 +590,10 @@
           "description": "service Cluster IP"
         },
         "nodePort": {
-          "type": ["integer","string"],
+          "type": [
+            "integer",
+            "string"
+          ],
           "title": "Node Port",
           "description": "service port if defining service as type nodeport"
         },

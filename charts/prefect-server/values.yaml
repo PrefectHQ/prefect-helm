@@ -183,6 +183,20 @@ server:
   # -- array with extra Arguments for the server container to start with
   extraArgs: []
 
+  services:
+    # -- enable running services in a separate deployment
+    enabled: false
+    # -- number of services replicas to deploy
+    replicaCount: 1
+    # -- resources for the services container
+    resources:
+      requests:
+        cpu: 500m
+        memory: 512Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+
 ## ServiceAccount configuration
 serviceAccount:
   # -- specifies whether a ServiceAccount should be created

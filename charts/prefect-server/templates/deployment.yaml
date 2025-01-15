@@ -65,6 +65,9 @@ spec:
             - prefect
             - server
             - start
+            {{- if .Values.server.services.enabled }}
+            - --no-services
+            {{- end }}
             - --port
             - {{ .Values.service.targetPort | quote }}
             {{- range .Values.server.extraArgs }}
