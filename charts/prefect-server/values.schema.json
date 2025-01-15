@@ -439,7 +439,7 @@
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
         },
-        "services": {
+        "loopServices": {
           "type": "object",
           "title": "Services",
           "description": "configuration for running services separately",

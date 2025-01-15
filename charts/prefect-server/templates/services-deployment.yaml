@@ -1,11 +1,11 @@
-{{- if .Values.server.services.enabled }}
+{{- if .Values.server.loopServices.enabled }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
-  name: {{ template "common.names.fullname" . }}-services
+  name: {{ template "common.names.fullname" . }}-loop-services
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: services
+    app.kubernetes.io/component: loop-services
     prefect-version: {{ .Chart.AppVersion }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
@@ -14,14 +14,14 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.server.services.replicaCount }}
+  replicas: {{ .Values.server.loopServices.replicaCount }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
-      app.kubernetes.io/component: services
+      app.kubernetes.io/component: loop-services
   template:
     metadata:
       labels: {{- include "common.labels.standard" . | nindent 8 }}
-        app.kubernetes.io/component: services
+        app.kubernetes.io/component: loop-services
         prefect-version: {{ .Chart.AppVersion }}
     spec:
       serviceAccountName: {{ template "server.serviceAccountName" . }}
@@ -72,8 +72,8 @@ spec:
             - secretRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.server.extraEnvVarsSecret "context" $) }}
             {{- end }}
-          {{- if .Values.server.services.resources }}
-          resources: {{- toYaml .Values.server.services.resources | nindent 12 }}
+          {{- if .Values.server.loopServices.resources }}
+          resources: {{- toYaml .Values.server.loopServices.resources | nindent 12 }}
           {{- end }}
           {{- with .Values.server.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
