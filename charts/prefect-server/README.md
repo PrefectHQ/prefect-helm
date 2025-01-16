@@ -24,14 +24,14 @@ kubectl port-forward svc/prefect-server 4200:4200
 
 Note: If you choose to make modifications to either the `server.prefectApiUrl` or `service.port`, make sure to update the other value with the updated port!
 
-## Loop Services Configuration
+## Background Services Configuration
 
-The Prefect server includes background loop services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
+The Prefect server includes background background services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
 
-To run loop services in a separate deployment:
+To run background services in a separate deployment:
 
 ```yaml
-loopServices:
+backgroundServices:
   runSeparately: true
 ```
 
@@ -168,6 +168,44 @@ the HorizontalPodAutoscaler.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| backgroundServices.affinity | object | `{}` | affinity for background-services pod assignment |
+| backgroundServices.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set background-services containers' security context allowPrivilegeEscalation |
+| backgroundServices.containerSecurityContext.capabilities | object | `{}` | set background-services container's security context capabilities |
+| backgroundServices.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set background-services containers' security context readOnlyRootFilesystem |
+| backgroundServices.containerSecurityContext.runAsNonRoot | bool | `true` | set background-services containers' security context runAsNonRoot |
+| backgroundServices.containerSecurityContext.runAsUser | int | `1001` | set background-services containers' security context runAsUser |
+| backgroundServices.debug | bool | `false` | enable background-services debug mode |
+| backgroundServices.env | list | `[]` | array with environment variables to add to background-services container |
+| backgroundServices.extraContainers | list | `[]` | additional sidecar containers |
+| backgroundServices.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to background-services pod |
+| backgroundServices.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to background-services pod |
+| backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
+| backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
+| backgroundServices.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
+| backgroundServices.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
+| backgroundServices.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
+| backgroundServices.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
+| backgroundServices.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
+| backgroundServices.livenessProbe.enabled | bool | `false` |  |
+| backgroundServices.loggingLevel | string | `"WARNING"` |  |
+| backgroundServices.nodeSelector | object | `{}` | node labels for background-services pod assignment |
+| backgroundServices.podAnnotations | object | `{}` | extra annotations for background-services pod |
+| backgroundServices.podLabels | object | `{}` | extra labels for background-services pod |
+| backgroundServices.podSecurityContext.fsGroup | int | `1001` | set background-services pod's security context fsGroup |
+| backgroundServices.podSecurityContext.runAsNonRoot | bool | `true` | set background-services pod's security context runAsNonRoot |
+| backgroundServices.podSecurityContext.runAsUser | int | `1001` | set background-services pod's security context runAsUser |
+| backgroundServices.priorityClassName | string | `""` | priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class |
+| backgroundServices.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
+| backgroundServices.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
+| backgroundServices.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
+| backgroundServices.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
+| backgroundServices.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
+| backgroundServices.readinessProbe.enabled | bool | `false` |  |
+| backgroundServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the background-services container |
+| backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
+| backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
+| backgroundServices.runSeparately | bool | `false` | Run background services (like scheduling) in a separate deployment. |
+| backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
@@ -191,44 +229,6 @@ the HorizontalPodAutoscaler.
 | ingress.selfSigned | bool | `false` | create a TLS secret for this ingress record using self-signed certificates generated by Helm |
 | ingress.servicePort | string | `"server-svc-port"` | port for the ingress' main path |
 | ingress.tls | bool | `false` | enable TLS configuration for the host defined at `ingress.host.hostname` parameter |
-| loopServices.affinity | object | `{}` | affinity for loop-services pod assignment |
-| loopServices.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set loop-services containers' security context allowPrivilegeEscalation |
-| loopServices.containerSecurityContext.capabilities | object | `{}` | set loop-services container's security context capabilities |
-| loopServices.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set loop-services containers' security context readOnlyRootFilesystem |
-| loopServices.containerSecurityContext.runAsNonRoot | bool | `true` | set loop-services containers' security context runAsNonRoot |
-| loopServices.containerSecurityContext.runAsUser | int | `1001` | set loop-services containers' security context runAsUser |
-| loopServices.debug | bool | `false` | enable loop-services debug mode |
-| loopServices.env | list | `[]` | array with environment variables to add to loop-services container |
-| loopServices.extraContainers | list | `[]` | additional sidecar containers |
-| loopServices.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to loop-services pod |
-| loopServices.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to loop-services pod |
-| loopServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the loop-services pod |
-| loopServices.extraVolumes | list | `[]` | array with extra volumes for the loop-services pod |
-| loopServices.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
-| loopServices.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
-| loopServices.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
-| loopServices.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
-| loopServices.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| loopServices.livenessProbe.enabled | bool | `false` |  |
-| loopServices.loggingLevel | string | `"WARNING"` |  |
-| loopServices.nodeSelector | object | `{}` | node labels for loop-services pod assignment |
-| loopServices.podAnnotations | object | `{}` | extra annotations for loop-services pod |
-| loopServices.podLabels | object | `{}` | extra labels for loop-services pod |
-| loopServices.podSecurityContext.fsGroup | int | `1001` | set loop-services pod's security context fsGroup |
-| loopServices.podSecurityContext.runAsNonRoot | bool | `true` | set loop-services pod's security context runAsNonRoot |
-| loopServices.podSecurityContext.runAsUser | int | `1001` | set loop-services pod's security context runAsUser |
-| loopServices.priorityClassName | string | `""` | priority class name to use for the loop-services pods; if the priority class is empty or doesn't exist, the loop-services pods are scheduled without a priority class |
-| loopServices.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
-| loopServices.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
-| loopServices.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
-| loopServices.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
-| loopServices.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| loopServices.readinessProbe.enabled | bool | `false` |  |
-| loopServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the loop-services container |
-| loopServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the loop-services container |
-| loopServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
-| loopServices.runSeparately | bool | `false` | Run loop services (like scheduling) in a separate deployment. |
-| loopServices.tolerations | list | `[]` | tolerations for loop-services pod assignment |
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
 | postgresql.auth.database | string | `"server"` | name for a custom database |

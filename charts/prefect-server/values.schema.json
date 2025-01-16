@@ -498,25 +498,25 @@
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
         },
-        "loopServices": {
+        "backgroundServices": {
           "type": "object",
-          "title": "Loop Services",
-          "description": "configuration for running loop services separately",
+          "title": "Background Services",
+          "description": "configuration for running background services separately",
           "properties": {
             "runSeparately": {
               "type": "boolean",
               "title": "Run Separately",
-              "description": "run loop services in a separate deployment"
+              "description": "run background services in a separate deployment"
             },
             "replicaCount": {
               "type": "integer",
               "title": "Replica Count",
-              "description": "number of loop services replicas to deploy"
+              "description": "number of background services replicas to deploy"
             },
             "resources": {
               "type": "object",
               "title": "Resources",
-              "description": "resources for the loop services container",
+              "description": "resources for the background services container",
               "properties": {
                 "requests": {
                   "type": "object",
@@ -546,23 +546,23 @@
         }
       }
     },
-    "loopServices": {
+    "backgroundServices": {
       "type": "object",
-      "title": "Loop Services",
-      "description": "Loop Services Deployment Configuration",
+      "title": "Background Services",
+      "description": "Background Services Deployment Configuration",
       "additionalProperties": false,
       "properties": {
         "runSeparately": {
           "type": "boolean",
-          "description": "Run loop services (like scheduling) in a separate deployment"
+          "description": "Run background services (like scheduling) in a separate deployment"
         },
         "priorityClassName": {
           "type": "string",
-          "description": "priority class name to use for the loop-services pods"
+          "description": "priority class name to use for the background-services pods"
         },
         "debug": {
           "type": "boolean",
-          "description": "enable loop-services debug mode"
+          "description": "enable background-services debug mode"
         },
         "loggingLevel": {
           "type": "string",
@@ -570,7 +570,7 @@
         },
         "env": {
           "type": "array",
-          "description": "array with environment variables to add to loop-services container",
+          "description": "array with environment variables to add to background-services container",
           "items": {
             "type": "object"
           }
@@ -584,11 +584,11 @@
           "properties": {
             "requests": {
               "type": "object",
-              "description": "the requested resources for the loop-services container"
+              "description": "the requested resources for the background-services container"
             },
             "limits": {
               "type": "object",
-              "description": "the requested limits for the loop-services container"
+              "description": "the requested limits for the background-services container"
             }
           }
         },

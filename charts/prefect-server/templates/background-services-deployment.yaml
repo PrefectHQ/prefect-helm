@@ -1,11 +1,11 @@
-{{- if .Values.loopServices.runSeparately }}
+{{- if .Values.backgroundServices.runSeparately }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
-  name: {{ template "common.names.fullname" . }}-loop-services
+  name: {{ template "common.names.fullname" . }}-background-services
   namespace: {{ include "common.names.namespace" . | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: loop-services
+    app.kubernetes.io/component: background-services
     prefect-version: {{ .Chart.AppVersion }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
@@ -14,21 +14,21 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  revisionHistoryLimit: {{ .Values.loopServices.revisionHistoryLimit }}
+  revisionHistoryLimit: {{ .Values.backgroundServices.revisionHistoryLimit }}
   replicas: 1
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
-      app.kubernetes.io/component: loop-services
+      app.kubernetes.io/component: background-services
   template:
     metadata:
-      {{- if .Values.loopServices.podAnnotations }}
-      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.podAnnotations "context" $) | nindent 8 }}
+      {{- if .Values.backgroundServices.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.podAnnotations "context" $) | nindent 8 }}
       {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
-        app.kubernetes.io/component: loop-services
+        app.kubernetes.io/component: background-services
         prefect-version: {{ .Chart.AppVersion }}
-        {{- if .Values.loopServices.podLabels }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.podLabels "context" $) | nindent 8 }}
+        {{- if .Values.backgroundServices.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
       {{- if .Values.global.prefect.image.pullSecrets }}
@@ -38,23 +38,23 @@ spec:
       {{- end }}
       {{- end }}
       serviceAccountName: {{ template "global.prefect.serviceAccountName" . }}
-      {{- if .Values.loopServices.affinity }}
-      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.loopServices.affinity "context" $) | nindent 8 }}
+      {{- if .Values.backgroundServices.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.backgroundServices.affinity "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .Values.loopServices.nodeSelector }}
-      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.loopServices.nodeSelector "context" $) | nindent 8 }}
+      {{- if .Values.backgroundServices.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.backgroundServices.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .Values.loopServices.tolerations }}
-      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.tolerations "context" .) | nindent 8 }}
+      {{- if .Values.backgroundServices.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.tolerations "context" .) | nindent 8 }}
       {{- end }}
-      {{- if .Values.loopServices.podSecurityContext }}
-      securityContext: {{- .Values.loopServices.podSecurityContext | toYaml | nindent 8 }}
+      {{- if .Values.backgroundServices.podSecurityContext }}
+      securityContext: {{- .Values.backgroundServices.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
-      {{- if .Values.loopServices.priorityClassName }}
-      priorityClassName: {{ .Values.loopServices.priorityClassName }}
+      {{- if .Values.backgroundServices.priorityClassName }}
+      priorityClassName: {{ .Values.backgroundServices.priorityClassName }}
       {{- end }}
       containers:
-        - name: prefect-loop-services
+        - name: prefect-background-services
           image: "{{ .Values.global.prefect.image.repository }}:{{ .Values.global.prefect.image.prefectTag }}"
           imagePullPolicy: {{ .Values.global.prefect.image.pullPolicy }}
           command:
@@ -74,9 +74,9 @@ spec:
             - name: PREFECT_API_URL
               value: {{ .Values.global.prefect.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
-              value: {{ .Values.loopServices.debug | quote }}
+              value: {{ .Values.backgroundServices.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
-              value: {{ .Values.loopServices.loggingLevel | quote }}
+              value: {{ .Values.backgroundServices.loggingLevel | quote }}
             - name: PREFECT_SERVER_API_HOST
               value: {{ .Values.global.prefect.prefectApiHost | quote }}
             - name: PREFECT_UI_ENABLED
@@ -93,37 +93,37 @@ spec:
             {{- if .Values.global.prefect.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.global.prefect.env "context" $) | nindent 12 }}
             {{- end }}
-            {{- if .Values.loopServices.env }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.env "context" $) | nindent 12 }}
+            {{- if .Values.backgroundServices.env }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.env "context" $) | nindent 12 }}
             {{- end }}
           envFrom:
-            {{- if .Values.loopServices.extraEnvVarsCM }}
+            {{- if .Values.backgroundServices.extraEnvVarsCM }}
             - configMapRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.loopServices.extraEnvVarsCM "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraEnvVarsCM "context" $) }}
             {{- end }}
-            {{- if .Values.loopServices.extraEnvVarsSecret }}
+            {{- if .Values.backgroundServices.extraEnvVarsSecret }}
             - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.loopServices.extraEnvVarsSecret "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraEnvVarsSecret "context" $) }}
             {{- end }}
-          {{- if .Values.loopServices.resources }}
-          resources: {{- toYaml .Values.loopServices.resources | nindent 12 }}
+          {{- if .Values.backgroundServices.resources }}
+          resources: {{- toYaml .Values.backgroundServices.resources | nindent 12 }}
           {{- end }}
-          {{- with .Values.loopServices.containerSecurityContext }}
+          {{- with .Values.backgroundServices.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if .Values.loopServices.livenessProbe.enabled }}
+          {{- if .Values.backgroundServices.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
               path: /api/health
               port: {{ .Values.service.targetPort }}
-          {{- toYaml .Values.loopServices.livenessProbe.config | nindent 12 }}
+          {{- toYaml .Values.backgroundServices.livenessProbe.config | nindent 12 }}
           {{- end }}
-          {{- if .Values.loopServices.readinessProbe.enabled }}
+          {{- if .Values.backgroundServices.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
               path: /api/ready
               port: {{ .Values.service.targetPort }}
-          {{- toYaml .Values.loopServices.readinessProbe.config | nindent 12 }}
+          {{- toYaml .Values.backgroundServices.readinessProbe.config | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect
@@ -136,11 +136,11 @@ spec:
             - mountPath: /data
               name: sqlite-storage
             {{- end }}
-          {{- if .Values.loopServices.extraVolumeMounts }}
-          {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- if .Values.backgroundServices.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
-        {{- if .Values.loopServices.extraContainers }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.extraContainers "context" $) | nindent 8 }}
+        {{- if .Values.backgroundServices.extraContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraContainers "context" $) | nindent 8 }}
         {{- end }}
       volumes:
         - name: scratch
@@ -150,7 +150,7 @@ spec:
           persistentVolumeClaim:
             claimName: {{ template "common.names.fullname" . }}-sqlite
         {{- end }}
-        {{- if .Values.loopServices.extraVolumes }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.extraVolumes "context" $) | nindent 8 }}
+        {{- if .Values.backgroundServices.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
 {{- end }}
