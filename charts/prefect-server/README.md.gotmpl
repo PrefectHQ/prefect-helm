@@ -23,6 +23,22 @@ kubectl port-forward svc/prefect-server 4200:4200
 
 Note: If you choose to make modifications to either the `server.prefectApiUrl` or `service.port`, make sure to update the other value with the updated port!
 
+## Background Services Configuration
+
+The Prefect server includes background background services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
+
+To run background services in a separate deployment:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+```
+
+This configuration is recommended when:
+- You're experiencing database connection pool contention
+- You need different scaling policies for the web server and background services
+- You want to monitor and manage resource usage separately
+
 ## PostgreSQL Configuration
 
 ### Handling Connection Secrets
@@ -107,6 +123,29 @@ prefect-server:
     ```
     postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
     ```
+
+## SQLite Configuration
+
+SQLite can be used as an alternative to PostgreSQL. As mentioned in the
+[documentation on hosting Prefect](https://docs-3.prefect.io/v3/manage/self-host),
+SQLite is only recommended for lightweight, single-server deployments.
+
+To use SQLite for the database, provide the following configuration values:
+
+```yaml
+postgresql:
+  enabled: false
+sqlite:
+  enabled: true
+```
+
+More configuration options are available in [`values.yaml`](./values.yaml).
+
+By default, a PersistentVolumeClaim persists the SQLite database file between
+Pod restarts.
+
+Note that enabling SQLite enforces 1 replica in the Deployment, and disables
+the HorizontalPodAutoscaler.
 
 {{ template "chart.maintainersSection" . }}
 

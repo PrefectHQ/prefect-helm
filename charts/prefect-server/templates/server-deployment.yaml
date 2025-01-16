@@ -30,9 +30,9 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.server.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-      {{- if .Values.server.image.pullSecrets }}
+      {{- if .Values.global.prefect.image.pullSecrets }}
       imagePullSecrets:
-      {{- range .Values.server.image.pullSecrets }}
+      {{- range .Values.global.prefect.image.pullSecrets }}
         - name: {{ . }}
       {{- end }}
       {{- end }}
@@ -54,8 +54,8 @@ spec:
       {{- end }}
       containers:
         - name: prefect-server
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
-          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          image: "{{ .Values.global.prefect.image.repository }}:{{ .Values.global.prefect.image.prefectTag }}"
+          imagePullPolicy: {{ .Values.global.prefect.image.pullPolicy }}
           command:
             - /usr/bin/tini
             - -g
@@ -65,7 +65,7 @@ spec:
             - prefect
             - server
             - start
-            {{- if .Values.server.loopServices.runSeparately }}
+            {{- if .Values.backgroundServices.runAsSeparateDeployment }}
             - --no-services
             {{- end }}
             - --port
@@ -80,13 +80,13 @@ spec:
             - name: HOME
               value: /home/prefect
             - name: PREFECT_API_URL
-              value: {{ .Values.server.prefectApiUrl | quote }}
+              value: {{ .Values.global.prefect.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.server.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
               value: {{ .Values.server.loggingLevel | quote }}
             - name: PREFECT_SERVER_API_HOST
-              value: {{ .Values.server.prefectApiHost | quote }}
+              value: {{ .Values.global.prefect.prefectApiHost | quote }}
             - name: PREFECT_SERVER_API_PORT
               value: {{ .Values.service.targetPort | quote }}
             - name: PREFECT_UI_ENABLED
@@ -110,6 +110,9 @@ spec:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
               {{- end }}
+            {{- if .Values.global.prefect.env }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.global.prefect.env "context" $) | nindent 12 }}
+            {{- end }}
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
@@ -128,18 +131,19 @@ spec:
           {{- with .Values.server.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.server.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: {{ .Values.service.targetPort }}
+          {{- toYaml .Values.server.livenessProbe.config | nindent 12 }}
+          {{- end }}
+          {{- if .Values.server.readinessProbe.enabled }}
           readinessProbe:
-            exec:
-              command:
-                - python
-                - -c
-                - "from prefect.server.database import get_db_connection; import asyncio; asyncio.run(get_db_connection())"
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          {{- if .Values.sqlite.enabled }}
-          volumeMounts:
-            - mountPath: /data
-              name: sqlite-storage
+            httpGet:
+              path: /api/ready
+              port: {{ .Values.service.targetPort }}
+          {{- toYaml .Values.server.readinessProbe.config | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect
@@ -151,12 +155,24 @@ spec:
             - mountPath: {{ .Values.server.uiConfig.prefectUiStaticDirectory }}
               name: scratch
               subPathExpr: ui-build
-      {{- if .Values.sqlite.enabled }}
-      volumes:
-        - name: sqlite-storage
-          persistentVolumeClaim:
-            claimName: {{ template "common.names.fullname" . }}-sqlite
-      {{- end }}
+            {{- if .Values.sqlite.enabled }}
+            - mountPath: /data
+              name: sqlite-storage
+            {{- end }}
+          {{- if .Values.server.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}
+        {{- if .Values.server.extraContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.server.extraContainers "context" $) | nindent 8 }}
+        {{- end }}
       volumes:
         - name: scratch
           emptyDir: {}
+        {{- if .Values.sqlite.enabled }}
+        - name: sqlite-storage
+          persistentVolumeClaim:
+            claimName: {{ template "common.names.fullname" . }}-sqlite
+        {{- end }}
+        {{- if .Values.server.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.server.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}

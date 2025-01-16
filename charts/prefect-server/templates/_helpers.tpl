@@ -1,11 +1,22 @@
 {{/*
-Create the name of the service account to use
+Create the name of the service account to associate with the server deployment
 */}}
 {{- define "server.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
     {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the name of the service account to associate with the background-services deployment
+*/}}
+{{- define "backgroundServices.serviceAccountName" -}}
+{{- if and .Values.backgroundServices.serviceAccount.create .Values.backgroundServices.runAsSeparateDeployment -}}
+    {{ default (include "common.names.fullname" .) .Values.backgroundServices.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.backgroundServices.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 
@@ -122,6 +133,6 @@ Create the name of the service account to use
 {{- if .Values.server.uiConfig.prefectUiUrl -}}
   {{- .Values.server.uiConfig.prefectUiUrl -}}
 {{- else -}}
-  {{- printf "%s" (replace "/api" "" .Values.server.prefectApiUrl) -}}
+  {{- printf "%s" (replace "/api" "" .Values.global.prefect.prefectApiUrl) -}}
 {{- end -}}
 {{- end -}}

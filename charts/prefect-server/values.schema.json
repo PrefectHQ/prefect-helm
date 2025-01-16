@@ -28,6 +28,65 @@
       "title": "Common Annotations",
       "description": "annotations to add to all deployed objects"
     },
+    "common": {
+      "type": "object",
+      "title": "Common",
+      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
+    },
+    "global": {
+      "type": "object",
+      "title": "Global",
+      "description": "global configuration",
+      "properties": {
+        "prefect": {
+          "type": "object",
+          "title": "Prefect",
+          "description": "global prefect configuration",
+          "additionalProperties": false,
+          "properties": {
+            "image": {
+              "type": "object",
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "description": "prefect image repository"
+                },
+                "prefectTag": {
+                  "type": "string",
+                  "description": "prefect image tag (immutable tags are recommended)"
+                },
+                "pullPolicy": {
+                  "type": "string",
+                  "description": "prefect image pull policy"
+                },
+                "pullSecrets": {
+                  "type": "array",
+                  "description": "prefect image pull secrets",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "prefectApiUrl": {
+              "type": "string",
+              "description": "sets PREFECT_API_URL"
+            },
+            "prefectApiHost": {
+              "type": "string",
+              "description": "sets PREFECT_SERVER_API_HOST"
+            },
+            "env": {
+              "type": "array",
+              "description": "array with environment variables to add to all deployments",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
     "server": {
       "type": "object",
       "title": "Server",
@@ -439,25 +498,25 @@
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
         },
-        "loopServices": {
+        "backgroundServices": {
           "type": "object",
-          "title": "Loop Services",
-          "description": "configuration for running loop services separately",
+          "title": "Background Services",
+          "description": "configuration for running background services separately",
           "properties": {
-            "runSeparately": {
+            "runAsSeparateDeployment": {
               "type": "boolean",
               "title": "Run Separately",
-              "description": "run loop services in a separate deployment"
+              "description": "run background services in a separate deployment"
             },
             "replicaCount": {
               "type": "integer",
               "title": "Replica Count",
-              "description": "number of loop services replicas to deploy"
+              "description": "number of background services replicas to deploy"
             },
             "resources": {
               "type": "object",
               "title": "Resources",
-              "description": "resources for the loop services container",
+              "description": "resources for the background services container",
               "properties": {
                 "requests": {
                   "type": "object",
@@ -487,130 +546,138 @@
         }
       }
     },
-    "sqlite": {
+    "backgroundServices": {
       "type": "object",
-      "title": "SQLite",
-      "description": "sqlite configuration",
+      "title": "Background Services",
+      "description": "Background Services Deployment Configuration",
       "additionalProperties": false,
       "properties": {
-        "enabled": {
+        "runAsSeparateDeployment": {
           "type": "boolean",
-          "title": "Enabled",
-          "description": "enable sqlite database"
+          "description": "Run background services (like scheduling) in a separate deployment"
         },
-        "persistence": {
+        "priorityClassName": {
+          "type": "string",
+          "description": "priority class name to use for the background-services pods"
+        },
+        "debug": {
+          "type": "boolean",
+          "description": "enable background-services debug mode"
+        },
+        "loggingLevel": {
+          "type": "string",
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
+        },
+        "env": {
+          "type": "array",
+          "description": "array with environment variables to add to background-services container",
+          "items": {
+            "type": "object"
+          }
+        },
+        "revisionHistoryLimit": {
+          "type": "integer",
+          "description": "the number of old ReplicaSets to retain to allow rollback"
+        },
+        "resources": {
           "type": "object",
-          "title": "Persistence",
-          "description": "persistence settings for sqlite",
-          "additionalProperties": false,
           "properties": {
-            "enabled": {
-              "type": "boolean",
-              "title": "Enabled",
-              "description": "enable sqlite database persistence"
+            "requests": {
+              "type": "object",
+              "description": "the requested resources for the background-services container"
             },
-            "size": {
-              "type": "string",
-              "title": "Size",
-              "description": "size of the persistent volume claim"
-            },
-            "storageClassName": {
-              "type": "string",
-              "title": "Storage class name",
-              "description": "storage class name for the persistent volume claim"
+            "limits": {
+              "type": "object",
+              "description": "the requested limits for the background-services container"
             }
           }
-        }
-      }
-    },
-    "serviceAccount": {
-      "type": "object",
-      "title": "Service Account",
-      "description": "server service account configuration",
-      "additionalProperties": false,
-      "properties": {
-        "create": {
-          "type": "boolean",
-          "title": "Create",
-          "description": "create server service account"
         },
-        "name": {
-          "type": "string",
-          "title": "Name",
-          "description": "the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template"
-        },
-        "annotations": {
+        "livenessProbe": {
           "type": "object",
-          "title": "Annotations",
-          "description": "annotations to add to the server service account"
-        }
-      }
-    },
-    "service": {
-      "type": "object",
-      "title": "Service",
-      "description": "server service configuration",
-      "additionalProperties": false,
-      "properties": {
-        "type": {
-          "type": "string",
-          "title": "Type",
-          "description": "service type"
-        },
-        "port": {
-          "type": "integer",
-          "title": "Port",
-          "description": "service port"
-        },
-        "extraPorts": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "port": {
-                "type": "integer"
-              },
-              "targetPort": {
-                "type": "integer"
-              }
+          "properties": {
+            "enabled": {
+              "type": "boolean"
             },
-            "required": [
-              "name",
-              "port",
-              "targetPort"
-            ]
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
           }
         },
-        "clusterIP": {
-          "type": "string",
-          "title": "Cluster IP",
-          "description": "service Cluster IP"
-        },
-        "nodePort": {
-          "type": [
-            "integer",
-            "string"
-          ],
-          "title": "Node Port",
-          "description": "service port if defining service as type nodeport"
-        },
-        "targetPort": {
-          "type": "integer",
-          "title": "Target Port",
-          "description": "target port on the server pod"
-        },
-        "externalTrafficPolicy": {
-          "type": "string",
-          "title": "External Traffic Policy",
-          "description": "service external traffic policy"
-        },
-        "annotations": {
+        "readinessProbe": {
           "type": "object",
-          "title": "Annotations",
-          "description": "annotations to add to the server service"
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "podSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": "integer" },
+            "runAsNonRoot": { "type": "boolean" },
+            "fsGroup": { "type": "integer" }
+          }
+        },
+        "containerSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": "integer" },
+            "runAsNonRoot": { "type": "boolean" },
+            "readOnlyRootFilesystem": { "type": "boolean" },
+            "allowPrivilegeEscalation": { "type": "boolean" },
+            "capabilities": { "type": "object" }
+          }
+        },
+        "podLabels": { "type": "object" },
+        "podAnnotations": { "type": "object" },
+        "affinity": { "type": "object" },
+        "nodeSelector": { "type": "object" },
+        "tolerations": { "type": "array" },
+        "extraEnvVarsCM": { "type": "string" },
+        "extraEnvVarsSecret": { "type": "string" },
+        "extraContainers": { "type": "array" },
+        "extraVolumes": { "type": "array" },
+        "extraVolumeMounts": { "type": "array" },
+        "serviceAccount": {
+          "type": "object",
+          "title": "Service Account",
+          "description": "background services service account configuration",
+          "additionalProperties": false,
+          "properties": {
+            "create": {
+              "type": "boolean",
+              "title": "Create",
+              "description": "create background services service account"
+            },
+            "name": {
+              "type": "string",
+              "title": "Name",
+              "description": "the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template"
+            },
+            "annotations": {
+              "type": "object",
+              "title": "Annotations",
+              "description": "annotations to add to the background services service account"
+            }
+          }
         }
       }
     },
@@ -707,15 +774,199 @@
         }
       }
     },
-    "common": {
+    "sqlite": {
       "type": "object",
-      "title": "Common",
-      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
+      "title": "SQLite",
+      "description": "sqlite configuration",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "enable sqlite database"
+        },
+        "persistence": {
+          "type": "object",
+          "title": "Persistence",
+          "description": "persistence settings for sqlite",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enabled",
+              "description": "enable sqlite database persistence"
+            },
+            "size": {
+              "type": "string",
+              "title": "Size",
+              "description": "size of the persistent volume claim"
+            },
+            "storageClassName": {
+              "type": "string",
+              "title": "Storage class name",
+              "description": "storage class name for the persistent volume claim"
+            }
+          }
+        }
+      }
     },
-    "global": {
+    "serviceAccount": {
       "type": "object",
-      "title": "Global",
-      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart"
+      "title": "Service Account",
+      "description": "server service account configuration",
+      "additionalProperties": false,
+      "properties": {
+        "create": {
+          "type": "boolean",
+          "title": "Create",
+          "description": "create server service account"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template"
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "annotations to add to the server service account"
+        }
+      }
+    },
+    "service": {
+      "type": "object",
+      "title": "Service",
+      "description": "server service configuration",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "description": "service type"
+        },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "title": "Port",
+          "description": "service port"
+        },
+        "extraPorts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "port": {
+                "type": [
+                  "integer",
+                  "string"
+                ]
+              },
+              "targetPort": {
+                "type": [
+                  "integer",
+                  "string"
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "port",
+              "targetPort"
+            ]
+          }
+        },
+        "clusterIP": {
+          "type": "string",
+          "title": "Cluster IP",
+          "description": "service Cluster IP"
+        },
+        "nodePort": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "title": "Node Port",
+          "description": "service port if defining service as type nodeport"
+        },
+        "targetPort": {
+          "type": [
+            "integer",
+            "string"
+          ],
+          "title": "Target Port",
+          "description": "target port on the server pod"
+        },
+        "externalTrafficPolicy": {
+          "type": "string",
+          "title": "External Traffic Policy",
+          "description": "service external traffic policy"
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "annotations to add to the server service"
+        }
+      }
+    },
+    "secret": {
+      "type": "object",
+      "properties": {
+        "create": { "type": "boolean" },
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "host": { "type": "string" },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "database": { "type": "string" }
+      }
+    },
+    "postgresql": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "auth": {
+          "type": "object",
+          "properties": {
+            "enablePostgresUser": { "type": "boolean" },
+            "database": { "type": "string" },
+            "username": { "type": "string" },
+            "password": { "type": "string" }
+          }
+        },
+        "primary": {
+          "type": "object",
+          "properties": {
+            "initdb": {
+              "type": "object",
+              "properties": {
+                "user": { "type": "string" }
+              }
+            },
+            "persistence": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "image": {
+          "type": "object",
+          "properties": {
+            "tag": { "type": "string" }
+          }
+        }
+      }
     }
   }
 }
