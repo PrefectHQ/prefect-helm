@@ -463,7 +463,7 @@ tests:
     asserts:
       - template: server-deployment.yaml
         contains:
-          path: .spec.template.spec.containers[1].volumeMounts
+          path: .spec.template.spec.containers[0].volumeMounts
           content:
             name: config
             mountPath: /app/config
