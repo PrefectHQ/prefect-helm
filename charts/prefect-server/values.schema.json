@@ -814,7 +814,10 @@
           "description": "service type"
         },
         "port": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "title": "Port",
           "description": "service port"
         },
@@ -827,10 +830,16 @@
                 "type": "string"
               },
               "port": {
-                "type": "integer"
+                "type": [
+                  "integer",
+                  "string"
+                ]
               },
               "targetPort": {
-                "type": "integer"
+                "type": [
+                  "integer",
+                  "string"
+                ]
               }
             },
             "required": [
@@ -854,7 +863,10 @@
           "description": "service port if defining service as type nodeport"
         },
         "targetPort": {
-          "type": "integer",
+          "type": [
+            "integer",
+            "string"
+          ],
           "title": "Target Port",
           "description": "target port on the server pod"
         },
@@ -878,7 +890,12 @@
         "username": { "type": "string" },
         "password": { "type": "string" },
         "host": { "type": "string" },
-        "port": { "type": "integer" },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
         "database": { "type": "string" }
       }
     },
