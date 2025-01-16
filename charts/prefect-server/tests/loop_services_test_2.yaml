@@ -1,0 +1,414 @@
+suite: Loop Services configuration
+release:
+  name: loop-services-test
+  namespace: prefect
+
+tests:
+  - it: Should set the correct image and tag
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].image
+          value: prefecthq/prefect:3-latest
+
+  - it: Should set custom image and tag
+    set:
+      global:
+        image:
+          repository: custom/prefect
+          prefectTag: v2.0.0
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].image
+          value: custom/prefect:v2.0.0
+
+  - it: Should set the correct pull policy
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: IfNotPresent
+
+  - it: Should set custom pull policy
+    set:
+      global:
+        image:
+          pullPolicy: Always
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].imagePullPolicy
+          value: Always
+
+  - it: Should set image pull secrets
+    set:
+      global:
+        image:
+          pullSecrets:
+            - my-secret
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.imagePullSecrets[0].name
+          value: my-secret
+
+  - it: Should set the correct priority class name
+    set:
+      loopServices:
+        priorityClassName: high-priority
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.priorityClassName
+          value: high-priority
+
+  - it: Should set the correct debug mode
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
+          value: "false"
+
+  - it: Should enable debug mode
+    set:
+      loopServices:
+        debug: true
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
+          value: "true"
+
+  - it: Should set the correct logging level
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
+          value: WARNING
+
+  - it: Should set a custom logging level
+    set:
+      loopServices:
+        loggingLevel: DEBUG
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
+          value: DEBUG
+
+  - it: Should set the correct API URL
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
+          value: "http://localhost:4200/api"
+
+  - it: Should set a custom API URL
+    set:
+      global:
+        prefectApiUrl: "https://custom-api.example.com"
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
+          value: "https://custom-api.example.com"
+
+  - it: Should set the correct API host
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
+          value: "0.0.0.0"
+
+  - it: Should set a custom API host
+    set:
+      global:
+        prefectApiHost: "127.0.0.1"
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
+          value: "127.0.0.1"
+
+  - it: Should set custom environment variables
+    set:
+      loopServices:
+        env:
+          - name: CUSTOM_ENV
+            value: custom_value
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
+          value: custom_value
+
+  - it: Should set the correct revision history limit
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.revisionHistoryLimit
+          value: 10
+
+  - it: Should set a custom revision history limit
+    set:
+      loopServices:
+        revisionHistoryLimit: 5
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.revisionHistoryLimit
+          value: 5
+
+  - it: Should set the correct resource requests and limits
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.cpu
+          value: 500m
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.memory
+          value: 512Mi
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.cpu
+          value: "1"
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.memory
+          value: 1Gi
+
+  - it: Should set custom resource requests and limits
+    set:
+      loopServices:
+        resources:
+          requests:
+            cpu: 250m
+            memory: 256Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.cpu
+          value: 250m
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.memory
+          value: 256Mi
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.cpu
+          value: 500m
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.memory
+          value: 512Mi
+
+  - it: Should set the correct security context
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.runAsUser
+          value: 1001
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.runAsNonRoot
+          value: true
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.fsGroup
+          value: 1001
+
+  - it: Should set custom security context
+    set:
+      loopServices:
+        podSecurityContext:
+          runAsUser: 2000
+          runAsNonRoot: false
+          fsGroup: 3000
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.runAsUser
+          value: 2000
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.runAsNonRoot
+          value: false
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.fsGroup
+          value: 3000
+
+  - it: Should set the correct container security context
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 1001
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: true
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: true
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: false
+
+  - it: Should set custom container security context
+    set:
+      loopServices:
+        containerSecurityContext:
+          runAsUser: 2000
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          allowPrivilegeEscalation: true
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 2000
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
+          value: false
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
+          value: false
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
+          value: true
+
+  - it: Should set pod labels
+    set:
+      loopServices:
+        podLabels:
+          custom-label: custom-value
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.metadata.labels.custom-label
+          value: custom-value
+
+  - it: Should set pod annotations
+    set:
+      loopServices:
+        podAnnotations:
+          custom-annotation: custom-value
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.metadata.annotations.custom-annotation
+          value: custom-value
+
+  - it: Should set affinity
+    set:
+      loopServices:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/e2e-az-name
+                      operator: In
+                      values:
+                        - e2e-az1
+                        - e2e-az2
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
+          value: kubernetes.io/e2e-az-name
+
+  - it: Should set node selector
+    set:
+      loopServices:
+        nodeSelector:
+          disktype: ssd
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.nodeSelector.disktype
+          value: ssd
+
+  - it: Should set tolerations
+    set:
+      loopServices:
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.tolerations[0].key
+          value: key1
+
+  - it: Should set extra environment variables from ConfigMap
+    set:
+      loopServices:
+        extraEnvVarsCM: my-config-map
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
+          value: my-config-map
+
+  - it: Should set extra environment variables from Secret
+    set:
+      loopServices:
+        extraEnvVarsSecret: my-secret
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].envFrom[0].secretRef.name
+          value: my-secret
+
+  - it: Should set extra containers
+    set:
+      loopServices:
+        extraContainers:
+          - name: sidecar
+            image: nginx:latest
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[1].name
+          value: sidecar
+
+  - it: Should set extra volumes
+    set:
+      loopServices:
+        extraVolumes:
+          - name: config
+            configMap:
+              name: my-config
+    asserts:
+      - template: loop-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.volumes[1].name
+          value: config
+
+  - it: Should set extra volume mounts
+    set:
+      loopServices:
+        extraVolumeMounts:
+          - name: config
+            mountPath: /app/config
+    asserts:
+      - template: loop-services-deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].volumeMounts
+          content:
+            name: config
+            mountPath: /app/config
