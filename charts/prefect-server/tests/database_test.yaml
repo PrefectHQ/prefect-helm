@@ -116,7 +116,7 @@ tests:
         equal:
           path: .data.connection-string
           decodeBase64: true
-          value: postgresql+asyncpg://myuser:mypass@test-postgresql.prefect:1234/mydb
+          value: postgresql+asyncpg://myuser:mypass@database-test-postgresql.prefect:1234/mydb
 
   - it: Should configure an external secret name correctly
     set:
