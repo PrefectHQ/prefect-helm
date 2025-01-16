@@ -28,6 +28,57 @@
       "title": "Common Annotations",
       "description": "annotations to add to all deployed objects"
     },
+    "common": {
+      "type": "object",
+      "title": "Common",
+      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
+    },
+    "global": {
+      "type": "object",
+      "title": "Global",
+      "description": "global configuration",
+      "properties": {
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "description": "prefect image repository"
+            },
+            "prefectTag": {
+              "type": "string",
+              "description": "prefect image tag (immutable tags are recommended)"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "description": "prefect image pull policy"
+            },
+            "pullSecrets": {
+              "type": "array",
+              "description": "prefect image pull secrets",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "prefectApiUrl": {
+          "type": "string",
+          "description": "sets PREFECT_API_URL"
+        },
+        "prefectApiHost": {
+          "type": "string",
+          "description": "sets PREFECT_SERVER_API_HOST"
+        },
+        "env": {
+          "type": "array",
+          "description": "array with environment variables to add to all deployments",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
     "server": {
       "type": "object",
       "title": "Server",
@@ -487,6 +538,211 @@
         }
       }
     },
+    "loopServices": {
+      "type": "object",
+      "title": "Loop Services",
+      "description": "Loop Services Deployment Configuration",
+      "additionalProperties": false,
+      "properties": {
+        "runSeparately": {
+          "type": "boolean",
+          "description": "Run loop services (like scheduling) in a separate deployment"
+        },
+        "priorityClassName": {
+          "type": "string",
+          "description": "priority class name to use for the loop-services pods"
+        },
+        "debug": {
+          "type": "boolean",
+          "description": "enable loop-services debug mode"
+        },
+        "loggingLevel": {
+          "type": "string",
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
+        },
+        "env": {
+          "type": "array",
+          "description": "array with environment variables to add to loop-services container",
+          "items": {
+            "type": "object"
+          }
+        },
+        "revisionHistoryLimit": {
+          "type": "integer",
+          "description": "the number of old ReplicaSets to retain to allow rollback"
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "requests": {
+              "type": "object",
+              "description": "the requested resources for the loop-services container"
+            },
+            "limits": {
+              "type": "object",
+              "description": "the requested limits for the loop-services container"
+            }
+          }
+        },
+        "livenessProbe": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "readinessProbe": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "podSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": "integer" },
+            "runAsNonRoot": { "type": "boolean" },
+            "fsGroup": { "type": "integer" }
+          }
+        },
+        "containerSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": "integer" },
+            "runAsNonRoot": { "type": "boolean" },
+            "readOnlyRootFilesystem": { "type": "boolean" },
+            "allowPrivilegeEscalation": { "type": "boolean" },
+            "capabilities": { "type": "object" }
+          }
+        },
+        "podLabels": { "type": "object" },
+        "podAnnotations": { "type": "object" },
+        "affinity": { "type": "object" },
+        "nodeSelector": { "type": "object" },
+        "tolerations": { "type": "array" },
+        "extraEnvVarsCM": { "type": "string" },
+        "extraEnvVarsSecret": { "type": "string" },
+        "extraContainers": { "type": "array" },
+        "extraVolumes": { "type": "array" },
+        "extraVolumeMounts": { "type": "array" }
+      }
+    },
+    "ingress": {
+      "type": "object",
+      "title": "Ingress",
+      "description": "server ingress configuration",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "enable ingress record generation for server"
+        },
+        "servicePort": {
+          "type": "string",
+          "title": "Service Port Name",
+          "description": "service port name"
+        },
+        "className": {
+          "type": "string",
+          "title": "Class Name",
+          "description": "IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)"
+        },
+        "host": {
+          "type": "object",
+          "title": "Host",
+          "description": "server ingress host configuration",
+          "additionalProperties": false,
+          "properties": {
+            "hostname": {
+              "type": "string",
+              "title": "Hostname",
+              "description": "default host for the ingress record"
+            },
+            "path": {
+              "type": "string",
+              "title": "Path",
+              "description": "default path for the ingress record"
+            },
+            "pathType": {
+              "type": "string",
+              "title": "Path Type",
+              "description": "ingress path type"
+            }
+          }
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations."
+        },
+        "tls": {
+          "type": "boolean",
+          "title": "TLS",
+          "description": "enable TLS configuration for the host defined at `ingress.host.hostname` parameter"
+        },
+        "selfSigned": {
+          "type": "boolean",
+          "title": "Self Signed",
+          "description": "create a TLS secret for this ingress record using self-signed certificates generated by Helm"
+        },
+        "extraHosts": {
+          "type": "array",
+          "title": "Extra Hosts",
+          "description": "an array with additional hostname(s) to be covered with the ingress record",
+          "items": {
+            "type": "object"
+          }
+        },
+        "extraPaths": {
+          "type": "array",
+          "title": "Extra Paths",
+          "description": "an array with additional arbitrary paths that may need to be added to the ingress under the main host",
+          "items": {
+            "type": "object"
+          }
+        },
+        "extraTls": {
+          "type": "array",
+          "title": "Extra TLS",
+          "description": "an array with additional tls configuration to be added to the ingress record",
+          "items": {
+            "type": "object"
+          }
+        },
+        "extraRules": {
+          "type": "array",
+          "title": "Extra Rules",
+          "description": "additional rules to be covered with this ingress record",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
     "sqlite": {
       "type": "object",
       "title": "SQLite",
@@ -612,261 +868,6 @@
           "title": "Annotations",
           "description": "annotations to add to the server service"
         }
-      }
-    },
-    "ingress": {
-      "type": "object",
-      "title": "Ingress",
-      "description": "server ingress configuration",
-      "additionalProperties": false,
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "title": "Enabled",
-          "description": "enable ingress record generation for server"
-        },
-        "servicePort": {
-          "type": "string",
-          "title": "Service Port Name",
-          "description": "service port name"
-        },
-        "className": {
-          "type": "string",
-          "title": "Class Name",
-          "description": "IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)"
-        },
-        "host": {
-          "type": "object",
-          "title": "Host",
-          "description": "server ingress host configuration",
-          "additionalProperties": false,
-          "properties": {
-            "hostname": {
-              "type": "string",
-              "title": "Hostname",
-              "description": "default host for the ingress record"
-            },
-            "path": {
-              "type": "string",
-              "title": "Path",
-              "description": "default path for the ingress record"
-            },
-            "pathType": {
-              "type": "string",
-              "title": "Path Type",
-              "description": "ingress path type"
-            }
-          }
-        },
-        "annotations": {
-          "type": "object",
-          "title": "Annotations",
-          "description": "additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations."
-        },
-        "tls": {
-          "type": "boolean",
-          "title": "TLS",
-          "description": "enable TLS configuration for the host defined at `ingress.host.hostname` parameter"
-        },
-        "selfSigned": {
-          "type": "boolean",
-          "title": "Self Signed",
-          "description": "create a TLS secret for this ingress record using self-signed certificates generated by Helm"
-        },
-        "extraHosts": {
-          "type": "array",
-          "title": "Extra Hosts",
-          "description": "an array with additional hostname(s) to be covered with the ingress record",
-          "items": {
-            "type": "object"
-          }
-        },
-        "extraPaths": {
-          "type": "array",
-          "title": "Extra Paths",
-          "description": "an array with additional arbitrary paths that may need to be added to the ingress under the main host",
-          "items": {
-            "type": "object"
-          }
-        },
-        "extraTls": {
-          "type": "array",
-          "title": "Extra TLS",
-          "description": "an array with additional tls configuration to be added to the ingress record",
-          "items": {
-            "type": "object"
-          }
-        },
-        "extraRules": {
-          "type": "array",
-          "title": "Extra Rules",
-          "description": "additional rules to be covered with this ingress record",
-          "items": {
-            "type": "object"
-          }
-        }
-      }
-    },
-    "common": {
-      "type": "object",
-      "title": "Common",
-      "description": "common configuration.  Not set by user but required as common vars are passed to all manifests."
-    },
-    "global": {
-      "type": "object",
-      "title": "Global",
-      "description": "global configuration",
-      "properties": {
-        "image": {
-          "type": "object",
-          "properties": {
-            "repository": {
-              "type": "string",
-              "description": "prefect image repository"
-            },
-            "prefectTag": {
-              "type": "string",
-              "description": "prefect image tag (immutable tags are recommended)"
-            },
-            "pullPolicy": {
-              "type": "string",
-              "description": "prefect image pull policy"
-            },
-            "pullSecrets": {
-              "type": "array",
-              "description": "prefect image pull secrets",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "prefectApiUrl": {
-          "type": "string",
-          "description": "sets PREFECT_API_URL"
-        },
-        "prefectApiHost": {
-          "type": "string",
-          "description": "sets PREFECT_SERVER_API_HOST"
-        },
-        "env": {
-          "type": "array",
-          "description": "array with environment variables to add to all deployments",
-          "items": {
-            "type": "object"
-          }
-        }
-      }
-    },
-    "loopServices": {
-      "type": "object",
-      "title": "Loop Services",
-      "description": "Loop Services Deployment Configuration",
-      "properties": {
-        "runSeparately": {
-          "type": "boolean",
-          "description": "Run loop services (like scheduling) in a separate deployment"
-        },
-        "priorityClassName": {
-          "type": "string",
-          "description": "priority class name to use for the loop-services pods"
-        },
-        "debug": {
-          "type": "boolean",
-          "description": "enable loop-services debug mode"
-        },
-        "loggingLevel": {
-          "type": "string",
-          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
-        },
-        "env": {
-          "type": "array",
-          "description": "array with environment variables to add to loop-services container",
-          "items": {
-            "type": "object"
-          }
-        },
-        "revisionHistoryLimit": {
-          "type": "integer",
-          "description": "the number of old ReplicaSets to retain to allow rollback"
-        },
-        "resources": {
-          "type": "object",
-          "properties": {
-            "requests": {
-              "type": "object",
-              "description": "the requested resources for the loop-services container"
-            },
-            "limits": {
-              "type": "object",
-              "description": "the requested limits for the loop-services container"
-            }
-          }
-        },
-        "livenessProbe": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "config": {
-              "type": "object",
-              "properties": {
-                "initialDelaySeconds": { "type": "integer" },
-                "periodSeconds": { "type": "integer" },
-                "timeoutSeconds": { "type": "integer" },
-                "failureThreshold": { "type": "integer" },
-                "successThreshold": { "type": "integer" }
-              }
-            }
-          }
-        },
-        "readinessProbe": {
-          "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "config": {
-              "type": "object",
-              "properties": {
-                "initialDelaySeconds": { "type": "integer" },
-                "periodSeconds": { "type": "integer" },
-                "timeoutSeconds": { "type": "integer" },
-                "failureThreshold": { "type": "integer" },
-                "successThreshold": { "type": "integer" }
-              }
-            }
-          }
-        },
-        "podSecurityContext": {
-          "type": "object",
-          "properties": {
-            "runAsUser": { "type": "integer" },
-            "runAsNonRoot": { "type": "boolean" },
-            "fsGroup": { "type": "integer" }
-          }
-        },
-        "containerSecurityContext": {
-          "type": "object",
-          "properties": {
-            "runAsUser": { "type": "integer" },
-            "runAsNonRoot": { "type": "boolean" },
-            "readOnlyRootFilesystem": { "type": "boolean" },
-            "allowPrivilegeEscalation": { "type": "boolean" },
-            "capabilities": { "type": "object" }
-          }
-        },
-        "podLabels": { "type": "object" },
-        "podAnnotations": { "type": "object" },
-        "affinity": { "type": "object" },
-        "nodeSelector": { "type": "object" },
-        "tolerations": { "type": "array" },
-        "extraEnvVarsCM": { "type": "string" },
-        "extraEnvVarsSecret": { "type": "string" },
-        "extraContainers": { "type": "array" },
-        "extraVolumes": { "type": "array" },
-        "extraVolumeMounts": { "type": "array" }
       }
     },
     "secret": {
