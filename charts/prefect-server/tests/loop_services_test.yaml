@@ -1,0 +1,65 @@
+suite: Loop Services configuration
+release:
+  name: test
+  namespace: prefect
+
+tests:
+  - it: Should not create loop services deployment by default
+    asserts:
+      - hasDocuments:
+          count: 0
+          template: loop-services-deployment.yaml
+
+  - it: Should create loop services deployment when enabled
+    set:
+      server:
+        loopServices:
+          runSeparately: true
+    asserts:
+      - hasDocuments:
+          count: 1
+          template: loop-services-deployment.yaml
+      - equal:
+          path: metadata.name
+          value: test-loop-services
+          template: loop-services-deployment.yaml
+      - equal:
+          path: spec.template.spec.containers[0].name
+          value: prefect-loop-services
+          template: loop-services-deployment.yaml
+
+  - it: Should set custom replicas
+    set:
+      server:
+        loopServices:
+          runSeparately: true
+          replicaCount: 3
+    asserts:
+      - equal:
+          path: spec.replicas
+          value: 3
+          template: loop-services-deployment.yaml
+
+  - it: Should set resources correctly
+    set:
+      server:
+        loopServices:
+          runSeparately: true
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+    asserts:
+      - equal:
+          path: spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          template: loop-services-deployment.yaml 

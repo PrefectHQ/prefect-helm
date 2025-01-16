@@ -441,23 +441,23 @@
         },
         "loopServices": {
           "type": "object",
-          "title": "Services",
-          "description": "configuration for running services separately",
+          "title": "Loop Services",
+          "description": "configuration for running loop services separately",
           "properties": {
-            "enabled": {
+            "runSeparately": {
               "type": "boolean",
-              "title": "Enable Services",
-              "description": "enable running services in a separate deployment"
+              "title": "Run Separately",
+              "description": "run loop services in a separate deployment"
             },
             "replicaCount": {
               "type": "integer",
               "title": "Replica Count",
-              "description": "number of services replicas to deploy"
+              "description": "number of loop services replicas to deploy"
             },
             "resources": {
               "type": "object",
               "title": "Resources",
-              "description": "resources for the services container",
+              "description": "resources for the loop services container",
               "properties": {
                 "requests": {
                   "type": "object",
