@@ -13,7 +13,7 @@ tests:
 
   - it: Should set custom image and tag
     set:
-      server:
+      global:
         image:
           repository: custom/prefect
           prefectTag: v2.0.0
@@ -32,7 +32,7 @@ tests:
 
   - it: Should set custom pull policy
     set:
-      server:
+      global:
         image:
           pullPolicy: Always
     asserts:
@@ -43,7 +43,7 @@ tests:
 
   - it: Should set image pull secrets
     set:
-      server:
+      global:
         image:
           pullSecrets:
             - my-secret
@@ -106,7 +106,7 @@ tests:
 
   - it: Should set a custom API URL
     set:
-      server:
+      global:
         prefectApiUrl: "https://custom-api.example.com"
     asserts:
       - template: deployment.yaml
@@ -123,7 +123,7 @@ tests:
 
   - it: Should set a custom API host
     set:
-      server:
+      global:
         prefectApiHost: "127.0.0.1"
     asserts:
       - template: deployment.yaml
