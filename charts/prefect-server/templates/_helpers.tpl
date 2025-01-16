@@ -1,5 +1,5 @@
 {{/*
-Create the name of the service account to associate with the deployments
+Create the name of the service account to associate with the deployment(s)
 */}}
 {{- define "global.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
