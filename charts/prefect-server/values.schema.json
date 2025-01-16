@@ -715,7 +715,209 @@
     "global": {
       "type": "object",
       "title": "Global",
-      "description": "global configuration.  Not set by user but required when prefect is referenced as a downstream Chart"
+      "description": "global configuration",
+      "properties": {
+        "image": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "description": "prefect image repository"
+            },
+            "prefectTag": {
+              "type": "string",
+              "description": "prefect image tag (immutable tags are recommended)"
+            },
+            "pullPolicy": {
+              "type": "string",
+              "description": "prefect image pull policy"
+            },
+            "pullSecrets": {
+              "type": "array",
+              "description": "prefect image pull secrets",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "prefectApiUrl": {
+          "type": "string",
+          "description": "sets PREFECT_API_URL"
+        },
+        "prefectApiHost": {
+          "type": "string",
+          "description": "sets PREFECT_SERVER_API_HOST"
+        },
+        "env": {
+          "type": "array",
+          "description": "array with environment variables to add to all deployments",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "loopServices": {
+      "type": "object",
+      "title": "Loop Services",
+      "description": "Loop Services Deployment Configuration",
+      "properties": {
+        "runSeparately": {
+          "type": "boolean",
+          "description": "Run loop services (like scheduling) in a separate deployment"
+        },
+        "priorityClassName": {
+          "type": "string",
+          "description": "priority class name to use for the loop-services pods"
+        },
+        "debug": {
+          "type": "boolean",
+          "description": "enable loop-services debug mode"
+        },
+        "loggingLevel": {
+          "type": "string",
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
+        },
+        "env": {
+          "type": "array",
+          "description": "array with environment variables to add to loop-services container",
+          "items": {
+            "type": "object"
+          }
+        },
+        "revisionHistoryLimit": {
+          "type": "integer",
+          "description": "the number of old ReplicaSets to retain to allow rollback"
+        },
+        "resources": {
+          "type": "object",
+          "properties": {
+            "requests": {
+              "type": "object",
+              "description": "the requested resources for the loop-services container"
+            },
+            "limits": {
+              "type": "object",
+              "description": "the requested limits for the loop-services container"
+            }
+          }
+        },
+        "livenessProbe": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "readinessProbe": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
+        },
+        "podSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": "integer" },
+            "runAsNonRoot": { "type": "boolean" },
+            "fsGroup": { "type": "integer" }
+          }
+        },
+        "containerSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": "integer" },
+            "runAsNonRoot": { "type": "boolean" },
+            "readOnlyRootFilesystem": { "type": "boolean" },
+            "allowPrivilegeEscalation": { "type": "boolean" },
+            "capabilities": { "type": "object" }
+          }
+        },
+        "podLabels": { "type": "object" },
+        "podAnnotations": { "type": "object" },
+        "affinity": { "type": "object" },
+        "nodeSelector": { "type": "object" },
+        "tolerations": { "type": "array" },
+        "extraEnvVarsCM": { "type": "string" },
+        "extraEnvVarsSecret": { "type": "string" },
+        "extraContainers": { "type": "array" },
+        "extraVolumes": { "type": "array" },
+        "extraVolumeMounts": { "type": "array" }
+      }
+    },
+    "secret": {
+      "type": "object",
+      "properties": {
+        "create": { "type": "boolean" },
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "host": { "type": "string" },
+        "port": { "type": "string" },
+        "database": { "type": "string" }
+      }
+    },
+    "postgresql": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "auth": {
+          "type": "object",
+          "properties": {
+            "enablePostgresUser": { "type": "boolean" },
+            "database": { "type": "string" },
+            "username": { "type": "string" },
+            "password": { "type": "string" }
+          }
+        },
+        "primary": {
+          "type": "object",
+          "properties": {
+            "initdb": {
+              "type": "object",
+              "properties": {
+                "user": { "type": "string" }
+              }
+            },
+            "persistence": {
+              "type": "object",
+              "properties": {
+                "enabled": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "image": {
+          "type": "object",
+          "properties": {
+            "tag": { "type": "string" }
+          }
+        }
+      }
     }
   }
 }
