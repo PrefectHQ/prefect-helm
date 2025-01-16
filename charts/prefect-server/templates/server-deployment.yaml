@@ -65,7 +65,7 @@ spec:
             - prefect
             - server
             - start
-            {{- if .Values.backgroundServices.runSeparately }}
+            {{- if .Values.backgroundServices.runAsSeparateDeployment }}
             - --no-services
             {{- end }}
             - --port

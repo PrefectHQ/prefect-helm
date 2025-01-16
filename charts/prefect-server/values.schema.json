@@ -503,7 +503,7 @@
           "title": "Background Services",
           "description": "configuration for running background services separately",
           "properties": {
-            "runSeparately": {
+            "runAsSeparateDeployment": {
               "type": "boolean",
               "title": "Run Separately",
               "description": "run background services in a separate deployment"
@@ -552,7 +552,7 @@
       "description": "Background Services Deployment Configuration",
       "additionalProperties": false,
       "properties": {
-        "runSeparately": {
+        "runAsSeparateDeployment": {
           "type": "boolean",
           "description": "Run background services (like scheduling) in a separate deployment"
         },

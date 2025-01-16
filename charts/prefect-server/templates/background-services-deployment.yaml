@@ -1,4 +1,4 @@
-{{- if .Values.backgroundServices.runSeparately }}
+{{- if .Values.backgroundServices.runAsSeparateDeployment }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:

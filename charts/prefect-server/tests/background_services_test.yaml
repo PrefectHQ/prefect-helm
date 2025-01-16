@@ -7,7 +7,7 @@ tests:
   - it: Should set the correct image and tag
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -22,7 +22,7 @@ tests:
             repository: custom/prefect
             prefectTag: v2.0.0
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -32,7 +32,7 @@ tests:
   - it: Should set the correct pull policy
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -46,7 +46,7 @@ tests:
           image:
             pullPolicy: Always
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -61,7 +61,7 @@ tests:
             pullSecrets:
               - my-secret
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -71,7 +71,7 @@ tests:
   - it: Should set the correct priority class name
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         priorityClassName: high-priority
     asserts:
       - template: background-services-deployment.yaml
@@ -82,7 +82,7 @@ tests:
   - it: Should set the correct debug mode
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -92,7 +92,7 @@ tests:
   - it: Should enable debug mode
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         debug: true
     asserts:
       - template: background-services-deployment.yaml
@@ -103,7 +103,7 @@ tests:
   - it: Should set the correct logging level
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -113,7 +113,7 @@ tests:
   - it: Should set a custom logging level
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         loggingLevel: DEBUG
     asserts:
       - template: background-services-deployment.yaml
@@ -124,7 +124,7 @@ tests:
   - it: Should set the correct API URL
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -137,7 +137,7 @@ tests:
         prefect:
           prefectApiUrl: "https://custom-api.example.com"
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -147,7 +147,7 @@ tests:
   - it: Should set the correct API host
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -160,7 +160,7 @@ tests:
         prefect:
           prefectApiHost: "127.0.0.1"
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -170,7 +170,7 @@ tests:
   - it: Should set custom environment variables
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         env:
           - name: CUSTOM_ENV
             value: custom_value
@@ -183,7 +183,7 @@ tests:
   - it: Should set the correct revision history limit
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -193,7 +193,7 @@ tests:
   - it: Should set a custom revision history limit
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         revisionHistoryLimit: 5
     asserts:
       - template: background-services-deployment.yaml
@@ -204,7 +204,7 @@ tests:
   - it: Should set the correct resource requests and limits
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -226,7 +226,7 @@ tests:
   - it: Should set custom resource requests and limits
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         resources:
           requests:
             cpu: 250m
@@ -255,7 +255,7 @@ tests:
   - it: Should set the correct security context
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -273,7 +273,7 @@ tests:
   - it: Should set custom security context
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         podSecurityContext:
           runAsUser: 2000
           runAsNonRoot: false
@@ -295,7 +295,7 @@ tests:
   - it: Should set the correct container security context
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
@@ -317,7 +317,7 @@ tests:
   - it: Should set custom container security context
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         containerSecurityContext:
           runAsUser: 2000
           runAsNonRoot: false
@@ -344,7 +344,7 @@ tests:
   - it: Should set pod labels
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         podLabels:
           custom-label: custom-value
     asserts:
@@ -356,7 +356,7 @@ tests:
   - it: Should set pod annotations
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         podAnnotations:
           custom-annotation: custom-value
     asserts:
@@ -368,7 +368,7 @@ tests:
   - it: Should set affinity
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -388,7 +388,7 @@ tests:
   - it: Should set node selector
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         nodeSelector:
           disktype: ssd
     asserts:
@@ -400,7 +400,7 @@ tests:
   - it: Should set tolerations
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         tolerations:
           - key: "key1"
             operator: "Equal"
@@ -415,7 +415,7 @@ tests:
   - it: Should set extra environment variables from ConfigMap
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         extraEnvVarsCM: my-config-map
     asserts:
       - template: background-services-deployment.yaml
@@ -426,7 +426,7 @@ tests:
   - it: Should set extra environment variables from Secret
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         extraEnvVarsSecret: my-secret
     asserts:
       - template: background-services-deployment.yaml
@@ -437,7 +437,7 @@ tests:
   - it: Should set extra containers
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         extraContainers:
           - name: sidecar
             image: nginx:latest
@@ -450,7 +450,7 @@ tests:
   - it: Should set extra volumes
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         extraVolumes:
           - name: config
             configMap:
@@ -464,7 +464,7 @@ tests:
   - it: Should set extra volume mounts
     set:
       backgroundServices:
-        runSeparately: true
+        runAsSeparateDeployment: true
         extraVolumeMounts:
           - name: config
             mountPath: /app/config

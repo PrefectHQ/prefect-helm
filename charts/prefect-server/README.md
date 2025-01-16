@@ -32,7 +32,7 @@ To run background services in a separate deployment:
 
 ```yaml
 backgroundServices:
-  runSeparately: true
+  runAsSeparateDeployment: true
 ```
 
 This configuration is recommended when:
@@ -204,7 +204,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the background-services container |
 | backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
 | backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
-| backgroundServices.runSeparately | bool | `false` | Run background services (like scheduling) in a separate deployment. |
+| backgroundServices.runAsSeparateDeployment | bool | `false` | Run background services (like scheduling) in a separate deployment. |
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template |

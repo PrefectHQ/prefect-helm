@@ -13,7 +13,7 @@ Create the name of the service account to associate with the server deployment
 Create the name of the service account to associate with the background-services deployment
 */}}
 {{- define "backgroundServices.serviceAccountName" -}}
-{{- if and .Values.backgroundServices.serviceAccount.create .Values.backgroundServices.runSeparately -}}
+{{- if and .Values.backgroundServices.serviceAccount.create .Values.backgroundServices.runAsSeparateDeployment -}}
     {{ default (include "common.names.fullname" .) .Values.backgroundServices.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.backgroundServices.serviceAccount.name }}
