@@ -94,7 +94,7 @@ tests:
         equal:
           path: .data.connection-string
           decodeBase64: true
-          value: postgresql+asyncpg://prefect:prefect-rocks@test-postgresql.prefect:5432/server
+          value: postgresql+asyncpg://prefect:prefect-rocks@database-test-postgresql.prefect:5432/server
       - template: server-deployment.yaml
         equal:
           path: *envSecretPath
