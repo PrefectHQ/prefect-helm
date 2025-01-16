@@ -439,7 +439,7 @@ tests:
     asserts:
       - template: loop-services-deployment.yaml
         equal:
-          path: .spec.template.spec.containers[1].name
+          path: .spec.template.spec.containers[0].name
           value: sidecar
 
   - it: Should set extra volumes
@@ -453,7 +453,7 @@ tests:
     asserts:
       - template: loop-services-deployment.yaml
         equal:
-          path: .spec.template.spec.volumes[1].name
+          path: .spec.template.spec.volumes[0].name
           value: config
 
   - it: Should set extra volume mounts
