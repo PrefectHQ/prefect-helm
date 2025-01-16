@@ -1,4 +1,4 @@
-{{- if .Values.server.loopServices.runSeparately }}
+{{- if .Values.loopServices.runSeparately }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
@@ -14,24 +14,49 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  replicas: {{ .Values.server.loopServices.replicaCount }}
+  revisionHistoryLimit: {{ .Values.loopServices.revisionHistoryLimit }}
+  replicas: 1
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: loop-services
   template:
     metadata:
+      {{- if .Values.loopServices.podAnnotations }}
+      annotations: {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.podAnnotations "context" $) | nindent 8 }}
+      {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: loop-services
         prefect-version: {{ .Chart.AppVersion }}
+        {{- if .Values.loopServices.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.podLabels "context" $) | nindent 8 }}
+        {{- end }}
     spec:
-      serviceAccountName: {{ template "server.serviceAccountName" . }}
-      {{- if .Values.server.podSecurityContext }}
-      securityContext: {{- .Values.server.podSecurityContext | toYaml | nindent 8 }}
+      {{- if .Values.global.image.pullSecrets }}
+      imagePullSecrets:
+      {{- range .Values.global.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: {{ template "global.serviceAccountName" . }}
+      {{- if .Values.loopServices.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.loopServices.affinity "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.loopServices.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.loopServices.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.loopServices.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.tolerations "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.loopServices.podSecurityContext }}
+      securityContext: {{- .Values.loopServices.podSecurityContext | toYaml | nindent 8 }}
+      {{- end }}
+      {{- if .Values.loopServices.priorityClassName }}
+      priorityClassName: {{ .Values.loopServices.priorityClassName }}
       {{- end }}
       containers:
-        - name: prefect-loop-services
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
-          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+        - name: prefect-loop-ervices
+          image: "{{ .Values.global.image.repository }}:{{ .Values.global.image.prefectTag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           command:
             - /usr/bin/tini
             - -g
@@ -42,15 +67,20 @@ spec:
             - server
             - services
             - start
+          workingDir: /home/prefect
           env:
             - name: HOME
               value: /home/prefect
             - name: PREFECT_API_URL
-              value: {{ .Values.server.prefectApiUrl | quote }}
+              value: {{ .Values.global.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
-              value: {{ .Values.server.debug | quote }}
+              value: {{ .Values.loopServices.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
-              value: {{ .Values.server.loggingLevel | quote }}
+              value: {{ .Values.loopServices.loggingLevel | quote }}
+            - name: PREFECT_SERVER_API_HOST
+              value: {{ .Values.global.prefectApiHost | quote }}
+            - name: PREFECT_UI_ENABLED
+              value: false
             - name: PREFECT_API_DATABASE_CONNECTION_URL
               {{- if .Values.sqlite.enabled }}
               value: "sqlite+aiosqlite:////data/prefect.db"
@@ -60,22 +90,25 @@ spec:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
               {{- end }}
-            {{- if .Values.server.env }}
-            {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
+            {{- if .Values.global.env }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.global.env "context" $) | nindent 12 }}
+            {{- end }}
+            {{- if .Values.loopServices.env }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.env "context" $) | nindent 12 }}
             {{- end }}
           envFrom:
-            {{- if .Values.server.extraEnvVarsCM }}
+            {{- if .Values.loopServices.extraEnvVarsCM }}
             - configMapRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.server.extraEnvVarsCM "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.loopServices.extraEnvVarsCM "context" $) }}
             {{- end }}
-            {{- if .Values.server.extraEnvVarsSecret }}
+            {{- if .Values.loopServices.extraEnvVarsSecret }}
             - secretRef:
-                name: {{ include "common.tplvalues.render" (dict "value" .Values.server.extraEnvVarsSecret "context" $) }}
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.loopServices.extraEnvVarsSecret "context" $) }}
             {{- end }}
-          {{- if .Values.server.loopServices.resources }}
-          resources: {{- toYaml .Values.server.loopServices.resources | nindent 12 }}
+          {{- if .Values.loopServices.resources }}
+          resources: {{- toYaml .Values.loopServices.resources | nindent 12 }}
           {{- end }}
-          {{- with .Values.server.containerSecurityContext }}
+          {{- with .Values.loopServices.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
           readinessProbe:
@@ -107,4 +140,4 @@ spec:
       volumes:
         - name: scratch
           emptyDir: {}
-{{- end }} 
+{{- end }}

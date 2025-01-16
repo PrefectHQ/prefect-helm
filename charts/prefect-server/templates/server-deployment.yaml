@@ -30,13 +30,13 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.server.podLabels "context" $) | nindent 8 }}
         {{- end }}
     spec:
-      {{- if .Values.server.image.pullSecrets }}
+      {{- if .Values.global.image.pullSecrets }}
       imagePullSecrets:
-      {{- range .Values.server.image.pullSecrets }}
+      {{- range .Values.global.image.pullSecrets }}
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      serviceAccountName: {{ template "server.serviceAccountName" . }}
+      serviceAccountName: {{ template "global.serviceAccountName" . }}
       {{- if .Values.server.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.server.affinity "context" $) | nindent 8 }}
       {{- end }}
@@ -54,8 +54,8 @@ spec:
       {{- end }}
       containers:
         - name: prefect-server
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
-          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          image: "{{ .Values.global.image.repository }}:{{ .Values.global.image.prefectTag }}"
+          imagePullPolicy: {{ .Values.global.image.pullPolicy }}
           command:
             - /usr/bin/tini
             - -g
@@ -65,7 +65,7 @@ spec:
             - prefect
             - server
             - start
-            {{- if .Values.server.loopServices.runSeparately }}
+            {{- if .Values.loopServices.runSeparately }}
             - --no-services
             {{- end }}
             - --port
@@ -80,13 +80,13 @@ spec:
             - name: HOME
               value: /home/prefect
             - name: PREFECT_API_URL
-              value: {{ .Values.server.prefectApiUrl | quote }}
+              value: {{ .Values.global.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.server.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
               value: {{ .Values.server.loggingLevel | quote }}
             - name: PREFECT_SERVER_API_HOST
-              value: {{ .Values.server.prefectApiHost | quote }}
+              value: {{ .Values.global.prefectApiHost | quote }}
             - name: PREFECT_SERVER_API_PORT
               value: {{ .Values.service.targetPort | quote }}
             - name: PREFECT_UI_ENABLED
@@ -110,6 +110,9 @@ spec:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
               {{- end }}
+            {{- if .Values.global.env }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.global.env "context" $) | nindent 12 }}
+            {{- end }}
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
