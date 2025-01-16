@@ -655,7 +655,30 @@
         "extraEnvVarsSecret": { "type": "string" },
         "extraContainers": { "type": "array" },
         "extraVolumes": { "type": "array" },
-        "extraVolumeMounts": { "type": "array" }
+        "extraVolumeMounts": { "type": "array" },
+        "serviceAccount": {
+          "type": "object",
+          "title": "Service Account",
+          "description": "background services service account configuration",
+          "additionalProperties": false,
+          "properties": {
+            "create": {
+              "type": "boolean",
+              "title": "Create",
+              "description": "create background services service account"
+            },
+            "name": {
+              "type": "string",
+              "title": "Name",
+              "description": "the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template"
+            },
+            "annotations": {
+              "type": "object",
+              "title": "Annotations",
+              "description": "annotations to add to the background services service account"
+            }
+          }
+        }
       }
     },
     "ingress": {

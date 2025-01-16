@@ -205,6 +205,9 @@ the HorizontalPodAutoscaler.
 | backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
 | backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | backgroundServices.runSeparately | bool | `false` | Run background services (like scheduling) in a separate deployment. |
+| backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
+| backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
+| backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
@@ -303,8 +306,8 @@ the HorizontalPodAutoscaler.
 | service.targetPort | int | `4200` | target port of the server pod; also sets PREFECT_SERVER_API_PORT |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
-| serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
-| serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
+| serviceAccount.create | bool | `true` | specifies whether a service account should be created |
+| serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | sqlite.enabled | bool | `false` | enable use of the embedded SQLite database |
 | sqlite.persistence.enabled | bool | `true` | enable SQLite data persistence using PVC |
 | sqlite.persistence.size | string | `"1Gi"` | size for the PVC |

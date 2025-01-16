@@ -1,11 +1,22 @@
 {{/*
-Create the name of the service account to associate with the deployment(s)
+Create the name of the service account to associate with the server deployment
 */}}
-{{- define "global.prefect.serviceAccountName" -}}
+{{- define "server.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
     {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the name of the service account to associate with the background-services deployment
+*/}}
+{{- define "backgroundServices.serviceAccountName" -}}
+{{- if and .Values.backgroundServices.serviceAccount.create .Values.backgroundServices.runSeparately -}}
+    {{ default (include "common.names.fullname" .) .Values.backgroundServices.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.backgroundServices.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 

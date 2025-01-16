@@ -318,12 +318,21 @@ backgroundServices:
   # -- array with extra volumeMounts for the background-services pod
   extraVolumeMounts: []
 
+  ## Background Services Service Account configuration
+  serviceAccount:
+    # -- specifies whether a service account should be created
+    create: true
+    # -- the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template
+    name: ""
+    # -- additional service account annotations (evaluated as a template)
+    annotations: {}
 
-## ServiceAccount configuration
+
+## Server Service Account configuration
 serviceAccount:
-  # -- specifies whether a ServiceAccount should be created
+  # -- specifies whether a service account should be created
   create: true
-  # -- the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template
+  # -- the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template
   name: ""
   # -- additional service account annotations (evaluated as a template)
   annotations: {}

@@ -36,7 +36,7 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      serviceAccountName: {{ template "global.prefect.serviceAccountName" . }}
+      serviceAccountName: {{ template "server.serviceAccountName" . }}
       {{- if .Values.server.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.server.affinity "context" $) | nindent 8 }}
       {{- end }}
