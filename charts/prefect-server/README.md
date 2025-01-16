@@ -171,13 +171,13 @@ the HorizontalPodAutoscaler.
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
-| global.env | list | `[]` | array with environment variables to add to all deployments |
-| global.image.prefectTag | string | `"3-latest"` | prefect image tag (immutable tags are recommended) |
-| global.image.pullPolicy | string | `"IfNotPresent"` | prefect image pull policy |
-| global.image.pullSecrets | list | `[]` | prefect image pull secrets |
-| global.image.repository | string | `"prefecthq/prefect"` | prefect image repository |
-| global.prefectApiHost | string | `"0.0.0.0"` | sets PREFECT_SERVER_API_HOST |
-| global.prefectApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_API_URL |
+| global.prefect.env | list | `[]` | array with environment variables to add to all deployments |
+| global.prefect.image.prefectTag | string | `"3-latest"` | prefect image tag (immutable tags are recommended) |
+| global.prefect.image.pullPolicy | string | `"IfNotPresent"` | prefect image pull policy |
+| global.prefect.image.pullSecrets | list | `[]` | prefect image pull secrets |
+| global.prefect.image.repository | string | `"prefecthq/prefect"` | prefect image repository |
+| global.prefect.prefectApiHost | string | `"0.0.0.0"` | sets PREFECT_SERVER_API_HOST |
+| global.prefect.prefectApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_API_URL |
 | ingress.annotations | object | `{}` | additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. |
 | ingress.className | string | `""` | IngressClass that will be used to implement the Ingress (Kubernetes 1.18+) |
 | ingress.enabled | bool | `false` | enable ingress record generation for server |

@@ -1,7 +1,7 @@
 {{/*
 Create the name of the service account to associate with the deployment(s)
 */}}
-{{- define "global.serviceAccountName" -}}
+{{- define "global.prefect.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
     {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
@@ -122,6 +122,6 @@ Create the name of the service account to associate with the deployment(s)
 {{- if .Values.server.uiConfig.prefectUiUrl -}}
   {{- .Values.server.uiConfig.prefectUiUrl -}}
 {{- else -}}
-  {{- printf "%s" (replace "/api" "" .Values.global.prefectApiUrl) -}}
+  {{- printf "%s" (replace "/api" "" .Values.global.prefect.prefectApiUrl) -}}
 {{- end -}}
 {{- end -}}

@@ -17,9 +17,10 @@ tests:
   - it: Should set custom image and tag
     set:
       global:
-        image:
-          repository: custom/prefect
-          prefectTag: v2.0.0
+        prefect:
+          image:
+            repository: custom/prefect
+            prefectTag: v2.0.0
       loopServices:
         runSeparately: true
     asserts:
@@ -41,8 +42,9 @@ tests:
   - it: Should set custom pull policy
     set:
       global:
-        image:
-          pullPolicy: Always
+        prefect:
+          image:
+            pullPolicy: Always
       loopServices:
         runSeparately: true
     asserts:
@@ -54,9 +56,10 @@ tests:
   - it: Should set image pull secrets
     set:
       global:
-        image:
-          pullSecrets:
-            - my-secret
+        prefect:
+          image:
+            pullSecrets:
+              - my-secret
       loopServices:
         runSeparately: true
     asserts:
@@ -131,7 +134,8 @@ tests:
   - it: Should set a custom API URL
     set:
       global:
-        prefectApiUrl: "https://custom-api.example.com"
+        prefect:
+          prefectApiUrl: "https://custom-api.example.com"
       loopServices:
         runSeparately: true
     asserts:
@@ -153,7 +157,8 @@ tests:
   - it: Should set a custom API host
     set:
       global:
-        prefectApiHost: "127.0.0.1"
+        prefect:
+          prefectApiHost: "127.0.0.1"
       loopServices:
         runSeparately: true
     asserts:

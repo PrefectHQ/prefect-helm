@@ -12,36 +12,37 @@ commonAnnotations: {}
 
 ## Global Deployment Configuration
 global:
-  image:
-    # -- prefect image repository
-    repository: prefecthq/prefect
-    ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
-    ## override pinned tag
-    # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 3-latest
-    # -- prefect image pull policy
-    pullPolicy: IfNotPresent
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
-    # -- prefect image pull secrets
-    pullSecrets: []
+  prefect:
+    image:
+      # -- prefect image repository
+      repository: prefecthq/prefect
+      ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
+      ## override pinned tag
+      # -- prefect image tag (immutable tags are recommended)
+      prefectTag: 3-latest
+      # -- prefect image pull policy
+      pullPolicy: IfNotPresent
+      ## Optionally specify an array of imagePullSecrets.
+      ## Secrets must be manually created in the namespace.
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      ## e.g:
+      ## pullSecrets:
+      ##   - myRegistryKeySecretName
+      # -- prefect image pull secrets
+      pullSecrets: []
 
-  # -- sets PREFECT_API_URL
-  prefectApiUrl: http://localhost:4200/api
+    # -- sets PREFECT_API_URL
+    prefectApiUrl: http://localhost:4200/api
 
-  # -- sets PREFECT_SERVER_API_HOST
-  prefectApiHost: 0.0.0.0
+    # -- sets PREFECT_SERVER_API_HOST
+    prefectApiHost: 0.0.0.0
 
-  # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
-  # -- array with environment variables to add to all deployments
-  env: []
-  ## env:
-  ##   - name: PREFECT_API_ENABLE_HTTP2
-  ##     value: false
+    # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
+    # -- array with environment variables to add to all deployments
+    env: []
+    ## env:
+    ##   - name: PREFECT_API_ENABLE_HTTP2
+    ##     value: false
 
 ## Server Deployment Configuration
 server:

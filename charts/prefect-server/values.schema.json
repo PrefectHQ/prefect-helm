@@ -38,43 +38,51 @@
       "title": "Global",
       "description": "global configuration",
       "properties": {
-        "image": {
+        "prefect": {
           "type": "object",
+          "title": "Prefect",
+          "description": "global prefect configuration",
+          "additionalProperties": false,
           "properties": {
-            "repository": {
-              "type": "string",
-              "description": "prefect image repository"
+            "image": {
+              "type": "object",
+              "properties": {
+                "repository": {
+                  "type": "string",
+                  "description": "prefect image repository"
+                },
+                "prefectTag": {
+                  "type": "string",
+                  "description": "prefect image tag (immutable tags are recommended)"
+                },
+                "pullPolicy": {
+                  "type": "string",
+                  "description": "prefect image pull policy"
+                },
+                "pullSecrets": {
+                  "type": "array",
+                  "description": "prefect image pull secrets",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             },
-            "prefectTag": {
+            "prefectApiUrl": {
               "type": "string",
-              "description": "prefect image tag (immutable tags are recommended)"
+              "description": "sets PREFECT_API_URL"
             },
-            "pullPolicy": {
+            "prefectApiHost": {
               "type": "string",
-              "description": "prefect image pull policy"
+              "description": "sets PREFECT_SERVER_API_HOST"
             },
-            "pullSecrets": {
+            "env": {
               "type": "array",
-              "description": "prefect image pull secrets",
+              "description": "array with environment variables to add to all deployments",
               "items": {
-                "type": "string"
+                "type": "object"
               }
             }
-          }
-        },
-        "prefectApiUrl": {
-          "type": "string",
-          "description": "sets PREFECT_API_URL"
-        },
-        "prefectApiHost": {
-          "type": "string",
-          "description": "sets PREFECT_SERVER_API_HOST"
-        },
-        "env": {
-          "type": "array",
-          "description": "array with environment variables to add to all deployments",
-          "items": {
-            "type": "object"
           }
         }
       }
