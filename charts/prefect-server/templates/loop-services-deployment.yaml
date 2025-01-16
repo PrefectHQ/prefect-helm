@@ -111,18 +111,19 @@ spec:
           {{- with .Values.loopServices.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.loopServices.livenessProbe.enabled }}
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: {{ .Values.service.targetPort }}
+          {{- toYaml .Values.loopServices.livenessProbe.config | nindent 12 }}
+          {{- end }}
+          {{- if .Values.loopServices.readinessProbe.enabled }}
           readinessProbe:
-            exec:
-              command:
-                - python
-                - -c
-                - "from prefect.server.database import get_db_connection; import asyncio; asyncio.run(get_db_connection())"
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          {{- if .Values.sqlite.enabled }}
-          volumeMounts:
-            - mountPath: /data
-              name: sqlite-storage
+            httpGet:
+              path: /api/ready
+              port: {{ .Values.service.targetPort }}
+          {{- toYaml .Values.loopServices.readinessProbe.config | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect
@@ -131,13 +132,25 @@ spec:
             - mountPath: /tmp
               name: scratch
               subPathExpr: tmp
-      {{- if .Values.sqlite.enabled }}
-      volumes:
-        - name: sqlite-storage
-          persistentVolumeClaim:
-            claimName: {{ template "common.names.fullname" . }}-sqlite
-      {{- end }}
+            {{- if .Values.sqlite.enabled }}
+            - mountPath: /data
+              name: sqlite-storage
+            {{- end }}
+          {{- if .Values.loopServices.extraVolumeMounts }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.extraVolumeMounts "context" $) | nindent 12 }}
+          {{- end }}
+        {{- if .Values.loopServices.extraContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.extraContainers "context" $) | nindent 8 }}
+        {{- end }}
       volumes:
         - name: scratch
           emptyDir: {}
+        {{- if .Values.sqlite.enabled }}
+        - name: sqlite-storage
+          persistentVolumeClaim:
+            claimName: {{ template "common.names.fullname" . }}-sqlite
+        {{- end }}
+        {{- if .Values.loopServices.extraVolumes }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.loopServices.extraVolumes "context" $) | nindent 8 }}
+        {{- end }}
 {{- end }}
