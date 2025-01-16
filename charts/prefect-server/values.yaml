@@ -184,11 +184,15 @@ server:
   extraArgs: []
 
   loopServices:
-    # -- enable running services in a separate deployment
-    enabled: false
-    # -- number of services replicas to deploy
+    # -- run loop services (like scheduling and flow runs) in a separate deployment.
+    # This can help with:
+    # - Separate scaling of web server and background services
+    # - Independent connection pools for better database management
+    # - More granular monitoring and resource control
+    runSeparately: false
+    # -- number of loop services replicas to deploy
     replicaCount: 1
-    # -- resources for the services container
+    # -- resources for the loop services container
     resources:
       requests:
         cpu: 500m

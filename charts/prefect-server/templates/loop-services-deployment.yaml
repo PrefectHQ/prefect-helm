@@ -1,4 +1,4 @@
-{{- if .Values.server.loopServices.enabled }}
+{{- if .Values.server.loopServices.runSeparately }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
@@ -29,7 +29,7 @@ spec:
       securityContext: {{- .Values.server.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
       containers:
-        - name: prefect-services
+        - name: prefect-loop-services
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.prefectTag }}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           command:
@@ -78,6 +78,14 @@ spec:
           {{- with .Values.server.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
+          readinessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "from prefect.server.database import get_db_connection; import asyncio; asyncio.run(get_db_connection())"
+            initialDelaySeconds: 5
+            periodSeconds: 10
           {{- if .Values.sqlite.enabled }}
           volumeMounts:
             - mountPath: /data
