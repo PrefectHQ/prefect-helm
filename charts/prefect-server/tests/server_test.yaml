@@ -6,7 +6,7 @@ release:
 tests:
   - it: Should set the correct image and tag
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
           value: prefecthq/prefect:3-latest
@@ -18,14 +18,14 @@ tests:
           repository: custom/prefect
           prefectTag: v2.0.0
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
           value: custom/prefect:v2.0.0
 
   - it: Should set the correct pull policy
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].imagePullPolicy
           value: IfNotPresent
@@ -36,7 +36,7 @@ tests:
         image:
           pullPolicy: Always
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].imagePullPolicy
           value: Always
@@ -48,7 +48,7 @@ tests:
           pullSecrets:
             - my-secret
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.imagePullSecrets[0].name
           value: my-secret
@@ -58,14 +58,14 @@ tests:
       server:
         priorityClassName: high-priority
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.priorityClassName
           value: high-priority
 
   - it: Should set the correct debug mode
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
           value: "false"
@@ -75,14 +75,14 @@ tests:
       server:
         debug: true
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
           value: "true"
 
   - it: Should set the correct logging level
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: WARNING
@@ -92,14 +92,14 @@ tests:
       server:
         loggingLevel: DEBUG
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: DEBUG
 
   - it: Should set the correct API URL
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
           value: "http://localhost:4200/api"
@@ -109,14 +109,14 @@ tests:
       global:
         prefectApiUrl: "https://custom-api.example.com"
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
           value: "https://custom-api.example.com"
 
   - it: Should set the correct API host
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
           value: "0.0.0.0"
@@ -126,18 +126,18 @@ tests:
       global:
         prefectApiHost: "127.0.0.1"
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
           value: "127.0.0.1"
 
   - it: Should set the correct UI configuration
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_ENABLED")].value
           value: "true"
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_STATIC_DIRECTORY")].value
           value: "/ui_build"
@@ -148,7 +148,7 @@ tests:
         uiConfig:
           enabled: false
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_ENABLED")].value
           value: "false"
@@ -160,11 +160,11 @@ tests:
           prefectUiApiUrl: "https://custom-ui-api.example.com"
           prefectUiUrl: "https://custom-ui.example.com"
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_API_URL")].value
           value: "https://custom-ui-api.example.com"
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_URL")].value
           value: "https://custom-ui.example.com"
@@ -176,14 +176,14 @@ tests:
           - name: CUSTOM_ENV
             value: custom_value
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
           value: custom_value
 
   - it: Should set the correct revision history limit
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.revisionHistoryLimit
           value: 10
@@ -193,14 +193,14 @@ tests:
       server:
         revisionHistoryLimit: 5
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.revisionHistoryLimit
           value: 5
 
   - it: Should set the correct replica count
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.replicas
           value: 1
@@ -210,26 +210,26 @@ tests:
       server:
         replicaCount: 3
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.replicas
           value: 3
 
   - it: Should set the correct resource requests and limits
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.cpu
           value: 500m
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.memory
           value: 512Mi
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.cpu
           value: "1"
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.memory
           value: 1Gi
@@ -245,34 +245,34 @@ tests:
             cpu: 500m
             memory: 512Mi
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.cpu
           value: 250m
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.memory
           value: 256Mi
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.cpu
           value: 500m
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.memory
           value: 512Mi
 
   - it: Should set the correct security context
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsUser
           value: 1001
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsNonRoot
           value: true
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.fsGroup
           value: 1001
@@ -285,34 +285,34 @@ tests:
           runAsNonRoot: false
           fsGroup: 3000
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsUser
           value: 2000
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsNonRoot
           value: false
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.fsGroup
           value: 3000
 
   - it: Should set the correct container security context
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
           value: 1001
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
           value: true
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
           value: true
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: false
@@ -326,19 +326,19 @@ tests:
           readOnlyRootFilesystem: false
           allowPrivilegeEscalation: true
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
           value: 2000
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
           value: false
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
           value: false
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: true
@@ -349,7 +349,7 @@ tests:
         podLabels:
           custom-label: custom-value
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.metadata.labels.custom-label
           value: custom-value
@@ -360,7 +360,7 @@ tests:
         podAnnotations:
           custom-annotation: custom-value
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.metadata.annotations.custom-annotation
           value: custom-value
@@ -379,7 +379,7 @@ tests:
                         - e2e-az1
                         - e2e-az2
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
           value: kubernetes.io/e2e-az-name
@@ -390,7 +390,7 @@ tests:
         nodeSelector:
           disktype: ssd
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.nodeSelector.disktype
           value: ssd
@@ -404,7 +404,7 @@ tests:
             value: "value1"
             effect: "NoSchedule"
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.tolerations[0].key
           value: key1
@@ -414,7 +414,7 @@ tests:
       server:
         extraEnvVarsCM: my-config-map
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
           value: my-config-map
@@ -424,7 +424,7 @@ tests:
       server:
         extraEnvVarsSecret: my-secret
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: my-secret
@@ -436,7 +436,7 @@ tests:
           - name: sidecar
             image: nginx:latest
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[1].name
           value: sidecar
@@ -449,7 +449,7 @@ tests:
             configMap:
               name: my-config
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.volumes[1].name
           value: config
@@ -461,7 +461,7 @@ tests:
           - name: config
             mountPath: /app/config
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         contains:
           path: .spec.template.spec.containers[0].volumeMounts
           content:
@@ -474,7 +474,7 @@ tests:
         extraArgs:
           - --debug
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].args[-1]
           value: --debug
