@@ -31,17 +31,8 @@ The Prefect server includes background loop services related to scheduling and c
 To run loop services in a separate deployment:
 
 ```yaml
-server:
-  loopServices:
-    runSeparately: true
-    replicaCount: 1  # Scale loop services independently if desired
-    resources:
-      requests:
-        cpu: 500m
-        memory: 512Mi
-      limits:
-        cpu: "1"
-        memory: 1Gi
+loopServices:
+  runSeparately: true
 ```
 
 This configuration is recommended when:
