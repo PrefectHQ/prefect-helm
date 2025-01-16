@@ -5,6 +5,9 @@ release:
 
 tests:
   - it: Should set the correct image and tag
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -17,6 +20,8 @@ tests:
         image:
           repository: custom/prefect
           prefectTag: v2.0.0
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -24,6 +29,9 @@ tests:
           value: custom/prefect:v2.0.0
 
   - it: Should set the correct pull policy
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -35,6 +43,8 @@ tests:
       global:
         image:
           pullPolicy: Always
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -47,6 +57,8 @@ tests:
         image:
           pullSecrets:
             - my-secret
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -56,6 +68,7 @@ tests:
   - it: Should set the correct priority class name
     set:
       loopServices:
+        runSeparately: true
         priorityClassName: high-priority
     asserts:
       - template: loop-services-deployment.yaml
@@ -64,6 +77,9 @@ tests:
           value: high-priority
 
   - it: Should set the correct debug mode
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -73,6 +89,7 @@ tests:
   - it: Should enable debug mode
     set:
       loopServices:
+        runSeparately: true
         debug: true
     asserts:
       - template: loop-services-deployment.yaml
@@ -81,6 +98,9 @@ tests:
           value: "true"
 
   - it: Should set the correct logging level
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -90,6 +110,7 @@ tests:
   - it: Should set a custom logging level
     set:
       loopServices:
+        runSeparately: true
         loggingLevel: DEBUG
     asserts:
       - template: loop-services-deployment.yaml
@@ -98,6 +119,9 @@ tests:
           value: DEBUG
 
   - it: Should set the correct API URL
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -108,6 +132,8 @@ tests:
     set:
       global:
         prefectApiUrl: "https://custom-api.example.com"
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -115,6 +141,9 @@ tests:
           value: "https://custom-api.example.com"
 
   - it: Should set the correct API host
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -125,6 +154,8 @@ tests:
     set:
       global:
         prefectApiHost: "127.0.0.1"
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -134,6 +165,7 @@ tests:
   - it: Should set custom environment variables
     set:
       loopServices:
+        runSeparately: true
         env:
           - name: CUSTOM_ENV
             value: custom_value
@@ -144,6 +176,9 @@ tests:
           value: custom_value
 
   - it: Should set the correct revision history limit
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -153,6 +188,7 @@ tests:
   - it: Should set a custom revision history limit
     set:
       loopServices:
+        runSeparately: true
         revisionHistoryLimit: 5
     asserts:
       - template: loop-services-deployment.yaml
@@ -161,6 +197,9 @@ tests:
           value: 5
 
   - it: Should set the correct resource requests and limits
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -182,6 +221,7 @@ tests:
   - it: Should set custom resource requests and limits
     set:
       loopServices:
+        runSeparately: true
         resources:
           requests:
             cpu: 250m
@@ -208,6 +248,9 @@ tests:
           value: 512Mi
 
   - it: Should set the correct security context
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -225,6 +268,7 @@ tests:
   - it: Should set custom security context
     set:
       loopServices:
+        runSeparately: true
         podSecurityContext:
           runAsUser: 2000
           runAsNonRoot: false
@@ -244,6 +288,9 @@ tests:
           value: 3000
 
   - it: Should set the correct container security context
+    set:
+      loopServices:
+        runSeparately: true
     asserts:
       - template: loop-services-deployment.yaml
         equal:
@@ -265,6 +312,7 @@ tests:
   - it: Should set custom container security context
     set:
       loopServices:
+        runSeparately: true
         containerSecurityContext:
           runAsUser: 2000
           runAsNonRoot: false
@@ -291,6 +339,7 @@ tests:
   - it: Should set pod labels
     set:
       loopServices:
+        runSeparately: true
         podLabels:
           custom-label: custom-value
     asserts:
@@ -302,6 +351,7 @@ tests:
   - it: Should set pod annotations
     set:
       loopServices:
+        runSeparately: true
         podAnnotations:
           custom-annotation: custom-value
     asserts:
@@ -313,6 +363,7 @@ tests:
   - it: Should set affinity
     set:
       loopServices:
+        runSeparately: true
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -332,6 +383,7 @@ tests:
   - it: Should set node selector
     set:
       loopServices:
+        runSeparately: true
         nodeSelector:
           disktype: ssd
     asserts:
@@ -343,6 +395,7 @@ tests:
   - it: Should set tolerations
     set:
       loopServices:
+        runSeparately: true
         tolerations:
           - key: "key1"
             operator: "Equal"
@@ -357,6 +410,7 @@ tests:
   - it: Should set extra environment variables from ConfigMap
     set:
       loopServices:
+        runSeparately: true
         extraEnvVarsCM: my-config-map
     asserts:
       - template: loop-services-deployment.yaml
@@ -367,6 +421,7 @@ tests:
   - it: Should set extra environment variables from Secret
     set:
       loopServices:
+        runSeparately: true
         extraEnvVarsSecret: my-secret
     asserts:
       - template: loop-services-deployment.yaml
@@ -377,6 +432,7 @@ tests:
   - it: Should set extra containers
     set:
       loopServices:
+        runSeparately: true
         extraContainers:
           - name: sidecar
             image: nginx:latest
@@ -389,6 +445,7 @@ tests:
   - it: Should set extra volumes
     set:
       loopServices:
+        runSeparately: true
         extraVolumes:
           - name: config
             configMap:
@@ -402,6 +459,7 @@ tests:
   - it: Should set extra volume mounts
     set:
       loopServices:
+        runSeparately: true
         extraVolumeMounts:
           - name: config
             mountPath: /app/config
