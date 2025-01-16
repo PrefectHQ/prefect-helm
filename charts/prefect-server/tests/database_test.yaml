@@ -1,6 +1,6 @@
 suite: Database configuration
 release:
-  name: test
+  name: database-test
   namespace: prefect
 
 # Anchors to reuse in the tests
@@ -9,7 +9,6 @@ defaultSecretName: &defaultSecretName prefect-server-postgresql-connection
 
 tests:
   # SQLite embedded database tests
-
   - it: Should correctly configure SQLite connection string
     set:
       postgresql:
