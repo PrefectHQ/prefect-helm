@@ -878,7 +878,7 @@
         "username": { "type": "string" },
         "password": { "type": "string" },
         "host": { "type": "string" },
-        "port": { "type": "string" },
+        "port": { "type": "integer" },
         "database": { "type": "string" }
       }
     },
