@@ -165,7 +165,6 @@ spec:
         {{- if .Values.server.extraContainers }}
         {{- include "common.tplvalues.render" (dict "value" .Values.server.extraContainers "context" $) | nindent 8 }}
         {{- end }}
-
       volumes:
         - name: scratch
           emptyDir: {}
