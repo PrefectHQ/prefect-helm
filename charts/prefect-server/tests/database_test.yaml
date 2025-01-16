@@ -17,7 +17,7 @@ tests:
       sqlite:
         enabled: true
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         contains:
           path: .spec.template.spec.containers[0].env
           content:
@@ -31,14 +31,14 @@ tests:
       sqlite:
         enabled: true
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         contains:
           path: .spec.template.spec.volumes
           content:
             name: sqlite-storage
             persistentVolumeClaim:
               claimName: prefect-server-sqlite
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         contains:
           path: .spec.template.spec.containers[0].volumeMounts
           content:
@@ -78,7 +78,7 @@ tests:
       server:
         replicaCount: 5
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: .spec.replicas
           value: 1
@@ -96,7 +96,7 @@ tests:
           path: .data.connection-string
           decodeBase64: true
           value: postgresql+asyncpg://prefect:prefect-rocks@test-postgresql.prefect:5432/server
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: *envSecretPath
           value: *defaultSecretName
@@ -129,7 +129,7 @@ tests:
         equal:
           path: .metadata.name
           value: my-pg-secret
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: *envSecretPath
           value: my-pg-secret
@@ -177,7 +177,7 @@ tests:
         create: false
         name: my-pg-secret
     asserts:
-      - template: deployment.yaml
+      - template: server-deployment.yaml
         equal:
           path: *envSecretPath
           value: my-pg-secret
