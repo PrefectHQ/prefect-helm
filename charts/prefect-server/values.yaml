@@ -327,7 +327,6 @@ backgroundServices:
     # -- additional service account annotations (evaluated as a template)
     annotations: {}
 
-
 ## Server Service Account configuration
 serviceAccount:
   # -- specifies whether a service account should be created
