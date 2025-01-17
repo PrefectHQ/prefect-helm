@@ -35,7 +35,7 @@ helm install my-release prefect/prefect-<chart>
 
 ### Installing released versions
 
-Charts are automatically versioned and released together. The `appVersion` and `prefectTag` version are pinned at package time to the current release of Prefect 2.
+Charts are automatically versioned and released together. The `appVersion` and `prefectTag` version are pinned at package time to the current release of Prefect 3.
 
 The charts are hosted in a [Helm repository](https://helm.sh/docs/chart_repository/) deployed to the web courtesy of GitHub Pages.
 
