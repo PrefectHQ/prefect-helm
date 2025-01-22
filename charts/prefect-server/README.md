@@ -26,7 +26,7 @@ Note: If you choose to make modifications to either the `server.prefectApiUrl` o
 
 ## Background Services Configuration
 
-The Prefect server includes background background services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
+The Prefect server includes background services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
 
 To run background services in a separate deployment:
 
