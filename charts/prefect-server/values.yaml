@@ -200,7 +200,7 @@ backgroundServices:
   # - Separate scaling of web server and background services
   # - Independent connection pools for better database management
   # - More granular monitoring and resource control
-  # -- Run background services (like scheduling) in a separate deployment.
+  # - Run background services (like scheduling) in a separate deployment.
   runAsSeparateDeployment: false
 
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
