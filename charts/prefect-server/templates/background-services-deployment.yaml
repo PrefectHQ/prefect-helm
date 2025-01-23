@@ -37,7 +37,7 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
-      serviceAccountName: {{ template "backgroundServices.serviceAccountName" . }}
+      serviceAccountName: {{ if .Values.backgroundServices.serviceAccount.create }}{{ template "backgroundServices.serviceAccountName" . }}{{ else if .Values.backgroundServices.serviceAccount.name }}{{ .Values.backgroundServices.serviceAccount.name }}{{ else }}{{ template "server.serviceAccountName" . }}{{ end }}
       {{- if .Values.backgroundServices.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.backgroundServices.affinity "context" $) | nindent 8 }}
       {{- end }}
@@ -80,7 +80,7 @@ spec:
             - name: PREFECT_SERVER_API_HOST
               value: {{ .Values.global.prefect.prefectApiHost | quote }}
             - name: PREFECT_UI_ENABLED
-              value: false
+              value: 'false'
             - name: PREFECT_API_DATABASE_CONNECTION_URL
               {{- if .Values.sqlite.enabled }}
               value: "sqlite+aiosqlite:////data/prefect.db"

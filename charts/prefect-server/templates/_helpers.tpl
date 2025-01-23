@@ -14,7 +14,7 @@ Create the name of the service account to associate with the background-services
 */}}
 {{- define "backgroundServices.serviceAccountName" -}}
 {{- if and .Values.backgroundServices.serviceAccount.create .Values.backgroundServices.runAsSeparateDeployment -}}
-    {{ default (include "common.names.fullname" .) .Values.backgroundServices.serviceAccount.name }}
+    {{ .Values.backgroundServices.serviceAccount.name | default (printf "%s-background-services" (include "common.names.fullname" .)) }}
 {{- else -}}
     {{ default "default" .Values.backgroundServices.serviceAccount.name }}
 {{- end -}}

@@ -207,7 +207,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.runAsSeparateDeployment | bool | `false` | Run background services (like scheduling) in a separate deployment. |
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
-| backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template |
+| backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended |
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
