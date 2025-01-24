@@ -2,7 +2,7 @@
 
 ## > 2025.1.23213604
 
-After version `2025.1.23213604`, the `prefect-server` chart introduces the option to run background services as a separate deployment. Due to the numerous shared values between the `server` and `background-services` deployments, the `values.yaml` file has been consolidated in the following ways:
+After version `2025.1.23213604`, the `prefect-server` chart [introduces the option to run background services as a separate deployment](https://github.com/PrefectHQ/prefect-helm/pull/425). Due to the numerous shared values between the `server` and `background-services` deployments, the `values.yaml` file has been consolidated in the following ways:
 
 ### Introduction of `global.prefect` key in `values.yaml`
 
