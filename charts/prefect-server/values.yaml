@@ -10,26 +10,42 @@ commonLabels: {}
 # -- annotations to add to all deployed objects
 commonAnnotations: {}
 
-## Deployment Configuration
-server:
-  image:
-    # -- server image repository
-    repository: prefecthq/prefect
-    ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
-    ## override pinned tag
-    # -- prefect image tag (immutable tags are recommended)
-    prefectTag: 3-latest
-    # -- server image pull policy
-    pullPolicy: IfNotPresent
-    ## Optionally specify an array of imagePullSecrets.
-    ## Secrets must be manually created in the namespace.
-    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
-    ## e.g:
-    ## pullSecrets:
-    ##   - myRegistryKeySecretName
-    # -- server image pull secrets
-    pullSecrets: []
+## Global Deployment Configuration
+global:
+  prefect:
+    image:
+      # -- prefect image repository
+      repository: prefecthq/prefect
+      ## prefect tag is pinned to the latest available image tag at packaging time.  Update the value here to
+      ## override pinned tag
+      # -- prefect image tag (immutable tags are recommended)
+      prefectTag: 3-latest
+      # -- prefect image pull policy
+      pullPolicy: IfNotPresent
+      ## Optionally specify an array of imagePullSecrets.
+      ## Secrets must be manually created in the namespace.
+      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      ## e.g:
+      ## pullSecrets:
+      ##   - myRegistryKeySecretName
+      # -- prefect image pull secrets
+      pullSecrets: []
 
+    # -- sets PREFECT_API_URL
+    prefectApiUrl: http://localhost:4200/api
+
+    # -- sets PREFECT_SERVER_API_HOST
+    prefectApiHost: 0.0.0.0
+
+    # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
+    # -- array with environment variables to add to all deployments
+    env: []
+    ## env:
+    ##   - name: PREFECT_API_ENABLE_HTTP2
+    ##     value: false
+
+## Server Deployment Configuration
+server:
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
@@ -39,12 +55,6 @@ server:
 
   # sets PREFECT_LOGGING_SERVER_LEVEL
   loggingLevel: WARNING
-
-  # -- sets PREFECT_API_URL
-  prefectApiUrl: http://localhost:4200/api
-
-  # -- sets PREFECT_SERVER_API_HOST
-  prefectApiHost: 0.0.0.0
 
   ## If you want to run the UI seperately from the server, you will need to set the UI-specific URLs below
   uiConfig:
@@ -58,7 +68,7 @@ server:
     prefectUiStaticDirectory: "/ui_build"
 
   # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
-  # -- array with environment variables to add to server nodes
+  # -- array with environment variables to add to server deployment
   env: []
   ## env:
   ##   - name: PREFECT_API_ENABLE_HTTP2
@@ -188,11 +198,145 @@ server:
   # -- array with extra Arguments for the server container to start with
   extraArgs: []
 
-## ServiceAccount configuration
+## Background Services Deployment Configuration
+backgroundServices:
+  # https://github.com/PrefectHQ/prefect/tree/main/src/prefect/server/services
+  # This can help with:
+  # - Separate scaling of web server and background services
+  # - Independent connection pools for better database management
+  # - More granular monitoring and resource control
+  # - Run background services (like scheduling) in a separate deployment.
+  runAsSeparateDeployment: false
+
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
+  # -- priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class
+  priorityClassName: ""
+
+  # -- enable background-services debug mode
+  debug: false
+
+  # sets PREFECT_LOGGING_SERVER_LEVEL
+  loggingLevel: WARNING
+
+  # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
+  # -- array with environment variables to add to background-services container
+  env: []
+  ## env:
+  ##   - name: PREFECT_API_ENABLE_HTTP2
+  ##     value: false
+
+  # -- the number of old ReplicaSets to retain to allow rollback
+  revisionHistoryLimit: 10
+
+  resources:
+    # -- the requested resources for the background-services container
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    # -- the requested limits for the background-services container
+    limits:
+      cpu: "1"
+      memory: 1Gi
+
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+  livenessProbe:
+    enabled: false
+    config:
+      # -- The number of seconds to wait before starting the first probe.
+      initialDelaySeconds: 10
+      # -- The number of seconds to wait between consecutive probes.
+      periodSeconds: 10
+      # -- The number of seconds to wait for a probe response before considering it as failed.
+      timeoutSeconds: 5
+      # -- The number of consecutive failures allowed before considering the probe as failed.
+      failureThreshold: 3
+      # -- The minimum consecutive successes required to consider the probe successful.
+      successThreshold: 1
+  readinessProbe:
+    enabled: false
+    config:
+      # -- The number of seconds to wait before starting the first probe.
+      initialDelaySeconds: 10
+      # -- The number of seconds to wait between consecutive probes.
+      periodSeconds: 10
+      # -- The number of seconds to wait for a probe response before considering it as failed.
+      timeoutSeconds: 5
+      # -- The number of consecutive failures allowed before considering the probe as failed.
+      failureThreshold: 3
+      # -- The minimum consecutive successes required to consider the probe successful.
+      successThreshold: 1
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    # -- set background-services pod's security context runAsUser
+    runAsUser: 1001
+    # -- set background-services pod's security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set background-services pod's security context fsGroup
+    fsGroup: 1001
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  containerSecurityContext:
+    # -- set background-services containers' security context runAsUser
+    runAsUser: 1001
+    # -- set background-services containers' security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set background-services containers' security context readOnlyRootFilesystem
+    readOnlyRootFilesystem: true
+    # -- set background-services containers' security context allowPrivilegeEscalation
+    allowPrivilegeEscalation: false
+    # -- set background-services container's security context capabilities
+    capabilities: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # -- extra labels for background-services pod
+  podLabels: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # -- extra annotations for background-services pod
+  podAnnotations: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- affinity for background-services pod assignment
+  affinity: {}
+
+  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # -- node labels for background-services pod assignment
+  nodeSelector: {}
+
+  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # -- tolerations for background-services pod assignment
+  tolerations: []
+
+  # -- name of existing ConfigMap containing extra env vars to add to background-services pod
+  extraEnvVarsCM: ""
+
+  # -- name of existing Secret containing extra env vars to add to background-services pod
+  extraEnvVarsSecret: ""
+
+  # -- additional sidecar containers
+  extraContainers: []
+
+  # -- array with extra volumes for the background-services pod
+  extraVolumes: []
+
+  # -- array with extra volumeMounts for the background-services pod
+  extraVolumeMounts: []
+
+  ## Background Services Service Account configuration
+  serviceAccount:
+    # -- specifies whether a service account should be created
+    create: true
+    # -- the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended
+    name: ""
+    # -- additional service account annotations (evaluated as a template)
+    annotations: {}
+
+## Server Service Account configuration
 serviceAccount:
-  # -- specifies whether a ServiceAccount should be created
+  # -- specifies whether a service account should be created
   create: true
-  # -- the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template
+  # -- the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template
   name: ""
   # -- additional service account annotations (evaluated as a template)
   annotations: {}
@@ -308,7 +452,6 @@ secret:
   # -- name for the Secret containing the PostgreSQL connection string
   # To provide an existing Secret, provide a name and set `create=false`
   name: ""
-
   # -- username for the PostgreSQL connection string
   username: ""
   # -- password for the PostgreSQL connection string
