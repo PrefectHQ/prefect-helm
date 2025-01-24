@@ -4,6 +4,41 @@ release:
   namespace: default
 
 tests:
+  - it: Should not set basic auth by default
+    asserts:
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_API_AUTH_STRING
+
+  - it: Should set basic auth from authString
+    set:
+      basicAuth:
+        enabled: true
+        authString: "admin:mypassword"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_AUTH_STRING")].value
+          value: "admin:mypassword"
+
+  - it: Should set basic auth from existing secret
+    set:
+      basicAuth:
+        enabled: true
+        existingSecret: "my-auth-secret"
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_API_AUTH_STRING
+            valueFrom:
+              secretKeyRef:
+                name: my-auth-secret
+                key: auth-string
+
   - it: Should set the correct image and tag
     asserts:
       - template: deployment.yaml
