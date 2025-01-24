@@ -206,6 +206,11 @@ worker:
     runAsNonRoot: true
     # -- set worker pod's security context fsGroup
     fsGroup: 1001
+    # -- set worker pod's seccomp profile
+    seccompProfile:
+      type: RuntimeDefault
+      # -- in case of Localhost value in seccompProfile.type, set seccompProfile.localhostProfile value below
+      # localhostProfile: /my-path.json
 
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   # -- priority class name to use for the worker pods; if the priority class is empty or doesn't exist, the worker pods are scheduled without a priority class

@@ -141,6 +141,11 @@ server:
     runAsNonRoot: true
     # -- set server pod's security context fsGroup
     fsGroup: 1001
+    # -- set server pod's seccomp profile
+    seccompProfile:
+      type: RuntimeDefault
+      # -- in case of Localhost value in seccompProfile.type, set seccompProfile.localhostProfile value below
+      # localhostProfile: /my-path.json
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   containerSecurityContext:
@@ -200,7 +205,7 @@ backgroundServices:
   # - Separate scaling of web server and background services
   # - Independent connection pools for better database management
   # - More granular monitoring and resource control
-  # -- Run background services (like scheduling) in a separate deployment.
+  # - Run background services (like scheduling) in a separate deployment.
   runAsSeparateDeployment: false
 
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass

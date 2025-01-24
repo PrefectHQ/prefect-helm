@@ -377,6 +377,48 @@
               "type": "integer",
               "title": "FS Group",
               "description": "set server pod's security context fsGroup"
+            },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the pod",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": ["type"],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["RuntimeDefault", "Unconfined"]
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["Localhost"]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["type", "localhostProfile"]
+                    }
+                  ]
+                }
+              }
             }
           }
         },
