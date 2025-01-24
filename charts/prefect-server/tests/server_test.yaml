@@ -10,7 +10,7 @@ tests:
         notContains:
           path: .spec.template.spec.containers[0].env
           content:
-            name: PREFECT_BASIC_AUTH_STRING
+            name: PREFECT_SERVER_API_AUTH_STRING
 
   - it: Should set basic auth from authString
     set:
@@ -21,7 +21,7 @@ tests:
     asserts:
       - template: server-deployment.yaml
         equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_BASIC_AUTH_STRING")].value
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_AUTH_STRING")].value
           value: "admin:mypassword"
 
   - it: Should set basic auth from existing secret
@@ -35,7 +35,7 @@ tests:
         contains:
           path: .spec.template.spec.containers[0].env
           content:
-            name: PREFECT_BASIC_AUTH_STRING
+            name: PREFECT_SERVER_API_AUTH_STRING
             valueFrom:
               secretKeyRef:
                 name: my-auth-secret

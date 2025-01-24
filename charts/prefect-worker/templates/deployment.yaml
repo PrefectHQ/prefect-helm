@@ -201,6 +201,17 @@ spec:
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
+            {{- if .Values.worker.basicAuth.enabled }}
+            - name: PREFECT_API_AUTH_STRING
+            {{- if .Values.worker.basicAuth.existingSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.worker.basicAuth.existingSecret }}
+                  key: auth-string
+            {{- else }}
+              value: {{ .Values.worker.basicAuth.authString | quote }}
+            {{- end }}
+            {{- end }}
             {{- if .Values.worker.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}

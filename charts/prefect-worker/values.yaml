@@ -24,6 +24,15 @@ worker:
     # -- target memory utilization percentage for scaling the worker
     targetMemoryUtilizationPercentage: 80
 
+  # ref: https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings
+  basicAuth:
+    # -- enable basic auth for the worker, for an administrator/password combination. must be enabled on the server as well
+    enabled: false
+    # -- basic auth credentials in the format admin:<your-password> (no brackets)
+    authString: "admin:pass"
+    # -- name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string
+    existingSecret: ""
+
   # -- unique cluster identifier, if none is provided this value will be inferred at time of helm install
   clusterUid: ""
 

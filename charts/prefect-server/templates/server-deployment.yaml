@@ -111,7 +111,7 @@ spec:
                   key: connection-string
               {{- end }}
             {{- if .Values.server.basicAuth.enabled }}
-            - name: PREFECT_BASIC_AUTH_STRING
+            - name: PREFECT_SERVER_API_AUTH_STRING
             {{- if .Values.server.basicAuth.existingSecret }}
               valueFrom:
                 secretKeyRef:

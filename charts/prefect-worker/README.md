@@ -173,7 +173,35 @@ Workers each have a type corresponding to the execution environment to which the
 
     You should see the Prefect worker pod running
 
-## FAQ
+## Additional Worker Configurations
+
+### Basic Auth
+
+Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
+
+Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a self-hosted server with basic auth enabled, you can authenticate your worker with the same credentials.
+
+The format of the auth string is `admin:<my-password>` (no brackets).
+
+```yaml
+worker:
+  basicAuth:
+    enabled: true
+    authString: "admin:pass"
+```
+
+Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
+
+```sh
+kubectl create secret generic prefect-worker-basic-auth --from-literal=auth-string='admin:my-password'
+```
+
+```yaml
+worker:
+  basicAuth:
+    enabled: true
+    existingSecret: prefect-worker-basic-auth
+```
 
 ### Deploying multiple workers to a single namespace
 
@@ -283,6 +311,9 @@ worker:
 | worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` | target CPU utilization percentage for scaling the worker |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` | target memory utilization percentage for scaling the worker |
+| worker.basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
+| worker.basicAuth.enabled | bool | `false` | enable basic auth for the worker, for an administrator/password combination. must be enabled on the server as well |
+| worker.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | worker.cloudApiConfig.accountId | string | `""` | prefect account ID |
 | worker.cloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
