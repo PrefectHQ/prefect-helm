@@ -35,6 +35,16 @@ prefectApiUrl: http://prefect-server.prefect.svc.cluster.local:4200/api
 
 # -- Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled)
 csrfAuth: false
+
+# ref: https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings
+basicAuth:
+  # -- enable basic auth for the exporter, for an administrator/password combination. must be enabled on the server as well
+  enabled: false
+  # -- basic auth credentials in the format admin:<your-password> (no brackets)
+  authString: "admin:pass"
+  # -- name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string
+  existingSecret: ""
+
 # -- Pagination settings. If enabled, the exporter will paginate the API requests to Prefect Server which uses more resources.  Remember to increase the resources for the exporter if enabled.
 pagination:
   enabled: true

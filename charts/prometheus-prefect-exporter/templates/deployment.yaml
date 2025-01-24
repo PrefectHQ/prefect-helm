@@ -84,6 +84,17 @@ spec:
             value: {{ $value | quote }}
           {{- end }}
           {{- end }}
+          {{- if .Values.basicAuth.enabled }}
+          - name: PREFECT_API_AUTH_STRING
+          {{- if .Values.basicAuth.existingSecret }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.basicAuth.existingSecret }}
+                key: auth-string
+          {{- else }}
+            value: {{ .Values.basicAuth.authString | quote }}
+          {{- end }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

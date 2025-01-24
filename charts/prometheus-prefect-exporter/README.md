@@ -41,6 +41,34 @@ Shoutout to @ialejandro for the original work on this chart!
 
     You should see the Prometheus Prefect Exporter pod running
 
+## Additional Exporter Configurations
+
+### Basic Auth
+
+Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
+
+Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a self-hosted server with basic auth enabled, you can authenticate your exporter with the same credentials.
+
+The format of the auth string is `admin:<my-password>` (no brackets).
+
+```yaml
+basicAuth:
+    enabled: true
+    authString: "admin:pass"
+```
+
+Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
+
+```sh
+kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
+```
+
+```yaml
+basicAuth:
+    enabled: true
+    existingSecret: prefect-basic-auth
+```
+
 ## Maintainers
 
 | Name | Email | Url |
@@ -62,6 +90,9 @@ Shoutout to @ialejandro for the original work on this chart!
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for pod assignment |
 | autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling with CPU or memory utilization percentage |
+| basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
+| basicAuth.enabled | bool | `false` | enable basic auth for the exporter, for an administrator/password combination. must be enabled on the server as well |
+| basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | csrfAuth | bool | `false` | Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled) |
 | env | object | `{}` | Environment variables to configure application |
 | fullnameOverride | string | `""` | String to fully override common.names.fullname template |

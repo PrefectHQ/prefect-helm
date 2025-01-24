@@ -24,6 +24,34 @@ kubectl port-forward svc/prefect-server 4200:4200
 
 Note: If you choose to make modifications to either the `server.prefectApiUrl` or `service.port`, make sure to update the other value with the updated port!
 
+### Basic Auth
+
+Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
+
+Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination.
+
+The format of the auth string is `admin:<my-password>` (no brackets).
+
+```yaml
+server:
+  basicAuth:
+    enabled: true
+    authString: "admin:pass"
+```
+
+Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
+
+```sh
+kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
+```
+
+```yaml
+server:
+  basicAuth:
+    enabled: true
+    existingSecret: prefect-basic-auth
+```
+
 ## Background Services Configuration
 
 The Prefect server includes background services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
@@ -202,7 +230,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the background-services container |
 | backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
 | backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
-| backgroundServices.runAsSeparateDeployment | bool | `false` | Run background services (like scheduling) in a separate deployment. |
+| backgroundServices.runAsSeparateDeployment | bool | `false` |  |
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended |
@@ -253,6 +281,9 @@ the HorizontalPodAutoscaler.
 | server.autoscaling.minReplicas | int | `1` | minimum number of server replicas |
 | server.autoscaling.targetCPU | int | `80` | target CPU utilization percentage |
 | server.autoscaling.targetMemory | int | `80` | target Memory utilization percentage |
+| server.basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
+| server.basicAuth.enabled | bool | `false` | enable basic auth for the server, for an administrator/password combination |
+| server.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | server.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set server containers' security context allowPrivilegeEscalation |
 | server.containerSecurityContext.capabilities | object | `{}` | set server container's security context capabilities |
 | server.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set server containers' security context readOnlyRootFilesystem |
@@ -279,6 +310,7 @@ the HorizontalPodAutoscaler.
 | server.podSecurityContext.fsGroup | int | `1001` | set server pod's security context fsGroup |
 | server.podSecurityContext.runAsNonRoot | bool | `true` | set server pod's security context runAsNonRoot |
 | server.podSecurityContext.runAsUser | int | `1001` | set server pod's security context runAsUser |
+| server.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | set server pod's seccomp profile |
 | server.priorityClassName | string | `""` | priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class |
 | server.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |

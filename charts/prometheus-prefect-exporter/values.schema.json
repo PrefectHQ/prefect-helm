@@ -82,6 +82,28 @@
       "title": "CSRF Auth",
       "description": "Enable CSRF auth"
     },
+    "basicAuth": {
+      "type": "object",
+      "title": "Basic Auth",
+      "description": "basic auth configuration",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "enable basic auth for the exporter, for an administrator/password combination. must be enabled on the server as well"
+        },
+        "authString": {
+          "type": "string",
+          "title": "Auth String",
+          "description": "basic auth credentials in the format admin:<your-password> (no brackets)"
+        },
+        "existingSecret": {
+          "type": "string",
+          "title": "Existing Secret",
+          "description": "name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string"
+        }
+      }
+    },
     "pagination": {
       "type": "object",
       "title": "Pagination",

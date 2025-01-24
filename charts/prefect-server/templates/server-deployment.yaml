@@ -110,6 +110,17 @@ spec:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
               {{- end }}
+            {{- if .Values.server.basicAuth.enabled }}
+            - name: PREFECT_SERVER_API_AUTH_STRING
+            {{- if .Values.server.basicAuth.existingSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.server.basicAuth.existingSecret }}
+                  key: auth-string
+            {{- else }}
+              value: {{ .Values.server.basicAuth.authString | quote }}
+            {{- end }}
+            {{- end }}
             {{- if .Values.global.prefect.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.global.prefect.env "context" $) | nindent 12 }}
             {{- end }}

@@ -173,7 +173,35 @@ Workers each have a type corresponding to the execution environment to which the
 
     You should see the Prefect worker pod running
 
-## FAQ
+## Additional Worker Configurations
+
+### Basic Auth
+
+Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
+
+Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a self-hosted server with basic auth enabled, you can authenticate your worker with the same credentials.
+
+The format of the auth string is `admin:<my-password>` (no brackets).
+
+```yaml
+worker:
+  basicAuth:
+    enabled: true
+    authString: "admin:pass"
+```
+
+Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
+
+```sh
+kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
+```
+
+```yaml
+worker:
+  basicAuth:
+    enabled: true
+    existingSecret: prefect-basic-auth
+```
 
 ### Deploying multiple workers to a single namespace
 
