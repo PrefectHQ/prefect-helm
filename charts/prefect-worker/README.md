@@ -193,14 +193,14 @@ worker:
 Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
 
 ```sh
-kubectl create secret generic prefect-worker-basic-auth --from-literal=auth-string='admin:my-password'
+kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
 ```
 
 ```yaml
 worker:
   basicAuth:
     enabled: true
-    existingSecret: prefect-worker-basic-auth
+    existingSecret: prefect-basic-auth
 ```
 
 ### Deploying multiple workers to a single namespace

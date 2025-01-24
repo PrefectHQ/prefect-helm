@@ -60,13 +60,13 @@ basicAuth:
 Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
 
 ```sh
-kubectl create secret generic prefect-exporter-basic-auth --from-literal=auth-string='admin:my-password'
+kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
 ```
 
 ```yaml
 basicAuth:
     enabled: true
-    existingSecret: prefect-exporter-basic-auth
+    existingSecret: prefect-basic-auth
 ```
 
 ## Maintainers
@@ -96,7 +96,7 @@ basicAuth:
 | csrfAuth | bool | `false` | Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled) |
 | env | object | `{}` | Environment variables to configure application |
 | fullnameOverride | string | `""` | String to fully override common.names.fullname template |
-| image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.1.0"}` | Image registry |
+| image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.6.6"}` | Image registry |
 | imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
 | ingress | object | `{"annotations":{},"className":"","enabled":false,"hosts":[{"host":"chart-example.local","paths":[{"path":"/","pathType":"ImplementationSpecific"}]}],"tls":[]}` | Ingress configuration to expose app |
 | livenessProbe | bool | `false` | Enable livenessProbe |

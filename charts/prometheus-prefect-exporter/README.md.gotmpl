@@ -60,13 +60,13 @@ basicAuth:
 Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
 
 ```sh
-kubectl create secret generic prefect-exporter-basic-auth --from-literal=auth-string='admin:my-password'
+kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
 ```
 
 ```yaml
 basicAuth:
     enabled: true
-    existingSecret: prefect-exporter-basic-auth
+    existingSecret: prefect-basic-auth
 ```
 
 
