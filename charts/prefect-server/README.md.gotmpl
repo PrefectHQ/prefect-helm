@@ -69,43 +69,41 @@ Two secrets are created when not providing an existing secret name:
 If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
 
 ```yaml
-prefect-server:
-  postgresql:
-    enabled: false
+postgresql:
+  enabled: false
 
-  secret:
-    # Option 1: provide the name of an existing secret following the instructions above.
-    create: false
-    name: <existing secret name>
+secret:
+  # Option 1: provide the name of an existing secret following the instructions above.
+  create: false
+  name: <existing secret name>
 
-    # Option 2: provide the connection string details directly
-    create: true
-    username: myuser
-    password: mypass
-    host: myhost.com
-    port: 1234
-    database: mydb
+  # Option 2: provide the connection string details directly
+  create: true
+  username: myuser
+  password: mypass
+  host: myhost.com
+  port: 1234
+  database: mydb
 ```
 
 ### Connecting with SSL configured
 
 1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
     ```yaml
-    prefect-server:
-      server:
-        extraVolumes:
-          - name: db-ssl-secret
-            secret:
-              secretName: db-ssl-secret
-              defaultMode: 384
-        extraVolumeMounts:
-          - name: db-ssl-secret
-            mountPath: "/home/prefect/.postgresql"
-            readOnly: true
-      postgresql:
-        enabled: false
-        auth:
-          existingSecret: external-db-connection-string
+    server:
+      extraVolumes:
+        - name: db-ssl-secret
+          secret:
+            secretName: db-ssl-secret
+            defaultMode: 384
+      extraVolumeMounts:
+        - name: db-ssl-secret
+          mountPath: "/home/prefect/.postgresql"
+          readOnly: true
+    postgresql:
+      enabled: false
+      auth:
+        existingSecret: external-db-connection-string
     ```
 
 2. Create a secret to hold the ca certificate for the database with the key `root.crt`
