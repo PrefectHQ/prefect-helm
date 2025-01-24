@@ -526,6 +526,64 @@
               "type": "integer",
               "title": "Run As User",
               "description": "set worker pod's security context runAsUser"
+            },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the init container",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": [
+                    "RuntimeDefault",
+                    "Unconfined",
+                    "Localhost"
+                  ]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": [
+                "type"
+              ],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "RuntimeDefault",
+                            "Unconfined"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "type"
+                      ]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": [
+                            "Localhost"
+                          ]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "type",
+                        "localhostProfile"
+                      ]
+                    }
+                  ]
+                }
+              }
             }
           }
         },

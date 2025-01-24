@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 2-latest
+appVersion: 3-latest
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
