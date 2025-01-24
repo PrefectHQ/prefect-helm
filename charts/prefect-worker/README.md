@@ -339,6 +339,7 @@ worker:
 | worker.podSecurityContext.fsGroup | int | `1001` | set worker pod's security context fsGroup |
 | worker.podSecurityContext.runAsNonRoot | bool | `true` | set worker pod's security context runAsNonRoot |
 | worker.podSecurityContext.runAsUser | int | `1001` | set worker pod's security context runAsUser |
+| worker.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | set worker pod's seccomp profile |
 | worker.priorityClassName | string | `""` | priority class name to use for the worker pods; if the priority class is empty or doesn't exist, the worker pods are scheduled without a priority class |
 | worker.replicaCount | int | `1` | number of worker replicas to deploy |
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |

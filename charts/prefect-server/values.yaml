@@ -46,6 +46,15 @@ global:
 
 ## Server Deployment Configuration
 server:
+  # ref: https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings
+  basicAuth:
+    # -- enable basic auth for the server, for an administrator/password combination
+    enabled: false
+    # -- basic auth credentials in the format admin:<your-password> (no brackets)
+    authString: "admin:pass"
+    # -- name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string
+    existingSecret: ""
+
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""

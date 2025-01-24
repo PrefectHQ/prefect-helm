@@ -4,6 +4,43 @@ release:
   namespace: prefect
 
 tests:
+  - it: Should not set basic auth by default
+    asserts:
+      - template: server-deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_BASIC_AUTH_STRING
+
+  - it: Should set basic auth from authString
+    set:
+      server:
+        basicAuth:
+          enabled: true
+          authString: "admin:mypassword"
+    asserts:
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_BASIC_AUTH_STRING")].value
+          value: "admin:mypassword"
+
+  - it: Should set basic auth from existing secret
+    set:
+      server:
+        basicAuth:
+          enabled: true
+          existingSecret: "my-auth-secret"
+    asserts:
+      - template: server-deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_BASIC_AUTH_STRING
+            valueFrom:
+              secretKeyRef:
+                name: my-auth-secret
+                key: auth-string
+
   - it: Should set the correct image and tag
     asserts:
       - template: server-deployment.yaml
