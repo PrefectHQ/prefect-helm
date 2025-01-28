@@ -165,6 +165,8 @@ worker:
       name: prefect-api-key
       # -- prefect API secret key
       key: key
+    # -- Cloud API url for PREFECT_CLOUD_API_URL
+    cloudApiUrl: ""
     # -- self hosted UI url
     uiUrl: ""
 
