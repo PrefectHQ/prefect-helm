@@ -166,7 +166,7 @@ worker:
       # -- prefect API secret key
       key: key
 
-    # -- self managed UI url
+    # -- Self-managed UI url
     uiUrl: ""
 
   serverApiConfig:
