@@ -380,7 +380,7 @@ worker:
 | worker.selfHostedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.selfHostedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.selfHostedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
-| worker.selfHostedCloudApiConfig.cloudApiUrl | string | `""` | Cloud API url for PREFECT_CLOUD_API_URL |
+| worker.selfHostedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
 | worker.selfHostedCloudApiConfig.uiUrl | string | `""` | self hosted UI url |
 | worker.selfHostedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
