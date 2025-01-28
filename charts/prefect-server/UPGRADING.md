@@ -1,0 +1,40 @@
+# Upgrade guidelines
+
+## > 2025.1.23213604
+
+After version `2025.1.23213604`, the `prefect-server` chart [introduces the option to run background services as a separate deployment](https://github.com/PrefectHQ/prefect-helm/pull/425). Due to the numerous shared values between the `server` and `background-services` deployments, the `values.yaml` file has been consolidated in the following ways:
+
+### Introduction of `global.prefect` key in `values.yaml`
+
+`.Values.global.prefect` will contain shared configurations, many of which used to live under `.Values.server`, specifically:
+
+- `.Values.server.image` => `.Values.global.prefect.image`
+- `.Values.server.prefectApiUrl` => `.Values.global.prefect.prefectApiUrl`
+- `.Values.server.prefectApiHost` => `.Values.global.prefect.prefectApiHost`
+
+**Before**
+
+```yaml
+server:
+  image:
+    repository: prefecthq/prefect
+    prefectTag: 3-latest
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  prefectApiUrl: http://localhost:4200/api
+  prefectApiHost: 0.0.0.0
+```
+
+**After**
+
+```yaml
+global:
+  prefect:
+    image:
+      repository: prefecthq/prefect
+      prefectTag: 3-latest
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+    prefectApiUrl: http://localhost:4200/api
+    prefectApiHost: 0.0.0.0
+```
