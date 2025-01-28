@@ -28,29 +28,29 @@ Require Prefect Cloud Workspace ID
 {{- end -}}
 
 {{/*
-Require Self Hosted Cloud Account ID
+Require Self Managed Cloud Account ID
 */}}
-{{- define "selfHosted.requiredConfig.accountId" -}}
-{{- if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- required "A Prefect Cloud Account ID is required (worker.selfHostedCloudApiConfig.accountId)" .Values.worker.selfHostedCloudApiConfig.accountId -}}
+{{- define "selfManaged.requiredConfig.accountId" -}}
+{{- if eq .Values.worker.apiConfig "selfManaged" }}
+    {{- required "A Prefect Cloud Account ID is required (worker.selfManagedCloudApiConfig.accountId)" .Values.worker.selfManagedCloudApiConfig.accountId -}}
 {{- end -}}
 {{- end -}}
 
 {{/*
-Require Self Hosted Cloud Workspace ID
+Require Self Managed Cloud Workspace ID
 */}}
-{{- define "selfHosted.requiredConfig.workspaceId" -}}
-{{- if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- required "A Prefect Cloud Workspace ID is required (worker.selfHostedCloudApiConfig.workspaceId)" .Values.worker.selfHostedCloudApiConfig.workspaceId -}}
+{{- define "selfManaged.requiredConfig.workspaceId" -}}
+{{- if eq .Values.worker.apiConfig "selfManaged" }}
+    {{- required "A Prefect Cloud Workspace ID is required (worker.selfManagedCloudApiConfig.workspaceId)" .Values.worker.selfManagedCloudApiConfig.workspaceId -}}
 {{- end -}}
 {{- end -}}
 
 {{/*
-Require Self Hosted Cloud API URL
+Require Self Managed Cloud API URL
 */}}
-{{- define "selfHosted.requiredConfig.apiUrl" -}}
-{{- if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- required "The Self Hosted Cloud API URL is required (worker.selfHostedCloudApiConfig.apiUrl)" .Values.worker.selfHostedCloudApiConfig.apiUrl -}}
+{{- define "selfManaged.requiredConfig.apiUrl" -}}
+{{- if eq .Values.worker.apiConfig "selfManaged" }}
+    {{- required "The Self Managed Cloud API URL is required (worker.selfManagedCloudApiConfig.apiUrl)" .Values.worker.selfManagedCloudApiConfig.apiUrl -}}
 {{- end -}}
 {{- end -}}
 
@@ -70,8 +70,8 @@ Require Prefect Server API URL
 {{- define "worker.apiUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.cloudApiConfig.cloudUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
-{{- else if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- printf "%s/accounts/%s/workspaces/%s" (include "selfHosted.requiredConfig.apiUrl" .) (include "selfHosted.requiredConfig.accountId" .) (include "selfHosted.requiredConfig.workspaceId" .) | quote }}
+{{- else if eq .Values.worker.apiConfig "selfManaged" }}
+    {{- printf "%s/accounts/%s/workspaces/%s" (include "selfManaged.requiredConfig.apiUrl" .) (include "selfManaged.requiredConfig.accountId" .) (include "selfManaged.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
     {{- include "server.requiredConfig.apiUrl" . | quote }}
 {{- end }}
@@ -84,8 +84,8 @@ Require Prefect Server API URL
 {{- define "worker.appUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "https://app.prefect.cloud/account/%s/workspace/%s" (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
-{{- else if eq .Values.worker.apiConfig "selfHosted" }}
-    {{- printf "%s/account/%s/workspace/%s" .Values.worker.selfHostedCloudApiConfig.uiUrl (include "selfHosted.requiredConfig.accountId" .) (include "selfHosted.requiredConfig.workspaceId" .) | quote }}
+{{- else if eq .Values.worker.apiConfig "selfManaged" }}
+    {{- printf "%s/account/%s/workspace/%s" .Values.worker.selfManagedCloudApiConfig.uiUrl (include "selfManaged.requiredConfig.accountId" .) (include "selfManaged.requiredConfig.workspaceId" .) | quote }}
 {{- else }}
     {{- .Values.worker.serverApiConfig.uiUrl | quote }}
 {{- end }}

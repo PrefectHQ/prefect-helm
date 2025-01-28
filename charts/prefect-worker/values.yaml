@@ -134,7 +134,7 @@ worker:
       # name: ""
 
   ## connection settings
-  # -- one of 'cloud', 'selfHosted', or 'server'
+  # -- one of 'cloud', 'selfManaged', or 'server'
   apiConfig: "cloud"
 
   cloudApiConfig:
@@ -152,7 +152,7 @@ worker:
     # -- prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId
     cloudUrl: https://api.prefect.cloud/api
 
-  selfHostedCloudApiConfig:
+  selfManagedCloudApiConfig:
     # -- prefect API url (PREFECT_API_URL)
     apiUrl: ""
     # -- prefect account ID
@@ -165,7 +165,8 @@ worker:
       name: prefect-api-key
       # -- prefect API secret key
       key: key
-    # -- self hosted UI url
+
+    # -- self managed UI url
     uiUrl: ""
 
   serverApiConfig:

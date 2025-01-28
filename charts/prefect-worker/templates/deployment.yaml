@@ -113,12 +113,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfHosted" }}
+            {{- else if eq .Values.worker.apiConfig "selfManaged" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
-                  key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
+                  name: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
           {{- with .Values.worker }}
           resources: {{ coalesce .initContainer.resources .resources | toYaml | nindent 12 }}
@@ -192,12 +192,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfHosted" }}
+            {{- else if eq .Values.worker.apiConfig "selfManaged" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
-                  key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
+                  name: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
