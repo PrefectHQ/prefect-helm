@@ -398,6 +398,11 @@
                 }
               }
             },
+            "cloudApiUrl": {
+              "type": "string",
+              "title": "Self Managed Cloud API URL",
+              "description": "self managed cloud api url"
+            },
             "uiUrl": {
               "type": "string",
               "title": "Self Hosted Cloud URL",

@@ -198,6 +198,8 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
+            - name: PREFECT_CLOUD_API_URL
+              value: {{ .Values.worker.selfHostedCloudApiConfig.cloudApiUrl}}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
