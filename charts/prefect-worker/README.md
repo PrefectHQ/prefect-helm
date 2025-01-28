@@ -76,9 +76,9 @@ Workers each have a type corresponding to the execution environment to which the
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
-### Configuring a Worker for Self Managed Cloud (not to be confused with [Prefect Server](https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker#configuring-a-worker-for-prefect-server))
+### Configuring a Worker for Self-Managed Cloud (not to be confused with [Self-hostedPrefect Server](https://github.com/PrefectHQ/prefect-helm/tree/main/charts/prefect-worker#configuring-a-worker-for-prefect-server))
 
-1. Create a Kubernetes secret for a Prefect Self Managed Cloud API key
+1. Create a Kubernetes secret for a Prefect Self-Managed Cloud API key
 
     First create a file named `api-key.yaml` with the following contents:
 
@@ -93,7 +93,7 @@ Workers each have a type corresponding to the execution environment to which the
       key:  <base64-encoded-api-key>
     ```
 
-    Replace `<base64-encoded-api-key>` with your Prefect Self Managed Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
+    Replace `<base64-encoded-api-key>` with your Prefect Self-Managed Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
 
     You can use the following command to generate the base64-encoded value:
 
@@ -125,10 +125,10 @@ Workers each have a type corresponding to the execution environment to which the
       selfManagedCloudApiConfig:
         # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
         # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
-        apiUrl: "https://<DNS of Self Managed Cloud API>"
+        apiUrl: "https://<DNS of Self-Managed Cloud API>"
         accountId: <target account ID>
         workspaceId: <target workspace ID>
-        uiUrl: "https://<DNS of Self Managed Cloud UI>"
+        uiUrl: "https://<DNS of Self-Managed Cloud UI>"
     ```
 
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.

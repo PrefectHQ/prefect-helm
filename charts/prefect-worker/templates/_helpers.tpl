@@ -28,7 +28,7 @@ Require Prefect Cloud Workspace ID
 {{- end -}}
 
 {{/*
-Require Self Managed Cloud Account ID
+Require Self-managed Cloud Account ID
 */}}
 {{- define "selfManaged.requiredConfig.accountId" -}}
 {{- if eq .Values.worker.apiConfig "selfManaged" }}
@@ -37,7 +37,7 @@ Require Self Managed Cloud Account ID
 {{- end -}}
 
 {{/*
-Require Self Managed Cloud Workspace ID
+Require Self-managed Cloud Workspace ID
 */}}
 {{- define "selfManaged.requiredConfig.workspaceId" -}}
 {{- if eq .Values.worker.apiConfig "selfManaged" }}
@@ -46,11 +46,11 @@ Require Self Managed Cloud Workspace ID
 {{- end -}}
 
 {{/*
-Require Self Managed Cloud API URL
+Require Self-managed Cloud API URL
 */}}
 {{- define "selfManaged.requiredConfig.apiUrl" -}}
 {{- if eq .Values.worker.apiConfig "selfManaged" }}
-    {{- required "The Self Managed Cloud API URL is required (worker.selfManagedCloudApiConfig.apiUrl)" .Values.worker.selfManagedCloudApiConfig.apiUrl -}}
+    {{- required "The Self-managed Cloud API URL is required (worker.selfManagedCloudApiConfig.apiUrl)" .Values.worker.selfManagedCloudApiConfig.apiUrl -}}
 {{- end -}}
 {{- end -}}
 

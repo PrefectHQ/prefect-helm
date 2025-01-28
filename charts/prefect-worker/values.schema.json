@@ -367,8 +367,8 @@
         },
         "selfManagedCloudApiConfig": {
           "type": "object",
-          "title": "Self Managed API Configuration",
-          "description": "Self managed API Configuration",
+          "title": "Self-managed API Configuration",
+          "description": "Self-managed API Configuration",
           "additionalProperties": false,
           "properties": {
             "accountId": {
@@ -400,13 +400,13 @@
             },
             "uiUrl": {
               "type": "string",
-              "title": "Self Managed Cloud URL",
-              "description": "Self Managed Cloud URL"
+              "title": "Self-managed Cloud URL",
+              "description": "Self-managed Cloud URL"
             },
             "apiUrl": {
               "type": "string",
-              "title": "Self Managed API URL",
-              "description": "Self Managed API URL (PREFECT_API_URL)"
+              "title": "Self-managed API URL",
+              "description": "Self-managed API URL (PREFECT_API_URL)"
             }
           }
         },
