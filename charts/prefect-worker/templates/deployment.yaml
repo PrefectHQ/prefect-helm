@@ -196,15 +196,10 @@ spec:
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-<<<<<<< HEAD
                   name: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
-=======
-                  name: {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.name }}
-                  key:  {{ .Values.worker.selfHostedCloudApiConfig.apiKeySecret.key }}
             - name: PREFECT_CLOUD_API_URL
-              value: {{ .Values.worker.selfHostedCloudApiConfig.cloudApiUrl}}
->>>>>>> a596bd914745d396609d94e5e2bfd42333ef0001
+              value: {{ .Values.worker.selfManagedCloudApiConfig.cloudApiUrl}}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
