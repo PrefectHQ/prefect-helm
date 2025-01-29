@@ -26,4 +26,4 @@ jobs:
           ref: 'main'
 
       - name: upgrade mise tools
-        uses: prefecthq/actions-mise-upgrade@first-implementation
+        uses: prefecthq/actions-mise-upgrade@main
