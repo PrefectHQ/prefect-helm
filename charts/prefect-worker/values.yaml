@@ -166,7 +166,10 @@ worker:
       # -- prefect API secret key
       key: key
 
-    # -- Self-managed UI url
+    # -- Cloud API url for PREFECT_CLOUD_API_URL
+    # -- This is used in self managed cloud instances to congfigure events and logs over websockets
+    cloudApiUrl: ""
+    # -- self hosted UI url
     uiUrl: ""
 
   serverApiConfig:
