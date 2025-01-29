@@ -1,0 +1,33 @@
+---
+name: Update mise tool versions
+
+"on":
+  schedule:
+    - cron: 0 15 1 * *  # First of the month @ 3pm UTC
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  updatecli_major:
+    runs-on: ubuntu-latest
+    permissions:
+      # required to write to the repo
+      contents: write
+      # required to open a pr with changes
+      pull-requests: write
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install mise
+        uses: jdx/mise-action@v2
+
+      - name: upgrade tools in mise
+        run: mise upgrade --bump
+
+      - name: commit and push changes
+        run: |
+          git add .mise.toml
+          git commit -m 'Update mise tool versions'
+          git push origin main
