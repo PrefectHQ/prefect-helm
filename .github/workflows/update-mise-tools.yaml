@@ -1,0 +1,21 @@
+---
+name: Update mise tool versions
+
+"on":
+  schedule:
+    - cron: 0 15 1 * *  # First of the month @ 3pm UTC
+  workflow_dispatch: {}
+
+permissions: {}
+
+jobs:
+  updatecli_major:
+    runs-on: ubuntu-latest
+    permissions:
+      # required to write to the repo
+      contents: write
+      # required to open a pr with changes
+      pull-requests: write
+    steps:
+      - name: upgrade mise tools
+        uses: prefecthq/actions-mise-upgrade@main
