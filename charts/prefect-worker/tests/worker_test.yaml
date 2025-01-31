@@ -151,11 +151,11 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
           value: "https://api.prefect.cloud/api/accounts/my-account-id/workspaces/my-workspace-id"
 
-  - it: Should set the correct API configuration for self-hosted cloud
+  - it: Should set the correct API configuration for self-managed cloud
     set:
       worker:
-        apiConfig: "selfHosted"
-        selfHostedCloudApiConfig:
+        apiConfig: "selfManaged"
+        selfManagedCloudApiConfig:
           apiUrl: "https://my-prefect-api.com/api"
           accountId: "my-account-id"
           workspaceId: "my-workspace-id"
