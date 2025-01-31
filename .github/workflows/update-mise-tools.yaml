@@ -17,13 +17,5 @@ jobs:
       # required to open a pr with changes
       pull-requests: write
     steps:
-      - name: checkout
-        uses: actions/checkout@v4
-        with:
-          # This should be 'main' anyway as it will run
-          # on a schedule, but let's be explicit so we can,
-          # for example, run this from pull request branches.
-          ref: 'main'
-
       - name: upgrade mise tools
         uses: prefecthq/actions-mise-upgrade@main
