@@ -9,7 +9,7 @@ name: Update mise tool versions
 permissions: {}
 
 jobs:
-  update-mise-tools:
+  update_mise_tools:
     runs-on: ubuntu-latest
     permissions:
       # required to write to the repo
