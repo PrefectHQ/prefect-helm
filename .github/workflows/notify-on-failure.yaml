@@ -8,6 +8,7 @@ name: Notify on Failure
       - Release Prometheus Prefect Exporter Helm Chart
       - Updatecli Major Dependency Updates
       - Updatecli Minor Dependency Updates
+      - Update mise tool versions
     types: [completed]
 
 permissions: {}
