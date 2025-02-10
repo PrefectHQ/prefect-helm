@@ -233,7 +233,9 @@ pip install prefect-kubernetes
 prefect work-pool get-default-base-job-template --type kubernetes > base-job-template.json
 ```
 
-2. Modify the base job template as needed
+2. Modify the base job template as needed. Keep in mind that modifications are not merged with the default template. The configuration
+   you provide will replace the default configuration entirely. See [modifying the base job template](#modifying-the-base-job-template)
+   for more information.
 
 3. Install the chart as you usually would, making sure to use the `--set-file` command to pass in the `base-job-template.json` file as a paramater:
 
@@ -241,38 +243,41 @@ prefect work-pool get-default-base-job-template --type kubernetes > base-job-tem
 helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate.configuration=base-job-template.json
 ```
 
-#### Using the Base Job Template
+#### Modifying the Base Job Template
 
-The worker uses the [base job template](https://docs.prefect.io/v3/deploy/infrastructure-concepts/work-pools#base-job-template)
-to create the Kubernetes job that executes your workflow. The base job template configuration can be modified by setting
-`worker.config.baseJobTemplate.configuration`. For example, to provide image pull secrets for the container running your flow,
-provide the following values:
+Modifying the base job template replaces the default configuration entirely.
+Put differently, any provdied configuration is not merged with the default configuration.
 
-```yaml
-worker:
-  config:
-    baseJobTemplate:
-      configuration: |
-       {
-         "job_configuration": {
-           "job_manifest": {
-             "spec": {
-               "template": {
-                 "spec": {
-                   "imagePullSecrets": [
-                     {
-                       "name": "my-pull-secret"
-                     }
-                   ]
-                 }
-               }
-             }
-           }
+For example, if you want to add an image pull secret to the base job template,
+you would modify the `base-job-template.json` file to look like this:
+
+```diff
+{
+ "job_configuration": {
+   "job_manifest": {
+     "spec": {
+       "template": {
+         "spec": {
++          "imagePullSecrets": [
++            {
++              "name": "my-pull-secret"
++            }
++          ]
          }
        }
+     }
+   }
+ },
+}
 ```
-You can see the entire base job template in the UI by navigating to `Account settings` > `Work Pools` > your work pool > three-dot menu
-in the top right corner > `Edit` > `Base Job Template` section > `Advanced` tab.
+
+Here, you add `imagePullSecrets` into your existing configuration. Note that
+the snippet is truncated for brevity. The full configuration should still be
+provided.
+
+Once applied, you can see the entire base job template in the UI by navigating
+to `Account settings` > `Work Pools` > your work pool > three-dot menu in the
+top right corner > `Edit` > `Base Job Template` section > `Advanced` tab.
 
 #### Updating the Base Job Template
 
