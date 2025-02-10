@@ -241,6 +241,35 @@ prefect work-pool get-default-base-job-template --type kubernetes > base-job-tem
 helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate.configuration=base-job-template.json
 ```
 
+#### Using the Base Job Template
+
+The worker uses the [base job template](https://docs.prefect.io/v3/deploy/infrastructure-concepts/work-pools#base-job-template)
+to create the Kubernetes job that executes your workflow. The base job template configuration can be modified by setting
+`worker.config.baseJobTemplate.configuration`. For example, to provide image pull secrets for the container running your flow,
+provide the following values:
+
+```yaml
+worker:
+  config:
+    baseJobTemplate:
+      configuration: |
+       {
+         "job_configuration": {
+           "job_manifest": {
+             "spec": {
+               "template": {
+                 "spec": {
+                   "imagePullSecrets": "my-pull-secret"
+                 }
+               }
+             }
+           }
+         }
+       }
+```
+You can see the entire base job template in the UI by navigating to `Account settings` > `Work Pools` > your work pool > three-dot menu
+in the top right corner > `Edit` > `Base Job Template` section > `Advanced` tab.
+
 #### Updating the Base Job Template
 
 If a base job template is set through Helm (via either `.Values.worker.config.baseJobTemplate.configuration` or `.Values.worker.config.baseJobTemplate.existingConfigMapName`), we'll run an optional `initContainer` that will sync the template configuration to the work pool named in `.Values.worker.config.workPool`.
