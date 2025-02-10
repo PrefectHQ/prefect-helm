@@ -259,7 +259,11 @@ worker:
              "spec": {
                "template": {
                  "spec": {
-                   "imagePullSecrets": "my-pull-secret"
+                   "imagePullSecrets": [
+                     {
+                       "name": "my-pull-secret"
+                     }
+                   ]
                  }
                }
              }
