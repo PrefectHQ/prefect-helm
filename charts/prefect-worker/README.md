@@ -226,8 +226,6 @@ The worker uses the [base job template](https://docs.prefect.io/v3/deploy/infras
 to create the Kubernetes job that executes your workflow. The base job template configuration can be modified by setting
 `worker.config.baseJobTemplate.configuration`.
 
-**Note**: if the target work pool (`config.workPool`) already exists, the base job template passed **will be ignored**.
-
 1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`:
 
 ```bash
