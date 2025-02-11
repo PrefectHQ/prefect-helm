@@ -222,9 +222,13 @@ serviceAccount:
 
 ### Configuring a Base Job Template on the Worker
 
-If you want to define the [base job template](https://docs.prefect.io/concepts/work-pools/#base-job-template) of the worker and pass it as a value in this chart, you will need to do the following. **Note** if the `workPool` already exists, the base job template passed **will** be ignored.
+The worker uses the [base job template](https://docs.prefect.io/v3/deploy/infrastructure-concepts/work-pools#base-job-template)
+to create the Kubernetes job that executes your workflow. The base job template configuration can be modified by setting
+`worker.config.baseJobTemplate.configuration`.
 
-1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`
+**Note**: if the target work pool (`config.workPool`) already exists, the base job template passed **will be ignored**.
+
+1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`:
 
 ```bash
 # you may need to install `prefect-kubernetes` first
