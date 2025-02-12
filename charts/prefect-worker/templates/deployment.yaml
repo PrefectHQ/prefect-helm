@@ -105,6 +105,17 @@ spec:
               value: /home/prefect
             - name: PREFECT_API_URL
               value: {{ template "worker.apiUrl" . }}
+            {{- if .Values.worker.basicAuth.enabled }}
+            - name: PREFECT_API_AUTH_STRING
+            {{- if .Values.worker.basicAuth.existingSecret }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.worker.basicAuth.existingSecret }}
+                  key: auth-string
+            {{- else }}
+              value: {{ .Values.worker.basicAuth.authString | quote }}
+            {{- end }}
+            {{- end }}
             - name: PREFECT_KUBERNETES_CLUSTER_UID
               value: {{ template "worker.clusterUUID" . }}
             {{- if eq .Values.worker.apiConfig "cloud" }}
