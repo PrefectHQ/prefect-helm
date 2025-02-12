@@ -107,18 +107,3 @@ jobs:
             [$PROMETHEUS_PREFECT_EXPORTER_VERSION](https://github.com/PrefectHQ/prometheus-prefect-exporter/releases/tag/$PROMETHEUS_PREFECT_EXPORTER_VERSION)"
         env:
           GH_TOKEN: ${{ github.token }}
-
-  update_helm_chart_version_downstream:
-    name: Update Helm Chart version in `ops-cluster-deployment`
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run workflow
-        run: |
-          gh workflow run update-prefect-helm-chart-versions.yaml \
-            --repo prefecthq/ops-cluster-deployment \
-            --ref main \
-            -f chart_version=${{ needs.release.outputs.releaseVersion }} \
-            -f type=exporter
-        env:
-          GH_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
