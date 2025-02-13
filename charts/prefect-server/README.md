@@ -276,6 +276,7 @@ the HorizontalPodAutoscaler.
 | secret.port | string | `""` | port for the PostgreSQL connection string |
 | secret.username | string | `""` | username for the PostgreSQL connection string |
 | server.affinity | object | `{}` | affinity for server pods assignment |
+| server.args | list | `[]` | Custom container command arguments |
 | server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
 | server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |
 | server.autoscaling.minReplicas | int | `1` | minimum number of server replicas |
@@ -284,6 +285,7 @@ the HorizontalPodAutoscaler.
 | server.basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
 | server.basicAuth.enabled | bool | `false` | enable basic auth for the server, for an administrator/password combination |
 | server.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
+| server.command | list | `[]` | Custom container entrypoint |
 | server.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set server containers' security context allowPrivilegeEscalation |
 | server.containerSecurityContext.capabilities | object | `{}` | set server container's security context capabilities |
 | server.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set server containers' security context readOnlyRootFilesystem |
