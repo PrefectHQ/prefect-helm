@@ -324,7 +324,7 @@ the HorizontalPodAutoscaler.
 | server.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
 | server.uiConfig.enabled | bool | `true` | set PREFECT_UI_ENABLED; enable the UI on the server |
-| server.uiConfig.prefectUiApiUrl | string | `""` | sets PREFECT_UI_API_URL |
+| server.uiConfig.prefectUiApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL |
 | server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
