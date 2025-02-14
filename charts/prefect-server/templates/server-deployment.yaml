@@ -87,14 +87,10 @@ spec:
           env:
             - name: HOME
               value: /home/prefect
-            - name: PREFECT_API_URL
-              value: {{ .Values.global.prefect.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.server.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
               value: {{ .Values.server.loggingLevel | quote }}
-            - name: PREFECT_SERVER_API_HOST
-              value: {{ .Values.global.prefect.prefectApiHost | quote }}
             - name: PREFECT_SERVER_API_PORT
               value: {{ .Values.service.targetPort | quote }}
             - name: PREFECT_UI_ENABLED
@@ -102,10 +98,6 @@ spec:
             {{- if .Values.server.uiConfig.prefectUiApiUrl }}
             - name: PREFECT_UI_API_URL
               value: {{ .Values.server.uiConfig.prefectUiApiUrl | quote }}
-            {{- end }}
-            {{- if .Values.server.uiConfig.prefectUiUrl }}
-            - name: PREFECT_UI_URL
-              value: {{ .Values.server.uiConfig.prefectUiUrl | quote }}
             {{- end }}
             - name: PREFECT_UI_STATIC_DIRECTORY
               value: {{ .Values.server.uiConfig.prefectUiStaticDirectory | quote }}

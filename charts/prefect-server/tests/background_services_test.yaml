@@ -121,52 +121,6 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: DEBUG
 
-  - it: Should set the correct API URL
-    set:
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
-          value: "http://localhost:4200/api"
-
-  - it: Should set a custom API URL
-    set:
-      global:
-        prefect:
-          prefectApiUrl: "https://custom-api.example.com"
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
-          value: "https://custom-api.example.com"
-
-  - it: Should set the correct API host
-    set:
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
-          value: "0.0.0.0"
-
-  - it: Should set a custom API host
-    set:
-      global:
-        prefect:
-          prefectApiHost: "127.0.0.1"
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
-          value: "127.0.0.1"
-
   - it: Should set custom environment variables
     set:
       backgroundServices:

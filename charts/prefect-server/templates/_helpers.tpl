@@ -130,9 +130,5 @@ Create the name of the service account to associate with the background-services
 // ----- End connection string templates -----
 
 {{- define "server.uiUrl" -}}
-{{- if .Values.server.uiConfig.prefectUiUrl -}}
-  {{- .Values.server.uiConfig.prefectUiUrl -}}
-{{- else -}}
-  {{- printf "%s" (replace "/api" "" .Values.global.prefect.prefectApiUrl) -}}
-{{- end -}}
+  {{- printf "%s" (replace "/api" "" .Values.server.uiConfig.prefectUiApiUrl) -}}
 {{- end -}}
