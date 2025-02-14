@@ -71,14 +71,10 @@ spec:
           env:
             - name: HOME
               value: /home/prefect
-            - name: PREFECT_API_URL
-              value: {{ .Values.global.prefect.prefectApiUrl | quote }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.backgroundServices.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
               value: {{ .Values.backgroundServices.loggingLevel | quote }}
-            - name: PREFECT_SERVER_API_HOST
-              value: {{ .Values.global.prefect.prefectApiHost | quote }}
             - name: PREFECT_UI_ENABLED
               value: 'false'
             - name: PREFECT_API_DATABASE_CONNECTION_URL

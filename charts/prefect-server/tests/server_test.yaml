@@ -137,42 +137,6 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: DEBUG
 
-  - it: Should set the correct API URL
-    asserts:
-      - template: server-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
-          value: "http://localhost:4200/api"
-
-  - it: Should set a custom API URL
-    set:
-      global:
-        prefect:
-          prefectApiUrl: "https://custom-api.example.com"
-    asserts:
-      - template: server-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
-          value: "https://custom-api.example.com"
-
-  - it: Should set the correct API host
-    asserts:
-      - template: server-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
-          value: "0.0.0.0"
-
-  - it: Should set a custom API host
-    set:
-      global:
-        prefect:
-          prefectApiHost: "127.0.0.1"
-    asserts:
-      - template: server-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
-          value: "127.0.0.1"
-
   - it: Should set the correct UI configuration
     asserts:
       - template: server-deployment.yaml
@@ -195,21 +159,16 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_ENABLED")].value
           value: "false"
 
-  - it: Should set custom UI API URL and UI URL
+  - it: Should set custom UI API URL
     set:
       server:
         uiConfig:
           prefectUiApiUrl: "https://custom-ui-api.example.com"
-          prefectUiUrl: "https://custom-ui.example.com"
     asserts:
       - template: server-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_API_URL")].value
           value: "https://custom-ui-api.example.com"
-      - template: server-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_URL")].value
-          value: "https://custom-ui.example.com"
 
   - it: Should set custom environment variables
     set:

@@ -68,14 +68,6 @@
                 }
               }
             },
-            "prefectApiUrl": {
-              "type": "string",
-              "description": "sets PREFECT_API_URL"
-            },
-            "prefectApiHost": {
-              "type": "string",
-              "description": "sets PREFECT_SERVER_API_HOST"
-            },
             "env": {
               "type": "array",
               "description": "array with environment variables to add to all deployments",
@@ -160,16 +152,6 @@
           "title": "Logging Level",
           "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
         },
-        "prefectApiUrl": {
-          "type": "string",
-          "title": "Prefect API URL",
-          "description": "sets PREFECT_API_URL"
-        },
-        "prefectApiHost": {
-          "type": "string",
-          "title": "Prefect API Host",
-          "description": "sets PREFECT_SERVER_API_HOST"
-        },
         "uiConfig": {
           "type": "object",
           "title": "UI Config",
@@ -184,11 +166,6 @@
               "type": "string",
               "title": "Prefect API URL",
               "description": "sets PREFECT_UI_API_URL"
-            },
-            "prefectUiUrl": {
-              "type": "string",
-              "title": "Prefect UI URL",
-              "description": "sets PREFECT_UI_URL"
             }
           }
         },

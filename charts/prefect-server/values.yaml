@@ -31,12 +31,6 @@ global:
       # -- prefect image pull secrets
       pullSecrets: []
 
-    # -- sets PREFECT_API_URL
-    prefectApiUrl: http://localhost:4200/api
-
-    # -- sets PREFECT_SERVER_API_HOST
-    prefectApiHost: 0.0.0.0
-
     # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
     # -- array with environment variables to add to all deployments
     env: []
@@ -71,8 +65,6 @@ server:
     enabled: true
     # -- sets PREFECT_UI_API_URL
     prefectUiApiUrl: ""
-    # -- sets PREFECT_UI_URL
-    prefectUiUrl: ""
     # -- sets PREFECT_UI_STATIC_DIRECTORY
     prefectUiStaticDirectory: "/ui_build"
 
