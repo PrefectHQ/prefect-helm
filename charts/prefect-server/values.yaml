@@ -62,7 +62,7 @@ server:
   uiConfig:
     # -- set PREFECT_UI_ENABLED; enable the UI on the server
     enabled: true
-    # -- sets PREFECT_UI_API_URL; If you want to connect to the UI form somewhere external to the cluster (like via an ingress), you need to set this value to the ingress URL (e.g. http://app.internal.prefect.com/api).
+    # -- sets PREFECT_UI_API_URL; If you want to connect to the UI from somewhere external to the cluster (like via an ingress), you need to set this value to the ingress URL (e.g. http://app.internal.prefect.com/api).
     prefectUiApiUrl: "http://localhost:4200/api"
     # -- sets PREFECT_UI_STATIC_DIRECTORY
     prefectUiStaticDirectory: "/ui_build"
