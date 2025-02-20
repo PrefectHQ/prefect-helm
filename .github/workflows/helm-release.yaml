@@ -2,7 +2,8 @@
 name: Release Prefect Server and Worker Helm Charts
 
 "on":
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs: {}
 
 permissions: {}
 
