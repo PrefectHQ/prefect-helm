@@ -123,18 +123,15 @@ Workers each have a type corresponding to the execution environment to which the
       config:
         workPool: <target work pool name>
       selfManagedCloudApiConfig:
-        # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
-        # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
         apiUrl: "https://<DNS of Self-managed Cloud API>"
         accountId: <target account ID>
         workspaceId: <target workspace ID>
-        uiUrl: "https://<DNS of Self-managed Cloud UI>"
     ```
 
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://self-managed-prefect.company/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
-### Configuring a Worker for Prefect Server
+### Configuring a Worker for Self-hosted Prefect Server
 
 1. Configure the Prefect worker values
 
@@ -149,8 +146,8 @@ Workers each have a type corresponding to the execution environment to which the
         apiUrl: <dns or ip address of the prefect-server pod here>
     ```
 
-    These settings will ensure the worker connects with the local deployment of Prefect Server.
-    If the Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `prefect-server.<namespace>.svc.cluster.local`
+    These settings will ensure the worker connects with the local deployment of Self-hosted Prefect Server.
+    If the Self-hosted Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `prefect-server.<namespace>.svc.cluster.local`
 
 ### Installing & Verifying Deployment of the Prefect Worker
 
@@ -179,7 +176,7 @@ Workers each have a type corresponding to the execution environment to which the
 
 Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
 
-Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a Self-hosted server with basic auth enabled, you can authenticate your worker with the same credentials.
+Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a Self-hosted Prefect server with basic auth enabled, you can authenticate your worker with the same credentials.
 
 The format of the auth string is `admin:<my-password>` (no brackets).
 
