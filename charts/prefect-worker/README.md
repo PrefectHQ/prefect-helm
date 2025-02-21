@@ -147,7 +147,7 @@ Workers each have a type corresponding to the execution environment to which the
     ```
 
     These settings will ensure the worker connects with the local deployment of Self-hosted Prefect Server.
-    If the Self-hosted Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `prefect-server.<namespace>.svc.cluster.local`
+    If the Self-hosted Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api`. If the Self-hosted Prefect Server pod is deployed in a different cluster, set the apiUrl to the fully qualified domain name of the Self-hosted Prefect Server.
 
 ### Installing & Verifying Deployment of the Prefect Worker
 
