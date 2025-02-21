@@ -362,7 +362,7 @@
             "cloudUrl": {
               "type": "string",
               "title": "Cloud URL",
-              "description": "prefect cloud url"
+              "description": "prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId"
             }
           }
         },
@@ -402,7 +402,7 @@
             "cloudApiUrl": {
               "type": "string",
               "title": "Self Managed Cloud API URL",
-              "description": "self managed cloud api url"
+              "description": "Cloud API url for PREFECT_CLOUD_API_URL. This is used in self managed cloud instances to configure events and logs over websockets"
             },
             "apiUrl": {
               "type": "string",
