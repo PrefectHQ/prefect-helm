@@ -119,7 +119,7 @@ Workers each have a type corresponding to the execution environment to which the
 
     ```yaml
     worker:
-      apiConfig: selfManaged
+      apiConfig: selfManagedCloud
       config:
         workPool: <target work pool name>
       selfManagedCloudApiConfig:
@@ -142,10 +142,10 @@ Workers each have a type corresponding to the execution environment to which the
 
     ```yaml
     worker:
-      apiConfig: server
+      apiConfig: selfHostedServer
       config:
         workPool: <target work pool name>
-      serverApiConfig:
+      selfHostedServerApiConfig:
         apiUrl: <dns or ip address of the prefect-server pod here>
     ```
 
@@ -345,7 +345,7 @@ worker:
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | worker.affinity | object | `{}` | affinity for worker pods assignment |
-| worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfManaged', or 'server' |
+| worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfManagedCloud', or 'selfHostedServer' |
 | worker.autoscaling.enabled | bool | `false` | enable autoscaling for the worker |
 | worker.autoscaling.maxReplicas | int | `1` | maximum number of replicas to scale up to |
 | worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
@@ -416,15 +416,13 @@ worker:
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
 | worker.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
+| worker.selfHostedServerApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.selfManagedCloudApiConfig.accountId | string | `""` | prefect account ID |
 | worker.selfManagedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.selfManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.selfManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.selfManagedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
-| worker.selfManagedCloudApiConfig.uiUrl | string | `""` | self hosted UI url |
 | worker.selfManagedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
-| worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
-| worker.serverApiConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
 
 ----------------------------------------------

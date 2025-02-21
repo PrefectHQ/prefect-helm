@@ -1,1 +1,1 @@
-1. Check Prefect worker connections in the prefect UI at {{ template "worker.appUrl" . }}
+1. Check Prefect worker connections in the prefect UI

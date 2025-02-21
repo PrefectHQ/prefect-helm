@@ -323,7 +323,8 @@
         "apiConfig": {
           "type": "string",
           "title": "API Config",
-          "description": "one of 'cloud' or 'server'"
+          "description": "one of 'cloud', 'selfManagedCloud', or 'selfHostedServer'",
+          "enum": ["cloud", "selfManagedCloud", "selfHostedServer"]
         },
         "cloudApiConfig": {
           "type": "object",
@@ -403,11 +404,6 @@
               "title": "Self Managed Cloud API URL",
               "description": "self managed cloud api url"
             },
-            "uiUrl": {
-              "type": "string",
-              "title": "Self-managed Cloud URL",
-              "description": "Self-managed Cloud URL"
-            },
             "apiUrl": {
               "type": "string",
               "title": "Self-managed API URL",
@@ -415,7 +411,7 @@
             }
           }
         },
-        "serverApiConfig": {
+        "selfHostedServerApiConfig": {
           "type": "object",
           "title": "Server API Config",
           "description": "server api configuration",
@@ -425,11 +421,6 @@
               "type": "string",
               "title": "API",
               "description": "prefect API url (PREFECT_API_URL)"
-            },
-            "uiUrl": {
-              "type": "string",
-              "title": "UI",
-              "description": "prefect UI url"
             }
           }
         },
