@@ -9,7 +9,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13-python3.11-kubernetes-python3.11-kubernetes
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
