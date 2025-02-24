@@ -4,15 +4,19 @@ release:
   namespace: prefect
 
 tests:
-  - it: Should set the correct image and tag
+  - it: Should set the correct image
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
-          value: prefecthq/prefect:3-latest
+          value: prefecthq/prefect:3.1.13
 
   - it: Should set custom image and tag
     set:
@@ -20,17 +24,21 @@ tests:
         prefect:
           image:
             repository: custom/prefect
-            prefectTag: v2.0.0
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
-          value: custom/prefect:v2.0.0
+          value: custom/prefect:3.1.13
 
   - it: Should set the correct pull policy
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -44,6 +52,7 @@ tests:
       global:
         prefect:
           image:
+            prefectTag: 3.1.13
             pullPolicy: Always
       backgroundServices:
         runAsSeparateDeployment: true
@@ -60,6 +69,7 @@ tests:
           image:
             pullSecrets:
               - my-secret
+          prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -70,6 +80,10 @@ tests:
 
   - it: Should set the correct priority class name
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         priorityClassName: high-priority
@@ -81,6 +95,10 @@ tests:
 
   - it: Should set the correct debug mode
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -91,6 +109,10 @@ tests:
 
   - it: Should enable debug mode
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         debug: true
@@ -102,6 +124,10 @@ tests:
 
   - it: Should set the correct logging level
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -112,6 +138,10 @@ tests:
 
   - it: Should set a custom logging level
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         loggingLevel: DEBUG
@@ -123,6 +153,10 @@ tests:
 
   - it: Should set custom environment variables
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         env:
@@ -136,6 +170,10 @@ tests:
 
   - it: Should set the correct revision history limit
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -146,6 +184,10 @@ tests:
 
   - it: Should set a custom revision history limit
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         revisionHistoryLimit: 5
@@ -157,6 +199,10 @@ tests:
 
   - it: Should set the correct resource requests and limits
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -179,6 +225,10 @@ tests:
 
   - it: Should set custom resource requests and limits
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         resources:
@@ -208,6 +258,10 @@ tests:
 
   - it: Should set the correct security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -226,6 +280,10 @@ tests:
 
   - it: Should set custom security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         podSecurityContext:
@@ -248,6 +306,10 @@ tests:
 
   - it: Should set the correct container security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -270,6 +332,10 @@ tests:
 
   - it: Should set custom container security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         containerSecurityContext:
@@ -297,6 +363,10 @@ tests:
 
   - it: Should set pod labels
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         podLabels:
@@ -309,6 +379,10 @@ tests:
 
   - it: Should set pod annotations
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         podAnnotations:
@@ -321,6 +395,10 @@ tests:
 
   - it: Should set affinity
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         affinity:
@@ -341,6 +419,10 @@ tests:
 
   - it: Should set node selector
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         nodeSelector:
@@ -353,6 +435,10 @@ tests:
 
   - it: Should set tolerations
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         tolerations:
@@ -368,6 +454,10 @@ tests:
 
   - it: Should set extra environment variables from ConfigMap
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         extraEnvVarsCM: my-config-map
@@ -379,6 +469,10 @@ tests:
 
   - it: Should set extra environment variables from Secret
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         extraEnvVarsSecret: my-secret
@@ -390,6 +484,10 @@ tests:
 
   - it: Should set extra containers
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         extraContainers:
@@ -403,6 +501,10 @@ tests:
 
   - it: Should set extra volumes
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         extraVolumes:
@@ -417,6 +519,10 @@ tests:
 
   - it: Should set extra volume mounts
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
         extraVolumeMounts:
