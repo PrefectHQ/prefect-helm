@@ -42,7 +42,7 @@
           "type": "object",
           "title": "Prefect",
           "description": "global prefect configuration",
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "image": {
               "type": "object",

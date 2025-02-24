@@ -1,3 +1,4 @@
+{{- include "prefect-server.validatePrefectServerApiSettings" . }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
