@@ -29,6 +29,6 @@
   {{- fail "prefectApiHost is deprecated. Please use `.Values.server.uiConfig.prefectUiApiUrl` instead." -}}
 {{- end -}}
 {{- if .Values.server.uiConfig.prefectUiUrl -}}
-  {{- fail "prefectUiUrl has been removed. This value was used solely for the purposes of printing out the UI URL during the installation process. It will now infer the UI URL from the `prefectUiApiUrl` value." -}}
+  {{- fail "`server.uiConfig.prefectUiUrl` has been removed. This value was used solely for the purposes of printing out the UI URL during the installation process. It will now infer the UI URL from the `prefectUiApiUrl` value." -}}
 {{- end -}}
 {{- end -}}
