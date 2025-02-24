@@ -8,3 +8,4 @@
 - [ ] Added/modified configuration includes a descriptive comment for documentation generation
 - [ ] Unit tests are added/updated
 - [ ] Deprecation/removal checks are added in `templates/NOTES.txt`
+- [ ] Relevant labels are added
