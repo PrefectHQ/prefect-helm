@@ -21,7 +21,6 @@
 {{- end -}}
 {{- end -}}
 
-
 {{- define "prefect-server.validatePrefectServerApiSettings" -}}
 {{- if .Values.global.prefect.prefectApiUrl -}}
   {{- fail "prefectApiUrl is deprecated. Please use `.Values.server.uiConfig.prefectUiApiUrl` instead." -}}
