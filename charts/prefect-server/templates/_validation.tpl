@@ -19,7 +19,6 @@
     {{- fail "When running background services separately, Prefect version must be 3.1.13 or higher" -}}
   {{- end -}}
 {{- end -}}
-{{- end -}}
 
 {{- define "prefect-server.validatePrefectServerApiSettings" -}}
 {{- if .Values.global.prefect.prefectApiUrl -}}
