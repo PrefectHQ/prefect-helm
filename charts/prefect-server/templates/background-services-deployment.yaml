@@ -1,5 +1,4 @@
 {{- if .Values.backgroundServices.runAsSeparateDeployment }}
-{{- include "prefect-server.validatePrefectVersion" . }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
 metadata:
