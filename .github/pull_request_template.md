@@ -11,3 +11,4 @@
 - [ ] Unit tests are added/updated
 - [ ] Deprecation/removal checks are added in `templates/NOTES.txt`
 - [ ] Relevant labels are added
+- [ ] `Draft` status is used until ready for review
