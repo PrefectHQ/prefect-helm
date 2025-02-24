@@ -67,9 +67,9 @@ tests:
       global:
         prefect:
           image:
+            prefectTag: 3.1.13
             pullSecrets:
               - my-secret
-          prefectTag: 3.1.13
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
