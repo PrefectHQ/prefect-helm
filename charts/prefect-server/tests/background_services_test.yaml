@@ -9,14 +9,14 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
-          value: prefecthq/prefect:3.1.13
+          value: prefecthq/prefect:3.1.13-python3.11-kubernetes
 
   - it: Should set custom image and tag
     set:
@@ -24,21 +24,21 @@ tests:
         prefect:
           image:
             repository: custom/prefect
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
-          value: custom/prefect:3.1.13
+          value: custom/prefect:3.1.13-python3.11-kubernetes
 
   - it: Should set the correct pull policy
     set:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -52,7 +52,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
             pullPolicy: Always
       backgroundServices:
         runAsSeparateDeployment: true
@@ -67,7 +67,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
             pullSecrets:
               - my-secret
       backgroundServices:
@@ -83,7 +83,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         priorityClassName: high-priority
@@ -98,7 +98,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -112,7 +112,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         debug: true
@@ -127,7 +127,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -141,7 +141,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         loggingLevel: DEBUG
@@ -156,7 +156,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         env:
@@ -173,7 +173,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -187,7 +187,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         revisionHistoryLimit: 5
@@ -202,7 +202,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -228,7 +228,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         resources:
@@ -261,7 +261,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -283,7 +283,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         podSecurityContext:
@@ -309,7 +309,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -335,7 +335,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         containerSecurityContext:
@@ -366,7 +366,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         podLabels:
@@ -382,7 +382,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         podAnnotations:
@@ -398,7 +398,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         affinity:
@@ -422,7 +422,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         nodeSelector:
@@ -438,7 +438,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         tolerations:
@@ -457,7 +457,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraEnvVarsCM: my-config-map
@@ -472,7 +472,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraEnvVarsSecret: my-secret
@@ -487,7 +487,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraContainers:
@@ -504,7 +504,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraVolumes:
@@ -522,7 +522,7 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraVolumeMounts:
