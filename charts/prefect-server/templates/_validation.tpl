@@ -1,5 +1,5 @@
 {{- define "prefect-server.validatePrefectVersion" -}}
-{{- if .Values.backgroundServices.runAsSeparateDeployment }}
+{{- if .Values.backgroundServices.runAsSeparateDeployment -}}
   {{- $prefectTag := .Values.global.prefect.image.prefectTag -}}
   {{- if not (regexMatch "^[0-9]+" $prefectTag) -}}
     {{- fail "When running background services separately, Prefect tag must start with a version number" -}}
