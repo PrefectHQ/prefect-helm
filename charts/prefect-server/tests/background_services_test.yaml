@@ -4,15 +4,19 @@ release:
   namespace: prefect
 
 tests:
-  - it: Should set the correct image and tag
+  - it: Should set the correct image
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
-          value: prefecthq/prefect:3-latest
+          value: prefecthq/prefect:3.1.13-python3.11-kubernetes
 
   - it: Should set custom image and tag
     set:
@@ -20,17 +24,21 @@ tests:
         prefect:
           image:
             repository: custom/prefect
-            prefectTag: v2.0.0
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
       - template: background-services-deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
-          value: custom/prefect:v2.0.0
+          value: custom/prefect:3.1.13-python3.11-kubernetes
 
   - it: Should set the correct pull policy
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -44,6 +52,7 @@ tests:
       global:
         prefect:
           image:
+            prefectTag: 3.1.13-python3.11-kubernetes
             pullPolicy: Always
       backgroundServices:
         runAsSeparateDeployment: true
@@ -58,6 +67,7 @@ tests:
       global:
         prefect:
           image:
+            prefectTag: 3.1.13-python3.11-kubernetes
             pullSecrets:
               - my-secret
       backgroundServices:
@@ -70,6 +80,10 @@ tests:
 
   - it: Should set the correct priority class name
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         priorityClassName: high-priority
@@ -81,6 +95,10 @@ tests:
 
   - it: Should set the correct debug mode
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -91,6 +109,10 @@ tests:
 
   - it: Should enable debug mode
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         debug: true
@@ -102,6 +124,10 @@ tests:
 
   - it: Should set the correct logging level
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -112,6 +138,10 @@ tests:
 
   - it: Should set a custom logging level
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         loggingLevel: DEBUG
@@ -121,54 +151,12 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: DEBUG
 
-  - it: Should set the correct API URL
-    set:
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
-          value: "http://localhost:4200/api"
-
-  - it: Should set a custom API URL
-    set:
-      global:
-        prefect:
-          prefectApiUrl: "https://custom-api.example.com"
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
-          value: "https://custom-api.example.com"
-
-  - it: Should set the correct API host
-    set:
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
-          value: "0.0.0.0"
-
-  - it: Should set a custom API host
-    set:
-      global:
-        prefect:
-          prefectApiHost: "127.0.0.1"
-      backgroundServices:
-        runAsSeparateDeployment: true
-    asserts:
-      - template: background-services-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_HOST")].value
-          value: "127.0.0.1"
-
   - it: Should set custom environment variables
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         env:
@@ -182,6 +170,10 @@ tests:
 
   - it: Should set the correct revision history limit
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -192,6 +184,10 @@ tests:
 
   - it: Should set a custom revision history limit
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         revisionHistoryLimit: 5
@@ -203,6 +199,10 @@ tests:
 
   - it: Should set the correct resource requests and limits
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -225,6 +225,10 @@ tests:
 
   - it: Should set custom resource requests and limits
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         resources:
@@ -254,6 +258,10 @@ tests:
 
   - it: Should set the correct security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -272,6 +280,10 @@ tests:
 
   - it: Should set custom security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         podSecurityContext:
@@ -294,6 +306,10 @@ tests:
 
   - it: Should set the correct container security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
     asserts:
@@ -316,6 +332,10 @@ tests:
 
   - it: Should set custom container security context
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         containerSecurityContext:
@@ -343,6 +363,10 @@ tests:
 
   - it: Should set pod labels
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         podLabels:
@@ -355,6 +379,10 @@ tests:
 
   - it: Should set pod annotations
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         podAnnotations:
@@ -367,6 +395,10 @@ tests:
 
   - it: Should set affinity
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         affinity:
@@ -387,6 +419,10 @@ tests:
 
   - it: Should set node selector
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         nodeSelector:
@@ -399,6 +435,10 @@ tests:
 
   - it: Should set tolerations
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         tolerations:
@@ -414,6 +454,10 @@ tests:
 
   - it: Should set extra environment variables from ConfigMap
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraEnvVarsCM: my-config-map
@@ -425,6 +469,10 @@ tests:
 
   - it: Should set extra environment variables from Secret
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraEnvVarsSecret: my-secret
@@ -436,6 +484,10 @@ tests:
 
   - it: Should set extra containers
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraContainers:
@@ -449,6 +501,10 @@ tests:
 
   - it: Should set extra volumes
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraVolumes:
@@ -463,6 +519,10 @@ tests:
 
   - it: Should set extra volume mounts
     set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
         runAsSeparateDeployment: true
         extraVolumeMounts:

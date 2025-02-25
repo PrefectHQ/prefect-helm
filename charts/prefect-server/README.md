@@ -243,8 +243,6 @@ the HorizontalPodAutoscaler.
 | global.prefect.image.pullPolicy | string | `"IfNotPresent"` | prefect image pull policy |
 | global.prefect.image.pullSecrets | list | `[]` | prefect image pull secrets |
 | global.prefect.image.repository | string | `"prefecthq/prefect"` | prefect image repository |
-| global.prefect.prefectApiHost | string | `"0.0.0.0"` | sets PREFECT_SERVER_API_HOST |
-| global.prefect.prefectApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_API_URL |
 | ingress.annotations | object | `{}` | additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. |
 | ingress.className | string | `""` | IngressClass that will be used to implement the Ingress (Kubernetes 1.18+) |
 | ingress.enabled | bool | `false` | enable ingress record generation for server |
@@ -326,9 +324,8 @@ the HorizontalPodAutoscaler.
 | server.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
 | server.uiConfig.enabled | bool | `true` | set PREFECT_UI_ENABLED; enable the UI on the server |
-| server.uiConfig.prefectUiApiUrl | string | `""` | sets PREFECT_UI_API_URL |
+| server.uiConfig.prefectUiApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; If you want to connect to the UI from somewhere external to the cluster (i.e. via an ingress), you need to set this value to the ingress URL (e.g. http://app.internal.prefect.com/api). You can find additional documentation on this here - https://docs.prefect.io/v3/manage/self-host#ui |
 | server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |
-| server.uiConfig.prefectUiUrl | string | `""` | sets PREFECT_UI_URL |
 | service.annotations | object | `{}` |  |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |

@@ -20,3 +20,15 @@
   {{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "prefect-server.validatePrefectServerApiSettings" -}}
+{{- if .Values.global.prefect.prefectApiUrl -}}
+  {{- fail "`global.prefect.prefectApiUrl` has been removed. Please use `server.uiConfig.prefectUiApiUrl` instead." -}}
+{{- end -}}
+{{- if .Values.global.prefect.prefectApiHost -}}
+  {{- fail "`global.prefect.prefectApiHost` has been removed. Please use `server.uiConfig.prefectUiApiUrl` instead." -}}
+{{- end -}}
+{{- if .Values.server.uiConfig.prefectUiUrl -}}
+  {{- fail "`server.uiConfig.prefectUiUrl` has been removed. This value was used solely for the purposes of printing out the UI URL during the installation process. It will now infer the UI URL from the `prefectUiApiUrl` value." -}}
+{{- end -}}
+{{- end -}}
