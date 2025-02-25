@@ -119,22 +119,19 @@ Workers each have a type corresponding to the execution environment to which the
 
     ```yaml
     worker:
-      apiConfig: selfManaged
+      apiConfig: selfManagedCloud
       config:
         workPool: <target work pool name>
       selfManagedCloudApiConfig:
-        # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
-        # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
         apiUrl: "https://<DNS of Self-managed Cloud API>"
         accountId: <target account ID>
         workspaceId: <target workspace ID>
-        uiUrl: "https://<DNS of Self-managed Cloud UI>"
     ```
 
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://self-managed-prefect.company/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
 
-### Configuring a Worker for Prefect Server
+### Configuring a Worker for Self-hosted Prefect Server
 
 1. Configure the Prefect worker values
 
@@ -142,15 +139,15 @@ Workers each have a type corresponding to the execution environment to which the
 
     ```yaml
     worker:
-      apiConfig: server
+      apiConfig: selfHostedServer
       config:
         workPool: <target work pool name>
-      serverApiConfig:
+      selfHostedServerApiConfig:
         apiUrl: <dns or ip address of the prefect-server pod here>
     ```
 
-    These settings will ensure the worker connects with the local deployment of Prefect Server.
-    If the Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `prefect-server.<namespace>.svc.cluster.local`
+    These settings will ensure the worker connects with the local deployment of Self-hosted Prefect Server.
+    If the Self-hosted Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api`. If the Self-hosted Prefect Server pod is deployed in a different cluster, set the apiUrl to the fully qualified domain name of the Self-hosted Prefect Server.
 
 ### Installing & Verifying Deployment of the Prefect Worker
 
@@ -179,7 +176,7 @@ Workers each have a type corresponding to the execution environment to which the
 
 Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
 
-Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a Self-hosted server with basic auth enabled, you can authenticate your worker with the same credentials.
+Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a Self-hosted Prefect server with basic auth enabled, you can authenticate your worker with the same credentials.
 
 The format of the auth string is `admin:<my-password>` (no brackets).
 
@@ -345,7 +342,7 @@ worker:
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | worker.affinity | object | `{}` | affinity for worker pods assignment |
-| worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfManaged', or 'server' |
+| worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfManagedCloud', or 'selfHostedServer' |
 | worker.autoscaling.enabled | bool | `false` | enable autoscaling for the worker |
 | worker.autoscaling.maxReplicas | int | `1` | maximum number of replicas to scale up to |
 | worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
@@ -416,15 +413,13 @@ worker:
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
 | worker.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
+| worker.selfHostedServerApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.selfManagedCloudApiConfig.accountId | string | `""` | prefect account ID |
 | worker.selfManagedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.selfManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.selfManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.selfManagedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
-| worker.selfManagedCloudApiConfig.uiUrl | string | `""` | self hosted UI url |
 | worker.selfManagedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
-| worker.serverApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
-| worker.serverApiConfig.uiUrl | string | `"http://localhost:4200"` | prefect UI url |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
 
 ----------------------------------------------
