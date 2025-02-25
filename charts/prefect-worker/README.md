@@ -348,9 +348,6 @@ worker:
 | worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
 | worker.autoscaling.targetCPUUtilizationPercentage | int | `80` | target CPU utilization percentage for scaling the worker |
 | worker.autoscaling.targetMemoryUtilizationPercentage | int | `80` | target memory utilization percentage for scaling the worker |
-| worker.basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
-| worker.basicAuth.enabled | bool | `false` | enable basic auth for the worker, for an administrator/password combination. must be enabled on the server as well |
-| worker.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | worker.cloudApiConfig.accountId | string | `""` | prefect account ID |
 | worker.cloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
@@ -414,6 +411,9 @@ worker:
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
 | worker.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | worker.selfHostedServerApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
+| worker.selfHostedServerApiConfig.basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
+| worker.selfHostedServerApiConfig.basicAuth.enabled | bool | `false` | enable basic auth for the worker, for an administrator/password combination. must be enabled on the server as well |
+| worker.selfHostedServerApiConfig.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | worker.selfManagedCloudApiConfig.accountId | string | `""` | prefect account ID |
 | worker.selfManagedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.selfManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |

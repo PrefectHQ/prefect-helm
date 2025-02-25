@@ -19,9 +19,10 @@ tests:
   - it: Should set basic auth from authString
     set:
       worker:
-        basicAuth:
-          enabled: true
-          authString: "admin:mypassword"
+        selfHostedServerApiConfig:
+          basicAuth:
+            enabled: true
+            authString: "admin:mypassword"
     asserts:
       - template: deployment.yaml
         equal:
@@ -31,9 +32,10 @@ tests:
   - it: Should set basic auth from existing secret
     set:
       worker:
-        basicAuth:
-          enabled: true
-          existingSecret: "my-auth-secret"
+        selfHostedServerApiConfig:
+          basicAuth:
+            enabled: true
+            existingSecret: "my-auth-secret"
     asserts:
       - template: deployment.yaml
         contains:

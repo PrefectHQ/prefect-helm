@@ -105,15 +105,15 @@ spec:
               value: /home/prefect
             - name: PREFECT_API_URL
               value: {{ template "worker.apiUrl" . }}
-            {{- if .Values.worker.basicAuth.enabled }}
+            {{- if .Values.worker.selfHostedServerApiConfig.basicAuth.enabled }}
             - name: PREFECT_API_AUTH_STRING
-            {{- if .Values.worker.basicAuth.existingSecret }}
+            {{- if .Values.worker.selfHostedServerApiConfig.basicAuth.existingSecret }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.basicAuth.existingSecret }}
+                  name: {{ .Values.worker.selfHostedServerApiConfig.basicAuth.existingSecret }}
                   key: auth-string
             {{- else }}
-              value: {{ .Values.worker.basicAuth.authString | quote }}
+              value: {{ .Values.worker.selfHostedServerApiConfig.basicAuth.authString | quote }}
             {{- end }}
             {{- end }}
             - name: PREFECT_KUBERNETES_CLUSTER_UID
@@ -214,15 +214,15 @@ spec:
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
-            {{- if .Values.worker.basicAuth.enabled }}
+            {{- if .Values.worker.selfHostedServerApiConfig.basicAuth.enabled }}
             - name: PREFECT_API_AUTH_STRING
-            {{- if .Values.worker.basicAuth.existingSecret }}
+            {{- if .Values.worker.selfHostedServerApiConfig.basicAuth.existingSecret }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.basicAuth.existingSecret }}
+                  name: {{ .Values.worker.selfHostedServerApiConfig.basicAuth.existingSecret }}
                   key: auth-string
             {{- else }}
-              value: {{ .Values.worker.basicAuth.authString | quote }}
+              value: {{ .Values.worker.selfHostedServerApiConfig.basicAuth.authString | quote }}
             {{- end }}
             {{- end }}
             {{- if .Values.worker.extraEnvVars }}
