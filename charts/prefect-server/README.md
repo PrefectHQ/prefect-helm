@@ -54,7 +54,27 @@ server:
 
 ## Background Services Configuration
 
-The Prefect server includes background services related to scheduling and cleanup. By default, these run in the same deployment as the web server, but they can be separated for better resource management and scalability.
+The Prefect server includes background services related to scheduling and
+cleanup. By default, these run in the same deployment as the web server, but
+they can be separated for better resource management and scalability.
+
+Support for this separation was added to provide a path to scaling your deployment as your usage grows.
+If you are orchestrating a lot of work, you may need more web services to handle requests than background
+services to field the increased API requests.
+
+By default, the web services and background services share a connection pool to the
+database, but their connection needs are very different and even antagonistic
+with each other at times. Splitting the background services out also allows you
+to tune the datbase connections for each deployment (pool size, timeout, etc.),
+which can help with the database load.
+
+The separate deployment for background services is currently limited to one replica
+because it has not been optimized for running multiple copies. Additionally, many background
+services run on a loop between 5 and 60 seconds, so if they go down, Kubernetes should bring
+them back up after a health check without much disruption.
+
+Splitting the background services is optional, and is likely not necessary if
+you are not having any issues with your setup.
 
 To run background services in a separate deployment:
 
