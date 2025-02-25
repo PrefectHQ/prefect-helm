@@ -134,7 +134,7 @@ worker:
       # name: ""
 
   ## connection settings
-  # -- one of 'cloud', 'selfManaged', or 'server'
+  # -- one of 'cloud', 'selfManagedCloud', or 'selfHostedServer'
   apiConfig: "cloud"
 
   cloudApiConfig:
@@ -169,16 +169,12 @@ worker:
     # -- Cloud API url for PREFECT_CLOUD_API_URL
     # -- This is used in self managed cloud instances to congfigure events and logs over websockets
     cloudApiUrl: ""
-    # -- self hosted UI url
-    uiUrl: ""
 
-  serverApiConfig:
+  selfHostedServerApiConfig:
     # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
     # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api
     # -- prefect API url (PREFECT_API_URL)
     apiUrl: ""
-    # -- prefect UI url
-    uiUrl: http://localhost:4200
 
   # -- the number of old ReplicaSets to retain to allow rollback
   revisionHistoryLimit: 10
