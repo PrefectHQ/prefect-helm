@@ -126,7 +126,7 @@ worker:
 
   ## connection settings
   # -- one of 'cloud', 'selfManagedCloud', or 'selfHostedServer'
-  apiConfig: "cloud"
+  apiConfig: cloud
 
   cloudApiConfig:
     # -- prefect account ID
