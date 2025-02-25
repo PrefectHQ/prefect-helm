@@ -91,6 +91,8 @@ spec:
               value: {{ .Values.server.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
               value: {{ .Values.server.loggingLevel | quote }}
+            - name: PREFECT_SERVER_API_HOST
+              value: 0.0.0.0
             - name: PREFECT_SERVER_API_PORT
               value: {{ .Values.service.targetPort | quote }}
             - name: PREFECT_UI_ENABLED

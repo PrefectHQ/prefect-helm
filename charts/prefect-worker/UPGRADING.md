@@ -2,13 +2,21 @@
 
 ## > TBD
 
-After version TBD, the `prefect-worker` chart renamed the `server` key to `selfHostedServer`. Also, the allowed values for the `apiConfig` key changed from `cloud`, `server`, or `selfManaged` to `cloud`, `selfManagedCloud`, or `selfHostedServer`.
+After version TBD, there have been several breaking changes to the `prefect-worker` chart:
+- The allowed values for the `apiConfig` key changed from `cloud`, `server`, or `selfManaged` to `cloud`, `selfHostedServer`, and `selfManagedCloud`.
+- `.Values.worker.server` => `.Values.worker.selfHostedServerApiConfig`
+- `.Values.worker.basicAuth` => `.Values.worker.selfHostedServerApiConfig.basicAuth`
 
-### Self Hosted Server Configuration
+### Adjusting Your Configuration
+
+#### Self Hosted Server Configuration
+
 **Before**
 
 ```yaml
 worker:
+  basicAuth:
+    ...
   apiConfig: server
   server:
     ...
@@ -20,10 +28,12 @@ worker:
 worker:
   apiConfig: selfHostedServer
   selfHostedServerApiConfig:
-    ...
+    basicAuth:
+      ...
 ```
 
-### Self Managed Cloud Configuration
+#### Self Managed Cloud Configuration
+
 **Before**
 
 ```yaml
