@@ -32,7 +32,7 @@ worker:
       ...
 ```
 
-### Self Managed Cloud Configuration
+#### Self Managed Cloud Configuration
 
 **Before**
 
