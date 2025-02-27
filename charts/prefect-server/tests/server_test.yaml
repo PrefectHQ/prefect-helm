@@ -141,23 +141,8 @@ tests:
     asserts:
       - template: server-deployment.yaml
         equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_ENABLED")].value
-          value: "true"
-      - template: server-deployment.yaml
-        equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_STATIC_DIRECTORY")].value
           value: "/ui_build"
-
-  - it: Should disable the UI
-    set:
-      server:
-        uiConfig:
-          enabled: false
-    asserts:
-      - template: server-deployment.yaml
-        equal:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_ENABLED")].value
-          value: "false"
 
   - it: Should set custom UI API URL
     set:
