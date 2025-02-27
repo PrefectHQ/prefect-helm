@@ -95,8 +95,6 @@ spec:
               value: 0.0.0.0
             - name: PREFECT_SERVER_API_PORT
               value: {{ .Values.service.targetPort | quote }}
-            - name: PREFECT_UI_ENABLED
-              value: {{ .Values.server.uiConfig.enabled | quote }}
             - name: PREFECT_UI_API_URL
               value: {{ .Values.server.uiConfig.prefectUiApiUrl | quote }}
             - name: PREFECT_UI_STATIC_DIRECTORY
