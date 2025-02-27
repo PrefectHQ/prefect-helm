@@ -227,12 +227,6 @@ the HorizontalPodAutoscaler.
 | backgroundServices.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to background-services pod |
 | backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
 | backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
-| backgroundServices.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
-| backgroundServices.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
-| backgroundServices.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
-| backgroundServices.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
-| backgroundServices.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| backgroundServices.livenessProbe.enabled | bool | `false` |  |
 | backgroundServices.loggingLevel | string | `"WARNING"` |  |
 | backgroundServices.nodeSelector | object | `{}` | node labels for background-services pod assignment |
 | backgroundServices.podAnnotations | object | `{}` | extra annotations for background-services pod |
@@ -241,12 +235,6 @@ the HorizontalPodAutoscaler.
 | backgroundServices.podSecurityContext.runAsNonRoot | bool | `true` | set background-services pod's security context runAsNonRoot |
 | backgroundServices.podSecurityContext.runAsUser | int | `1001` | set background-services pod's security context runAsUser |
 | backgroundServices.priorityClassName | string | `""` | priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class |
-| backgroundServices.readinessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
-| backgroundServices.readinessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
-| backgroundServices.readinessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
-| backgroundServices.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
-| backgroundServices.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
-| backgroundServices.readinessProbe.enabled | bool | `false` |  |
 | backgroundServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the background-services container |
 | backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
 | backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
