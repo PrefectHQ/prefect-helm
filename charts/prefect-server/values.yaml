@@ -53,10 +53,13 @@ server:
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
 
-  # -- enable server debug mode
+  # -- sets PREFECT_SERVER_API_BASE_PATH - https://docs.prefect.io/v3/develop/settings-ref#base-path
+  apiBasePath: "/api"
+
+  # -- sets PREFECT_DEBUG_MODE - https://docs.prefect.io/v3/develop/settings-ref#debug-mode
   debug: false
 
-  # sets PREFECT_LOGGING_SERVER_LEVEL
+  # -- sets PREFECT_LOGGING_SERVER_LEVEL - https://docs.prefect.io/v3/develop/settings-ref#logging-level-2
   loggingLevel: WARNING
 
   uiConfig:
@@ -65,7 +68,7 @@ server:
     # -- sets PREFECT_UI_STATIC_DIRECTORY
     prefectUiStaticDirectory: "/ui_build"
 
-  # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
+  # see here for a full list of possible environment variables - https://docs.prefect.io/v3/develop/settings-ref#serversettings
   # -- array with environment variables to add to server deployment
   env: []
   ## env:
@@ -216,10 +219,10 @@ backgroundServices:
   # -- priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class
   priorityClassName: ""
 
-  # -- enable background-services debug mode
+  # -- sets PREFECT_DEBUG_MODE - https://docs.prefect.io/v3/develop/settings-ref#debug-mode
   debug: false
 
-  # sets PREFECT_LOGGING_SERVER_LEVEL
+  # -- sets PREFECT_LOGGING_SERVER_LEVEL - https://docs.prefect.io/v3/develop/settings-ref#logging-level-2
   loggingLevel: WARNING
 
   # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/

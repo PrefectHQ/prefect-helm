@@ -127,6 +127,13 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: WARNING
 
+  - it: Should set the correct API base path
+    asserts:
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_BASE_PATH")].value
+          value: "/api"
+
   - it: Should set a custom logging level
     set:
       server:
@@ -136,6 +143,16 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: DEBUG
+
+  - it: Should set a custom API base path
+    set:
+      server:
+        apiBasePath: "/custom-api"
+    asserts:
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_SERVER_API_BASE_PATH")].value
+          value: "/custom-api"
 
   - it: Should set the correct UI configuration
     asserts:
