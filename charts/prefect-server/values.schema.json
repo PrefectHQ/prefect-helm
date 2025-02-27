@@ -142,6 +142,12 @@
           "title": "Priority Class Name",
           "description": "priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class"
         },
+        "apiBasePath": {
+          "type": "string",
+          "title": "API Base Path",
+          "description": "sets PREFECT_SERVER_API_BASE_PATH",
+          "default": "/api"
+        },
         "debug": {
           "type": "boolean",
           "title": "Debug",
@@ -150,7 +156,8 @@
         "loggingLevel": {
           "type": "string",
           "title": "Logging Level",
-          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL",
+          "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         },
         "uiConfig": {
           "type": "object",
@@ -623,7 +630,8 @@
         },
         "loggingLevel": {
           "type": "string",
-          "description": "sets PREFECT_LOGGING_SERVER_LEVEL"
+          "description": "sets PREFECT_LOGGING_SERVER_LEVEL",
+          "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         },
         "env": {
           "type": "array",

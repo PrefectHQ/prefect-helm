@@ -91,6 +91,8 @@ spec:
               value: {{ .Values.server.debug | quote }}
             - name: PREFECT_LOGGING_SERVER_LEVEL
               value: {{ .Values.server.loggingLevel | quote }}
+            - name: PREFECT_SERVER_API_BASE_PATH
+              value: {{ .Values.server.apiBasePath | quote }}
             - name: PREFECT_SERVER_API_HOST
               value: 0.0.0.0
             - name: PREFECT_SERVER_API_PORT
@@ -143,14 +145,14 @@ spec:
           {{- if .Values.server.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
-              path: /api/health
+              path: {{ .Values.server.apiBasePath }}/health
               port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.livenessProbe.config | nindent 12 }}
           {{- end }}
           {{- if .Values.server.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
-              path: /api/ready
+              path: {{ .Values.server.apiBasePath }}/ready
               port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.readinessProbe.config | nindent 12 }}
           {{- end }}
