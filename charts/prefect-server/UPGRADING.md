@@ -2,7 +2,9 @@
 
 ## > TBD
 
-After version `TBD` the `prefect-server` chart has removed some exposed environment variables in favor of a more simplified configuration. In particular, the `prefectApiUrl` and `prefectApiHost` values have been removed in favor of the single `prefectUiApiUrl` value.
+After version TBD, there have been several breaking changes to the `prefect-worker` chart:
+- The `prefectApiUrl` and `prefectApiHost` values have been removed in favor of the single `prefectUiApiUrl` value.
+- `.Values.server.uiConfig.prefectUiUrl` has been removed.
 
 ### Adjusting your configuration
 
@@ -16,6 +18,17 @@ Note: If you were using the default value for `prefectApiUrl` (i.e. `http://loca
 #### UI URL
 
 `.Values.server.uiConfig.prefectUiUrl` has been removed altogether. This value was used solely for the purposes of printing out the UI URL during the installation process. It will now infer the UI URL from the `prefectUiApiUrl` value.
+
+#### Disabling the UI
+
+If you would like to disable the UI, you can pass this configuration via the `env` key.
+
+```yaml
+server:
+  env:
+    - name: PREFECT_UI_ENABLED
+      value: 'false'
+```
 
 ---
 
