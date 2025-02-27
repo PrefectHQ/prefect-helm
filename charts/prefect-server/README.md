@@ -220,14 +220,14 @@ the HorizontalPodAutoscaler.
 | backgroundServices.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set background-services containers' security context readOnlyRootFilesystem |
 | backgroundServices.containerSecurityContext.runAsNonRoot | bool | `true` | set background-services containers' security context runAsNonRoot |
 | backgroundServices.containerSecurityContext.runAsUser | int | `1001` | set background-services containers' security context runAsUser |
-| backgroundServices.debug | bool | `false` | sets PREFECT_DEBUG_MODE - https://docs.prefect.io/v3/develop/settings-ref#debug-mode |
+| backgroundServices.debug | bool | `false` | sets PREFECT_DEBUG_MODE |
 | backgroundServices.env | list | `[]` | array with environment variables to add to background-services container |
 | backgroundServices.extraContainers | list | `[]` | additional sidecar containers |
 | backgroundServices.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to background-services pod |
 | backgroundServices.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to background-services pod |
 | backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
 | backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
-| backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL - https://docs.prefect.io/v3/develop/settings-ref#logging-level-2 |
+| backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.nodeSelector | object | `{}` | node labels for background-services pod assignment |
 | backgroundServices.podAnnotations | object | `{}` | extra annotations for background-services pod |
 | backgroundServices.podLabels | object | `{}` | extra labels for background-services pod |
@@ -282,7 +282,7 @@ the HorizontalPodAutoscaler.
 | secret.port | string | `""` | port for the PostgreSQL connection string |
 | secret.username | string | `""` | username for the PostgreSQL connection string |
 | server.affinity | object | `{}` | affinity for server pods assignment |
-| server.apiBasePath | string | `"/api"` | sets PREFECT_SERVER_API_BASE_PATH - https://docs.prefect.io/v3/develop/settings-ref#base-path |
+| server.apiBasePath | string | `"/api"` | sets PREFECT_SERVER_API_BASE_PATH |
 | server.args | list | `[]` | Custom container command arguments |
 | server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
 | server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |
@@ -298,7 +298,7 @@ the HorizontalPodAutoscaler.
 | server.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set server containers' security context readOnlyRootFilesystem |
 | server.containerSecurityContext.runAsNonRoot | bool | `true` | set server containers' security context runAsNonRoot |
 | server.containerSecurityContext.runAsUser | int | `1001` | set server containers' security context runAsUser |
-| server.debug | bool | `false` | sets PREFECT_DEBUG_MODE - https://docs.prefect.io/v3/develop/settings-ref#debug-mode |
+| server.debug | bool | `false` | sets PREFECT_DEBUG_MODE |
 | server.env | list | `[]` | array with environment variables to add to server deployment |
 | server.extraArgs | list | `[]` | array with extra Arguments for the server container to start with |
 | server.extraContainers | list | `[]` | additional sidecar containers |
@@ -312,7 +312,7 @@ the HorizontalPodAutoscaler.
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.livenessProbe.enabled | bool | `false` |  |
-| server.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL - https://docs.prefect.io/v3/develop/settings-ref#logging-level-2 |
+| server.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
 | server.podLabels | object | `{}` | extra labels for server pod |
