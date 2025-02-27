@@ -24,7 +24,7 @@ global:
       pullPolicy: IfNotPresent
       ## Optionally specify an array of imagePullSecrets.
       ## Secrets must be manually created in the namespace.
-      ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+      # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
       ## e.g:
       ## pullSecrets:
       ##   - myRegistryKeySecretName
@@ -250,7 +250,7 @@ backgroundServices:
       cpu: "1"
       memory: 1Gi
 
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
     # -- set background-services pod's security context runAsUser
     runAsUser: 1001
@@ -259,7 +259,7 @@ backgroundServices:
     # -- set background-services pod's security context fsGroup
     fsGroup: 1001
 
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   containerSecurityContext:
     # -- set background-services containers' security context runAsUser
     runAsUser: 1001
@@ -272,23 +272,23 @@ backgroundServices:
     # -- set background-services container's security context capabilities
     capabilities: {}
 
-  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for background-services pod
   podLabels: {}
 
-  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+  # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   # -- extra annotations for background-services pod
   podAnnotations: {}
 
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   # -- affinity for background-services pod assignment
   affinity: {}
 
-  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
   # -- node labels for background-services pod assignment
   nodeSelector: {}
 
-  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   # -- tolerations for background-services pod assignment
   tolerations: []
 
@@ -350,10 +350,10 @@ service:
   clusterIP: ""
 
 
-  ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  # ref: http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   # -- service external traffic policy
   externalTrafficPolicy: Cluster
-  ## -- additional custom annotations for server service
+  # -- additional custom annotations for server service
   annotations: {}
 
 # Ingress configuration
@@ -365,7 +365,7 @@ ingress:
   servicePort: server-svc-port
 
   ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
-  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  # ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
   # -- IngressClass that will be used to implement the Ingress (Kubernetes 1.18+)
   className: ""
   host:
@@ -377,7 +377,7 @@ ingress:
     pathType: ImplementationSpecific
 
   ## Use this parameter to set the required annotations for cert-manager, see
-  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+  # ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
   # -- additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
   annotations: {}
   ## annotations:
@@ -408,7 +408,7 @@ ingress:
   ##     serviceName: ssl-redirect
   ##     servicePort: use-annotation
 
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+  # ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
   # -- an array with additional tls configuration to be added to the ingress record
   extraTls: []
   ## extraTls:
@@ -416,7 +416,7 @@ ingress:
   ##     - server.local
   ##   secretName: server.local-tls
 
-  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  # ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
   # -- additional rules to be covered with this ingress record
   extraRules: []
   ## extraRules:
@@ -479,7 +479,7 @@ postgresql:
     password: prefect-rocks
 
   ## Initdb configuration
-  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#specifying-initdb-arguments
+  # ref: https://github.com/bitnami/containers/tree/main/bitnami/postgresql#specifying-initdb-arguments
   primary:
     initdb:
       # -- specify the PostgreSQL username to execute the initdb scripts
