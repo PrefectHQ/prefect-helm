@@ -107,20 +107,6 @@ spec:
           {{- with .Values.backgroundServices.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- if .Values.backgroundServices.livenessProbe.enabled }}
-          livenessProbe:
-            httpGet:
-              path: /api/health
-              port: {{ .Values.service.targetPort }}
-          {{- toYaml .Values.backgroundServices.livenessProbe.config | nindent 12 }}
-          {{- end }}
-          {{- if .Values.backgroundServices.readinessProbe.enabled }}
-          readinessProbe:
-            httpGet:
-              path: /api/ready
-              port: {{ .Values.service.targetPort }}
-          {{- toYaml .Values.backgroundServices.readinessProbe.config | nindent 12 }}
-          {{- end }}
           volumeMounts:
             - mountPath: /home/prefect
               name: scratch
