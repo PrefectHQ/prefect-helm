@@ -212,6 +212,17 @@ spec:
             - name: PREFECT_CLOUD_API_URL
               value: {{ .Values.worker.selfManagedCloudApiConfig.cloudApiUrl}}
             {{- end }}
+            {{- if eq .Values.worker.apiConfig "cloud" }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
+              value: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
+              value: {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
+            {{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
+              value: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
+              value: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
+            {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
             {{- if .Values.worker.selfHostedServerApiConfig.basicAuth.enabled }}
