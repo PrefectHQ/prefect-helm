@@ -488,3 +488,42 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].livenessProbe.successThreshold
           value: 1
+
+  - it: Should set Kubernetes worker secret env vars for cloud config
+    set:
+      worker:
+        apiConfig: cloud
+        cloudApiConfig:
+          apiKeySecret:
+            name: cloud-api-key-secret
+            key: api-key
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME")].value
+          value: cloud-api-key-secret
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY")].value
+          value: api-key
+
+  - it: Should set Kubernetes worker secret env vars for self-managed config
+    set:
+      worker:
+        apiConfig: selfManagedCloud
+        selfManagedCloudApiConfig:
+          apiUrl: https://my-prefect-cloud.example.com/api
+          accountId: test-account
+          workspaceId: test-workspace
+          apiKeySecret:
+            name: self-managed-api-key-secret
+            key: secret-key
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME")].value
+          value: self-managed-api-key-secret
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY")].value
+          value: secret-key
