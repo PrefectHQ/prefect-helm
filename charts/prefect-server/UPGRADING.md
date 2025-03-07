@@ -1,8 +1,8 @@
 # Upgrade guidelines
 
-## > 2025.3.6
+## > 2025.3.7033449
 
-After version 2025.3.6, there have been several breaking changes to the `prefect-server` chart:
+After version 2025.3.7033449, there have been several breaking changes to the `prefect-server` chart:
 - The `prefectApiUrl` and `prefectApiHost` values have been removed in favor of the single `prefectUiApiUrl` value.
 - `.Values.server.uiConfig.prefectUiUrl` has been removed.
 - `.Values.server.uiConfig.prefectUiEnabled` has been removed.

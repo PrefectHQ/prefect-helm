@@ -1,8 +1,8 @@
 # Upgrade guidelines
 
-## > 2025.3.6
+## > 2025.3.7033449
 
-After version 2025.3.6, there have been several breaking changes to the `prefect-worker` chart:
+After version 2025.3.7033449, there have been several breaking changes to the `prefect-worker` chart:
 - The allowed values for the `apiConfig` key changed from `cloud`, `server`, or `selfManaged` to `cloud`, `selfHostedServer`, and `selfManagedCloud`.
 - The `serverApiConfig` key has been replaced with the `selfHostedServerApiConfig`.
   - `.Values.worker.serverApiConfig` => `.Values.worker.selfHostedServerApiConfig`
