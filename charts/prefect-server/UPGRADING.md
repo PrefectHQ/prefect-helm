@@ -1,10 +1,11 @@
 # Upgrade guidelines
 
-## > TBD
+## > 2025.3.6
 
-After version TBD, there have been several breaking changes to the `prefect-worker` chart:
+After version 2025.3.6, there have been several breaking changes to the `prefect-server` chart:
 - The `prefectApiUrl` and `prefectApiHost` values have been removed in favor of the single `prefectUiApiUrl` value.
 - `.Values.server.uiConfig.prefectUiUrl` has been removed.
+- `.Values.server.uiConfig.prefectUiEnabled` has been removed.
 
 ### Adjusting your configuration
 

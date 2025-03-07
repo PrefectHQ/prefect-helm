@@ -1,11 +1,13 @@
 # Upgrade guidelines
 
-## > TBD
+## > 2025.3.6
 
-After version TBD, there have been several breaking changes to the `prefect-worker` chart:
+After version 2025.3.6, there have been several breaking changes to the `prefect-worker` chart:
 - The allowed values for the `apiConfig` key changed from `cloud`, `server`, or `selfManaged` to `cloud`, `selfHostedServer`, and `selfManagedCloud`.
-- `.Values.worker.server` => `.Values.worker.selfHostedServerApiConfig`
-- `.Values.worker.basicAuth` => `.Values.worker.selfHostedServerApiConfig.basicAuth`
+- The `serverApiConfig` key has been replaced with the `selfHostedServerApiConfig`.
+  - `.Values.worker.serverApiConfig` => `.Values.worker.selfHostedServerApiConfig`
+- The `basicAuth` key has been nested under the `selfHostedServerApiConfig` key.
+  - `.Values.worker.basicAuth` => `.Values.worker.selfHostedServerApiConfig.basicAuth`
 
 ### Adjusting Your Configuration
 
@@ -18,7 +20,7 @@ worker:
   basicAuth:
     ...
   apiConfig: server
-  server:
+  serverApiConfig:
     ...
 ```
 
