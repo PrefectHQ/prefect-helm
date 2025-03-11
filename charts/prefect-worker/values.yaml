@@ -55,6 +55,13 @@ worker:
     # -- additional sidecar containers
     extraContainers: []
 
+    # -- set dns policy and config for worker deployment
+    # dnsPolicy: ""
+    # dnsConfig:
+    #   nameservers: []
+    #   searches: []
+    #   options: []
+
   image:
     # -- worker image repository
     repository: prefecthq/prefect

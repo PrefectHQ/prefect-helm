@@ -38,6 +38,25 @@ spec:
         - name: {{ . }}
       {{- end }}
     {{- end }}
+    {{- if .Values.worker.dnsPolicy }}
+      dnsPolicy: {{ .Values.worker.dnsPolicy }}
+    {{- end }}
+    {{- if .Values.worker.dnsConfig }}
+      dnsConfig:
+        nameservers:
+        {{- range .Values.worker.dnsConfig.nameservers }}
+          - {{ . }}
+        {{- end }}
+        searches:
+        {{- range .Values.worker.dnsConfig.searches }}
+          - {{ . }}
+        {{- end }}
+        options:
+        {{- range .Values.worker.dnsConfig.options }}
+          - name: {{ .name }}
+            value: {{ .value }}
+        {{- end }}
+    {{- end }}
       serviceAccountName: {{ template "worker.serviceAccountName" . }}
       {{- if .Values.worker.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.worker.affinity "context" $) | nindent 8 }}
