@@ -370,7 +370,6 @@ worker:
 | worker.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set worker containers' security context readOnlyRootFilesystem |
 | worker.containerSecurityContext.runAsNonRoot | bool | `true` | set worker containers' security context runAsNonRoot |
 | worker.containerSecurityContext.runAsUser | int | `1001` | set worker containers' security context runAsUser |
-| worker.dnsConfig | object | `{"nameservers":[],"options":[],"searches":[]}` | optional dns config for worker deployment |
 | worker.dnsConfig.nameservers | list | `[]` | optional list of IP addresses that will be used as dns servers for the Pod |
 | worker.dnsConfig.options | list | `[]` | optional list of dns options for the Pod |
 | worker.dnsConfig.searches | list | `[]` | optional list of dns search domains for hostname lookup in the Pod |
