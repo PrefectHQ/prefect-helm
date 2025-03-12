@@ -556,7 +556,7 @@ tests:
         notExists:
           path: .spec.template.spec.dnsConfig
 
-  - it: Should set Kubernetes worker dsnConfig, all sub-values provided
+  - it: Should set Kubernetes worker dnsConfig, all sub-values provided
     set:
       worker:
         dnsConfig:
@@ -598,7 +598,7 @@ tests:
         notExists:
           path: .spec.template.spec.dnsConfig.options[1].value
 
-  - it: Should set Kubernetes worker dsnConfig, only nameservers provided
+  - it: Should set Kubernetes worker dnsConfig, only nameservers provided
     set:
       worker:
         dnsConfig:
@@ -620,7 +620,7 @@ tests:
         isNullOrEmpty:
           path: .spec.template.spec.dnsConfig.options
 
-  - it: Should set Kubernetes worker dsnConfig, only searches provided
+  - it: Should set Kubernetes worker dnsConfig, only searches provided
     set:
       worker:
         dnsConfig:
@@ -642,7 +642,7 @@ tests:
         isNullOrEmpty:
           path: .spec.template.spec.dnsConfig.options
 
-  - it: Should set Kubernetes worker dsnConfig, only options provided
+  - it: Should set Kubernetes worker dnsConfig, only options provided
     set:
       worker:
         dnsConfig:

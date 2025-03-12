@@ -55,12 +55,21 @@ worker:
     # -- additional sidecar containers
     extraContainers: []
 
-    # -- set dns policy and config for worker deployment
-    # dnsPolicy: ""
-    # dnsConfig:
-    #   nameservers: []
-    #   searches: []
-    #   options: []
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  # -- optional dns policy for worker deployment
+  dnsPolicy: ""
+
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  # -- optional dns config for worker deployment
+  dnsConfig:
+    # -- optional list of IP addresses that will be used as DNS servers for the Pod
+    nameservers: []
+    # -- optional list of DNS search domains for hostname lookup in the Pod
+    searches: []
+    # -- optional list of DNS options for the Pod
+    options: []
+    # - name: ndots
+    #   value: "2"
 
   image:
     # -- worker image repository
