@@ -13,7 +13,7 @@
 # Usage:
 #  ./scripts/helm_unittest.sh
 
-version=${VERSION:-3.15.4-0.6.1}
+version=${VERSION:-3.17.1-0.7.2}
 
 docker run \
   -it --rm \
