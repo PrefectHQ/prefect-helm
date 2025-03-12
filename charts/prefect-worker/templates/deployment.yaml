@@ -53,8 +53,12 @@ spec:
         {{- end }}
         options:
         {{- range .Values.worker.dnsConfig.options }}
+        {{- if .value }}
           - name: {{ .name }}
-            value: {{ .value }}
+            value: {{ .value | quote }}
+        {{- else }}
+          - name: {{ .name }}
+        {{- end }}
         {{- end }}
     {{- end }}
       serviceAccountName: {{ template "worker.serviceAccountName" . }}
