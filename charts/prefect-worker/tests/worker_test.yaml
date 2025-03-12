@@ -550,7 +550,7 @@ tests:
   - it: Should not set Kubernetes worker dnsConfig if not provided
     set:
       worker:
-        dnsConfig: {}
+        dnsConfig:
     asserts:
       - template: deployment.yaml
         notExists:
