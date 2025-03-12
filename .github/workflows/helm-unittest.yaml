@@ -23,3 +23,4 @@ jobs:
         uses: d3adb5/helm-unittest-action@v2
         with:
           helm-version: v3.17.1
+          unittest-version: 0.7.2
