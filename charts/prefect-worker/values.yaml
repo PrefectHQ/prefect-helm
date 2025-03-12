@@ -62,11 +62,11 @@ worker:
   ## ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
   # -- optional dns config for worker deployment
   dnsConfig:
-    # -- optional list of IP addresses that will be used as DNS servers for the Pod
+    # -- optional list of IP addresses that will be used as dns servers for the Pod
     nameservers: []
-    # -- optional list of DNS search domains for hostname lookup in the Pod
+    # -- optional list of dns search domains for hostname lookup in the Pod
     searches: []
-    # -- optional list of DNS options for the Pod
+    # -- optional list of dns options for the Pod
     options: []
     # - name: ndots
     #   value: "2"
