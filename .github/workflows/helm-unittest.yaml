@@ -16,9 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Resolve chart dependencies
-        run: make buildall
-
       - name: Run helm unittest
         uses: d3adb5/helm-unittest-action@v2
         with:
