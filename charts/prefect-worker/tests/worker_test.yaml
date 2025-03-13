@@ -527,3 +527,142 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY")].value
           value: secret-key
+
+  - it: Should not set Kubernetes worker dnsPolicy if not provided
+    set:
+      worker:
+        dnsPolicy: ""
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.dnsPolicy
+
+  - it: Should set Kubernetes worker dnsPolicy if provided
+    set:
+      worker:
+        dnsPolicy: ClusterFirst
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsPolicy
+          value: ClusterFirst
+
+  - it: Should not set Kubernetes worker dnsConfig if not provided
+    set:
+      worker:
+        dnsConfig:
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.dnsConfig
+
+  - it: Should set Kubernetes worker dnsConfig, all sub-values provided
+    set:
+      worker:
+        dnsConfig:
+          nameservers:
+            - 1.1.1.1
+            - 8.8.8.8
+          searches:
+            - example.com
+          options:
+            - name: ndots
+              value: "2"
+            - name: edns0
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.nameservers[0]
+          value: 1.1.1.1
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.nameservers[1]
+          value: 8.8.8.8
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.searches[0]
+          value: example.com
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.options[0].name
+          value: ndots
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.options[0].value
+          value: "2"
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.options[1].name
+          value: edns0
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.dnsConfig.options[1].value
+
+  - it: Should set Kubernetes worker dnsConfig, only nameservers provided
+    set:
+      worker:
+        dnsConfig:
+          nameservers:
+            - 1.1.1.1
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.nameservers[0]
+          value: 1.1.1.1
+      - template: deployment.yaml
+        lengthEqual:
+          path: .spec.template.spec.dnsConfig.nameservers
+          count: 1
+      - template: deployment.yaml
+        isNullOrEmpty:
+          path: .spec.template.spec.dnsConfig.searches
+      - template: deployment.yaml
+        isNullOrEmpty:
+          path: .spec.template.spec.dnsConfig.options
+
+  - it: Should set Kubernetes worker dnsConfig, only searches provided
+    set:
+      worker:
+        dnsConfig:
+          searches:
+            - example.com
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.searches[0]
+          value: example.com
+      - template: deployment.yaml
+        lengthEqual:
+          path: .spec.template.spec.dnsConfig.searches
+          count: 1
+      - template: deployment.yaml
+        isNullOrEmpty:
+          path: .spec.template.spec.dnsConfig.nameservers
+      - template: deployment.yaml
+        isNullOrEmpty:
+          path: .spec.template.spec.dnsConfig.options
+
+  - it: Should set Kubernetes worker dnsConfig, only options provided
+    set:
+      worker:
+        dnsConfig:
+          options:
+            - name: edns0
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.dnsConfig.options[0].name
+          value: edns0
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.dnsConfig.options[0].value
+      - template: deployment.yaml
+        lengthEqual:
+          path: .spec.template.spec.dnsConfig.options
+          count: 1
+      - template: deployment.yaml
+        isNullOrEmpty:
+          path: .spec.template.spec.dnsConfig.nameservers
+      - template: deployment.yaml
+        isNullOrEmpty:
+          path: .spec.template.spec.dnsConfig.searches

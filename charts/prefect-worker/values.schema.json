@@ -743,6 +743,34 @@
           "type": "array",
           "title": "Extra Container Args",
           "description": "array with extra Arguments for the worker container to start with"
+        },
+        "dnsPolicy": {
+          "type": "string",
+          "title": "DNS Policy",
+          "description": "worker deployment dns policy"
+        },
+        "dnsConfig": {
+          "type": "object",
+          "title": "DNS Config",
+          "description": "worker deployment dns configuration",
+          "additionalProperties": false,
+          "properties": {
+            "nameservers": {
+              "type": "array",
+              "title": "Nameservers",
+              "description": "a list of DNS name server IP addresses"
+            },
+            "searches": {
+              "type": "array",
+              "title": "Searches",
+              "description": "a list of DNS search domains for host-name lookup"
+            },
+            "options": {
+              "type": "array",
+              "title": "Options",
+              "description": "a list of DNS resolver options"
+            }
+          }
         }
       }
     },
