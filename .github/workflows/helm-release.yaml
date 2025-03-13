@@ -3,16 +3,11 @@ name: Release Prefect Server and Worker Helm Charts
 
 "on":
   workflow_dispatch:
-    inputs:
-      really:
-        required: true
-        default: "false"
 
 permissions: {}
 
 jobs:
   release:
-    if: inputs.really == 'true'
     runs-on: ubuntu-latest
     permissions:
       # GitHub considers creating releases and uploading assets as writing contents.
@@ -136,7 +131,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   update_helm_chart_worker_version_downstream:
-    if: inputs.really == 'true'
     name: Update Helm Chart Worker version in `ops-cluster-deployment`
     needs: release
     runs-on: ubuntu-latest
