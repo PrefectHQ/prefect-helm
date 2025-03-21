@@ -565,3 +565,34 @@ tests:
             - prefect
             - worker
             - start
+
+  - it: Should configure custom entrypoint and args with custom image
+    set:
+      global:
+        prefect:
+          image:
+            repository: mycustomimage
+            prefectTag: 1.2.0
+      backgroundServices:
+        runAsSeparateDeployment: true
+        command:
+          - /usr/bin/tini
+          - myentrypoint
+        args:
+          - prefect
+          - worker
+          - start
+    asserts:
+      - template: background-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].command
+          value:
+            - /usr/bin/tini
+            - myentrypoint
+      - template: background-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args
+          value:
+            - prefect
+            - worker
+            - start
