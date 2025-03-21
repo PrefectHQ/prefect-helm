@@ -237,6 +237,12 @@ backgroundServices:
   ##   - name: PREFECT_API_ENABLE_HTTP2
   ##     value: false
 
+  # -- Custom container command arguments
+  args: []
+
+  # -- Custom container entrypoint
+  command: []
+
   # -- the number of old ReplicaSets to retain to allow rollback
   revisionHistoryLimit: 10
 

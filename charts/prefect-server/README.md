@@ -215,6 +215,8 @@ the HorizontalPodAutoscaler.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | backgroundServices.affinity | object | `{}` | affinity for background-services pod assignment |
+| backgroundServices.args | list | `[]` | Custom container command arguments |
+| backgroundServices.command | list | `[]` | Custom container entrypoint |
 | backgroundServices.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set background-services containers' security context allowPrivilegeEscalation |
 | backgroundServices.containerSecurityContext.capabilities | object | `{}` | set background-services container's security context capabilities |
 | backgroundServices.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set background-services containers' security context readOnlyRootFilesystem |
