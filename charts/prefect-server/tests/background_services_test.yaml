@@ -535,3 +535,33 @@ tests:
           content:
             name: config
             mountPath: /app/config
+
+  - it: Should configure custom entrypoint and args
+    set:
+      global:
+        prefect:
+          image:
+            prefectTag: 3.1.13-python3.11-kubernetes
+      backgroundServices:
+        runAsSeparateDeployment: true
+        command:
+          - /usr/bin/tini
+          - myentrypoint
+        args:
+          - prefect
+          - worker
+          - start
+    asserts:
+      - template: background-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].command
+          value:
+            - /usr/bin/tini
+            - myentrypoint
+      - template: background-services-deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args
+          value:
+            - prefect
+            - worker
+            - start
