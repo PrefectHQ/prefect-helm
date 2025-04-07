@@ -774,9 +774,9 @@
           "description": "enable ingress record generation for server"
         },
         "servicePort": {
-          "type": "string",
+          "type": ["integer", "string"],
           "title": "Service Port Name",
-          "description": "service port name"
+          "description": "service port name or number"
         },
         "className": {
           "type": "string",
