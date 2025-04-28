@@ -324,7 +324,7 @@ worker:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.27.0 |
+| https://charts.bitnami.com/bitnami | common | 2.30.0 |
 
 ## Values
 
