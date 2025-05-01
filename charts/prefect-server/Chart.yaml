@@ -5,11 +5,11 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.30.0
+    version: 2.30.2
   - name: postgresql
     condition: postgresql.enabled
     repository: https://charts.bitnami.com/bitnami
-    version: 12.12.10
+    version: 16.6.6
 description: Prefect server application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
