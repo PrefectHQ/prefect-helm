@@ -118,8 +118,8 @@ tests:
       worker:
         config:
           workQueues:
-          - one
-          - two
+            - one
+            - two
     asserts:
       - template: deployment.yaml
         equal:
@@ -666,3 +666,19 @@ tests:
       - template: deployment.yaml
         isNullOrEmpty:
           path: .spec.template.spec.dnsConfig.searches
+
+  - it: Should set Kubernetes worker observer namespaces by default
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES")].value
+          value: prefect
+
+  - it: Should set Kubernetes worker observer namespaces with override
+    set:
+      namespaceOverride: my-namespace
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES")].value
+          value: my-namespace
