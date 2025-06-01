@@ -65,7 +65,7 @@ services to field the increased API requests.
 By default, the web services and background services share a connection pool to the
 database, but their connection needs are very different and even antagonistic
 with each other at times. Splitting the background services out also allows you
-to tune the database connections for each deployment (pool size, timeout, etc.),
+to tune the datbase connections for each deployment (pool size, timeout, etc.),
 which can help with the database load.
 
 The separate deployment for background services is currently limited to one replica
@@ -166,7 +166,7 @@ secret:
     type: Opaque
     ```
 
-3. Set the connection string in the existing secret following this format - `?ssl=verify-ca` is crucial:
+3. Set the connection string in the existing secret following this format - `?ssl=verify-ca` is cruicial:
     ```
     postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
     ```
@@ -208,7 +208,7 @@ the HorizontalPodAutoscaler.
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.1 |
-| https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
+| https://charts.bitnami.com/bitnami | postgresql | 16.7.8 |
 
 ## Values
 
