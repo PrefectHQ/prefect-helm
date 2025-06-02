@@ -173,8 +173,12 @@ server:
     capabilities: {}
 
   # ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
-  # -- The type of deployment strategy, can be "Recreate" or RollingUpdate". Setting this to "Recreate" is useful when database is on a mounted volume that can only be attached to a single node at a time.
-  deploymentStrategyType: "RollingUpdate"
+  # -- Specifies the strategy used to replace old Pods by new ones. Type can be "Recreate" or "RollingUpdate".
+  # Setting this to "Recreate" is useful when database is on a mounted volume that can only be attached to a single node at a time.
+  updateStrategy:
+    type: RollingUpdate
+    #rollingUpdate:
+    #  maxUnavailable: 1
 
   # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for server pod

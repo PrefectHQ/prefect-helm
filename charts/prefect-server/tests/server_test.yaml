@@ -590,10 +590,11 @@ tests:
           path: .spec.tls[0].secretName
           value: prefect.example.com-tls
 
-  - it: Should set deployment strategy
+  - it: Should set update strategy
     set:
       server:
-        deploymentStrategyType: Recreate
+        updateStrategy:
+          type: Recreate
     asserts:
       - template: server-deployment.yaml
         equal:
