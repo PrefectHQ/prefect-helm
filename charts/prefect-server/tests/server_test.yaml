@@ -590,6 +590,16 @@ tests:
           path: .spec.tls[0].secretName
           value: prefect.example.com-tls
 
+  - it: Should set deployment strategy
+    set:
+      server:
+        deploymentStrategyType: Recreate
+    asserts:
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.strategy.type
+          value: Recreate
+
   - it: Should set autoscaling configuration when enabled
     set:
       server:

@@ -18,6 +18,8 @@ spec:
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: server
+  strategy:
+    type: {{ .Values.server.deploymentStrategyType }}
   template:
     metadata:
       {{- if .Values.server.podAnnotations }}
