@@ -264,6 +264,11 @@
                   "type": "string",
                   "title": "Memory",
                   "description": "server memory request"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "title": "Ephemeral Storage",
+                  "description": "server ephemeral storage request"
                 }
               }
             },
@@ -282,6 +287,11 @@
                   "type": "string",
                   "title": "Memory",
                   "description": "server memory limit"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "title": "Ephemeral Storage",
+                  "description": "server ephemeral storage limit"
                 }
               }
             }
