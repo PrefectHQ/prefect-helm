@@ -200,6 +200,11 @@
             "type": "string"
           }
         },
+        "deploymentStrategyType": {
+          "type": "string",
+          "title": "Deployment strategy type",
+          "description": "The type of deployment strategy to use to replace existing pods with new ones"
+        },
         "revisionHistoryLimit": {
           "type": "integer",
           "title": "Revision History Limit",

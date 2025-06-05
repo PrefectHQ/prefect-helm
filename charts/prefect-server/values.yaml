@@ -172,6 +172,10 @@ server:
     # -- set server container's security context capabilities
     capabilities: {}
 
+  # ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+  # -- The type of deployment strategy, can be "Recreate" or RollingUpdate". Setting this to "Recreate" is useful when database is on a mounted volume that can only be attached to a single node at a time.
+  deploymentStrategyType: "RollingUpdate"
+
   # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for server pod
   podLabels: {}
