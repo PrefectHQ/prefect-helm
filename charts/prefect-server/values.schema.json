@@ -200,10 +200,34 @@
             "type": "string"
           }
         },
-        "deploymentStrategyType": {
-          "type": "string",
-          "title": "Deployment strategy type",
-          "description": "The type of deployment strategy to use to replace existing pods with new ones"
+        "updateStrategy": {
+          "type": "object",
+          "title": "Update strategy",
+          "description": "The type of update strategy to use to replace existing pods with new ones",
+          "properties": {
+            "type": {
+              "type": "string",
+              "title": "Deployment type",
+              "description": "Type of deployment. Can be \"Recreate\" or \"RollingUpdate\"."
+            },
+            "rollingUpdate" : {
+              "type": "object",
+              "title": "Rolling update settings",
+              "description": "Rolling update config params. Should only be specified if updateStrategy is set to \"RollingUpdate\".",
+              "properties": {
+                "maxSurge": {
+                  "type": "string",
+                  "title": "Max pod surge",
+                  "description": ""
+                },
+                "maxSurge": {
+                  "type": "string",
+                  "title": "Max unavailable pods",
+                  "description": ""
+                }
+              }
+            }
+          }
         },
         "revisionHistoryLimit": {
           "type": "integer",
