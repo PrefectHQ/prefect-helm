@@ -456,6 +456,11 @@
                   "type": "string",
                   "title": "Memory",
                   "description": "worker resource request memory"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "title": "Ephemeral Storage",
+                  "description": "worker ephemeral storage request"
                 }
               }
             },
@@ -474,6 +479,11 @@
                   "type": "string",
                   "title": "Memory",
                   "description": "worker resource limit memory"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "title": "Ephemeral Storage",
+                  "description": "worker ephemeral storage limit"
                 }
               }
             }

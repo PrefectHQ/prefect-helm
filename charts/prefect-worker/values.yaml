@@ -202,10 +202,12 @@ worker:
     requests:
       memory: 256Mi
       cpu: 100m
+      # ephemeral-storage:
     # -- the requested limits for the worker container
     limits:
       memory: 1Gi
       cpu: 1000m
+      # ephemeral-storage:
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:

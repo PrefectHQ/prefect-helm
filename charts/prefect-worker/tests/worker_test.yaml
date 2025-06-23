@@ -213,9 +213,11 @@ tests:
           requests:
             cpu: 250m
             memory: 256Mi
+            ephemeral-storage: 100Mi
           limits:
             cpu: 500m
             memory: 512Mi
+            ephemeral-storage: 200Mi
     asserts:
       - template: deployment.yaml
         equal:
@@ -227,12 +229,20 @@ tests:
           value: 256Mi
       - template: deployment.yaml
         equal:
+          path: .spec.template.spec.containers[0].resources.requests.ephemeral-storage
+          value: 100Mi
+      - template: deployment.yaml
+        equal:
           path: .spec.template.spec.containers[0].resources.limits.cpu
           value: 500m
       - template: deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.memory
           value: 512Mi
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.ephemeral-storage
+          value: 200Mi
 
   - it: Should set the correct security context
     set:
