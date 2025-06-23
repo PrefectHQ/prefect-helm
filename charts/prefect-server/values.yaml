@@ -178,7 +178,8 @@ server:
   updateStrategy:
     type: RollingUpdate
     #rollingUpdate:
-    #  maxUnavailable: 1
+    #  maxUnavailable: "1"
+    #  maxSurge: "25%"
 
   # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for server pod
