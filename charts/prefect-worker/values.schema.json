@@ -99,6 +99,11 @@
                       "type": "string",
                       "title": "Memory",
                       "description": "init resource request memory"
+                    },
+                    "ephemeral-storage": {
+                      "type": "string",
+                      "title": "Ephemeral Storage",
+                      "description": "init resource request ephemeral storage"
                     }
                   }
                 },
@@ -117,6 +122,11 @@
                       "type": "string",
                       "title": "Memory",
                       "description": "init resource limit memory"
+                    },
+                    "ephemeral-storage": {
+                      "type": "string",
+                      "title": "Ephemeral Storage",
+                      "description": "init resource limit ephemeral storage"
                     }
                   }
                 }
@@ -456,6 +466,11 @@
                   "type": "string",
                   "title": "Memory",
                   "description": "worker resource request memory"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "title": "Ephemeral Storage",
+                  "description": "worker ephemeral storage request"
                 }
               }
             },
@@ -474,6 +489,11 @@
                   "type": "string",
                   "title": "Memory",
                   "description": "worker resource limit memory"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "title": "Ephemeral Storage",
+                  "description": "worker ephemeral storage limit"
                 }
               }
             }
