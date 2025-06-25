@@ -601,6 +601,28 @@ tests:
           path: .spec.strategy.type
           value: Recreate
 
+  - it: Should set RollingUpdate strategy fields
+    set:
+      server:
+        updateStrategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxSurge: "1"
+            maxUnavailable: "25%"
+    asserts:
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.strategy.type
+          value: RollingUpdate
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.strategy.rollingUpdate.maxSurge
+          value: "1"
+      - template: server-deployment.yaml
+        equal:
+          path: .spec.strategy.rollingUpdate.maxUnavailable
+          value: "25%"
+
   - it: Should set autoscaling configuration when enabled
     set:
       server:
