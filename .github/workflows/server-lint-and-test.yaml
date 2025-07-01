@@ -33,6 +33,9 @@ jobs:
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.7.0
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Run chart-testing (lint)
         run: ct lint --config .github/linters/server-ct.yaml

@@ -177,9 +177,10 @@ server:
   # Setting this to "Recreate" is useful when database is on a mounted volume that can only be attached to a single node at a time.
   updateStrategy:
     type: RollingUpdate
-    #rollingUpdate:
-    #  maxUnavailable: "1"
-    #  maxSurge: "25%"
+    # example RollingUpdate options
+    # rollingUpdate:
+    #   maxUnavailable: "1"
+    #   maxSurge: "25%"
 
   # ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for server pod
@@ -352,14 +353,14 @@ service:
   nodePort: ""
 
   extraPorts: []
-    # # example extra ports
-    # - name: sample-svc-port
-    #   # -- service port
-    #   port: 8080
-    #   # -- target port
-    #   targetPort: 8080
-    #   # -- service port if defining service as type nodeport
-    #   nodePort: ""
+  # example extra ports
+  # - name: sample-svc-port
+  #   # -- service port
+  #   port: 8080
+  #   # -- target port
+  #   targetPort: 8080
+  #   # -- service port if defining service as type nodeport
+  #   nodePort: ""
 
   # -- service type
   type: ClusterIP

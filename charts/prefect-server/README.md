@@ -336,6 +336,7 @@ the HorizontalPodAutoscaler.
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
 | server.uiConfig.prefectUiApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; If you want to connect to the UI from somewhere external to the cluster (i.e. via an ingress), you need to set this value to the ingress URL (e.g. http://app.internal.prefect.com/api). You can find additional documentation on this here - https://docs.prefect.io/v3/manage/self-host#ui |
 | server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |
+| server.updateStrategy | object | `{"type":"RollingUpdate"}` | Specifies the strategy used to replace old Pods by new ones. Type can be "Recreate" or "RollingUpdate". Setting this to "Recreate" is useful when database is on a mounted volume that can only be attached to a single node at a time. |
 | service.annotations | object | `{}` | additional custom annotations for server service |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
