@@ -55,3 +55,7 @@ buildall: buildworker buildserver buildprom
 .PHONY: helmtest
 helmtest: ## Run Helm unittest
 	./scripts/helm_unittest.sh
+
+.PHONY: charttest
+charttest: ## Run chart-testing
+	./scripts/helm_charttest.sh

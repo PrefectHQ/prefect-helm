@@ -239,6 +239,8 @@ make buildall
 
 Make sure that any new functionality is well tested!  You can do this by installing the chart locally, see [above](https://github.com/PrefectHQ/prefect-helm#installing-development-versions) for how to do this.
 
+#### Helm unit tests
+
 You can also create and run test suites via [helm-unittest](https://github.com/helm-unittest/helm-unittest).
 Related test files are stored under `./charts/<chart>/tests/*_test.yaml`.
 Refer to the `helm-unittest` repository for more information.
@@ -251,6 +253,19 @@ make helmtest
 
 When `helm-unittest` is available via the [`mise` registry](https://mise.jdx.dev/registry.html), we'll add it to `.mise.toml`
 for easy local installation.
+
+#### Helm linting and validation
+
+We use [chart-testing](https://github.com/helm/chart-testing) for linting and validation of our charts.
+Configuration files are stored under `./github/linters/*-ct.yaml`.
+Refer to the `chart-testing` repository for more information.
+
+The following helper script will run the tests via the `chart-testing` Docker image. The `helm-ct` binary will
+be installed locally through `mise`, but the Docker image addresses the problem of a missing local `chart_schema.yaml` file.
+
+```shell
+make charttest
+```
 
 ### Opening a PR
 
