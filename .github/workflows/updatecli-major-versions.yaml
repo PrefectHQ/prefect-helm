@@ -10,6 +10,7 @@ permissions: {}
 
 jobs:
   updatecli_major:
+    if: github.repository == 'prefecthq/prefect-helm'
     runs-on: ubuntu-latest
     permissions:
       # required to write to the repo
