@@ -1,3 +1,4 @@
+---
 suite: Worker configuration
 release:
   name: test
@@ -571,6 +572,9 @@ tests:
           apiKeySecret:
             name: self-managed-api-key-secret
             key: secret-key
+          apiAuthStringSecret:
+            name: self-managed-api-auth-string-secret
+            key: secret-key
     asserts:
       - template: deployment.yaml
         equal:
@@ -579,6 +583,14 @@ tests:
       - template: deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY")].value
+          value: secret-key
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_NAME")].value
+          value: self-managed-api-auth-string-secret
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_KEY")].value
           value: secret-key
 
   - it: Should not set Kubernetes worker dnsPolicy if not provided

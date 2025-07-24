@@ -388,6 +388,23 @@
                 }
               }
             },
+            "apiAuthStringSecret": {
+              "type": "object",
+              "title": "API auth string Secret",
+              "description": "prefect api auth string secret",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "title": "Name",
+                  "description": "prefect API auth string secret name"
+                },
+                "key": {
+                  "type": "string",
+                  "title": "Key",
+                  "description": "prefect API auth string secret key"
+                }
+              }
+            },
             "cloudApiUrl": {
               "type": "string",
               "title": "Self Managed Cloud API URL",

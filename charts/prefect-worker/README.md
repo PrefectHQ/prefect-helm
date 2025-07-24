@@ -419,6 +419,8 @@ worker:
 | worker.selfHostedServerApiConfig.basicAuth.enabled | bool | `false` | enable basic auth for the worker, for an administrator/password combination. must be enabled on the server as well |
 | worker.selfHostedServerApiConfig.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | worker.selfManagedCloudApiConfig.accountId | string | `""` | prefect account ID |
+| worker.selfManagedCloudApiConfig.apiAuthStringSecret.key | string | `"key"` | prefect API basic auth string secret key |
+| worker.selfManagedCloudApiConfig.apiAuthStringSecret.name | string | `"prefect-api-auth-string"` | prefect API basic auth string secret name |
 | worker.selfManagedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.selfManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.selfManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |

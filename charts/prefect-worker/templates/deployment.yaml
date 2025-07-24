@@ -247,6 +247,10 @@ spec:
               value: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
               value: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_NAME
+              value: {{ .Values.worker.selfManagedCloudApiConfig.apiAuthStringSecret.name }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_KEY
+              value: {{ .Values.worker.selfManagedCloudApiConfig.apiAuthStringSecret.key }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
