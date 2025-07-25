@@ -1,3 +1,4 @@
+---
 ## Common parameters
 # -- partially overrides common.names.name
 nameOverride: ""
@@ -31,16 +32,16 @@ worker:
     # -- the resource specifications for the sync-base-job-template initContainer
     # Defaults to the resources defined for the worker container
     resources: {}
-      # -- the requested resources for the sync-base-job-template initContainer
-      # requests:
-      #   memory: 256Mi
-      #   cpu: 100m
-      #   ephemeral-storage:
-      # -- the requested limits for the sync-base-job-template initContainer
-      # limits:
-      #   memory: 1Gi
-      #   cpu: 1000m
-      #   ephemeral-storage:
+    # -- the requested resources for the sync-base-job-template initContainer
+    # requests:
+    #   memory: 256Mi
+    #   cpu: 100m
+    #   ephemeral-storage:
+    # -- the requested limits for the sync-base-job-template initContainer
+    # limits:
+    #   memory: 1Gi
+    #   cpu: 1000m
+    #   ephemeral-storage:
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- security context for the sync-base-job-template initContainer
     containerSecurityContext:
@@ -172,6 +173,12 @@ worker:
       # -- prefect API secret name
       name: prefect-api-key
       # -- prefect API secret key
+      key: key
+
+    apiAuthStringSecret:
+      # -- prefect API basic auth string secret name
+      name: prefect-api-auth-string
+      # -- prefect API basic auth string secret key
       key: key
 
     # -- Cloud API url for PREFECT_CLOUD_API_URL
