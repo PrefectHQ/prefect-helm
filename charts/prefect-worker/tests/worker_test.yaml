@@ -735,3 +735,20 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES")].value
           value: my-namespace
+
+  - it: Should set auth string secret environment variables when existingSecret is provided
+    set:
+      worker:
+        selfHostedServerApiConfig:
+          basicAuth:
+            enabled: true
+            existingSecret: "my-auth-secret"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_NAME")].value
+          value: "my-auth-secret"
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_KEY")].value
+          value: "auth-string"

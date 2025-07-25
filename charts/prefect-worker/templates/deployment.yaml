@@ -260,6 +260,12 @@ spec:
             {{- else }}
               value: {{ .Values.worker.selfHostedServerApiConfig.basicAuth.authString | quote }}
             {{- end }}
+            {{- if .Values.worker.selfHostedServerApiConfig.basicAuth.existingSecret }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_NAME
+              value: {{ .Values.worker.selfHostedServerApiConfig.basicAuth.existingSecret }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_KEY
+              value: auth-string
+            {{- end }}
             {{- end }}
             {{- if .Values.worker.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.worker.extraEnvVars "context" $) | nindent 12 }}
