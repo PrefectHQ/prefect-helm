@@ -334,6 +334,30 @@ tests:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: true
 
+  - it: Should unset the security context
+    set:
+      worker:
+        podSecurityContext:
+          runAsUser: null
+          fsGroup: null
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.securityContext.runAsUser
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.securityContext.fsGroup
+
+  - it: Should unset the container security context
+    set:
+      worker:
+        containerSecurityContext:
+          runAsUser: null
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+
   - it: Should set pod annotations
     set:
       worker:

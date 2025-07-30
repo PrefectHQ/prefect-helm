@@ -425,7 +425,7 @@
           "additionalProperties": false,
           "properties": {
             "runAsUser": {
-              "type": "integer",
+              "type": ["integer", "null"],
               "title": "Run As User",
               "description": "set server pod's security context runAsUser"
             },
@@ -435,7 +435,7 @@
               "description": "set server pods security context runAsNonRoot"
             },
             "fsGroup": {
-              "type": "integer",
+              "type": ["integer", "null"],
               "title": "FS Group",
               "description": "set server pod's security context fsGroup"
             },
@@ -490,7 +490,7 @@
           "additionalProperties": false,
           "properties": {
             "runAsUser": {
-              "type": "integer",
+              "type": ["integer", "null"],
               "title": "Run As User",
               "description": "set server container's security context runAsUser"
             },
@@ -751,15 +751,15 @@
         "podSecurityContext": {
           "type": "object",
           "properties": {
-            "runAsUser": { "type": "integer" },
+            "runAsUser": { "type": ["integer", "null"] },
             "runAsNonRoot": { "type": "boolean" },
-            "fsGroup": { "type": "integer" }
+            "fsGroup": { "type": ["integer", "null"] }
           }
         },
         "containerSecurityContext": {
           "type": "object",
           "properties": {
-            "runAsUser": { "type": "integer" },
+            "runAsUser": { "type": ["integer", "null"] },
             "runAsNonRoot": { "type": "boolean" },
             "readOnlyRootFilesystem": { "type": "boolean" },
             "allowPrivilegeEscalation": { "type": "boolean" },

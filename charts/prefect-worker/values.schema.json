@@ -154,7 +154,7 @@
                   "description": "set init containers' security context runAsNonRoot"
                 },
                 "runAsUser": {
-                  "type": "integer",
+                  "type": ["integer", "null"],
                   "title": "Run As User",
                   "description": "set init containers' security context runAsUser"
                 },
@@ -552,7 +552,7 @@
           "additionalProperties": false,
           "properties": {
             "fsGroup": {
-              "type": "integer",
+              "type": ["integer", "null"],
               "title": "FS Group",
               "description": "set worker pod's security context fsGroup"
             },
@@ -562,7 +562,7 @@
               "description": "set worker pod's security context runAsNonRoot"
             },
             "runAsUser": {
-              "type": "integer",
+              "type": ["integer", "null"],
               "title": "Run As User",
               "description": "set worker pod's security context runAsUser"
             },
@@ -653,7 +653,7 @@
               "description": "set worker containers' security context runAsNonRoot"
             },
             "runAsUser": {
-              "type": "integer",
+              "type": ["integer", "null"],
               "title": "Run As User",
               "description": "set worker containers' security context runAsUser"
             },

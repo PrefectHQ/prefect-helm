@@ -356,6 +356,30 @@ tests:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: true
 
+  - it: Should unset security context
+    set:
+      server:
+        podSecurityContext:
+          runAsUser: null
+          fsGroup: null
+    asserts:
+      - template: server-deployment.yaml
+        notExists:
+          path: .spec.template.spec.securityContext.runAsUser
+      - template: server-deployment.yaml
+        notExists:
+          path: .spec.template.spec.securityContext.fsGroup
+
+  - it: Should unset container security context
+    set:
+      server:
+        containerSecurityContext:
+          runAsUser: null
+    asserts:
+      - template: server-deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+
   - it: Should set pod labels
     set:
       server:
