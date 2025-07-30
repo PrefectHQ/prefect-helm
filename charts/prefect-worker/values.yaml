@@ -44,7 +44,7 @@ worker:
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     # -- security context for the sync-base-job-template initContainer
     containerSecurityContext:
-      # -- set init containers' security context runAsUser
+      # -- set init containers' security context runAsUser, set to `null` to unset
       runAsUser: 1001
       # -- set init containers' security context runAsNonRoot
       runAsNonRoot: true
@@ -228,11 +228,11 @@ worker:
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
-    # -- set worker pod's security context runAsUser
+    # -- set worker pod's security context runAsUser, set to `null` to unset
     runAsUser: 1001
     # -- set worker pod's security context runAsNonRoot
     runAsNonRoot: true
-    # -- set worker pod's security context fsGroup
+    # -- set worker pod's security context fsGroup, set to `null` to unset
     fsGroup: 1001
     # -- set worker pod's seccomp profile
     seccompProfile:
@@ -246,7 +246,7 @@ worker:
 
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   containerSecurityContext:
-    # -- set worker containers' security context runAsUser
+    # -- set worker containers' security context runAsUser, set to `null` to unset
     runAsUser: 1001
     # -- set worker containers' security context runAsNonRoot
     runAsNonRoot: true

@@ -369,7 +369,7 @@ worker:
 | worker.containerSecurityContext.capabilities | object | `{}` | set worker container's security context capabilities |
 | worker.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set worker containers' security context readOnlyRootFilesystem |
 | worker.containerSecurityContext.runAsNonRoot | bool | `true` | set worker containers' security context runAsNonRoot |
-| worker.containerSecurityContext.runAsUser | int | `1001` | set worker containers' security context runAsUser |
+| worker.containerSecurityContext.runAsUser | int | `1001` | set worker containers' security context runAsUser, set to `null` to unset |
 | worker.dnsConfig.nameservers | list | `[]` | optional list of IP addresses that will be used as dns servers for the Pod |
 | worker.dnsConfig.options | list | `[]` | optional list of dns options for the Pod |
 | worker.dnsConfig.searches | list | `[]` | optional list of dns search domains for hostname lookup in the Pod |
@@ -393,7 +393,7 @@ worker:
 | worker.initContainer.containerSecurityContext.capabilities | object | `{}` | set init container's security context capabilities |
 | worker.initContainer.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set init containers' security context readOnlyRootFilesystem |
 | worker.initContainer.containerSecurityContext.runAsNonRoot | bool | `true` | set init containers' security context runAsNonRoot |
-| worker.initContainer.containerSecurityContext.runAsUser | int | `1001` | set init containers' security context runAsUser |
+| worker.initContainer.containerSecurityContext.runAsUser | int | `1001` | set init containers' security context runAsUser, set to `null` to unset |
 | worker.initContainer.extraContainers | list | `[]` | additional sidecar containers |
 | worker.initContainer.resources | object | `{}` | the resource specifications for the sync-base-job-template initContainer Defaults to the resources defined for the worker container |
 | worker.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
@@ -405,9 +405,9 @@ worker:
 | worker.nodeSelector | object | `{}` | node labels for worker pods assignment |
 | worker.podAnnotations | object | `{}` | extra annotations for worker pod |
 | worker.podLabels | object | `{}` | extra labels for worker pod |
-| worker.podSecurityContext.fsGroup | int | `1001` | set worker pod's security context fsGroup |
+| worker.podSecurityContext.fsGroup | int | `1001` | set worker pod's security context fsGroup, set to `null` to unset |
 | worker.podSecurityContext.runAsNonRoot | bool | `true` | set worker pod's security context runAsNonRoot |
-| worker.podSecurityContext.runAsUser | int | `1001` | set worker pod's security context runAsUser |
+| worker.podSecurityContext.runAsUser | int | `1001` | set worker pod's security context runAsUser, set to `null` to unset |
 | worker.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | set worker pod's seccomp profile |
 | worker.priorityClassName | string | `""` | priority class name to use for the worker pods; if the priority class is empty or doesn't exist, the worker pods are scheduled without a priority class |
 | worker.replicaCount | int | `1` | number of worker replicas to deploy |
