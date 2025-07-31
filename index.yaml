@@ -14729,6 +14729,36 @@ entries:
     version: 2023.03.27
   prometheus-prefect-exporter:
   - apiVersion: v2
+    appVersion: 2.0.1
+    created: "2025-07-31T14:35:19.901769769Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.31.3
+    description: A Helm chart to deploy Prometheus Prefect Exporter
+    digest: 56bb65140b4fef2db143587c93345e50976ece2d1d2035db1dc74cd9ce9498f4
+    home: https://github.com/PrefectHQ
+    keywords:
+    - prometheus-prefect-exporter
+    maintainers:
+    - email: jamie@prefect.io
+      name: jamiezieziula
+    - email: jimi@prefect.io
+      name: jimid27
+    - email: edward@prefect.io
+      name: parkedwards
+    - email: mitchell@prefect.io
+      name: mitchnielsen
+    name: prometheus-prefect-exporter
+    sources:
+    - https://github.com/PrefectHQ/prefect-helm
+    type: application
+    urls:
+    - https://prefecthq.github.io/prefect-helm/charts/prometheus-prefect-exporter-2025.7.31143508.tgz
+    version: 2025.7.31143508
+  - apiVersion: v2
     appVersion: 2.0.0
     created: "2025-07-24T19:11:32.542077878Z"
     dependencies:
@@ -15398,4 +15428,4 @@ entries:
     urls:
     - https://prefecthq.github.io/prefect-helm/charts/prometheus-prefect-exporter-2023.12.7.tgz
     version: 2023.12.7
-generated: "2025-07-28T16:48:12.04543519Z"
+generated: "2025-07-31T14:35:19.900252398Z"
