@@ -217,23 +217,12 @@ Contributions to the Prefect Helm Charts are always welcome! We welcome your hel
 To get started, install the required dependencies by running:
 
 ```shell
-make all
+mise run tools
 ```
 
 This will install tools like `helm`, `pre-commit`, and `mise`.
 
-You'll also need to install dependencies for the charts you're working on. You can use the following commands to install dependencies for each chart:
-
-```shell
-# Server Chart
-make buildserver
-# Worker Chart
-make buildworker
-# Prometheus Prefect Exporter Chart
-make buildprom
-# All Charts
-make buildall
-```
+To see a list of all available commands, run `mise tasks ls`.
 
 ### Testing & validation
 
@@ -248,7 +237,7 @@ Refer to the `helm-unittest` repository for more information.
 The following helper script will run the tests via the `helm-unittest` Docker image in case you don't have the binary installed locally:
 
 ```shell
-make helmtest
+mise run helmtest
 ```
 
 When `helm-unittest` is available via the [`mise` registry](https://mise.jdx.dev/registry.html), we'll add it to `.mise.toml`
@@ -264,7 +253,7 @@ The following helper script will run the tests via the `chart-testing` Docker im
 be installed locally through `mise`, but the Docker image addresses the problem of a missing local `chart_schema.yaml` file.
 
 ```shell
-make charttest
+mise run charttest
 ```
 
 ### Opening a PR
