@@ -30,7 +30,8 @@ worker:
   initContainer:
     # -- the resource specifications for the sync-base-job-template initContainer
     # Defaults to the resources defined for the worker container
-    resources: {}
+    resources:
+      {}
       # -- the requested resources for the sync-base-job-template initContainer
       # requests:
       #   memory: 256Mi
@@ -256,6 +257,12 @@ worker:
     allowPrivilegeEscalation: false
     # -- set worker container's security context capabilities
     capabilities: {}
+
+  # -- Custom container command arguments
+  args: []
+
+  # -- Custom container entrypoint
+  command: []
 
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for worker pod
