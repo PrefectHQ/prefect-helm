@@ -30,8 +30,7 @@ worker:
   initContainer:
     # -- the resource specifications for the sync-base-job-template initContainer
     # Defaults to the resources defined for the worker container
-    resources:
-      {}
+    resources: {}
       # -- the requested resources for the sync-base-job-template initContainer
       # requests:
       #   memory: 256Mi
