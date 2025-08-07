@@ -776,3 +776,28 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_AUTH_STRING_SECRET_KEY")].value
           value: "auth-string"
+
+  - it: Should configure custom entrypoint and args
+    set:
+      worker:
+        command:
+          - /usr/bin/tini
+          - myentrypoint
+        args:
+          - prefect
+          - worker
+          - start
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].command
+          value:
+            - /usr/bin/tini
+            - myentrypoint
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args
+          value:
+            - prefect
+            - worker
+            - start
