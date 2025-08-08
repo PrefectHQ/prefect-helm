@@ -257,6 +257,12 @@ worker:
     # -- set worker container's security context capabilities
     capabilities: {}
 
+  # -- Custom container command arguments
+  args: []
+
+  # -- Custom container entrypoint
+  command: []
+
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   # -- extra labels for worker pod
   podLabels: {}
