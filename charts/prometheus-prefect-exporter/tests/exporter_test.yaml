@@ -200,6 +200,8 @@ tests:
         type: LoadBalancer
         port: 8080
         targetPort: 30080
+        annotations:
+          my-annotation: hello-world
     asserts:
       - template: service.yaml
         equal:
@@ -213,6 +215,10 @@ tests:
         equal:
           path: .spec.ports[0].targetPort
           value: 30080
+      - template: service.yaml
+        equal:
+          path: .spec.metadata.annotations.my-annotation
+          value: hello-world
 
   - it: Should set the correct container arguments
     set:
