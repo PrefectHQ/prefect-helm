@@ -343,6 +343,7 @@ worker:
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | worker.affinity | object | `{}` | affinity for worker pods assignment |
 | worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfManagedCloud', or 'selfHostedServer' |
+| worker.args | list | `[]` | Custom container command arguments |
 | worker.autoscaling.enabled | bool | `false` | enable autoscaling for the worker |
 | worker.autoscaling.maxReplicas | int | `1` | maximum number of replicas to scale up to |
 | worker.autoscaling.minReplicas | int | `1` | minimum number of replicas to scale down to |
@@ -354,6 +355,7 @@ worker:
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be inferred at time of helm install |
+| worker.command | list | `[]` | Custom container entrypoint |
 | worker.config.baseJobTemplate.configuration | string | `nil` | JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod |
 | worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |

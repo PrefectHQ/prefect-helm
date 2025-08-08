@@ -170,11 +170,18 @@ spec:
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.prefectTag }}"
           imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           command:
+            {{- if .Values.worker.command }}
+            {{- .Values.worker.command | toYaml | nindent 12 }}
+            {{- else }}
             - /usr/bin/tini
             - -g
             - --
             - /opt/prefect/entrypoint.sh
+            {{- end }}
           args:
+            {{- if .Values.worker.args }}
+            {{- .Values.worker.args | toYaml | nindent 12 }}
+            {{- else }}
             - prefect
             - worker
             - start
@@ -205,6 +212,7 @@ spec:
             {{- end }}
             {{- range .Values.worker.extraArgs }}
             - {{ . | toString }}
+            {{- end }}
             {{- end }}
           workingDir: /home/prefect
           env:

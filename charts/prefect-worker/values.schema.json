@@ -682,6 +682,22 @@
             }
           }
         },
+        "args": {
+          "type": "array",
+          "title": "Custom container command arguments",
+          "description": "array with arguments",
+          "items": {
+            "type": "string"
+          }
+        },
+        "command": {
+          "type": "array",
+          "title": "Custom container entrypoint",
+          "description": "array with container entrypoint",
+          "items": {
+            "type": "string"
+          }
+        },
         "podLabels": {
           "type": "object",
           "title": "Pod Labels",
