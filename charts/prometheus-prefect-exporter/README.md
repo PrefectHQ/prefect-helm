@@ -116,7 +116,7 @@ basicAuth:
 | revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | securityContext | object | `{}` | Defines privilege and access control settings for a Pod or Container |
 | service | object | `{"port":80,"targetPort":8000,"type":"ClusterIP"}` | Kubernetes service to expose Pod |
-| service.annotations | object | `{}` | additional custom annotations for exporter server service |
+| service.annotations | object | `{}` | additional custom annotations for exporter service |
 | service.port | int | `80` | Kubernetes Service port |
 | service.targetPort | int | `8000` | Pod expose port |
 | service.type | string | `"ClusterIP"` | Kubernetes Service type. Allowed values: NodePort, LoadBalancer or ClusterIP |

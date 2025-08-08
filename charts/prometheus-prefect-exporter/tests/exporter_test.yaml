@@ -217,7 +217,7 @@ tests:
           value: 30080
       - template: service.yaml
         equal:
-          path: .spec.metadata.annotations.my-annotation
+          path: .metadata.annotations.my-annotation
           value: hello-world
 
   - it: Should set the correct container arguments

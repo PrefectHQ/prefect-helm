@@ -170,7 +170,7 @@
         "annotations": {
           "type": "object",
           "title": "Annotations",
-          "description": "annotations to add to the eexporter server service"
+          "description": "annotations to add to the exporter service"
         }
       }
     },

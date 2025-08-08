@@ -83,7 +83,7 @@ service:
   port: 80
   # -- Pod expose port
   targetPort: 8000
-  # -- additional custom annotations for exporter server service
+  # -- additional custom annotations for exporter service
   annotations: {}
 
 # -- Enable ServiceMonitor to get metrics
