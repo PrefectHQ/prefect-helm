@@ -166,6 +166,11 @@
           "type": "integer",
           "title": "Target Port",
           "description": "Service target port"
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Annotations",
+          "description": "annotations to add to the eexporter server service"
         }
       }
     },

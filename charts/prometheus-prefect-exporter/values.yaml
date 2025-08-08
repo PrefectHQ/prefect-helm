@@ -83,6 +83,8 @@ service:
   port: 80
   # -- Pod expose port
   targetPort: 8000
+  # -- additional custom annotations for exporter server service
+  annotations: {}
 
 # -- Enable ServiceMonitor to get metrics
 # ref: https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor
