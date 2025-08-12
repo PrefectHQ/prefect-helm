@@ -328,6 +328,7 @@ serviceAccount:
 role:
   # -- specifies whether a Role should be created
   create: true
+  namespace: null
   ## List of extra role permissions
   ## e.g:
   ## extraPermissions:
