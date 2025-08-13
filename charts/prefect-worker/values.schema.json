@@ -844,6 +844,11 @@
           "title": "Create",
           "description": "create role"
         },
+        "namespace": {
+          "type": ["string", "null"],
+          "title": "Namespace",
+          "description": "the namespace to deploy the role to. If not provided, deploys to the same namespace as the worker"
+        },
         "extraPermissions": {
           "type": "array",
           "title": "Extra Permissions",
