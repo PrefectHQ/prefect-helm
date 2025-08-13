@@ -801,3 +801,46 @@ tests:
             - prefect
             - worker
             - start
+
+  - it: Should configure additional labels on templated resources
+    set:
+      worker:
+        autoscaling:
+          enabled: true
+        config:
+          baseJobTemplate:
+            configuration: |
+              {}
+      role:
+        create: true
+      rolebinding:
+        create: true
+      serviceAccount:
+        create: true
+      commonLabels:
+        my-label: my-value
+    asserts:
+      - template: configmap.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: deployment.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: hpa.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: role.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: rolebinding.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: serviceaccount.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
