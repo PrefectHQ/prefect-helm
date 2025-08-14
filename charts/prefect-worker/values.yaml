@@ -328,6 +328,8 @@ serviceAccount:
 role:
   # -- specifies whether a Role should be created
   create: true
+  # -- the namespace to deploy the role to. If not provided, deploys to the same namespace as the worker
+  namespace: null
   ## List of extra role permissions
   ## e.g:
   ## extraPermissions:
