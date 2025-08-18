@@ -324,7 +324,7 @@ worker:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.31.3 |
+| https://charts.bitnami.com/bitnami | common | 2.31.4 |
 
 ## Values
 
@@ -336,8 +336,8 @@ worker:
 | nameOverride | string | `""` | partially overrides common.names.name |
 | namespaceOverride | string | `""` | fully override common.names.namespace |
 | role.create | bool | `true` | specifies whether a Role should be created |
-| role.namespace | string | `nil` | the namespace to deploy the role to. If not provided, deploys to the same namespace as the worker |
 | role.extraPermissions | list | `[]` | array with extra permissions to add to the worker role |
+| role.namespace | string | `nil` | the namespace to deploy the role to. If not provided, deploys to the same namespace as the worker |
 | rolebinding.create | bool | `true` | specifies whether a RoleBinding should be created |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
