@@ -845,12 +845,16 @@ tests:
           path: .metadata.labels.my-label
           value: my-value
 
-  - it: Should allow override of role namespace
+  - it: Should allow override of role and rolebinding namespace
     set:
       role:
         namespace: my-namespace
     asserts:
       - template: role.yaml
+        equal:
+          path: .metadata.namespace
+          value: my-namespace
+      - template: rolebinding.yaml
         equal:
           path: .metadata.namespace
           value: my-namespace
