@@ -82,7 +82,7 @@ basicAuth:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.31.3 |
+| https://charts.bitnami.com/bitnami | common | 2.31.4 |
 
 ## Values
 
@@ -115,7 +115,7 @@ basicAuth:
 | resources | object | `{}` | The resources limits and requested |
 | revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | securityContext | object | `{}` | Defines privilege and access control settings for a Pod or Container |
-| service | object | `{"port":80,"targetPort":8000,"type":"ClusterIP"}` | Kubernetes service to expose Pod |
+| service | object | `{"annotations":{},"port":80,"targetPort":8000,"type":"ClusterIP"}` | Kubernetes servide to expose Pod |
 | service.annotations | object | `{}` | additional custom annotations for exporter service |
 | service.port | int | `80` | Kubernetes Service port |
 | service.targetPort | int | `8000` | Pod expose port |
