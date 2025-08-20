@@ -513,5 +513,5 @@ postgresql:
   image:
     # -- Image repository.  Defaults to legacy bitnami repository for postgres 14.13.0 availability.
     repository: bitnamilegacy/postgresql
-    # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/
+    # -- Version tag, corresponds to tags at https://hub.docker.com/layers/bitnamilegacy/postgresql/
     tag: 14.13.0
