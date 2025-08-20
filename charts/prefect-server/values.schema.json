@@ -220,7 +220,7 @@
                   "title": "Max pod surge",
                   "description": ""
                 },
-                "maxSurge": {
+                "maxUnavailable": {
                   "type": "string",
                   "title": "Max unavailable pods",
                   "description": ""
@@ -600,52 +600,6 @@
           "type": "array",
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
-        },
-        "backgroundServices": {
-          "type": "object",
-          "title": "Background Services",
-          "description": "configuration for running background services separately",
-          "properties": {
-            "runAsSeparateDeployment": {
-              "type": "boolean",
-              "title": "Run Separately",
-              "description": "run background services in a separate deployment"
-            },
-            "replicaCount": {
-              "type": "integer",
-              "title": "Replica Count",
-              "description": "number of background services replicas to deploy"
-            },
-            "resources": {
-              "type": "object",
-              "title": "Resources",
-              "description": "resources for the background services container",
-              "properties": {
-                "requests": {
-                  "type": "object",
-                  "properties": {
-                    "cpu": {
-                      "type": "string"
-                    },
-                    "memory": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "limits": {
-                  "type": "object",
-                  "properties": {
-                    "cpu": {
-                      "type": "string"
-                    },
-                    "memory": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
         }
       }
     },
@@ -671,6 +625,44 @@
           "type": "string",
           "description": "sets PREFECT_LOGGING_SERVER_LEVEL",
           "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
+        },
+        "autoscaling": {
+          "type": "object",
+          "title": "Autoscaling",
+          "description": "server autoscaling configuration",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enabled",
+              "description": "enable server autoscaling"
+            },
+            "minReplicas": {
+              "type": "integer",
+              "title": "Min Replicas",
+              "description": "minimum number of server replicas"
+            },
+            "maxReplicas": {
+              "type": "integer",
+              "title": "Max Replicas",
+              "description": "maximum number of server replicas"
+            },
+            "targetCPU": {
+              "type": "integer",
+              "title": "Target CPU Utilization Percentage",
+              "description": "target CPU utilization percentage"
+            },
+            "targetMemory": {
+              "type": "integer",
+              "title": "Target Memory Utilization Percentage",
+              "description": "target Memory utilization percentage"
+            }
+          }
+        },
+        "replicaCount": {
+          "type": "integer",
+          "title": "Replica Count",
+          "description": "number of background services replicas to deploy"
         },
         "env": {
           "type": "array",
@@ -704,11 +696,27 @@
           "properties": {
             "requests": {
               "type": "object",
-              "description": "the requested resources for the background-services container"
+              "description": "the requested resources for the background-services container",
+              "properties": {
+                "cpu": {
+                  "type": "string"
+                },
+                "memory": {
+                  "type": "string"
+                }
+              }
             },
             "limits": {
               "type": "object",
-              "description": "the requested limits for the background-services container"
+              "description": "the requested limits for the background-services container",
+              "properties": {
+                "cpu": {
+                  "type": "string"
+                },
+                "memory": {
+                  "type": "string"
+                }
+              }
             }
           }
         },
@@ -796,6 +804,64 @@
               "type": "object",
               "title": "Annotations",
               "description": "annotations to add to the background services service account"
+            }
+          }
+        },
+        "messaging": {
+          "type": "object",
+          "title": "Messaging",
+          "description": "messaging configuration for background services",
+          "additionalProperties": false,
+          "properties": {
+            "broker": {
+              "type": "string",
+              "title": "Broker class",
+              "description": "messaging broker class to use for background services"
+            },
+            "cache": {
+              "type": "string",
+              "title": "Cache class",
+              "description": "messaging cache class to use for background services"
+            },
+            "redis": {
+              "type": "object",
+              "title": "Redis broker settings",
+              "description": "redis broker settings for background services",
+              "additionalProperties": false,
+              "properties": {
+                "host": {
+                  "type": "string",
+                  "title": "Redis hostname",
+                    "description": "redis broker hostname for background services"
+                },
+                "port": {
+                  "type": ["integer", "string"],
+                  "title": "Redis port",
+                  "description": "redis broker port for background services"
+                },
+                "db": {
+                  "type": ["integer", "string"],
+                  "title": "Redis database",
+                  "description": "redis broker database for background services"
+                },
+                "username": {
+                  "type": "string",
+                  "title": "Redis username",
+                  "description": "redis broker username for background services",
+                  "optional": true
+                },
+                "password": {
+                  "type": "string",
+                  "title": "Redis password",
+                  "description": "redis broker password for background services",
+                  "optional": true
+                },
+                "ssl": {
+                  "type": "boolean",
+                  "title": "SSL",
+                  "description": "enable SSL for redis broker connection"
+                }
+              }
             }
           }
         }
@@ -1085,6 +1151,17 @@
           "properties": {
             "tag": { "type": "string" }
           }
+        }
+      }
+    },
+    "redis": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "deploy a redis cluster for Prefect Server messaging"
         }
       }
     }
