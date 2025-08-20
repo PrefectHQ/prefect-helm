@@ -446,3 +446,137 @@ tests:
             - prefect
             - worker
             - start
+
+  - it: Should fail if redis.enabled is false when backgroundServices.runAsSeparateDeployment is true
+    set:
+      redis:
+        enabled: false
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "You must set redis.enabled=true or provide a redis configuration when backgroundServices.runAsSeparateDeployment=true"
+
+  - it: Should not fail if redis.enabled is false and a redis configuration is provided when backgroundServices.runAsSeparateDeployment is true
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: galaxy
+      redis:
+        enabled: false
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: { }
+
+  - it: Should deploy standalone redis instance by default
+    asserts:
+      - containsDocument:
+          apiVersion: v1
+          kind: Service
+          name: background-services-test-redis-headless
+        template: charts/redis/templates/headless-svc.yaml
+      - containsDocument:
+          apiVersion: apps/v1
+          kind: StatefulSet
+          name: background-services-test-redis-master
+        template: charts/redis/templates/master/application.yaml
+      - containsDocument:
+          apiVersion: v1
+          kind: Service
+          name: background-services-test-redis-replicas
+        not: true
+
+  - it: Should set the correct default environment variables
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_MESSAGING_BROKER
+            value: prefect_redis.messaging
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_MESSAGING_CACHE
+            value: prefect_redis.messaging
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_HOST
+            value: background-services-test-redis-headless.prefect.svc.cluster.local
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PORT
+            value: "6379"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_DB
+            value: "0"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: background-services-test-redis
+                key: redis-password
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_USERNAME
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_SSL
+
+  - it: Should use the provided redis configuration when backgroundServices.runAsSeparateDeployment is true
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            port: "6380"
+            db: "1"
+            password: custom-password
+            username: custom-username
+            ssl: true
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_HOST
+            value: custom-redis-host
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PORT
+            value: "6380"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_DB
+            value: "1"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_USERNAME
+            value: custom-username
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            value: custom-password
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_SSL
+            value: "true"
