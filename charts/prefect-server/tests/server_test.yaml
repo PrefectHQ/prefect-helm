@@ -1,3 +1,4 @@
+---
 suite: Server configuration
 release:
   name: server-test
@@ -363,10 +364,10 @@ tests:
           runAsUser: null
           fsGroup: null
     asserts:
-      - template: server-deployment.yaml
+      - template: deployment.yaml
         notExists:
           path: .spec.template.spec.securityContext.runAsUser
-      - template: server-deployment.yaml
+      - template: deployment.yaml
         notExists:
           path: .spec.template.spec.securityContext.fsGroup
 
@@ -376,7 +377,7 @@ tests:
         containerSecurityContext:
           runAsUser: null
     asserts:
-      - template: server-deployment.yaml
+      - template: deployment.yaml
         notExists:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
 
