@@ -273,7 +273,8 @@ the HorizontalPodAutoscaler.
 | postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user |
 | postgresql.enabled | bool | `true` | enable use of bitnami/postgresql subchart |
-| postgresql.image.tag | string | `"14.13.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
+| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` | Image repository.  Defaults to legacy bitnami repository for postgres 14.13.0 availability. |
+| postgresql.image.tag | string | `"14.13.0"` | Version tag, corresponds to tags at https://hub.docker.com/layers/bitnamilegacy/postgresql/ |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
 | secret.create | bool | `true` | whether to create a Secret containing the PostgreSQL connection string |

@@ -1,4 +1,9 @@
 # Upgrade guidelines
+## > 2025.7.31204438
+
+After version 2025.7.31204438, we have migrated the `postgresql` image from the existing `bitnami` repo image to the `bitnamilegacy` repo image.
+This change should not have any breaking change implications unless there is a need to whitelist that new docker registry.
+The change is required per https://github.com/bitnami/charts/issues/35164.
 
 ## > 2025.3.7033449
 
