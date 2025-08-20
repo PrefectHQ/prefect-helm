@@ -241,23 +241,6 @@ backgroundServices:
   # ref: https://docs.prefect.io/v3/develop/settings-ref#logging-level-2
   # -- sets PREFECT_LOGGING_SERVER_LEVEL
   loggingLevel: WARNING
-  
-  # Autoscaling configuration
-  # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event
-  autoscaling:
-    # -- enable autoscaling for background services
-    enabled: false
-    # -- minimum number of background service replicas
-    minReplicas: 1
-    # -- maximum number of background service replicas
-    maxReplicas: 100
-    # -- target CPU utilization percentage
-    targetCPU: 80
-    # -- target Memory utilization percentage
-    targetMemory: 80
-
-  # -- number of background service replicas to deploy
-  replicaCount: 1
 
   # see here for a full list of possible environment variables - https://docs.prefect.io/latest/api-ref/prefect/settings/
   # -- array with environment variables to add to background-services container

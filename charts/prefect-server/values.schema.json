@@ -626,44 +626,6 @@
           "description": "sets PREFECT_LOGGING_SERVER_LEVEL",
           "enum": ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         },
-        "autoscaling": {
-          "type": "object",
-          "title": "Autoscaling",
-          "description": "server autoscaling configuration",
-          "additionalProperties": false,
-          "properties": {
-            "enabled": {
-              "type": "boolean",
-              "title": "Enabled",
-              "description": "enable server autoscaling"
-            },
-            "minReplicas": {
-              "type": "integer",
-              "title": "Min Replicas",
-              "description": "minimum number of server replicas"
-            },
-            "maxReplicas": {
-              "type": "integer",
-              "title": "Max Replicas",
-              "description": "maximum number of server replicas"
-            },
-            "targetCPU": {
-              "type": "integer",
-              "title": "Target CPU Utilization Percentage",
-              "description": "target CPU utilization percentage"
-            },
-            "targetMemory": {
-              "type": "integer",
-              "title": "Target Memory Utilization Percentage",
-              "description": "target Memory utilization percentage"
-            }
-          }
-        },
-        "replicaCount": {
-          "type": "integer",
-          "title": "Replica Count",
-          "description": "number of background services replicas to deploy"
-        },
         "env": {
           "type": "array",
           "description": "array with environment variables to add to background-services container",
