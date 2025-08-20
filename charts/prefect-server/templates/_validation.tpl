@@ -32,3 +32,9 @@
   {{- fail "`server.uiConfig.prefectUiUrl` has been removed. This value was used solely for the purposes of printing out the UI URL during the installation process. It will now infer the UI URL from the `prefectUiApiUrl` value." -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "prefect-server.validateMessaging" -}}
+{{- if and (.Values.backgroundServices.runAsSeparateDeployment) (and (not .Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty)) -}}
+  {{- fail "You must set redis.enabled=true or provide a redis configuration when backgroundServices.runAsSeparateDeployment=true" -}}
+{{- end -}}
+{{- end -}}
