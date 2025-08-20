@@ -20,6 +20,62 @@ Create the name of the service account to associate with the background-services
 {{- end -}}
 {{- end -}}
 
+{{- /*
+    Reusable block for background services environment variables.
+*/ -}}
+{{- define "backgroundServices.envVars" -}}
+{{- /*
+Make redis subchart context available as a variable in this block
+*/ -}}
+{{- $redis := dict
+      "Release"      .Release
+      "Capabilities" .Capabilities
+      "Values"       .Values.redis
+      "Chart"        (dict "Name" "redis")
+-}}
+- name: PREFECT_MESSAGING_BROKER
+  value: {{ .Values.backgroundServices.messaging.broker }}
+- name: PREFECT_MESSAGING_CACHE
+  value: {{ .Values.backgroundServices.messaging.cache }}
+{{- if eq .Values.backgroundServices.messaging.broker "prefect_redis.messaging" }}
+- name: PREFECT_REDIS_MESSAGING_HOST
+{{- if and (.Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty) }}
+  value: {{ printf "%s-headless" (include "common.names.fullname" $redis) }}.{{ .Release.Namespace }}.svc.cluster.local
+{{- else }}
+  value: {{ .Values.backgroundServices.messaging.redis.host | quote }}
+{{- end }}
+- name: PREFECT_REDIS_MESSAGING_PORT
+  value: {{ .Values.backgroundServices.messaging.redis.port | quote }}
+{{- if (.Values.backgroundServices.messaging.redis.ssl) }}
+- name: PREFECT_REDIS_MESSAGING_SSL
+  value: {{ .Values.backgroundServices.messaging.redis.ssl | quote }}
+{{- end }}
+- name: PREFECT_REDIS_MESSAGING_DB
+  value: {{ .Values.backgroundServices.messaging.redis.db | quote }}
+{{- if not (.Values.backgroundServices.messaging.redis.username | empty) }}
+- name: PREFECT_REDIS_MESSAGING_USERNAME
+  value: {{ .Values.backgroundServices.messaging.redis.username | quote }}
+{{- end -}}
+{{- /* 
+There are three scenarios for passwords:
+    1. If the subchart is enabled, reference the secret from the subchart. 
+       Setting backgroundServices.messaging.redis.password has no effect here.
+    2. If the subchart is not enabled, use the secret defined in the values file. TODO: secret reference
+    3. No password is set, so the environment variable is not defined.
+*/ -}}
+{{- if and (.Values.redis.enabled) (.Values.backgroundServices.messaging.redis.password | empty) }}
+- name: PREFECT_REDIS_MESSAGING_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "common.names.fullname" $redis }}
+      key: redis-password
+{{- else if not (.Values.backgroundServices.messaging.redis.password | empty) }}
+- name: PREFECT_REDIS_MESSAGING_PASSWORD
+  value: {{ .Values.backgroundServices.messaging.redis.password | quote }}
+{{- end }}
+{{- end }}
+{{- end -}}
+
 // ----- Connection string templates ------
 
 {{/*
