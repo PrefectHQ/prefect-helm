@@ -1,5 +1,6 @@
 {{- include "prefect-server.validatePrefectVersion" . }}
 {{- include "prefect-server.validatePrefectServerApiSettings" . }}
+{{- include "prefect-server.validateMessaging" . }}
 {{- if .Values.ingress.enabled }}
 http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host.hostname }}{{ .Values.ingress.host.path }}
 {{- else if contains "NodePort" .Values.service.type }}
