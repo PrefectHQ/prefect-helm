@@ -113,7 +113,7 @@ If you want to use the bundled Redis chart but need to customize the configurati
 ```yaml
 redis:
   enabled: true
-  
+ 
   auth:
     # set a custom password for the Redis instance
     password: "dontpanic!"
@@ -256,6 +256,7 @@ the HorizontalPodAutoscaler.
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.31.4 |
 | https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
+| https://charts.bitnami.com/bitnami | redis | 22.0.4 |
 
 ## Values
 
@@ -277,6 +278,15 @@ the HorizontalPodAutoscaler.
 | backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
 | backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
+| backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
+| backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
+| backgroundServices.messaging.redis | object | `{"db":0,"host":"","password":"","port":6379,"ssl":false,"username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
+| backgroundServices.messaging.redis.db | int | `0` | redis database number |
+| backgroundServices.messaging.redis.host | string | `""` | redis hostname if using the built-in redis subchart, this will be automatically set to the redis subchart's service name |
+| backgroundServices.messaging.redis.password | string | `""` | redis password, leave empty to use default  if using the built-in redis subchart, this will be automatically set to the redis subchart's password value |
+| backgroundServices.messaging.redis.port | int | `6379` | redis port |
+| backgroundServices.messaging.redis.ssl | bool | `false` | use TLS for redis connection |
+| backgroundServices.messaging.redis.username | string | `""` | redis username, leave empty to use no authentication if using the built-in redis subchart, this will be automatically set to the redis subchart's username value |
 | backgroundServices.nodeSelector | object | `{}` | node labels for background-services pod assignment |
 | backgroundServices.podAnnotations | object | `{}` | extra annotations for background-services pod |
 | backgroundServices.podLabels | object | `{}` | extra labels for background-services pod |
@@ -323,6 +333,9 @@ the HorizontalPodAutoscaler.
 | postgresql.image.tag | string | `"14.13.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/postgresql/ |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
+| redis.architecture | string | `"standalone"` | Redis architecture Note: Prefect currently only supports standalone Redis deployments. |
+| redis.enabled | bool | `false` | enable use of bitnami/redis subchart if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance |
+| redis.image.tag | string | `"8.2.1"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/redis/ |
 | secret.create | bool | `true` | whether to create a Secret containing the PostgreSQL connection string |
 | secret.database | string | `""` | database for the PostgreSQL connection string |
 | secret.host | string | `""` | host for the PostgreSQL connection string |
