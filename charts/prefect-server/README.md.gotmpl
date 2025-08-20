@@ -80,12 +80,59 @@ To run background services in a separate deployment:
 ```yaml
 backgroundServices:
   runAsSeparateDeployment: true
+
+# Use the bundled Redis chart
+# See the next section for more details on other deployment options
+redis:
+  enabled: true
 ```
 
 This configuration is recommended when:
 - You're experiencing database connection pool contention
 - You need different scaling policies for the web server and background services
 - You want to monitor and manage resource usage separately
+
+You can read more about this architecture in the [How to scale self-hosted Prefect](https://docs.prefect.io/v3/advanced/self-hosted) guide.
+
+## Redis Configuration
+
+This section applies when enabling the use of Background Services.
+
+For a simple deployment, you can use the bundled Redis chart by setting the following:
+
+```yaml
+redis:
+  enabled: true
+```
+
+This will automatically configure the Prefect server and background services to use the bundled Redis instance with the correct connection string information.
+
+If you want to use the bundled Redis chart but need to customize the configuration, you can do so by providing additional values under the `redis` section. For example:
+
+```yaml
+redis:
+  enabled: true
+  
+  auth:
+    # set a custom password for the Redis instance
+    password: "dontpanic!"
+```
+
+You can find additional configuration values in the [Bitnami Redis chart values.yaml file](https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml).
+
+### Using an External Redis Instance
+
+If you want to use an existing or external Redis instance, do not set `redis.enabled`. Provide the connection details in the `backgroundServices.messaging.redis` section:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      host: external.redis.host.example.com
+      username: marvin
+      password: paranoid!
+```
 
 ## PostgreSQL Configuration
 
