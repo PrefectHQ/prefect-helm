@@ -15,7 +15,7 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.backgroundServices.revisionHistoryLimit }}
-  replicas: 1
+  replicas: {{ .Values.backgroundServices.replicaCount }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: background-services
@@ -93,13 +93,17 @@ spec:
                 secretKeyRef:
                   name: {{ include "server.postgres-string-secret-name" . }}
                   key: connection-string
-              {{- end }}
+              {{- end -}}
+            {{- if .Values.backgroundServices.runAsSeparateDeployment }}
+            {{- include "backgroundServices.envVars" . | nindent 12 }}
+            {{- end }}
             {{- if .Values.global.prefect.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.global.prefect.env "context" $) | nindent 12 }}
             {{- end }}
             {{- if .Values.backgroundServices.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.env "context" $) | nindent 12 }}
             {{- end }}
+          {{- if or (.Values.backgroundServices.extraEnvVarsCM) (.Values.backgroundServices.extraEnvVarsSecret) }}
           envFrom:
             {{- if .Values.backgroundServices.extraEnvVarsCM }}
             - configMapRef:
@@ -109,6 +113,7 @@ spec:
             - secretRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraEnvVarsSecret "context" $) }}
             {{- end }}
+          {{- end }}
           {{- if .Values.backgroundServices.resources }}
           resources: {{- toYaml .Values.backgroundServices.resources | nindent 12 }}
           {{- end }}
