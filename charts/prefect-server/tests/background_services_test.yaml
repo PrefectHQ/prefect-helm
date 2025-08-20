@@ -2,18 +2,21 @@ suite: Background Services configuration
 release:
   name: background-services-test
   namespace: prefect
+  
+set:
+  global:
+    prefect:
+      image:
+        prefectTag: 3.1.13-python3.11-kubernetes
+  backgroundServices:
+    runAsSeparateDeployment: true
+  redis:
+    enabled: true
 
 tests:
   - it: Should set the correct image
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
           value: prefecthq/prefect:3.1.13-python3.11-kubernetes
@@ -25,24 +28,15 @@ tests:
           image:
             repository: custom/prefect
             prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].image
           value: custom/prefect:3.1.13-python3.11-kubernetes
 
   - it: Should set the correct pull policy
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].imagePullPolicy
           value: IfNotPresent
@@ -52,12 +46,9 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13-python3.11-kubernetes
             pullPolicy: Always
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].imagePullPolicy
           value: Always
@@ -67,170 +58,109 @@ tests:
       global:
         prefect:
           image:
-            prefectTag: 3.1.13-python3.11-kubernetes
             pullSecrets:
               - my-secret
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.imagePullSecrets[0].name
           value: my-secret
 
   - it: Should set the correct priority class name
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         priorityClassName: high-priority
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.priorityClassName
           value: high-priority
 
   - it: Should set the correct debug mode
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
           value: "false"
 
   - it: Should enable debug mode
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         debug: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_DEBUG_MODE")].value
           value: "true"
 
   - it: Should set the correct logging level
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: WARNING
 
   - it: Should set a custom logging level
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         loggingLevel: DEBUG
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_LOGGING_SERVER_LEVEL")].value
           value: DEBUG
 
   - it: Should set custom environment variables
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         env:
           - name: CUSTOM_ENV
             value: custom_value
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
           value: custom_value
 
   - it: Should set the correct revision history limit
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.revisionHistoryLimit
           value: 10
 
   - it: Should set a custom revision history limit
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         revisionHistoryLimit: 5
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.revisionHistoryLimit
           value: 5
 
   - it: Should set the correct resource requests and limits
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.cpu
           value: 500m
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.memory
           value: 512Mi
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.cpu
           value: "1"
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.memory
           value: 1Gi
 
   - it: Should set custom resource requests and limits
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         resources:
           requests:
             cpu: 250m
@@ -239,168 +169,129 @@ tests:
             cpu: 500m
             memory: 512Mi
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.cpu
           value: 250m
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.requests.memory
           value: 256Mi
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.cpu
           value: 500m
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.memory
           value: 512Mi
 
   - it: Should set the correct security context
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsUser
           value: 1001
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsNonRoot
           value: true
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.fsGroup
           value: 1001
 
   - it: Should set custom security context
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         podSecurityContext:
           runAsUser: 2000
           runAsNonRoot: false
           fsGroup: 3000
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsUser
           value: 2000
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.runAsNonRoot
           value: false
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.securityContext.fsGroup
           value: 3000
 
   - it: Should set the correct container security context
-    set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
-      backgroundServices:
-        runAsSeparateDeployment: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
           value: 1001
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
           value: true
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
           value: true
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: false
 
   - it: Should set custom container security context
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         containerSecurityContext:
           runAsUser: 2000
           runAsNonRoot: false
           readOnlyRootFilesystem: false
           allowPrivilegeEscalation: true
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
           value: 2000
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsNonRoot
           value: false
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.readOnlyRootFilesystem
           value: false
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: true
 
   - it: Should set pod labels
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         podLabels:
           custom-label: custom-value
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.metadata.labels.custom-label
           value: custom-value
 
   - it: Should set pod annotations
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         podAnnotations:
           custom-annotation: custom-value
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.metadata.annotations.custom-annotation
           value: custom-value
 
   - it: Should set affinity
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         affinity:
           nodeAffinity:
             requiredDuringSchedulingIgnoredDuringExecution:
@@ -412,124 +303,89 @@ tests:
                         - e2e-az1
                         - e2e-az2
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
           value: kubernetes.io/e2e-az-name
 
   - it: Should set node selector
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         nodeSelector:
           disktype: ssd
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.nodeSelector.disktype
           value: ssd
 
   - it: Should set tolerations
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         tolerations:
           - key: "key1"
             operator: "Equal"
             value: "value1"
             effect: "NoSchedule"
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.tolerations[0].key
           value: key1
 
   - it: Should set extra environment variables from ConfigMap
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         extraEnvVarsCM: my-config-map
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].envFrom[0].configMapRef.name
           value: my-config-map
 
   - it: Should set extra environment variables from Secret
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         extraEnvVarsSecret: my-secret
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].envFrom[0].secretRef.name
           value: my-secret
 
   - it: Should set extra containers
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         extraContainers:
           - name: sidecar
             image: nginx:latest
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[1].name
           value: sidecar
 
   - it: Should set extra volumes
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         extraVolumes:
           - name: config
             configMap:
               name: my-config
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.volumes[1].name
           value: config
 
   - it: Should set extra volume mounts
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         extraVolumeMounts:
           - name: config
             mountPath: /app/config
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         contains:
           path: .spec.template.spec.containers[0].volumeMounts
           content:
@@ -538,12 +394,7 @@ tests:
 
   - it: Should configure custom entrypoint and args
     set:
-      global:
-        prefect:
-          image:
-            prefectTag: 3.1.13-python3.11-kubernetes
       backgroundServices:
-        runAsSeparateDeployment: true
         command:
           - /usr/bin/tini
           - myentrypoint
@@ -552,13 +403,13 @@ tests:
           - worker
           - start
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].command
           value:
             - /usr/bin/tini
             - myentrypoint
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].args
           value:
@@ -574,7 +425,6 @@ tests:
             repository: mycustomimage
             prefectTag: 1.2.0
       backgroundServices:
-        runAsSeparateDeployment: true
         command:
           - /usr/bin/tini
           - myentrypoint
@@ -583,13 +433,13 @@ tests:
           - worker
           - start
     asserts:
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].command
           value:
             - /usr/bin/tini
             - myentrypoint
-      - template: background-services-deployment.yaml
+      - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].args
           value:
