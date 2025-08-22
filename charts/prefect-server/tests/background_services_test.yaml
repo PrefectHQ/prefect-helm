@@ -2,7 +2,7 @@ suite: Background Services configuration
 release:
   name: background-services-test
   namespace: prefect
-  
+
 set:
   global:
     prefect:
