@@ -333,38 +333,38 @@ backgroundServices:
     name: ""
     # -- additional service account annotations (evaluated as a template)
     annotations: {}
-    
-  # Configuration for background service messaging using Redis 
+
+  # Configuration for background service messaging using Redis
   messaging:
     # ref: https://docs.prefect.io/v3/api-ref/settings-ref#messaging-broker
     # -- messaging broker class to use for background services
     broker: prefect_redis.messaging
-    
+
     # ref: https://docs.prefect.io/v3/api-ref/settings-ref#messaging-cache
     # -- messaging cache class to use for background services
     cache: prefect_redis.messaging
-    
+
     # -- settings for redis broker/cache
     # change these if not using the built-in redis subchart
     redis:
       # -- redis hostname
       # if using the built-in redis subchart, this will be automatically set to the redis subchart's service name
       host: ""
-      
+
       # -- redis port
       port: 6379
-      
+
       # -- redis database number
       db: 0
-      
+
       # -- redis username, leave empty to use no authentication
       # if using the built-in redis subchart, this will be automatically set to the redis subchart's username value
       username: ""
-      
-      # -- redis password, leave empty to use default 
+
+      # -- redis password, leave empty to use default
       # if using the built-in redis subchart, this will be automatically set to the redis subchart's password value
       password: ""
-      
+
       # -- use TLS for redis connection
       ssl: false
 
@@ -555,11 +555,13 @@ redis:
   # -- enable use of bitnami/redis subchart
   # if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance
   enabled: false
-  
+
   # -- Redis architecture
   # Note: Prefect currently only supports standalone Redis deployments.
   architecture: standalone
-  
-  image: 
+
+  image:
+    # -- Image repository.  Defaults to legacy bitnami repository for redis 8.2.1 availability.
+    repository: bitnamilegacy/redis
     # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/redis/
     tag: 8.2.1
