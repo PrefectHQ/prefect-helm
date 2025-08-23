@@ -55,7 +55,9 @@ Make redis subchart context available as a variable in this block
 {{- if not (.Values.backgroundServices.messaging.redis.username | empty) }}
 - name: PREFECT_REDIS_MESSAGING_USERNAME
   value: {{ .Values.backgroundServices.messaging.redis.username | quote }}
-{{- end -}}
+{{- end }}
+- name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+  value: "prefect_redis.ordering"
 {{- /*
 There are three scenarios for passwords:
     1. If the subchart is enabled, reference the secret from the subchart.

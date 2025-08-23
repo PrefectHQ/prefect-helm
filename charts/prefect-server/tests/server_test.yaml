@@ -699,3 +699,19 @@ tests:
             - prefect
             - worker
             - start
+
+  - it: Should set PREFECT_SERVER_EVENTS_CAUSAL_ORDERING when running with separate background services and Redis
+    set:
+      backgroundServices:
+        runAsSeparateDeployment: true
+        messaging:
+          broker: prefect_redis.messaging
+      redis:
+        enabled: true
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+            value: "prefect_redis.ordering"

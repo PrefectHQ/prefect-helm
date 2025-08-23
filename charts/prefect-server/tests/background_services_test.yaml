@@ -532,6 +532,11 @@ tests:
           path: .spec.template.spec.containers[0].env
           content:
             name: PREFECT_REDIS_MESSAGING_SSL
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+            value: "prefect_redis.ordering"
 
   - it: Should use the provided redis configuration when backgroundServices.runAsSeparateDeployment is true
     templates:
@@ -580,3 +585,8 @@ tests:
           content:
             name: PREFECT_REDIS_MESSAGING_SSL
             value: "true"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+            value: "prefect_redis.ordering"

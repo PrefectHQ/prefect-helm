@@ -95,6 +95,12 @@ This configuration is recommended when:
 
 You can read more about this architecture in the [How to scale self-hosted Prefect](https://docs.prefect.io/v3/advanced/self-hosted) guide.
 
+### Event Causal Ordering
+
+When running background services as a separate deployment with Redis messaging, the chart automatically configures Redis-based event causal ordering by setting `PREFECT_SERVER_EVENTS_CAUSAL_ORDERING=prefect_redis.ordering`. This ensures proper event ordering across multiple API server instances and prevents delays in task state updates in the UI.
+
+Without this configuration, events may arrive out of order in distributed setups, causing task states to appear stuck in "Pending" status for up to 15 minutes while the system waits for missing predecessor events.
+
 ## Redis Configuration
 
 This section applies when enabling the use of Background Services.
