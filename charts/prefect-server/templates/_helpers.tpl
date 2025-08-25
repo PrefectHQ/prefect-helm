@@ -38,6 +38,8 @@ Make redis subchart context available as a variable in this block
 - name: PREFECT_MESSAGING_CACHE
   value: {{ .Values.backgroundServices.messaging.cache }}
 {{- if eq .Values.backgroundServices.messaging.broker "prefect_redis.messaging" }}
+- name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+  value: prefect_redis.ordering
 - name: PREFECT_REDIS_MESSAGING_HOST
 {{- if and (.Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty) }}
   value: {{ printf "%s-headless" (include "common.names.fullname" $redis) }}.{{ .Release.Namespace }}.svc.cluster.local

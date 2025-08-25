@@ -504,6 +504,11 @@ tests:
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
+            name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+            value: prefect_redis.ordering
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
             name: PREFECT_REDIS_MESSAGING_HOST
             value: background-services-test-redis-headless.prefect.svc.cluster.local
       - contains:
@@ -550,6 +555,21 @@ tests:
       redis:
         enabled: false
     asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_MESSAGING_BROKER
+            value: prefect_redis.messaging
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_MESSAGING_CACHE
+            value: prefect_redis.messaging
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+            value: prefect_redis.ordering
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
