@@ -1,0 +1,265 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/helm-unittest/helm-unittest/main/helm-unittest-schema.json
+suite: Pre-upgrade hook tests
+release:
+  name: pre-upgrade-hook-test
+  namespace: prefect
+
+tests:
+  - it: Should create pre-upgrade hook job for PostgreSQL deployments
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        containsDocument:
+          apiVersion: batch/v1
+          kind: Job
+          metadata:
+            name: pre-upgrade-hook-test-pre-upgrade
+            annotations:
+              helm.sh/hook: pre-upgrade
+              helm.sh/hook-weight: "-5"
+              helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+        spec:
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: pre-upgrade-migration
+                command:
+                - /bin/sh
+                - -c
+                - |
+                  set -eo pipefail
+                  echo "Starting database migration..."
+                  prefect server database upgrade -y
+                env:
+                - name: PREFECT_API_DATABASE_CONNECTION_URL
+                  valueFrom:
+                    secretKeyRef:
+                      name: pre-upgrade-hook-test-postgresql-connection
+                      key: connection-string
+
+  - it: Should not create pre-upgrade hook job for SQLite deployments
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: true
+      migrations:
+        enabled: true
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        not: true
+        containsDocument:
+          apiVersion: batch/v1
+          kind: Job
+
+  - it: Should not create pre-upgrade hook job when migrations are disabled
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: false
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        not: true
+        containsDocument:
+          apiVersion: batch/v1
+          kind: Job
+
+  - it: Should use correct service account for pre-upgrade hook
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.serviceAccountName
+          value: prefect-server
+
+  - it: Should include global environment variables in pre-upgrade hook
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+      global:
+        prefect:
+          env:
+            - name: TEST_VAR
+              value: test_value
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: TEST_VAR
+            value: test_value
+
+  - it: Should include server environment variables in pre-upgrade hook
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+      server:
+        env:
+          - name: SERVER_VAR
+            value: server_value
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SERVER_VAR
+            value: server_value
+
+  - it: Should set correct resource limits for pre-upgrade hook
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources
+          value:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+
+  - it: Should set correct security context for pre-upgrade hook
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext
+          value:
+            runAsUser: 1001
+            runAsNonRoot: true
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities: {}
+
+  - it: Should not create pre-upgrade hook job when migrations are completely disabled
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: false
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        not: true
+        containsDocument:
+          apiVersion: batch/v1
+          kind: Job
+
+  - it: Should use custom migration configuration when provided
+    set:
+      postgresql:
+        enabled: true
+        auth:
+          password: testpass
+      sqlite:
+        enabled: false
+      migrations:
+        enabled: true
+        command: "custom-migration-command"
+        entrypoint: ["/bin/bash", "-c"]
+        timeoutSeconds: 600
+        backoffLimit: 5
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        securityContext:
+          runAsUser: 2000
+          runAsNonRoot: true
+          readOnlyRootFilesystem: false
+        env:
+          - name: CUSTOM_MIGRATION_VAR
+            value: custom_value
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.activeDeadlineSeconds
+          value: 600
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.backoffLimit
+          value: 5
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].command
+          value:
+            - /bin/bash
+            - -c
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].args
+          content: |
+            set -eo pipefail
+            echo "Starting database migration..."
+            custom-migration-command
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: CUSTOM_MIGRATION_VAR
+            value: custom_value
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.cpu
+          value: 200m
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsUser
+          value: 2000

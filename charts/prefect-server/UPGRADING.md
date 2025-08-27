@@ -1,4 +1,11 @@
 # Upgrade guidelines
+
+## > 2025.8.21160848
+
+After version 2025.8.21160848, the chart automatically handles database migrations during upgrades using a pre-upgrade hook when in multi-server mode.
+
+See the README.md file for more details.
+
 ## > 2025.7.31204438
 
 After version 2025.7.31204438, we have migrated the `postgresql` image from the existing `bitnami` repo image to the `bitnamilegacy` repo image.
