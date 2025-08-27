@@ -233,51 +233,17 @@ The chart automatically handles database migrations during upgrades using a pre-
 
 #### Migration Configuration
 
-The migration behavior can be customized through the `migrations` section in your values:
+The migration behavior can be customized through the `migrations` section in your values.
+
+For example, to disable automatic migrations (not recommended):
 
 ```yaml
 migrations:
   # Enable/disable automatic migrations (default: true)
-  enabled: true
-
-  # Custom migration command (default: "prefect server database upgrade -y")
-  command: "prefect server database upgrade -y"
-
-  # Custom container entrypoint (default: ["/bin/sh", "-c"])
-  entrypoint: ["/bin/sh", "-c"]
-
-  # Job timeout in seconds (default: 300)
-  timeoutSeconds: 300
-
-  # Job retry attempts (default: 3)
-  backoffLimit: 3
-
-  # Custom resource limits
-  resources:
-    requests:
-      cpu: 100m
-      memory: 128Mi
-    limits:
-      cpu: 500m
-      memory: 256Mi
-
-  # Custom security context
-  securityContext:
-    runAsUser: 1001
-    runAsNonRoot: true
-    readOnlyRootFilesystem: true
-    allowPrivilegeEscalation: false
-
-  # Additional environment variables
-  env:
-    - name: CUSTOM_VAR
-      value: custom_value
-
-  # Additional volumes and volume mounts
-  extraVolumes: []
-  extraVolumeMounts: []
+  enabled: false
 ```
 
+Consult the `values.yaml` file for additional configuration options such as resource requests/limits, backoff limits, and timeouts.
 
 ## SQLite Configuration
 
