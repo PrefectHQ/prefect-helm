@@ -466,7 +466,7 @@ tests:
         enabled: false
     asserts:
       - template: NOTES.txt
-        notFailedTemplate: { }
+        notFailedTemplate: {}
 
   - it: Should deploy standalone redis instance by default
     asserts:
@@ -511,6 +511,11 @@ tests:
           content:
             name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
             value: prefect_redis.ordering
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
+            value: prefect_redis.lease_storage
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
@@ -580,6 +585,11 @@ tests:
           content:
             name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
             value: prefect_redis.ordering
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
+            value: prefect_redis.lease_storage
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
