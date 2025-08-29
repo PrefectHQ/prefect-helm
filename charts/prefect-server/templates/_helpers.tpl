@@ -33,6 +33,8 @@ Make redis subchart context available as a variable in this block
       "Values"       .Values.redis
       "Chart"        (dict "Name" "redis")
 -}}
+- name: PREFECT_API_DATABASE_MIGRATE_ON_START
+  value: "false"
 - name: PREFECT_MESSAGING_BROKER
   value: {{ .Values.backgroundServices.messaging.broker }}
 - name: PREFECT_MESSAGING_CACHE

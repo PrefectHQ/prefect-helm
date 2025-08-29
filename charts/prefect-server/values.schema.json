@@ -79,6 +79,137 @@
         }
       }
     },
+    "migrations": {
+      "type": "object",
+      "title": "Migrations",
+      "description": "database migration configuration",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enabled",
+          "description": "enable automatic database migrations during chart upgrades"
+        },
+        "podLabels": {
+          "type": "object",
+          "title": "Pod Labels",
+          "description": "additional labels for the migration job pods"
+        },
+        "command": {
+          "type": "string",
+          "title": "Command",
+          "description": "custom command to run for database migrations"
+        },
+        "entrypoint": {
+          "type": "array",
+          "title": "Entrypoint",
+          "description": "custom container entrypoint for the migration job",
+          "items": {
+            "type": "string"
+          }
+        },
+        "resources": {
+          "type": "object",
+          "title": "Resources",
+          "description": "job resources configuration",
+          "properties": {
+            "requests": {
+              "type": "object",
+              "properties": {
+                "cpu": {
+                  "type": "string",
+                  "description": "CPU request for the migration job"
+                },
+                "memory": {
+                  "type": "string",
+                  "description": "Memory request for the migration job"
+                }
+              }
+            },
+            "limits": {
+              "type": "object",
+              "properties": {
+                "cpu": {
+                  "type": "string",
+                  "description": "CPU limit for the migration job"
+                },
+                "memory": {
+                  "type": "string",
+                  "description": "Memory limit for the migration job"
+                }
+              }
+            }
+          }
+        },
+        "securityContext": {
+          "type": "object",
+          "title": "Security Context",
+          "description": "job security context configuration",
+          "properties": {
+            "runAsUser": {
+              "type": "integer",
+              "description": "user ID to run the container as"
+            },
+            "runAsNonRoot": {
+              "type": "boolean",
+              "description": "whether the container must run as a non-root user"
+            },
+            "readOnlyRootFilesystem": {
+              "type": "boolean",
+              "description": "whether the container has a read-only root filesystem"
+            },
+            "allowPrivilegeEscalation": {
+              "type": "boolean",
+              "description": "whether to allow privilege escalation"
+            },
+            "capabilities": {
+              "type": "object",
+              "description": "capabilities to add or drop"
+            }
+          }
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "title": "Timeout Seconds",
+          "description": "job timeout in seconds"
+        },
+        "backoffLimit": {
+          "type": "integer",
+          "title": "Backoff Limit",
+          "description": "job backoff limit (number of retries)"
+        },
+        "restartPolicy": {
+          "type": "string",
+          "title": "Restart Policy",
+          "description": "job restart policy",
+          "enum": ["Never", "OnFailure"]
+        },
+        "env": {
+          "type": "array",
+          "title": "Environment Variables",
+          "description": "additional environment variables for the migration job",
+          "items": {
+            "type": "object"
+          }
+        },
+        "extraVolumeMounts": {
+          "type": "array",
+          "title": "Extra Volume Mounts",
+          "description": "additional volume mounts for the migration job",
+          "items": {
+            "type": "object"
+          }
+        },
+        "extraVolumes": {
+          "type": "array",
+          "title": "Extra Volumes",
+          "description": "additional volumes for the migration job",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
     "server": {
       "type": "object",
       "title": "Server",

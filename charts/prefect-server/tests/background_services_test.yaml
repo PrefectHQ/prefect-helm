@@ -494,6 +494,11 @@ tests:
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
+            name: PREFECT_API_DATABASE_MIGRATE_ON_START
+            value: "false"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
             name: PREFECT_MESSAGING_BROKER
             value: prefect_redis.messaging
       - contains:
@@ -555,6 +560,11 @@ tests:
       redis:
         enabled: false
     asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_API_DATABASE_MIGRATE_ON_START
+            value: "false"
       - contains:
           path: .spec.template.spec.containers[0].env
           content:

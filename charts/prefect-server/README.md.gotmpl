@@ -217,6 +217,34 @@ secret:
     postgresql+asyncpg://{username}:{password}@{hostname}/{database}?ssl=verify-ca
     ```
 
+### Database Migrations
+
+The chart automatically handles database migrations during upgrades using a pre-upgrade hook. When you upgrade the chart, it will:
+
+1. Run `prefect server database upgrade -y` before updating the main deployment
+2. Ensure your database schema is compatible with the new Prefect version
+3. Block the upgrade if migrations fail
+
+**Important Notes:**
+- Migrations only run for PostgreSQL deployments (not SQLite)
+- The migration job uses the same database credentials as your main deployment
+- **Downgrades require manual intervention** - if you need to rollback, you may need to manually run database downgrade commands
+- For more details, see [Prefect's database migration documentation](https://docs.prefect.io/v3/advanced/self-hosted#database-migrations)
+
+#### Migration Configuration
+
+The migration behavior can be customized through the `migrations` section in your values.
+
+For example, to disable automatic migrations (not recommended):
+
+```yaml
+migrations:
+  # Enable/disable automatic migrations (default: true)
+  enabled: false
+```
+
+Consult the `values.yaml` file for additional configuration options such as resource requests/limits, backoff limits, and timeouts.
+
 ## SQLite Configuration
 
 SQLite can be used as an alternative to PostgreSQL. As mentioned in the

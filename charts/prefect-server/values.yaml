@@ -220,6 +220,43 @@ server:
   # -- array with extra Arguments for the server container to start with
   extraArgs: []
 
+## Database Migration Configuration
+migrations:
+  # -- enable automatic database migrations during chart upgrades
+  enabled: true
+  # -- commands to run for database migrations (default: prefect server database upgrade -y)
+  command: |
+    prefect server database upgrade -y
+  # -- custom container entrypoint for the migration job
+  entrypoint: ["/bin/sh", "-c"]
+  # -- job resources configuration
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+  # -- job security context configuration
+  securityContext:
+    runAsUser: 1001
+    runAsNonRoot: true
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+    capabilities: {}
+  # -- job timeout in seconds (default: 300 seconds / 5 minutes)
+  timeoutSeconds: 300
+  # -- job backoff limit (number of retries)
+  backoffLimit: 5
+  # -- job restart policy
+  restartPolicy: Never
+  # -- additional environment variables for the migration job
+  env: []
+  # -- additional volume mounts for the migration job
+  extraVolumeMounts: []
+  # -- additional volumes for the migration job
+  extraVolumes: []
+
 ## Background Services Deployment Configuration
 backgroundServices:
   # ref: https://github.com/PrefectHQ/prefect/tree/main/src/prefect/server/services
