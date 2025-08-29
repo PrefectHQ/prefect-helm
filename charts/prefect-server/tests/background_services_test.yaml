@@ -515,7 +515,7 @@ tests:
           path: .spec.template.spec.containers[0].env
           content:
             name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
-            value: prefect_redis.least_storage
+            value: prefect_redis.lease_storage
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
@@ -589,7 +589,7 @@ tests:
           path: .spec.template.spec.containers[0].env
           content:
             name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
-            value: prefect_redis.least_storage
+            value: prefect_redis.lease_storage
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
