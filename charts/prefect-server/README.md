@@ -78,6 +78,9 @@ you are not having any issues with your setup.
 
 To run background services in a separate deployment:
 
+> [!WARNING]
+> **Version Requirement**: When using `backgroundServices.runAsSeparateDeployment: true`, you must use Prefect 3.4.16 or later. Earlier versions have a bug where the `--no-services` flag doesn't fully disable background services, causing Redis connection errors in the server pod.
+
 ```yaml
 backgroundServices:
   runAsSeparateDeployment: true
