@@ -67,6 +67,8 @@ spec:
       {{- end }}
       {{- if .Values.global.prefect.image.pullSecrets }}
       imagePullSecrets:
-        {{- toYaml .Values.global.prefect.image.pullSecrets | nindent 8 }}
+      {{- range .Values.global.prefect.image.pullSecrets }}
+        - name: {{ . }}
+      {{- end }}
       {{- end }}
 {{- end }}

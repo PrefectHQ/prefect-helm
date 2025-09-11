@@ -218,3 +218,21 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
           value: 2000
+
+  - it: Should use correct imagePullSecrets format in pre-upgrade hook
+    set:
+      global:
+        prefect:
+          image:
+            pullSecrets:
+              - my-secret-1
+              - my-secret-2
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.imagePullSecrets[0].name
+          value: my-secret-1
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.imagePullSecrets[1].name
+          value: my-secret-2
