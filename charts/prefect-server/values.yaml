@@ -257,6 +257,18 @@ migrations:
   # -- additional volumes for the migration job
   extraVolumes: []
 
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  # -- affinity for migration job pods assignment
+  affinity: {}
+
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  # -- node labels for migration job pods assignment
+  nodeSelector: {}
+
+  # ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  # -- tolerations for migration job pods assignment
+  tolerations: []
+
 ## Background Services Deployment Configuration
 backgroundServices:
   # ref: https://github.com/PrefectHQ/prefect/tree/main/src/prefect/server/services

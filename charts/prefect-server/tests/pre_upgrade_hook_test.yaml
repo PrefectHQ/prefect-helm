@@ -236,3 +236,47 @@ tests:
         equal:
           path: .spec.template.spec.imagePullSecrets[1].name
           value: my-secret-2
+
+  - it: Should set affinity
+    set:
+      migrations:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/e2e-az-name
+                      operator: In
+                      values:
+                        - e2e-az1
+                        - e2e-az2
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].key
+          value: kubernetes.io/e2e-az-name
+
+  - it: Should set node selector
+    set:
+      migrations:
+        nodeSelector:
+          disktype: ssd
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.nodeSelector.disktype
+          value: ssd
+
+  - it: Should set tolerations
+    set:
+      migrations:
+        tolerations:
+          - key: "key1"
+            operator: "Equal"
+            value: "value1"
+            effect: "NoSchedule"
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.tolerations[0].key
+          value: key1

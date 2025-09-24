@@ -65,6 +65,15 @@ spec:
       {{- if .Values.migrations.extraVolumes }}
       volumes: {{- toYaml .Values.migrations.extraVolumes | nindent 8 }}
       {{- end }}
+      {{- if .Values.migrations.affinity }}
+      affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.migrations.affinity "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.migrations.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" ( dict "value" .Values.migrations.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.migrations.tolerations }}
+      tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.migrations.tolerations "context" .) | nindent 8 }}
+      {{- end }}
       {{- if .Values.global.prefect.image.pullSecrets }}
       imagePullSecrets:
       {{- range .Values.global.prefect.image.pullSecrets }}
