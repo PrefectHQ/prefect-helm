@@ -371,13 +371,13 @@ the HorizontalPodAutoscaler.
 | postgresql.auth.enablePostgresUser | bool | `false` | determines whether an admin user is created within postgres |
 | postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user |
-| postgresql.enabled | bool | `true` | enable use of bitnami/postgresql subchart |
+| postgresql.enabled | bool | `true` | enable use of bitnami/postgresql subchart. For POC purposes only. |
 | postgresql.image.repository | string | `"bitnamilegacy/postgresql"` | Image repository.  Defaults to legacy bitnami repository for postgres 14.13.0 availability. |
 | postgresql.image.tag | string | `"14.13.0"` | Version tag, corresponds to tags at https://hub.docker.com/layers/bitnamilegacy/postgresql/ |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
 | redis.architecture | string | `"standalone"` | Redis architecture Note: Prefect currently only supports standalone Redis deployments. |
-| redis.enabled | bool | `false` | enable use of bitnami/redis subchart if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance |
+| redis.enabled | bool | `false` | enable use of bitnami/redis subchart. For POC purposes only. if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance |
 | redis.image.repository | string | `"bitnamilegacy/redis"` | Image repository.  Defaults to legacy bitnami repository for redis 8.2.1 availability. |
 | redis.image.tag | string | `"8.2.1"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/redis/ |
 | secret.create | bool | `true` | whether to create a Secret containing the PostgreSQL connection string |
