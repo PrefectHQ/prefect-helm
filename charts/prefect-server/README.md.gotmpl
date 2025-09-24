@@ -123,6 +123,9 @@ redis:
 
 You can find additional configuration values in the [Bitnami Redis chart values.yaml file](https://github.com/bitnami/charts/blob/main/bitnami/redis/values.yaml).
 
+**NOTE** Using the embedded Bitnami Redis chart his is **not intended for production use**, and is only
+included to provide a functional proof of concept installation.
+
 ### Using an External Redis Instance
 
 If you want to use an existing or external Redis instance, do not set `redis.enabled`. Provide the connection details in the `backgroundServices.messaging.redis` section:
