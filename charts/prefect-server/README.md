@@ -377,7 +377,7 @@ the HorizontalPodAutoscaler.
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
 | redis.architecture | string | `"standalone"` | Redis architecture Note: Prefect currently only supports standalone Redis deployments. |
-| redis.enabled | bool | `false` | enable use of bitnami/redis subchart. if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance |
+| redis.enabled | bool | `false` | enable use of bitnami/redis subchart if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance |
 | redis.image.repository | string | `"bitnamilegacy/redis"` | Image repository.  Defaults to legacy bitnami repository for redis 8.2.1 availability. |
 | redis.image.tag | string | `"8.2.1"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnami/redis/ |
 | secret.create | bool | `true` | whether to create a Secret containing the PostgreSQL connection string |

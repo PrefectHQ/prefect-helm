@@ -589,7 +589,7 @@ postgresql:
 
 # Redis subchart - default overrides
 redis:
-  # -- enable use of bitnami/redis subchart.
+  # -- enable use of bitnami/redis subchart
   # if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance
   enabled: false
 
