@@ -207,6 +207,24 @@
           "items": {
             "type": "object"
           }
+        },
+        "affinity": {
+          "type": "object",
+          "title": "Affinity",
+          "description": "affinity for migration job pods assignment"
+        },
+        "nodeSelector": {
+          "type": "object",
+          "title": "Node Selector",
+          "description": "node labels for migration job pods assignment"
+        },
+        "tolerations": {
+          "type": "array",
+          "title": "Tolerations",
+          "description": "tolerations for migration job pods assignment",
+          "items": {
+            "type": "object"
+          }
         }
       }
     },
