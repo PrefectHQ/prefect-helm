@@ -552,7 +552,7 @@ sqlite:
 
 # PostgreSQL subchart - default overrides
 postgresql:
-  # -- enable use of bitnami/postgresql subchart.
+  # -- enable use of bitnami/postgresql subchart
   enabled: true
   auth:
     # -- determines whether an admin user is created within postgres
