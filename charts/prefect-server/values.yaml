@@ -552,7 +552,7 @@ sqlite:
 
 # PostgreSQL subchart - default overrides
 postgresql:
-  # -- enable use of bitnami/postgresql subchart. For POC purposes only.
+  # -- enable use of bitnami/postgresql subchart.
   enabled: true
   auth:
     # -- determines whether an admin user is created within postgres
@@ -589,7 +589,7 @@ postgresql:
 
 # Redis subchart - default overrides
 redis:
-  # -- enable use of bitnami/redis subchart. For POC purposes only.
+  # -- enable use of bitnami/redis subchart.
   # if backgroundServices.runAsSeparateDeployment=true, you must set this to true or provide your own redis instance
   enabled: false
 
