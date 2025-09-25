@@ -95,6 +95,7 @@ basicAuth:
 | basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
 | csrfAuth | bool | `false` | Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled) |
 | env | object | `{}` | Environment variables to configure application |
+| extraEnvVars | list | `[]` | List of advanced environment variable configs to add to exporter pods |
 | fullnameOverride | string | `""` | String to fully override common.names.fullname template |
 | image | object | `{"pullPolicy":"IfNotPresent","repository":"prefecthq/prometheus-prefect-exporter","tag":"1.1.0"}` | Image registry |
 | imagePullSecrets | list | `[]` | Global Docker registry secret names as an array |
