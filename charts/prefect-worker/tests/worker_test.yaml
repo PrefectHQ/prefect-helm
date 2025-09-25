@@ -760,6 +760,18 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES")].value
           value: my-namespace
 
+  - it: Should set Kubernetes worker observer namespaces with job override
+    set:
+      namespaceOverride: my-namespace
+      worker:
+        config:
+          jobNamespace: job-namespace
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES")].value
+          value: job-namespace
+
   - it: Should set auth string secret environment variables when existingSecret is provided
     set:
       worker:

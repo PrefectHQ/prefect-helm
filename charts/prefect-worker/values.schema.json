@@ -284,6 +284,11 @@
               "title": "Type",
               "description": "the type of worker to start i.e kubernetes"
             },
+            "jobNamespace": {
+              "type": ["string", "null"],
+              "title": "Job Namespace",
+              "description": "the namespace where the jobs would spawn. If unset, spawns in the same namespace as the worker controller. Requires role.namespace to be set with the same value."
+            },
             "baseJobTemplate": {
               "type": "object",
               "title": "Base Job Template",
