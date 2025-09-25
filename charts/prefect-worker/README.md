@@ -361,6 +361,7 @@ worker:
 | worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
 | worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
+| worker.config.jobNamespace | string | `nil` | overrides namespaces where jobs are created on. |
 | worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
 | worker.config.name | string | `nil` | the name to give to the started worker. If not provided, a unique name will be generated. |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
