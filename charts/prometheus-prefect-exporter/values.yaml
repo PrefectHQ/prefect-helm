@@ -55,6 +55,9 @@ env: {}
   # foo: bar
   # my_env: my_value
 
+# -- array with extra environment variables to add to exporter deployment pods
+extraEnvVars: []
+
 # -- Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions
 podDisruptionBudget: {}
   # maxUnavailable: 0

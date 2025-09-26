@@ -95,6 +95,9 @@ spec:
             value: {{ .Values.basicAuth.authString | quote }}
           {{- end }}
           {{- end }}
+          {{- if .Values.extraEnvVars }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 10 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

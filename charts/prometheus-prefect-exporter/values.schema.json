@@ -126,6 +126,11 @@
       "title": "Environment Variables",
       "description": "Environment variables"
     },
+    "extraEnvVars": {
+      "type": "array",
+      "title": "Extra Env Vars",
+      "description": "Extra environment variables to add to exporter deployment pods"
+    },
     "podDisruptionBudget": {
       "type": "object",
       "title": "Pod Disruption Budget",
