@@ -10,6 +10,8 @@ permissions: {}
 
 jobs:
   lint_test:
+    environment: ${{
+      (github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository) && 'Acceptance Tests (External)' || '' }}
     name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
     permissions:
