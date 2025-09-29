@@ -144,6 +144,24 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].value
           value: custom_value
 
+  - it: Should set advanced custom environment variables
+    set:
+      extraEnvVars:
+        - name: CUSTOM_ENV
+          valueFrom:
+            secretKeyRef:
+              name: my-secret
+              key: my-secret-key
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].valueFrom.secretKeyRef.name
+          value: my-secret
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "CUSTOM_ENV")].valueFrom.secretKeyRef.key
+          value: my-secret-key
+
   - it: Should set the correct pod security context
     set:
       podSecurityContext:
