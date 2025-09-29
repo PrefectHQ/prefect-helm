@@ -117,6 +117,8 @@ worker:
     name: null
     # -- maximum number of flow runs to start simultaneously (default: unlimited)
     limit: null
+    # -- the namespace where the jobs would spawn. If unset, spawns in the same namespace as the worker controller. Requires role.namespace to be set with the same value.
+    jobNamespace: null
 
     ##  If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.
     ## e.g.:
