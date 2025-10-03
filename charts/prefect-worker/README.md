@@ -361,7 +361,7 @@ worker:
 | worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
 | worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
-| worker.config.jobNamespace | string | `nil` | overrides namespaces where jobs are created on. |
+| worker.config.jobNamespace | string | `nil` | the namespace where the jobs would spawn. If unset, spawns in the same namespace as the worker controller. Requires role.namespace to be set with the same value. |
 | worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
 | worker.config.name | string | `nil` | the name to give to the started worker. If not provided, a unique name will be generated. |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
@@ -408,6 +408,7 @@ worker:
 | worker.livenessProbe.enabled | bool | `false` |  |
 | worker.nodeSelector | object | `{}` | node labels for worker pods assignment |
 | worker.podAnnotations | object | `{}` | extra annotations for worker pod |
+| worker.podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
 | worker.podLabels | object | `{}` | extra labels for worker pod |
 | worker.podSecurityContext.fsGroup | int | `1001` | set worker pod's security context fsGroup, set to `null` to unset |
 | worker.podSecurityContext.runAsNonRoot | bool | `true` | set worker pod's security context runAsNonRoot |

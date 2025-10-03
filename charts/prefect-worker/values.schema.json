@@ -812,6 +812,11 @@
               "description": "a list of DNS resolver options"
             }
           }
+        },
+        "podDisruptionBudget": {
+          "type": "object",
+          "title": "Pod Disruption Budget",
+          "description": "Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions"
         }
       }
     },
