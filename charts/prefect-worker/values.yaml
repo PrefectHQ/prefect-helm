@@ -317,6 +317,11 @@ worker:
   # -- array with extra Arguments for the worker container to start with
   extraArgs: []
 
+  # -- Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions
+  podDisruptionBudget: {}
+    # maxUnavailable: 1
+    # minAvailable: 1
+
 ## ServiceAccount configuration
 serviceAccount:
   # -- specifies whether a ServiceAccount should be created

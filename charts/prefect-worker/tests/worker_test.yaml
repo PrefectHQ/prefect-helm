@@ -870,3 +870,100 @@ tests:
         equal:
           path: .metadata.namespace
           value: my-namespace
+
+  - it: Should not create PDB by default
+    asserts:
+      - template: pdb.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should create PDB with maxUnavailable
+    set:
+      worker:
+        podDisruptionBudget:
+          maxUnavailable: 1
+    asserts:
+      - template: pdb.yaml
+        hasDocuments:
+          count: 1
+      - template: pdb.yaml
+        equal:
+          path: .apiVersion
+          value: policy/v1
+      - template: pdb.yaml
+        equal:
+          path: .kind
+          value: PodDisruptionBudget
+      - template: pdb.yaml
+        equal:
+          path: .metadata.name
+          value: prefect-worker
+      - template: pdb.yaml
+        equal:
+          path: .metadata.namespace
+          value: prefect
+      - template: pdb.yaml
+        equal:
+          path: .spec.maxUnavailable
+          value: 1
+      - template: pdb.yaml
+        isSubset:
+          path: .spec.selector.matchLabels
+          content:
+            app.kubernetes.io/component: worker
+
+  - it: Should create PDB with minAvailable
+    set:
+      worker:
+        podDisruptionBudget:
+          minAvailable: 1
+    asserts:
+      - template: pdb.yaml
+        hasDocuments:
+          count: 1
+      - template: pdb.yaml
+        equal:
+          path: .spec.minAvailable
+          value: 1
+
+  - it: Should create PDB with unhealthyPodEvictionPolicy
+    set:
+      worker:
+        podDisruptionBudget:
+          maxUnavailable: 1
+          unhealthyPodEvictionPolicy: AlwaysAllow
+    asserts:
+      - template: pdb.yaml
+        equal:
+          path: .spec.maxUnavailable
+          value: 1
+      - template: pdb.yaml
+        equal:
+          path: .spec.unhealthyPodEvictionPolicy
+          value: AlwaysAllow
+
+  - it: Should include common labels in PDB
+    set:
+      commonLabels:
+        my-label: my-value
+      worker:
+        podDisruptionBudget:
+          maxUnavailable: 1
+    asserts:
+      - template: pdb.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+
+  - it: Should include common annotations in PDB
+    set:
+      commonAnnotations:
+        my-annotation: my-value
+      worker:
+        podDisruptionBudget:
+          maxUnavailable: 1
+    asserts:
+      - template: pdb.yaml
+        equal:
+          path: .metadata.annotations.my-annotation
+          value: my-value
