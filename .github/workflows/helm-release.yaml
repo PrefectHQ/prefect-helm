@@ -131,15 +131,15 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   update_helm_chart_worker_version_downstream:
-    name: Update Helm Chart Worker version in `ops-cluster-deployment`
+    name: Update Helm Chart Worker version in `cluster-deployment`
     needs: release
     runs-on: ubuntu-latest
     steps:
       - name: Run workflow
         run: |
           gh workflow run update-prefect-helm-chart-version.yaml \
-            --repo prefecthq/ops-cluster-deployment \
+            --repo prefecthq/cluster-deployment \
             --ref main \
             -f chart_version=${{ needs.release.outputs.releaseVersion }} \
         env:
-          GH_TOKEN: ${{ secrets.OPS_CLUSTER_DEPLOYMENT_ACTIONS_RW }}
+          GH_TOKEN: ${{ secrets.CLUSTER_DEPLOYMENT_ACTIONS_RW }}
