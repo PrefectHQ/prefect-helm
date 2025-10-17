@@ -147,7 +147,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfManaged" }}
+            {{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
@@ -240,7 +240,7 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfManaged" }}
+            {{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
