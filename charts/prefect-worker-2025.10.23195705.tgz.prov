@@ -1,0 +1,47 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 3.4.25
+dependencies:
+- - name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 2.31.4
+description: Prefect Worker application bundle
+home: https://github.com/PrefectHQ
+maintainers:
+- - email: jamie@prefect.io
+  name: jamiezieziula
+- - email: jimi@prefect.io
+  name: jimid27
+- - email: edward@prefect.io
+  name: parkedwards
+- - email: mitchell@prefect.io
+  name: mitchnielsen
+name: prefect-worker
+sources:
+- - https://github.com/PrefectHQ/prefect-helm
+type: application
+version: 2025.10.23195705
+
+...
+files:
+  prefect-worker-2025.10.23195705.tgz: sha256:3629cd816e2a7b2f2278a45550b6ab0bdd1f0f05cf475adae4213c8f18179ea2
+-----BEGIN PGP SIGNATURE-----
+
+wsFcBAEBCgAQBQJo+oieCRCNvdpwdMQMagAAITgQAHHYOM6JUJtmbdL2gWp+NAGl
+3gx8hrzDUCib/KynBrJkpgxgGE8e9QQa0bhqqtt2NBhoHeak+GGmTuSLMSGmdTBz
+sBzE9in8iMvDMzOXQ/jjlX+kvjaS0SSR38LV8LNifA8bVv4/3QtHRt92+ela2aVG
+D1kSBLyjIdo69QPz2fD9RPgDDOO1k4DeW6qYFZSEOdufmxmcEfc7wgCzSd5eqY5U
+SKHYDLHyOrszDOp4WLSNNxis1wF32qNr6F4G38bkouVWo3vtNU+6HRA1WRsdkiOU
+t+F/4iZgiEtwuE+Dih1x44PhQKpNtAKLVAJ9PHOzEYZG+SST+wmEQDKCqMB+Bzyc
+gi4cQOof9SAElG8fZRgTr3qyrghv7OuH1rb5ST3yAoFuXDZY+U5kZvIh7OvLTRJ2
+MZg81awJO3nI0p4wUDe3XrlqtwXgVrIqh2lKm2A9t/lF/p4KXCjXt0pTFfyu2ncf
+0YoM6THbxj+d8ZfhCSgQ/6ss1XFShZ8mkpWnR1VPKHkUVOediUJt7A3NjdBQ01La
+pgp2LVk7qDqMe8EoiRf2Z/WIii17mrhqFCoqfWSqDUK6mDvr1uERri+HiLak/7qt
+mZ3+KcKHpEwT06r37/h3jooUb/Q+hWvl0ZfVi1TAk/ZAcAlg3C7A6gScYfyqNCbl
+/oQTZ1U792YZ+xw7aeDl
+=hr7f
+-----END PGP SIGNATURE-----
