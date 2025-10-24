@@ -82,7 +82,7 @@ There are three scenarios for passwords:
 {{- end }}
 {{- end -}}
 
-// ----- Connection string templates ------
+{{/* ----- Connection string templates ------ */}}
 
 {{/*
   server.postgres-hostname:
@@ -189,13 +189,13 @@ There are three scenarios for passwords:
 {{- end -}}
 {{- end -}}
 
-// ----- End connection string templates -----
+{{/* ----- End connection string templates ----- */}}
 
 {{- define "server.uiUrl" -}}
   {{- printf "%s" (replace "/api" "" .Values.server.uiConfig.prefectUiApiUrl) -}}
 {{- end -}}
 
-// ----- Gateway API Helper Templates -----
+{{/* ----- Gateway API Helper Templates ----- */}}
 
 {{/*
   gateway.name:
@@ -264,4 +264,4 @@ true
 {{- end -}}
 {{- end -}}
 
-// ----- End Gateway API Helper Templates -----
+{{/* ----- End Gateway API Helper Templates ----- */}}
