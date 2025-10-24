@@ -558,7 +558,6 @@ gateway:
       # -- listener protocol (HTTP, HTTPS, TCP, TLS)
       protocol: HTTP
       # -- hostname pattern for this listener (e.g., "*.example.com")
-      # If not set, inherits from httproute.hostnames
       hostname: ""
     - # -- listener name
       name: https
