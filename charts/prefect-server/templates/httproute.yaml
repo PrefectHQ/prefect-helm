@@ -1,0 +1,57 @@
+{{- if and .Values.gateway.enabled .Values.httproute.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "httproute.name" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: httproute
+    prefect-version: {{ .Chart.AppVersion }}
+    {{- if .Values.httproute.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.httproute.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.httproute.annotations .Values.commonAnnotations }}
+  annotations:
+    {{- if .Values.httproute.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.httproute.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  parentRefs:
+  {{- range .Values.httproute.parentRefs }}
+  - name: {{ .name | default (include "gateway.name" $) | quote }}
+    {{- if .namespace }}
+    namespace: {{ .namespace | quote }}
+    {{- end }}
+    {{- if .sectionName }}
+    sectionName: {{ .sectionName }}
+    {{- end }}
+    {{- if .port }}
+    port: {{ .port }}
+    {{- end }}
+  {{- end }}
+  {{- $hostnames := include "gateway.hostnames" . | fromYamlArray }}
+  {{- if $hostnames }}
+  hostnames:
+  {{- range $hostnames }}
+  - {{ . | quote }}
+  {{- end }}
+  {{- end }}
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: {{ .Values.ingress.host.path | default "/" | quote }}
+    backendRefs:
+    - name: {{ include "common.names.fullname" . }}
+      port: {{ .Values.service.port }}
+  {{- if .Values.httproute.extraRules }}
+  {{- include "common.tplvalues.render" ( dict "value" .Values.httproute.extraRules "context" $ ) | nindent 2 }}
+  {{- end }}
+{{- end }}

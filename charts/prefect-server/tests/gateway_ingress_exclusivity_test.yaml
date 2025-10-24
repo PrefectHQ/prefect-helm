@@ -1,0 +1,71 @@
+---
+suite: Gateway and Ingress Mutual Exclusivity
+release:
+  name: exclusivity-test
+  namespace: prefect
+capabilities:
+  apiVersions:
+    - gateway.networking.k8s.io/v1/Gateway
+    - gateway.networking.k8s.io/v1/HTTPRoute
+
+tests:
+  - it: Should fail when both Gateway and Ingress are enabled
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      ingress:
+        enabled: true
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "Gateway API and Ingress are mutually exclusive. Only one can be enabled at a time. Please set either gateway.enabled=false or ingress.enabled=false."
+
+  - it: Should fail when Gateway is enabled without className
+    set:
+      gateway:
+        enabled: true
+        className: ""
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "gateway.className is required when gateway.enabled=true. Please specify a GatewayClass that exists in your cluster."
+
+  - it: Should succeed when only Gateway is enabled with className
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      ingress:
+        enabled: false
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 1
+
+  - it: Should succeed when only Ingress is enabled
+    set:
+      gateway:
+        enabled: false
+      ingress:
+        enabled: true
+        host:
+          hostname: "prefect.example.com"
+    asserts:
+      - template: ingress.yaml
+        hasDocuments:
+          count: 1
+
+  - it: Should succeed when both are disabled
+    set:
+      gateway:
+        enabled: false
+      ingress:
+        enabled: false
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 0
+      - template: ingress.yaml
+        hasDocuments:
+          count: 0

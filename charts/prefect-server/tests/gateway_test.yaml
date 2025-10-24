@@ -1,0 +1,403 @@
+---
+suite: Gateway API Configuration
+release:
+  name: gateway-test
+  namespace: prefect
+capabilities:
+  apiVersions:
+    - gateway.networking.k8s.io/v1/Gateway
+    - gateway.networking.k8s.io/v1/HTTPRoute
+
+tests:
+  - it: Should not create Gateway by default
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should not create HTTPRoute by default
+    asserts:
+      - template: httproute.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should not create TLS redirect HTTPRoute by default
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should create Gateway when enabled
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 1
+      - template: gateway.yaml
+        isKind:
+          of: Gateway
+      - template: gateway.yaml
+        equal:
+          path: spec.gatewayClassName
+          value: "istio"
+
+  - it: Should set Gateway name from values
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+        name: "custom-gateway"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: metadata.name
+          value: "custom-gateway"
+
+  - it: Should use fullname as Gateway name when not specified
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: metadata.name
+          value: "prefect-server"
+
+  - it: Should configure Gateway listeners
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[0].name
+          value: "http"
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[0].port
+          value: 80
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[0].protocol
+          value: "HTTP"
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[1].name
+          value: "https"
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[1].port
+          value: 443
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[1].protocol
+          value: "HTTPS"
+
+  - it: Should add custom labels to Gateway
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+        labels:
+          custom-label: "custom-value"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: metadata.labels["custom-label"]
+          value: "custom-value"
+
+  - it: Should add custom annotations to Gateway
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+        annotations:
+          custom-annotation: "custom-value"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: metadata.annotations["custom-annotation"]
+          value: "custom-value"
+
+  - it: Should configure TLS certificateRefs with default secret name
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      ingress:
+        host:
+          hostname: "prefect.example.com"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[1].tls.certificateRefs[0].name
+          value: "prefect.example.com-tls"
+
+  - it: Should configure TLS certificateRefs with custom secret name
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+        listeners:
+          - name: https
+            port: 443
+            protocol: HTTPS
+            tls:
+              mode: Terminate
+              certificateRefs:
+                - kind: Secret
+                  name: "custom-tls-secret"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[0].tls.certificateRefs[0].name
+          value: "custom-tls-secret"
+
+  - it: Should create HTTPRoute when Gateway is enabled
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      ingress:
+        host:
+          hostname: "prefect.example.com"
+    asserts:
+      - template: httproute.yaml
+        hasDocuments:
+          count: 1
+      - template: httproute.yaml
+        isKind:
+          of: HTTPRoute
+
+  - it: Should configure HTTPRoute parentRefs with default Gateway name
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].name
+          value: "prefect-server"
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].sectionName
+          value: "https"
+
+  - it: Should configure HTTPRoute hostnames from ingress.host.hostname
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      ingress:
+        host:
+          hostname: "prefect.example.com"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.hostnames[0]
+          value: "prefect.example.com"
+
+  - it: Should configure HTTPRoute hostnames from httproute.hostnames
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        hostnames:
+          - "prefect1.example.com"
+          - "prefect2.example.com"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.hostnames[0]
+          value: "prefect1.example.com"
+      - template: httproute.yaml
+        equal:
+          path: spec.hostnames[1]
+          value: "prefect2.example.com"
+
+  - it: Should configure HTTPRoute backendRefs
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      service:
+        port: 4200
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: "prefect-server"
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 4200
+
+  - it: Should configure HTTPRoute path from ingress.host.path
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      ingress:
+        host:
+          path: "/api"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: "/api"
+
+  - it: Should not create TLS redirect HTTPRoute when redirect is disabled
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        tls:
+          redirect: false
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should create TLS redirect HTTPRoute when redirect is enabled
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        tls:
+          redirect: true
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        hasDocuments:
+          count: 1
+      - template: httproute-tls-redirect.yaml
+        isKind:
+          of: HTTPRoute
+
+  - it: Should configure TLS redirect with default port
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        tls:
+          redirect: true
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.rules[0].filters[0].requestRedirect.scheme
+          value: "https"
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.rules[0].filters[0].requestRedirect.port
+          value: 443
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.rules[0].filters[0].requestRedirect.statusCode
+          value: 301
+
+  - it: Should configure TLS redirect with custom port
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        tls:
+          redirect: true
+          redirectPort: 8443
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.rules[0].filters[0].requestRedirect.port
+          value: 8443
+
+  - it: Should configure TLS redirect parentRef to http listener
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        tls:
+          redirect: true
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.parentRefs[0].sectionName
+          value: "http"
+
+  - it: Should add Gateway infrastructure configuration
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+        infrastructure:
+          parametersRef:
+            group: "example.com"
+            kind: "GatewayParameters"
+            name: "my-params"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: spec.infrastructure.parametersRef.group
+          value: "example.com"
+
+  - it: Should disable HTTPRoute when httproute.enabled is false
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        enabled: false
+    asserts:
+      - template: httproute.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should set HTTPRoute name from values
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        name: "custom-httproute"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: metadata.name
+          value: "custom-httproute"
+
+  - it: Should add custom labels to HTTPRoute
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        labels:
+          custom-label: "custom-value"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: metadata.labels["custom-label"]
+          value: "custom-value"
+
+  - it: Should add custom annotations to HTTPRoute
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+      httproute:
+        annotations:
+          custom-annotation: "custom-value"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: metadata.annotations["custom-annotation"]
+          value: "custom-value"

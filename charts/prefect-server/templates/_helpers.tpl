@@ -194,3 +194,74 @@ There are three scenarios for passwords:
 {{- define "server.uiUrl" -}}
   {{- printf "%s" (replace "/api" "" .Values.server.uiConfig.prefectUiApiUrl) -}}
 {{- end -}}
+
+// ----- Gateway API Helper Templates -----
+
+{{/*
+  gateway.name:
+    Returns the name of the Gateway resource
+*/}}
+{{- define "gateway.name" -}}
+{{- if .Values.gateway.name -}}
+  {{- .Values.gateway.name -}}
+{{- else -}}
+  {{- include "common.names.fullname" . -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  httproute.name:
+    Returns the name of the HTTPRoute resource
+*/}}
+{{- define "httproute.name" -}}
+{{- if .Values.httproute.name -}}
+  {{- .Values.httproute.name -}}
+{{- else -}}
+  {{- include "common.names.fullname" . -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  gateway.hostnames:
+    Returns the list of hostnames for Gateway/HTTPRoute
+    Falls back to ingress.host.hostname and ingress.extraHosts if httproute.hostnames is empty
+*/}}
+{{- define "gateway.hostnames" -}}
+{{- if .Values.httproute.hostnames -}}
+  {{- toYaml .Values.httproute.hostnames -}}
+{{- else -}}
+  {{- $hostnames := list -}}
+  {{- if .Values.ingress.host.hostname -}}
+    {{- $hostnames = append $hostnames .Values.ingress.host.hostname -}}
+  {{- end -}}
+  {{- range .Values.ingress.extraHosts -}}
+    {{- $hostnames = append $hostnames .name -}}
+  {{- end -}}
+  {{- toYaml $hostnames -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  gateway.tlsSecretName:
+    Returns the TLS secret name following ingress pattern
+*/}}
+{{- define "gateway.tlsSecretName" -}}
+{{- if .Values.ingress.host.hostname -}}
+  {{- printf "%s-tls" .Values.ingress.host.hostname -}}
+{{- else -}}
+  {{- printf "%s-tls" (include "common.names.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  gateway.apiAvailable:
+    Check if Gateway API is available in the cluster
+    Returns "true" if available, empty otherwise
+*/}}
+{{- define "gateway.apiAvailable" -}}
+{{- if .Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1/Gateway" -}}
+true
+{{- end -}}
+{{- end -}}
+
+// ----- End Gateway API Helper Templates -----
