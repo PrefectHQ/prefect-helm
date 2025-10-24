@@ -24,7 +24,7 @@ metadata:
   {{- end }}
 spec:
   parentRefs:
-  - name: {{ .Values.httproute.parentRefs | first | dig "name" (include "gateway.name" $) | quote }}
+  - name: {{ (.Values.httproute.parentRefs | first).name | default (include "gateway.name" $) | quote }}
     {{- if ((.Values.httproute.parentRefs | first).namespace) }}
     namespace: {{ (.Values.httproute.parentRefs | first).namespace | quote }}
     {{- end }}
