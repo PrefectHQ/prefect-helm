@@ -245,34 +245,148 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 #### Modifying the Base Job Template
 
 Modifying the base job template replaces the default configuration entirely.
-Put differently, any provdied configuration is not merged with the default configuration.
+Put differently, any provided configuration is not merged with the default configuration.
 
-For example, if you want to add an image pull secret to the base job template,
-you would modify the `base-job-template.json` file to look like this:
+The base job template includes two main sections:
+- `variables`: Define environment variables that will be available to your flow runs
+- `job_configuration`: Configure the Kubernetes job specifics like resources, image settings, etc.
 
-```diff
+##### Adding Environment Variables
+
+To add environment variables to your flow runs, modify the `variables` section of the base job template:
+```json
 {
- "job_configuration": {
-   "job_manifest": {
-     "spec": {
-       "template": {
-         "spec": {
-+          "imagePullSecrets": [
-+            {
-+              "name": "my-pull-secret"
-+            }
-+          ]
-         }
-       }
-     }
-   }
- },
+  "variables": {
+    "DATABASE_HOST": "my-database.example.com",
+    "DATABASE_PORT": "5432",
+    "LOG_LEVEL": "INFO",
+    "CUSTOM_SETTING": "my-value"
+  },
+  "job_configuration": {
+    // rest of configuration...
+  }
 }
 ```
 
-Here, you add `imagePullSecrets` into your existing configuration. Note that
-the snippet is truncated for brevity. The full configuration should still be
-provided.
+These variables will be available as environment variables in your flow runs.
+
+##### Adding Environment Variables from Secrets
+
+For sensitive information such as passwords or API keys, you can reference Kubernetes secrets:
+```json
+{
+  "variables": {
+    "DATABASE_HOST": "my-database.example.com",
+    "DATABASE_PASSWORD": {
+      "valueFrom": {
+        "secretKeyRef": {
+          "name": "db-credentials",
+          "key": "password"
+        }
+      }
+    },
+    "API_KEY": {
+      "valueFrom": {
+        "secretKeyRef": {
+          "name": "api-credentials", 
+          "key": "api-key"
+        }
+      }
+    }
+  },
+  "job_configuration": {
+    // rest of configuration...
+  }
+}
+```
+
+Make sure the referenced secrets (`db-credentials` and `api-credentials` in this example) exist in the namespace where your flows will run.
+
+##### Setting Image Pull Secrets
+
+If your flow images are stored in a private registry, you need to configure image pull secrets:
+```json
+{
+  "variables": {
+    // Your variables here...
+  },
+  "job_configuration": {
+    "job_manifest": {
+      "spec": {
+        "template": {
+          "spec": {
+            "imagePullSecrets": [
+              {
+                "name": "my-registry-secret"
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+You'll need to create the Kubernetes secret for your registry credentials first:
+```bash
+kubectl create secret docker-registry my-registry-secret \
+  --docker-server=<your-registry-server> \
+  --docker-username=<your-name> \
+  --docker-password=<your-password> \
+  --docker-email=<your-email>
+```
+
+##### Complete Example
+
+Here's a complete example combining all of the above:
+```json
+{
+  "variables": {
+    "DATABASE_HOST": "my-database.example.com",
+    "DATABASE_PORT": "5432",
+    "LOG_LEVEL": "INFO",
+    "DATABASE_PASSWORD": {
+      "valueFrom": {
+        "secretKeyRef": {
+          "name": "db-credentials",
+          "key": "password"
+        }
+      }
+    }
+  },
+  "job_configuration": {
+    "job_manifest": {
+      "spec": {
+        "template": {
+          "spec": {
+            "imagePullSecrets": [
+              {
+                "name": "my-registry-secret"
+              }
+            ],
+            "containers": [
+              {
+                "name": "flow",
+                "resources": {
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "128Mi"
+                  },
+                  "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 Once applied, you can see the entire base job template in the UI by navigating
 to `Account settings` > `Work Pools` > your work pool > three-dot menu in the
