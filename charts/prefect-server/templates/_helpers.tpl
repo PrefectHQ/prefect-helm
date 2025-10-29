@@ -223,31 +223,22 @@ There are three scenarios for passwords:
 
 {{/*
   gateway.hostnames:
-    Returns the list of hostnames for Gateway/HTTPRoute
-    Falls back to ingress.host.hostname and ingress.extraHosts if httproute.hostnames is empty
+    Returns the list of hostnames for Gateway/HTTPRoute from httproute.hostnames
 */}}
 {{- define "gateway.hostnames" -}}
 {{- if .Values.httproute.hostnames -}}
   {{- toYaml .Values.httproute.hostnames -}}
-{{- else -}}
-  {{- $hostnames := list -}}
-  {{- if .Values.ingress.host.hostname -}}
-    {{- $hostnames = append $hostnames .Values.ingress.host.hostname -}}
-  {{- end -}}
-  {{- range .Values.ingress.extraHosts -}}
-    {{- $hostnames = append $hostnames .name -}}
-  {{- end -}}
-  {{- toYaml $hostnames -}}
 {{- end -}}
 {{- end -}}
 
 {{/*
   gateway.tlsSecretName:
-    Returns the TLS secret name following ingress pattern
+    Returns the TLS secret name based on the first gateway hostname or release name
 */}}
 {{- define "gateway.tlsSecretName" -}}
-{{- if .Values.ingress.host.hostname -}}
-  {{- printf "%s-tls" .Values.ingress.host.hostname -}}
+{{- $hostnames := include "gateway.hostnames" . | fromYamlArray -}}
+{{- if $hostnames -}}
+  {{- printf "%s-tls" (index $hostnames 0) -}}
 {{- else -}}
   {{- printf "%s-tls" (include "common.names.fullname" .) -}}
 {{- end -}}

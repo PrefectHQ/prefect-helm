@@ -124,19 +124,30 @@ tests:
           path: metadata.annotations["custom-annotation"]
           value: "custom-value"
 
-  - it: Should configure TLS certificateRefs with default secret name
+  - it: Should configure TLS certificateRefs with default secret name from httproute.hostnames
     set:
       gateway:
         enabled: true
         className: "istio"
-      ingress:
-        host:
-          hostname: "prefect.example.com"
+      httproute:
+        hostnames:
+          - "prefect.example.com"
     asserts:
       - template: gateway.yaml
         equal:
           path: spec.listeners[1].tls.certificateRefs[0].name
           value: "prefect.example.com-tls"
+
+  - it: Should use release name for TLS secret when no hostnames configured
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+    asserts:
+      - template: gateway.yaml
+        equal:
+          path: spec.listeners[1].tls.certificateRefs[0].name
+          value: "prefect-server-tls"
 
   - it: Should configure TLS certificateRefs with custom secret name
     set:
@@ -189,19 +200,15 @@ tests:
           path: spec.parentRefs[0].sectionName
           value: "https"
 
-  - it: Should configure HTTPRoute hostnames from ingress.host.hostname
+  - it: Should not set HTTPRoute hostnames when not configured
     set:
       gateway:
         enabled: true
         className: "istio"
-      ingress:
-        host:
-          hostname: "prefect.example.com"
     asserts:
       - template: httproute.yaml
-        equal:
-          path: spec.hostnames[0]
-          value: "prefect.example.com"
+        isNull:
+          path: spec.hostnames
 
   - it: Should configure HTTPRoute hostnames from httproute.hostnames
     set:
