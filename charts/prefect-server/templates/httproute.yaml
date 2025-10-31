@@ -47,7 +47,7 @@ spec:
   - matches:
     - path:
         type: PathPrefix
-        value: {{ .Values.ingress.host.path | default "/" | quote }}
+        value: {{ .Values.httproute.path | default "/" | quote }}
     backendRefs:
     - name: {{ include "common.names.fullname" . }}
       port: {{ .Values.service.port }}

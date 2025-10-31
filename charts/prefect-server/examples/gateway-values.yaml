@@ -9,9 +9,6 @@
 # Disable Ingress (Gateway and Ingress are mutually exclusive)
 ingress:
   enabled: false
-  host:
-    hostname: "prefect.example.com"
-    path: "/"
 
 # Enable and configure Gateway API
 gateway:
@@ -65,7 +62,6 @@ httproute:
   # name: "my-custom-httproute"
   
   # Hostnames that this HTTPRoute should match
-  # If not set, falls back to ingress.host.hostname
   hostnames:
     - "prefect.example.com"
     # Optional: Add additional hostnames

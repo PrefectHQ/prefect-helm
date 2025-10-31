@@ -7,10 +7,10 @@ Gateway API is enabled. Access Prefect via your Gateway's configured hostname(s)
 {{- $hostnames := include "gateway.hostnames" . | fromYamlArray }}
 {{- if $hostnames }}
 {{- range $hostnames }}
-https://{{ . }}{{ $.Values.ingress.host.path }}
+https://{{ . }}{{ $.Values.httproute.path }}
 {{- end }}
 {{- else }}
-Configure hostnames in httproute.hostnames or ingress.host.hostname
+Configure hostnames in httproute.hostnames
 {{- end }}
 
 To check Gateway status:

@@ -246,19 +246,29 @@ tests:
           path: spec.rules[0].backendRefs[0].port
           value: 4200
 
-  - it: Should configure HTTPRoute path from ingress.host.path
+  - it: Should configure HTTPRoute path from httproute.path
     set:
       gateway:
         enabled: true
         className: "istio"
-      ingress:
-        host:
-          path: "/api"
+      httproute:
+        path: "/api"
     asserts:
       - template: httproute.yaml
         equal:
           path: spec.rules[0].matches[0].path.value
           value: "/api"
+
+  - it: Should default HTTPRoute path to / when not configured
+    set:
+      gateway:
+        enabled: true
+        className: "istio"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: "/"
 
   - it: Should not create TLS redirect HTTPRoute when redirect is disabled
     set:
