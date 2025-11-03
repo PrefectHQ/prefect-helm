@@ -13,23 +13,23 @@ ingress:
 # Enable and configure Gateway API
 gateway:
   enabled: true
-  
+
   # GatewayClass name - must exist in your cluster
   # Common values: "istio", "envoy", "nginx", etc.
   className: "istio"
-  
+
   # Optional: Custom Gateway name (defaults to release fullname)
   # name: "my-custom-gateway"
-  
+
   # Optional: Add custom labels to the Gateway resource
   labels:
     environment: production
     team: platform
-  
+
   # Optional: Add custom annotations to the Gateway resource
   annotations:
     external-dns.alpha.kubernetes.io/hostname: "prefect.example.com"
-  
+
   # Gateway listeners configuration
   listeners:
     # HTTP listener on port 80
@@ -37,7 +37,7 @@ gateway:
       port: 80
       protocol: HTTP
       hostname: ""
-    
+
     # HTTPS listener on port 443
     - name: https
       port: 443
@@ -57,16 +57,16 @@ gateway:
 httproute:
   # HTTPRoute is enabled by default when gateway.enabled=true
   enabled: true
-  
+
   # Optional: Custom HTTPRoute name (defaults to release fullname)
   # name: "my-custom-httproute"
-  
+
   # Hostnames that this HTTPRoute should match
   hostnames:
     - "prefect.example.com"
     # Optional: Add additional hostnames
     # - "prefect-alt.example.com"
-  
+
   # Parent Gateway references
   # Defaults shown below - usually you don't need to override these
   parentRefs:
@@ -74,15 +74,15 @@ httproute:
       namespace: ""  # Defaults to release namespace
       sectionName: https  # Which listener to attach to
       port: null  # Optional: specify port if needed
-  
+
   # Optional: Add custom labels to the HTTPRoute resource
   labels:
     app: prefect
-  
+
   # Optional: Add custom annotations to the HTTPRoute resource
   annotations:
     custom-annotation: value
-  
+
   # TLS redirect configuration
   tls:
     # Enable automatic HTTP to HTTPS redirect

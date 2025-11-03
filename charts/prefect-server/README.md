@@ -368,7 +368,7 @@ the HorizontalPodAutoscaler.
 | httproute.annotations | object | `{}` | additional annotations for the HTTPRoute resource |
 | httproute.enabled | bool | `true` | enable HTTPRoute resource (auto-enabled when gateway.enabled=true) Can be disabled if you want to create HTTPRoutes manually |
 | httproute.extraRules | list | `[]` | additional HTTPRoute rules (advanced usage) Will be merged with auto-generated rules |
-| httproute.hostnames | list | `[]` | hostnames that this HTTPRoute should match If not set, will use ingress.host.hostname and ingress.extraHosts |
+| httproute.hostnames | list | `[]` | hostnames that this HTTPRoute should match |
 | httproute.labels | object | `{}` | additional labels for the HTTPRoute resource |
 | httproute.name | string | `""` | HTTPRoute resource name (defaults to chart fullname if not set) |
 | httproute.parentRefs | list | `[{"name":"","namespace":"","port":null,"sectionName":"https"}]` | parent Gateway references |
@@ -376,6 +376,7 @@ the HorizontalPodAutoscaler.
 | httproute.parentRefs[0].namespace | string | `""` | namespace of the Gateway (optional) |
 | httproute.parentRefs[0].port | string | `nil` | port number (optional) |
 | httproute.parentRefs[0].sectionName | string | `"https"` | specific listener name to attach to (optional, defaults to "https") |
+| httproute.path | string | `"/"` | path prefix for HTTPRoute matching |
 | httproute.tls | object | `{"redirect":false,"redirectPort":443}` | TLS redirect configuration |
 | httproute.tls.redirect | bool | `false` | enable automatic HTTP to HTTPS redirect |
 | httproute.tls.redirectPort | int | `443` | HTTPS port for redirect (defaults to 443) |
