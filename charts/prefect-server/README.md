@@ -1,6 +1,6 @@
 # prefect-server
 
-Prefect server application bundle with Ingress and Gateway API support
+Prefect server application bundle
 
 **Homepage:** <https://github.com/PrefectHQ>
 
