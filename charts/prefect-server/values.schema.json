@@ -1071,6 +1071,97 @@
         }
       }
     },
+    "gateway": {
+      "type": "object",
+      "title": "Gateway API Configuration",
+      "description": "Configuration for Kubernetes Gateway API resources",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable Gateway",
+          "description": "Enable Gateway API resources (mutually exclusive with ingress)"
+        },
+        "className": {
+          "type": "string",
+          "title": "Gateway Class Name",
+          "description": "GatewayClass to use for the Gateway resource"
+        },
+        "name": {
+          "type": "string",
+          "title": "Gateway Name",
+          "description": "Name for the Gateway resource"
+        },
+        "labels": {
+          "type": "object",
+          "title": "Gateway Labels"
+        },
+        "annotations": {
+          "type": "object",
+          "title": "Gateway Annotations"
+        },
+        "listeners": {
+          "type": "array",
+          "title": "Gateway Listeners",
+          "items": {
+            "type": "object"
+          }
+        },
+        "infrastructure": {
+          "type": "object",
+          "title": "Infrastructure Configuration"
+        }
+      }
+    },
+    "httproute": {
+      "type": "object",
+      "title": "HTTPRoute Configuration",
+      "description": "Configuration for HTTPRoute resources",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "title": "Enable HTTPRoute"
+        },
+        "name": {
+          "type": "string",
+          "title": "HTTPRoute Name"
+        },
+        "labels": {
+          "type": "object",
+          "title": "HTTPRoute Labels"
+        },
+        "annotations": {
+          "type": "object",
+          "title": "HTTPRoute Annotations"
+        },
+        "hostnames": {
+          "type": "array",
+          "title": "Hostnames",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parentRefs": {
+          "type": "array",
+          "title": "Parent Gateway References"
+        },
+        "extraRules": {
+          "type": "array",
+          "title": "Extra Rules"
+        },
+        "tls": {
+          "type": "object",
+          "title": "TLS Configuration",
+          "properties": {
+            "redirect": {
+              "type": "boolean"
+            },
+            "redirectPort": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
     "sqlite": {
       "type": "object",
       "title": "SQLite",

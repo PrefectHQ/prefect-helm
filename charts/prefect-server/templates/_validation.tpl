@@ -38,3 +38,15 @@
   {{- fail "You must set redis.enabled=true or provide a redis configuration when backgroundServices.runAsSeparateDeployment=true" -}}
 {{- end -}}
 {{- end -}}
+
+{{- define "prefect-server.validateGatewayAPI" -}}
+{{- if and .Values.gateway.enabled .Values.ingress.enabled -}}
+  {{- fail "Gateway API and Ingress are mutually exclusive. Only one can be enabled at a time. Please set either gateway.enabled=false or ingress.enabled=false." -}}
+{{- end -}}
+{{- if and .Values.gateway.enabled (not .Values.gateway.className) -}}
+  {{- fail "gateway.className is required when gateway.enabled=true. Please specify a GatewayClass that exists in your cluster." -}}
+{{- end -}}
+{{- if and .Values.gateway.enabled (not (include "gateway.apiAvailable" .)) -}}
+  {{- fail "Gateway API (gateway.networking.k8s.io/v1) is not available in this cluster. Please install Gateway API CRDs or disable gateway.enabled." -}}
+{{- end -}}
+{{- end -}}

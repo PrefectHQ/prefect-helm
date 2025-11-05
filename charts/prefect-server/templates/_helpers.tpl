@@ -82,7 +82,7 @@ There are three scenarios for passwords:
 {{- end }}
 {{- end -}}
 
-// ----- Connection string templates ------
+{{/* ----- Connection string templates ------ */}}
 
 {{/*
   server.postgres-hostname:
@@ -189,8 +189,70 @@ There are three scenarios for passwords:
 {{- end -}}
 {{- end -}}
 
-// ----- End connection string templates -----
+{{/* ----- End connection string templates ----- */}}
 
 {{- define "server.uiUrl" -}}
   {{- printf "%s" (replace "/api" "" .Values.server.uiConfig.prefectUiApiUrl) -}}
 {{- end -}}
+
+{{/* ----- Gateway API Helper Templates ----- */}}
+
+{{/*
+  gateway.name:
+    Returns the name of the Gateway resource
+*/}}
+{{- define "gateway.name" -}}
+{{- if .Values.gateway.name -}}
+  {{- .Values.gateway.name -}}
+{{- else -}}
+  {{- include "common.names.fullname" . -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  httproute.name:
+    Returns the name of the HTTPRoute resource
+*/}}
+{{- define "httproute.name" -}}
+{{- if .Values.httproute.name -}}
+  {{- .Values.httproute.name -}}
+{{- else -}}
+  {{- include "common.names.fullname" . -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  gateway.hostnames:
+    Returns the list of hostnames for Gateway/HTTPRoute from httproute.hostnames
+*/}}
+{{- define "gateway.hostnames" -}}
+{{- if .Values.httproute.hostnames -}}
+  {{- toYaml .Values.httproute.hostnames -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  gateway.tlsSecretName:
+    Returns the TLS secret name based on the first gateway hostname or release name
+*/}}
+{{- define "gateway.tlsSecretName" -}}
+{{- $hostnames := include "gateway.hostnames" . | fromYamlArray -}}
+{{- if $hostnames -}}
+  {{- printf "%s-tls" (index $hostnames 0) -}}
+{{- else -}}
+  {{- printf "%s-tls" (include "common.names.fullname" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  gateway.apiAvailable:
+    Check if Gateway API is available in the cluster
+    Returns "true" if available, empty otherwise
+*/}}
+{{- define "gateway.apiAvailable" -}}
+{{- if .Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1/Gateway" -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/* ----- End Gateway API Helper Templates ----- */}}

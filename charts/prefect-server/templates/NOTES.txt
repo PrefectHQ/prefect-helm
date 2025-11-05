@@ -1,7 +1,22 @@
 {{- include "prefect-server.validatePrefectVersion" . }}
 {{- include "prefect-server.validatePrefectServerApiSettings" . }}
 {{- include "prefect-server.validateMessaging" . }}
-{{- if .Values.ingress.enabled }}
+{{- include "prefect-server.validateGatewayAPI" . }}
+{{- if .Values.gateway.enabled }}
+Gateway API is enabled. Access Prefect via your Gateway's configured hostname(s):
+{{- $hostnames := include "gateway.hostnames" . | fromYamlArray }}
+{{- if $hostnames }}
+{{- range $hostnames }}
+https://{{ . }}{{ $.Values.httproute.path }}
+{{- end }}
+{{- else }}
+Configure hostnames in httproute.hostnames
+{{- end }}
+
+To check Gateway status:
+$ kubectl get gateway {{ include "gateway.name" . }} -n {{ .Release.Namespace }}
+$ kubectl get httproute {{ include "httproute.name" . }} -n {{ .Release.Namespace }}
+{{- else if .Values.ingress.enabled }}
 http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host.hostname }}{{ .Values.ingress.host.path }}
 {{- else if contains "NodePort" .Values.service.type }}
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "common.names.fullname" . }})

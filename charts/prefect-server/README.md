@@ -339,11 +339,47 @@ the HorizontalPodAutoscaler.
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
+| gateway.annotations | object | `{}` | additional annotations for the Gateway resource |
+| gateway.className | string | `""` | GatewayClass that will be used to implement the Gateway This must match an existing GatewayClass in your cluster |
+| gateway.enabled | bool | `false` | enable Gateway API resources (mutually exclusive with ingress) |
+| gateway.infrastructure | object | `{}` | infrastructure configuration for Gateway ref: https://gateway-api.sigs.k8s.io/guides/infrastructure/ |
+| gateway.labels | object | `{}` | additional labels for the Gateway resource |
+| gateway.listeners | list | `[{"hostname":"","name":"http","port":80,"protocol":"HTTP"},{"hostname":"","name":"https","port":443,"protocol":"HTTPS","tls":{"certificateRefs":[{"kind":"Secret","name":"","namespace":""}],"mode":"Terminate"}}]` | Gateway listeners configuration |
+| gateway.listeners[0].hostname | string | `""` | hostname pattern for this listener (e.g., "*.example.com") |
+| gateway.listeners[0].name | string | `"http"` | listener name |
+| gateway.listeners[0].port | int | `80` | listener port |
+| gateway.listeners[0].protocol | string | `"HTTP"` | listener protocol (HTTP, HTTPS, TCP, TLS) |
+| gateway.listeners[1].hostname | string | `""` | hostname pattern for this listener |
+| gateway.listeners[1].name | string | `"https"` | listener name |
+| gateway.listeners[1].port | int | `443` | listener port |
+| gateway.listeners[1].protocol | string | `"HTTPS"` | listener protocol |
+| gateway.listeners[1].tls | object | `{"certificateRefs":[{"kind":"Secret","name":"","namespace":""}],"mode":"Terminate"}` | TLS configuration for HTTPS listener |
+| gateway.listeners[1].tls.certificateRefs | list | `[{"kind":"Secret","name":"","namespace":""}]` | certificate references (Secrets containing TLS cert/key) |
+| gateway.listeners[1].tls.certificateRefs[0].kind | string | `"Secret"` | kind of resource (usually Secret) |
+| gateway.listeners[1].tls.certificateRefs[0].name | string | `""` | name of the Secret (defaults to ingress pattern if not set) |
+| gateway.listeners[1].tls.certificateRefs[0].namespace | string | `""` | namespace of the Secret (optional, defaults to same namespace) |
+| gateway.listeners[1].tls.mode | string | `"Terminate"` | TLS mode (Terminate or Passthrough) |
+| gateway.name | string | `""` | Gateway resource name (defaults to chart fullname if not set) |
 | global.prefect.env | list | `[]` | array with environment variables to add to all deployments |
 | global.prefect.image.prefectTag | string | `"3-latest"` | prefect image tag (immutable tags are recommended) |
 | global.prefect.image.pullPolicy | string | `"IfNotPresent"` | prefect image pull policy |
 | global.prefect.image.pullSecrets | list | `[]` | prefect image pull secrets |
 | global.prefect.image.repository | string | `"prefecthq/prefect"` | prefect image repository |
+| httproute.annotations | object | `{}` | additional annotations for the HTTPRoute resource |
+| httproute.enabled | bool | `true` | enable HTTPRoute resource (auto-enabled when gateway.enabled=true) Can be disabled if you want to create HTTPRoutes manually |
+| httproute.extraRules | list | `[]` | additional HTTPRoute rules (advanced usage) Will be merged with auto-generated rules |
+| httproute.hostnames | list | `[]` | hostnames that this HTTPRoute should match |
+| httproute.labels | object | `{}` | additional labels for the HTTPRoute resource |
+| httproute.name | string | `""` | HTTPRoute resource name (defaults to chart fullname if not set) |
+| httproute.parentRefs | list | `[{"name":"","namespace":"","port":null,"sectionName":"https"}]` | parent Gateway references |
+| httproute.parentRefs[0].name | string | `""` | name of the Gateway to attach to (defaults to gateway.name) |
+| httproute.parentRefs[0].namespace | string | `""` | namespace of the Gateway (optional) |
+| httproute.parentRefs[0].port | string | `nil` | port number (optional) |
+| httproute.parentRefs[0].sectionName | string | `"https"` | specific listener name to attach to (optional, defaults to "https") |
+| httproute.path | string | `"/"` | path prefix for HTTPRoute matching |
+| httproute.tls | object | `{"redirect":false,"redirectPort":443}` | TLS redirect configuration |
+| httproute.tls.redirect | bool | `false` | enable automatic HTTP to HTTPS redirect |
+| httproute.tls.redirectPort | int | `443` | HTTPS port for redirect (defaults to 443) |
 | ingress.annotations | object | `{}` | additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. |
 | ingress.className | string | `""` | IngressClass that will be used to implement the Ingress (Kubernetes 1.18+) |
 | ingress.enabled | bool | `false` | enable ingress record generation for server |

@@ -1,0 +1,58 @@
+{{- if .Values.gateway.enabled }}
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: {{ include "gateway.name" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: gateway
+    prefect-version: {{ .Chart.AppVersion }}
+    {{- if .Values.gateway.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.gateway.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if or .Values.gateway.annotations .Values.commonAnnotations }}
+  annotations:
+    {{- if .Values.gateway.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.gateway.annotations "context" $) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- end }}
+spec:
+  gatewayClassName: {{ .Values.gateway.className | quote }}
+  {{- if .Values.gateway.infrastructure }}
+  infrastructure:
+    {{- include "common.tplvalues.render" ( dict "value" .Values.gateway.infrastructure "context" $ ) | nindent 4 }}
+  {{- end }}
+  listeners:
+  {{- range .Values.gateway.listeners }}
+  - name: {{ .name }}
+    port: {{ .port }}
+    protocol: {{ .protocol }}
+    {{- if .hostname }}
+    hostname: {{ .hostname | quote }}
+    {{- end }}
+    {{- if and (eq .protocol "HTTPS") .tls }}
+    tls:
+      mode: {{ .tls.mode | default "Terminate" }}
+      {{- if .tls.certificateRefs }}
+      certificateRefs:
+      {{- range .tls.certificateRefs }}
+      - kind: {{ .kind | default "Secret" }}
+        {{- if .name }}
+        name: {{ .name | quote }}
+        {{- else }}
+        name: {{ include "gateway.tlsSecretName" $ | quote }}
+        {{- end }}
+        {{- if .namespace }}
+        namespace: {{ .namespace | quote }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
