@@ -1,6 +1,6 @@
 # Upgrade guidelines
 
-## Next Release - Gateway API Support
+## Gateway API Support
 
 This release introduces support for [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io/) as an alternative to the traditional Ingress API for exposing the Prefect server. Gateway API is the successor to Ingress and provides more advanced routing capabilities.
 
