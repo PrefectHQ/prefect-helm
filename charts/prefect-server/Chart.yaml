@@ -14,7 +14,7 @@ dependencies:
     condition: redis.enabled
     repository: https://charts.bitnami.com/bitnami
     version: 22.0.4
-description: Prefect server application bundle with Ingress and Gateway API support
+description: Prefect server application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
 maintainers:
