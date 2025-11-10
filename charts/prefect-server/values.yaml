@@ -551,7 +551,7 @@ gateway:
 
   # -- Gateway listeners configuration
   listeners:
-      # -- listener name
+    # -- listener name
     - name: http
       # -- listener port
       port: 80
