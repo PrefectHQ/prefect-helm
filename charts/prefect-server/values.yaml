@@ -551,16 +551,16 @@ gateway:
 
   # -- Gateway listeners configuration
   listeners:
-    -  # -- listener name
-      name: http
+      # -- listener name
+    - name: http
       # -- listener port
       port: 80
       # -- listener protocol (HTTP, HTTPS, TCP, TLS)
       protocol: HTTP
       # -- hostname pattern for this listener (e.g., "*.example.com")
       hostname: ""
-    -  # -- listener name
-      name: https
+       # -- listener name
+    - name: https
       # -- listener port
       port: 443
       # -- listener protocol
