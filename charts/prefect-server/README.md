@@ -354,7 +354,7 @@ the HorizontalPodAutoscaler.
 | gateway.listeners[1].protocol | string | `"HTTPS"` | listener protocol |
 | gateway.listeners[1].tls | object | `{"certificateRefs":[{"kind":"Secret","name":"","namespace":""}],"mode":"Terminate"}` | TLS configuration for HTTPS listener |
 | gateway.listeners[1].tls.certificateRefs | list | `[{"kind":"Secret","name":"","namespace":""}]` | certificate references (Secrets containing TLS cert/key) |
-| gateway.listeners[1].tls.certificateRefs[0].kind | string | `"Secret"` | kind of resource (usually Secret) |
+| gateway.listeners[1].tls.certificateRefs[0] | object | `{"kind":"Secret","name":"","namespace":""}` | kind of resource (usually Secret) |
 | gateway.listeners[1].tls.certificateRefs[0].name | string | `""` | name of the Secret (defaults to ingress pattern if not set) |
 | gateway.listeners[1].tls.certificateRefs[0].namespace | string | `""` | namespace of the Secret (optional, defaults to same namespace) |
 | gateway.listeners[1].tls.mode | string | `"Terminate"` | TLS mode (Terminate or Passthrough) |
@@ -371,7 +371,7 @@ the HorizontalPodAutoscaler.
 | httproute.labels | object | `{}` | additional labels for the HTTPRoute resource |
 | httproute.name | string | `""` | HTTPRoute resource name (defaults to chart fullname if not set) |
 | httproute.parentRefs | list | `[{"name":"","namespace":"","port":null,"sectionName":"https"}]` | parent Gateway references |
-| httproute.parentRefs[0].name | string | `""` | name of the Gateway to attach to (defaults to gateway.name) |
+| httproute.parentRefs[0] | object | `{"name":"","namespace":"","port":null,"sectionName":"https"}` | name of the Gateway to attach to (defaults to gateway.name) |
 | httproute.parentRefs[0].namespace | string | `""` | namespace of the Gateway (optional) |
 | httproute.parentRefs[0].port | string | `nil` | port number (optional) |
 | httproute.parentRefs[0].sectionName | string | `"https"` | specific listener name to attach to (optional, defaults to "https") |
