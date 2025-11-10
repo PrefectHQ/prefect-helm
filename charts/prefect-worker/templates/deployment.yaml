@@ -147,12 +147,12 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
+            {{- else if eq .Values.worker.apiConfig "customerManagedCloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
-                  key:  {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
+                  name: {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
           {{- with .Values.worker }}
           resources: {{ coalesce .initContainer.resources .resources | toYaml | nindent 12 }}
@@ -240,25 +240,25 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
                   key:  {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
+            {{- else if eq .Values.worker.apiConfig "customerManagedCloud" }}
             - name: PREFECT_API_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
-                  key:  {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
+                  name: {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.name }}
+                  key:  {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.key }}
             - name: PREFECT_CLOUD_API_URL
-              value: {{ .Values.worker.selfManagedCloudApiConfig.cloudApiUrl}}
+              value: {{ .Values.worker.customerManagedCloudApiConfig.cloudApiUrl}}
             {{- end }}
             {{- if eq .Values.worker.apiConfig "cloud" }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
               value: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
               value: {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
-            {{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
+            {{- else if eq .Values.worker.apiConfig "customerManagedCloud" }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
-              value: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.name }}
+              value: {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.name }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
-              value: {{ .Values.worker.selfManagedCloudApiConfig.apiKeySecret.key }}
+              value: {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}

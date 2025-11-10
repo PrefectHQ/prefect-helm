@@ -119,10 +119,10 @@ Workers each have a type corresponding to the execution environment to which the
 
     ```yaml
     worker:
-      apiConfig: selfManagedCloud
+      apiConfig: customerManagedCloud
       config:
         workPool: <target work pool name>
-      selfManagedCloudApiConfig:
+      customerManagedCloudApiConfig:
         apiUrl: "https://<DNS of Self-managed Cloud API>"
         accountId: <target account ID>
         workspaceId: <target workspace ID>
@@ -343,7 +343,7 @@ worker:
 | serviceAccount.create | bool | `true` | specifies whether a ServiceAccount should be created |
 | serviceAccount.name | string | `""` | the name of the ServiceAccount to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | worker.affinity | object | `{}` | affinity for worker pods assignment |
-| worker.apiConfig | string | `"cloud"` | one of 'cloud', 'selfManagedCloud', or 'selfHostedServer' |
+| worker.apiConfig | string | `"cloud"` | one of 'cloud', 'customerManagedCloud', or 'selfHostedServer' |
 | worker.args | list | `[]` | Custom container command arguments |
 | worker.autoscaling.enabled | bool | `false` | enable autoscaling for the worker |
 | worker.autoscaling.maxReplicas | int | `1` | maximum number of replicas to scale up to |
@@ -374,6 +374,12 @@ worker:
 | worker.containerSecurityContext.readOnlyRootFilesystem | bool | `true` | set worker containers' security context readOnlyRootFilesystem |
 | worker.containerSecurityContext.runAsNonRoot | bool | `true` | set worker containers' security context runAsNonRoot |
 | worker.containerSecurityContext.runAsUser | int | `1001` | set worker containers' security context runAsUser, set to `null` to unset |
+| worker.customerManagedCloudApiConfig.accountId | string | `""` | prefect account ID |
+| worker.customerManagedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
+| worker.customerManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
+| worker.customerManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
+| worker.customerManagedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
+| worker.customerManagedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.dnsConfig.nameservers | list | `[]` | optional list of IP addresses that will be used as dns servers for the Pod |
 | worker.dnsConfig.options | list | `[]` | optional list of dns options for the Pod |
 | worker.dnsConfig.searches | list | `[]` | optional list of dns search domains for hostname lookup in the Pod |
@@ -423,12 +429,6 @@ worker:
 | worker.selfHostedServerApiConfig.basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
 | worker.selfHostedServerApiConfig.basicAuth.enabled | bool | `false` | enable basic auth for the worker, for an administrator/password combination. must be enabled on the server as well |
 | worker.selfHostedServerApiConfig.basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
-| worker.selfManagedCloudApiConfig.accountId | string | `""` | prefect account ID |
-| worker.selfManagedCloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
-| worker.selfManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
-| worker.selfManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
-| worker.selfManagedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
-| worker.selfManagedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.tolerations | list | `[]` | tolerations for worker pods assignment |
 
 ----------------------------------------------

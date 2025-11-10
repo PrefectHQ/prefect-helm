@@ -199,8 +199,8 @@ tests:
   - it: Should set the correct API configuration for self-managed cloud
     set:
       worker:
-        apiConfig: "selfManagedCloud"
-        selfManagedCloudApiConfig:
+        apiConfig: "customerManagedCloud"
+        customerManagedCloudApiConfig:
           apiUrl: "https://my-prefect-api.com/api"
           accountId: "my-account-id"
           workspaceId: "my-workspace-id"
@@ -587,8 +587,8 @@ tests:
   - it: Should set Kubernetes worker secret env vars for self-managed config
     set:
       worker:
-        apiConfig: selfManagedCloud
-        selfManagedCloudApiConfig:
+        apiConfig: customerManagedCloud
+        customerManagedCloudApiConfig:
           apiUrl: https://my-prefect-cloud.example.com/api
           accountId: test-account
           workspaceId: test-workspace
