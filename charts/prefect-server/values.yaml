@@ -551,7 +551,8 @@ gateway:
 
   # -- Gateway listeners configuration
   listeners:
-    -  # -- listener name
+    # -- listener name
+    -
       name: http
       # -- listener port
       port: 80
@@ -559,7 +560,8 @@ gateway:
       protocol: HTTP
       # -- hostname pattern for this listener (e.g., "*.example.com")
       hostname: ""
-    -  # -- listener name
+    # -- listener name
+    -
       name: https
       # -- listener port
       port: 443
@@ -573,7 +575,8 @@ gateway:
         mode: Terminate
         # -- certificate references (Secrets containing TLS cert/key)
         certificateRefs:
-          -  # -- kind of resource (usually Secret)
+          # -- kind of resource (usually Secret)
+          -
             kind: Secret
             # -- name of the Secret (defaults to ingress pattern if not set)
             name: ""
@@ -607,7 +610,8 @@ httproute:
 
   # -- parent Gateway references
   parentRefs:
-    -  # -- name of the Gateway to attach to (defaults to gateway.name)
+    # -- name of the Gateway to attach to (defaults to gateway.name)
+    -
       name: ""
       # -- namespace of the Gateway (optional)
       namespace: ""
