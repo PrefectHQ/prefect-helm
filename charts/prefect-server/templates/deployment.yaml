@@ -14,7 +14,9 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.server.revisionHistoryLimit }}
+  {{- if not .Values.server.autoscaling.enabled }}
   replicas: {{ .Values.sqlite.enabled | ternary 1 .Values.server.replicaCount }}
+  {{- end }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: server

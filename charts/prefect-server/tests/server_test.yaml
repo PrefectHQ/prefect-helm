@@ -675,6 +675,30 @@ tests:
           path: .spec.metrics[1].resource.target.averageUtilization
           value: 80
 
+  - it: Should omit replicas field from deployment when autoscaling is enabled
+    set:
+      server:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 5
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.replicas
+
+  - it: Should include replicas field in deployment when autoscaling is disabled
+    set:
+      server:
+        autoscaling:
+          enabled: false
+        replicaCount: 3
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 3
+
   - it: Should configure custom entrypoint and args
     set:
       server:

@@ -101,6 +101,7 @@ server:
     # -- target Memory utilization percentage
     targetMemory: 80
 
+  # if autoscaling is enabled, this value is ignored
   # -- number of server replicas to deploy
   replicaCount: 1
 
@@ -551,16 +552,16 @@ gateway:
 
   # -- Gateway listeners configuration
   listeners:
-    - # -- listener name
-      name: http
+      # -- listener name
+    - name: http
       # -- listener port
       port: 80
       # -- listener protocol (HTTP, HTTPS, TCP, TLS)
       protocol: HTTP
       # -- hostname pattern for this listener (e.g., "*.example.com")
       hostname: ""
-    - # -- listener name
-      name: https
+      # -- listener name
+    - name: https
       # -- listener port
       port: 443
       # -- listener protocol
@@ -573,8 +574,8 @@ gateway:
         mode: Terminate
         # -- certificate references (Secrets containing TLS cert/key)
         certificateRefs:
-          - # -- kind of resource (usually Secret)
-            kind: Secret
+            # -- kind of resource (usually Secret)
+          - kind: Secret
             # -- name of the Secret (defaults to ingress pattern if not set)
             name: ""
             # -- namespace of the Secret (optional, defaults to same namespace)
@@ -607,8 +608,8 @@ httproute:
 
   # -- parent Gateway references
   parentRefs:
-    - # -- name of the Gateway to attach to (defaults to gateway.name)
-      name: ""
+      # -- name of the Gateway to attach to (defaults to gateway.name)
+    - name: ""
       # -- namespace of the Gateway (optional)
       namespace: ""
       # -- specific listener name to attach to (optional, defaults to "https")

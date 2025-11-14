@@ -198,6 +198,7 @@ worker:
   # -- the number of old ReplicaSets to retain to allow rollback
   revisionHistoryLimit: 10
 
+  # if autoscaling is enabled, this value is ignored
   # -- number of worker replicas to deploy
   replicaCount: 1
 
