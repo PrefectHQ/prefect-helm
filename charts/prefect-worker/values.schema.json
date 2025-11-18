@@ -317,8 +317,8 @@
         "apiConfig": {
           "type": "string",
           "title": "API Config",
-          "description": "one of 'cloud', 'selfManagedCloud', or 'selfHostedServer'",
-          "enum": ["cloud", "selfManagedCloud", "selfHostedServer"]
+          "description": "one of 'cloud', 'customerManagedCloud', or 'selfHostedServer'",
+          "enum": ["cloud", "customerManagedCloud", "selfHostedServer"]
         },
         "cloudApiConfig": {
           "type": "object",
@@ -360,7 +360,7 @@
             }
           }
         },
-        "selfManagedCloudApiConfig": {
+        "customerManagedCloudApiConfig": {
           "type": "object",
           "title": "Self-managed API Configuration",
           "description": "Self-managed API Configuration",

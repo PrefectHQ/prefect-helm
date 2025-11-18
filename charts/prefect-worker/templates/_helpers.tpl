@@ -31,8 +31,8 @@ Require Prefect Cloud Workspace ID
 Require Self-managed Cloud Account ID
 */}}
 {{- define "selfManaged.requiredConfig.accountId" -}}
-{{- if eq .Values.worker.apiConfig "selfManagedCloud" }}
-    {{- required "A Prefect Cloud Account ID is required (worker.selfManagedCloudApiConfig.accountId)" .Values.worker.selfManagedCloudApiConfig.accountId -}}
+{{- if eq .Values.worker.apiConfig "customerManagedCloud" }}
+    {{- required "A Prefect Cloud Account ID is required (worker.customerManagedCloudApiConfig.accountId)" .Values.worker.customerManagedCloudApiConfig.accountId -}}
 {{- end -}}
 {{- end -}}
 
@@ -40,8 +40,8 @@ Require Self-managed Cloud Account ID
 Require Self-managed Cloud Workspace ID
 */}}
 {{- define "selfManaged.requiredConfig.workspaceId" -}}
-{{- if eq .Values.worker.apiConfig "selfManagedCloud" }}
-    {{- required "A Prefect Cloud Workspace ID is required (worker.selfManagedCloudApiConfig.workspaceId)" .Values.worker.selfManagedCloudApiConfig.workspaceId -}}
+{{- if eq .Values.worker.apiConfig "customerManagedCloud" }}
+    {{- required "A Prefect Cloud Workspace ID is required (worker.customerManagedCloudApiConfig.workspaceId)" .Values.worker.customerManagedCloudApiConfig.workspaceId -}}
 {{- end -}}
 {{- end -}}
 
@@ -49,8 +49,8 @@ Require Self-managed Cloud Workspace ID
 Require Self-managed Cloud API URL
 */}}
 {{- define "selfManaged.requiredConfig.apiUrl" -}}
-{{- if eq .Values.worker.apiConfig "selfManagedCloud" }}
-    {{- required "The Self-managed Cloud API URL is required (worker.selfManagedCloudApiConfig.apiUrl)" .Values.worker.selfManagedCloudApiConfig.apiUrl -}}
+{{- if eq .Values.worker.apiConfig "customerManagedCloud" }}
+    {{- required "The Self-managed Cloud API URL is required (worker.customerManagedCloudApiConfig.apiUrl)" .Values.worker.customerManagedCloudApiConfig.apiUrl -}}
 {{- end -}}
 {{- end -}}
 
@@ -70,7 +70,7 @@ Require Prefect Server API URL
 {{- define "worker.apiUrl" -}}
 {{- if eq .Values.worker.apiConfig "cloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" .Values.worker.cloudApiConfig.cloudUrl (include "cloud.requiredConfig.accountId" .) (include "cloud.requiredConfig.workspaceId" .) | quote }}
-{{- else if eq .Values.worker.apiConfig "selfManagedCloud" }}
+{{- else if eq .Values.worker.apiConfig "customerManagedCloud" }}
     {{- printf "%s/accounts/%s/workspaces/%s" (include "selfManaged.requiredConfig.apiUrl" .) (include "selfManaged.requiredConfig.accountId" .) (include "selfManaged.requiredConfig.workspaceId" .) | quote }}
 {{- else if eq .Values.worker.apiConfig "selfHostedServer" }}
     {{- include "server.requiredConfig.apiUrl" . | quote }}
