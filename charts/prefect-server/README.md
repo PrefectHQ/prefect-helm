@@ -474,7 +474,7 @@ the HorizontalPodAutoscaler.
 | server.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.readinessProbe.enabled | bool | `false` |  |
-| server.replicaCount | int | `1` | number of server replicas to deploy |
+| server.replicaCount | int | `1` | number of server replicas to deploy, ignored if autoscaling is enabled |
 | server.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the server container |
 | server.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the server container |
 | server.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
