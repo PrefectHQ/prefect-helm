@@ -239,15 +239,41 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_KEY")].valueFrom.secretKeyRef.key
           value: api-key
 
-  - it: Should set the correct replica count
+  - it: Should set the correct replica count when autoscaling is disabled
     set:
       worker:
         replicaCount: 3
+        autoscaling:
+          enabled: false
     asserts:
       - template: deployment.yaml
         equal:
           path: .spec.replicas
           value: 3
+
+  - it: Should omit replicas field from deployment when autoscaling is enabled
+    set:
+      worker:
+        autoscaling:
+          enabled: true
+          minReplicas: 2
+          maxReplicas: 5
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.replicas
+
+  - it: Should include replicas field in deployment when autoscaling is disabled
+    set:
+      worker:
+        autoscaling:
+          enabled: false
+        replicaCount: 4
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 4
 
   - it: Should set the correct resource requests and limits
     set:

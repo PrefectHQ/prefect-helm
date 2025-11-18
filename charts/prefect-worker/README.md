@@ -421,7 +421,7 @@ worker:
 | worker.podSecurityContext.runAsUser | int | `1001` | set worker pod's security context runAsUser, set to `null` to unset |
 | worker.podSecurityContext.seccompProfile | object | `{"type":"RuntimeDefault"}` | set worker pod's seccomp profile |
 | worker.priorityClassName | string | `""` | priority class name to use for the worker pods; if the priority class is empty or doesn't exist, the worker pods are scheduled without a priority class |
-| worker.replicaCount | int | `1` | number of worker replicas to deploy |
+| worker.replicaCount | int | `1` | number of worker replicas to deploy, ignored if autoscaling is enabled |
 | worker.resources.limits | object | `{"cpu":"1000m","memory":"1Gi"}` | the requested limits for the worker container |
 | worker.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | the requested resources for the worker container |
 | worker.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |

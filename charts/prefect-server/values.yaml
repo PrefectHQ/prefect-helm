@@ -101,7 +101,7 @@ server:
     # -- target Memory utilization percentage
     targetMemory: 80
 
-  # -- number of server replicas to deploy
+  # -- number of server replicas to deploy, ignored if autoscaling is enabled
   replicaCount: 1
 
   # requests MUST be specified if using an HPA, otherwise the HPA will not know when to trigger a scale event

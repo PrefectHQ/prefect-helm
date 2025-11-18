@@ -14,7 +14,9 @@ metadata:
   {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.worker.revisionHistoryLimit }}
+  {{- if not .Values.worker.autoscaling.enabled }}
   replicas: {{ .Values.worker.replicaCount }}
+  {{- end }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: worker
