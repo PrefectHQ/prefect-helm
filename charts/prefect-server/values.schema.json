@@ -1232,6 +1232,11 @@
           "title": "Type",
           "description": "service type"
         },
+        "portName": {
+          "type": "string",
+          "title": "Port name",
+          "description": "service port name"
+        },
         "port": {
           "type": [
             "integer",
