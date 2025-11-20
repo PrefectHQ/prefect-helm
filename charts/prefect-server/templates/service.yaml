@@ -27,7 +27,7 @@ spec:
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy | quote }}
   {{- end }}
   ports:
-    - name: server-svc-port
+    - name: {{ .Values.service.portName }}
       port: {{ .Values.service.port }}
       protocol: TCP
       targetPort: {{ .Values.service.targetPort }}

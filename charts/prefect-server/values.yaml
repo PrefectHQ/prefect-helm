@@ -428,6 +428,8 @@ serviceAccount:
 
 ## Service configuration
 service:
+  # -- servive port name
+  portName: server-svc-port
   # -- service port
   port: 4200
   # -- target port of the server pod; also sets PREFECT_SERVER_API_PORT
