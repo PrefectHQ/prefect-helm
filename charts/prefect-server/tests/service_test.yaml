@@ -1,0 +1,23 @@
+---
+suite: Service API Configuration
+release:
+  name: service-test
+  namespace: prefect
+
+tests:
+  - it: Service default port name is server-svc-port
+    asserts:
+      - template: service.yaml
+        equal:
+          path: spec.ports[0].name
+          value: "server-svc-port"
+
+  - it: Service port name is the customized one
+    set:
+      service:
+        portName: my-custom-port-name
+    asserts:
+      - template: service.yaml
+        equal:
+          path: spec.ports[0].name
+          value: "my-custom-port-name"
