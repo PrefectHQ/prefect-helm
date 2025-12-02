@@ -14,7 +14,7 @@ set -e
 # Usage:
 #  ./scripts/helm_charttest.sh
 
-version=${VERSION:-v3.13.0}
+version=${VERSION:-v3.14.0}
 
 # Lint each chart.
 # Note: we'll skip validating maintainers, which doesn't play nicely
