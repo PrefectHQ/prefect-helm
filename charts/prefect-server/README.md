@@ -487,8 +487,8 @@ the HorizontalPodAutoscaler.
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
 | service.extraPorts | list | `[]` |  |
 | service.nodePort | string | `""` | service port if defining service as type nodeport |
-| service.portName | string | `"server-svc-port"` | service port name |
 | service.port | int | `4200` | service port |
+| service.portName | string | `"server-svc-port"` | service port name |
 | service.targetPort | int | `4200` | target port of the server pod; also sets PREFECT_SERVER_API_PORT |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
