@@ -245,34 +245,35 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 #### Modifying the Base Job Template
 
 Modifying the base job template replaces the default configuration entirely.
-Put differently, any provdied configuration is not merged with the default configuration.
+Put differently, any provided configuration is not merged with the default configuration.
 
 For example, if you want to add an image pull secret to the base job template,
 you would modify the `base-job-template.json` file to look like this:
-
-```diff
+```json
 {
  "job_configuration": {
    "job_manifest": {
      "spec": {
        "template": {
          "spec": {
-+          "imagePullSecrets": [
-+            {
-+              "name": "my-pull-secret"
-+            }
-+          ]
+           "imagePullSecrets": [
+             {
+               "name": "my-pull-secret"
+             }
+           ]
          }
        }
      }
    }
- },
+ }
 }
 ```
 
 Here, you add `imagePullSecrets` into your existing configuration. Note that
 the snippet is truncated for brevity. The full configuration should still be
 provided.
+
+For comprehensive examples including environment variables, secret references, resource configurations, and advanced use cases, see the [Prefect base job template documentation](https://docs.prefect.io/latest/guides/deployment/kubernetes/#base-job-templates).
 
 Once applied, you can see the entire base job template in the UI by navigating
 to `Account settings` > `Work Pools` > your work pool > three-dot menu in the
