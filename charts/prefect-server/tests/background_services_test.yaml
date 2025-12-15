@@ -14,6 +14,23 @@ set:
     enabled: true
 
 tests:
+  - it: Should default to 1 replica
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 1
+
+  - it: Should set custom replica count
+    set:
+      backgroundServices:
+        replicaCount: 3
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 3
+
   - it: Should set the correct image
     asserts:
       - template: background-services/deployment.yaml
