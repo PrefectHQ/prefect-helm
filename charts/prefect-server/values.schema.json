@@ -762,6 +762,11 @@
           "type": "boolean",
           "description": "Run background services (like scheduling) in a separate deployment"
         },
+        "replicaCount": {
+          "type": "integer",
+          "description": "number of background-services replicas to deploy",
+          "minimum": 1
+        },
         "priorityClassName": {
           "type": "string",
           "description": "priority class name to use for the background-services pods"

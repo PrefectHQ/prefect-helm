@@ -279,6 +279,9 @@ backgroundServices:
   # - Run background services (like scheduling) in a separate deployment.
   runAsSeparateDeployment: false
 
+  # -- number of background-services replicas to deploy
+  replicaCount: 1
+
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   # -- priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class
   priorityClassName: ""
