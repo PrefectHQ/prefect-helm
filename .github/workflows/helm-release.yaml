@@ -4,14 +4,13 @@ name: Release Prefect Server and Worker Helm Charts
 "on":
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  # GitHub considers creating releases and uploading assets as writing contents.
+  contents: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions:
-      # GitHub considers creating releases and uploading assets as writing contents.
-      contents: write
     outputs:
       releaseVersion: ${{ steps.output_version.outputs.releaseVersion }}
     steps:
@@ -129,17 +128,3 @@ jobs:
             [$PREFECT_VERSION](https://github.com/PrefectHQ/prefect/releases/tag/$PREFECT_VERSION)"
         env:
           GH_TOKEN: ${{ github.token }}
-
-  update_helm_chart_worker_version_downstream:
-    name: Update Helm Chart Worker version in `cluster-deployment`
-    needs: release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Run workflow
-        run: |
-          gh workflow run update-prefect-helm-chart-version.yaml \
-            --repo prefecthq/cluster-deployment \
-            --ref main \
-            -f chart_version=${{ needs.release.outputs.releaseVersion }} \
-        env:
-          GH_TOKEN: ${{ secrets.CLUSTER_DEPLOYMENT_ACTIONS_RW }}

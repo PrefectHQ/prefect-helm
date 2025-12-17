@@ -6,7 +6,9 @@ name: Lint and Test Prefect Worker Chart
     branches:
       - main
 
-permissions: {}
+permissions:
+  # required to read from the repo
+  contents: read
 
 jobs:
   lint_test:
@@ -14,9 +16,6 @@ jobs:
       (github.event_name == 'pull_request_target' && github.event.pull_request.head.repo.full_name != github.repository) && 'Acceptance Tests (External)' || '' }}
     name: "lint-test (${{ matrix.kubernetes }})"
     runs-on: ubuntu-latest
-    permissions:
-      # required to read from the repo
-      contents: read
     strategy:
       matrix:
         kubernetes:
