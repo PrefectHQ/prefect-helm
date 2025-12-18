@@ -361,7 +361,7 @@ worker:
 | worker.config.baseJobTemplate.existingConfigMapName | string | `""` | the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json' |
 | worker.config.http2 | bool | `true` | connect using HTTP/2 if the server supports it (experimental) |
 | worker.config.installPolicy | string | `"prompt"` | install policy to use workers from Prefect integration packages. |
-| worker.config.jobNamespace | string | `nil` | the namespace where the jobs would spawn. If unset, spawns in the same namespace as the worker controller. Requires role.namespace to be set with the same value. |
+| worker.config.jobNamespace | string | `nil` | the namespace(s) that the Kubernetes observer will watch for pod events and job crash detection. Accepts a comma-separated list (e.g., "default,namespace-2"). If unset, defaults to watching only the namespace where the worker is deployed. This does NOT control where worker jobs are deployed - job deployment namespace is configured via the work pool's base job template. |
 | worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
 | worker.config.name | string | `nil` | the name to give to the started worker. If not provided, a unique name will be generated. |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
