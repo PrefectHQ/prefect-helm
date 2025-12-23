@@ -230,12 +230,14 @@ spec:
               value: {{ template "worker.apiUrl" . }}
             - name: PREFECT_KUBERNETES_CLUSTER_UID
               value: {{ template "worker.clusterUUID" . }}
+            {{- if not .Values.worker.config.observerClusterWide }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES
               {{- if .Values.worker.config.jobNamespace }}
               value: {{ .Values.worker.config.jobNamespace }}
               {{- else }}
               value: {{ include "common.names.namespace" . | quote }}
               {{- end }}
+            {{- end }}
             {{- if eq .Values.worker.apiConfig "cloud" }}
             - name: PREFECT_API_KEY
               valueFrom:

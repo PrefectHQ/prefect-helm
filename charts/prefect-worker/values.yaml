@@ -119,6 +119,8 @@ worker:
     limit: null
     # -- the namespace(s) that the Kubernetes observer will watch for pod events and job crash detection. Accepts a comma-separated list (e.g., "default,namespace-2"). If unset, defaults to watching only the namespace where the worker is deployed. This does NOT control where worker jobs are deployed - job deployment namespace is configured via the work pool's base job template.
     jobNamespace: null
+    # -- if true, the Kubernetes observer will watch for pod events and job crash detection across the entire cluster. If true, PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES will not be set.
+    observerClusterWide: false
 
     ##  If unspecified, Prefect will use the default base job template for the given worker type. If the work pool already exists, this will be ignored.
     ## e.g.:
