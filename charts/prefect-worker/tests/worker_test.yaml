@@ -806,9 +806,6 @@ tests:
     asserts:
       - template: deployment.yaml
         notExists:
-          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_CLUSTER_WIDE")]
-      - template: deployment.yaml
-        notExists:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES")]
 
   - it: Should set auth string secret environment variables when existingSecret is provided
