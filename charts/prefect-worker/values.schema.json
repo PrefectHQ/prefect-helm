@@ -289,6 +289,11 @@
               "title": "Job Namespace",
               "description": "the namespace where the jobs would spawn. If unset, spawns in the same namespace as the worker controller. Requires role.namespace to be set with the same value."
             },
+            "observerClusterWide": {
+              "type": "boolean",
+              "title": "Observer Cluster Wide",
+              "description": "if true, the Kubernetes observer will watch for pod events and job crash detection across the entire cluster. If true, PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES will not be set."
+            },
             "baseJobTemplate": {
               "type": "object",
               "title": "Base Job Template",
