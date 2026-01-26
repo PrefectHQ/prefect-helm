@@ -15,5 +15,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
+      - name: Install mise
+        uses: jdx/mise-action@v2
+        with:
+          install_args: helm
+
+      - name: Build chart dependencies
+        run: mise run buildall
+
       - name: Run helm unittest
         run: ./scripts/helm_unittest.sh
