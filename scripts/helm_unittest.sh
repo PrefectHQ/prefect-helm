@@ -17,5 +17,6 @@ version=${VERSION:-3.18.4-1.0.0}
 
 docker run \
   --rm \
+  --user $(id -u):$(id -g) \
   -v $(pwd):/apps \
   helmunittest/helm-unittest:${version} charts/*
