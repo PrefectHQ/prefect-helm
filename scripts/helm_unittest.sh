@@ -3,20 +3,23 @@
 # This script uses https://github.com/helm-unittest/helm-unittest
 # to run unit tests for our Helm Chart templates.
 #
-# It uses the Docker image to make it easier to run on local machines without
-# having to manage the binary and its correct version. Note that if it ever
-# appears in https://mise.jdx.dev/registry.html, we can add an entry in .mise.toml.
-#
 # Dependencies:
-# - docker
+# - helm (can be installed via mise)
 #
 # Usage:
 #  ./scripts/helm_unittest.sh
 
-version=${VERSION:-3.18.4-1.0.0}
+set -e
 
-docker run \
-  --rm \
-  --user $(id -u):$(id -g) \
-  -v $(pwd):/apps \
-  helmunittest/helm-unittest:${version} charts/*
+PLUGIN_VERSION=${PLUGIN_VERSION:-1.0.3}
+
+# Check if helm-unittest plugin is installed
+if ! helm plugin list | grep -q unittest; then
+  echo "Installing helm-unittest plugin version ${PLUGIN_VERSION}..."
+  helm plugin install https://github.com/helm-unittest/helm-unittest.git --version ${PLUGIN_VERSION} --verify=false
+else
+  echo "helm-unittest plugin is already installed"
+fi
+
+# Run helm unittest on all charts
+helm unittest charts/*
