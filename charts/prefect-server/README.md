@@ -328,6 +328,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.podSecurityContext.runAsNonRoot | bool | `true` | set background-services pod's security context runAsNonRoot |
 | backgroundServices.podSecurityContext.runAsUser | int | `1001` | set background-services pod's security context runAsUser |
 | backgroundServices.priorityClassName | string | `""` | priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class |
+| backgroundServices.replicaCount | int | `1` | number of background-services replicas to deploy |
 | backgroundServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the background-services container |
 | backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
 | backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |

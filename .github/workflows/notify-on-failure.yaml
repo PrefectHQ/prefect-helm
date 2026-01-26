@@ -11,18 +11,17 @@ name: Notify on Failure
       - Update mise tool versions
     types: [completed]
 
-permissions: {}
+permissions:
+  # required to introspect the workflow run
+  actions: read
+  # required to read from the repo
+  contents: read
 
 jobs:
   notify:
     name: Notify on Failure
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
-    permissions:
-      # required to introspect the workflow run
-      actions: read
-      # required to read from the repo
-      contents: read
     steps:
       - name: Format date
         run: |

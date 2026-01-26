@@ -6,17 +6,16 @@ name: Updatecli Major Dependency Updates
     - cron: 0 15 1 * *  # First of the month @ 3pm UTC
   workflow_dispatch: {}
 
-permissions: {}
+permissions:
+  # required to write to the repo
+  contents: write
+  # required to open a pr with updatecli changes
+  pull-requests: write
 
 jobs:
   updatecli_major:
     if: github.repository == 'prefecthq/prefect-helm'
     runs-on: ubuntu-latest
-    permissions:
-      # required to write to the repo
-      contents: write
-      # required to open a pr with updatecli changes
-      pull-requests: write
     steps:
       - name: checkout
         uses: actions/checkout@v6

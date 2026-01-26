@@ -4,14 +4,13 @@ name: Run Helm Unit Tests
 "on":
   pull_request: {}
 
-permissions: {}
+permissions:
+  # required to read from the repo
+  contents: read
 
 jobs:
   unittest:
     runs-on: ubuntu-latest
-    permissions:
-      # required to read from the repo
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v6
