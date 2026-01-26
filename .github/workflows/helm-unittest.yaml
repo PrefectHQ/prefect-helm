@@ -16,8 +16,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Run helm unittest
-        uses: d3adb5/helm-unittest-action@v2
+      - name: Install mise
+        uses: jdx/mise-action@v2
         with:
-          helm-version: v4.0.4
-          unittest-version: 1.0.0
+          install_args: helm
+
+      - name: Install helm-unittest plugin
+        run: helm plugin install https://github.com/helm-unittest/helm-unittest.git --verify=false
+
+      - name: Run helm unittest
+        run: mise run helmtest
