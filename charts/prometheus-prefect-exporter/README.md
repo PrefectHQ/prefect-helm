@@ -82,7 +82,7 @@ basicAuth:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.31.4 |
+| https://charts.bitnami.com/bitnami | common | 2.34.0 |
 
 ## Values
 
