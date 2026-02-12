@@ -324,7 +324,7 @@ worker:
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.31.4 |
+| https://charts.bitnami.com/bitnami | common | 2.34.0 |
 
 ## Values
 
@@ -364,6 +364,7 @@ worker:
 | worker.config.jobNamespace | string | `nil` | the namespace(s) that the Kubernetes observer will watch for pod events and job crash detection. Accepts a comma-separated list (e.g., "default,namespace-2"). If unset, defaults to watching only the namespace where the worker is deployed. This does NOT control where worker jobs are deployed - job deployment namespace is configured via the work pool's base job template. |
 | worker.config.limit | string | `nil` | maximum number of flow runs to start simultaneously (default: unlimited) |
 | worker.config.name | string | `nil` | the name to give to the started worker. If not provided, a unique name will be generated. |
+| worker.config.observerClusterWide | bool | `false` | if true, the Kubernetes observer will watch for pod events and job crash detection across the entire cluster. If true, PREFECT_INTEGRATIONS_KUBERNETES_OBSERVER_NAMESPACES will not be set. |
 | worker.config.prefetchSeconds | int | `10` | when querying for runs, how many seconds in the future can they be scheduled |
 | worker.config.queryInterval | int | `5` | how often the worker will query for runs |
 | worker.config.type | string | `"kubernetes"` | specify the worker type |
