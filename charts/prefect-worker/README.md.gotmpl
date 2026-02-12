@@ -11,25 +11,22 @@ Workers each have a type corresponding to the execution environment to which the
 ### Prerequisites
 
 1. Add the Prefect Helm repository to your Helm client:
-
-    ```bash
+```bash
     helm repo add prefect https://prefecthq.github.io/prefect-helm
     helm repo update
-    ```
+```
 
 2. Create a new namespace in your Kubernetes cluster to deploy the Prefect worker in:
-
-    ```bash
+```bash
     kubectl create namespace prefect
-    ```
+```
 
 ### Configuring a Worker for Prefect Cloud
 
 1. Create a Kubernetes secret for a Prefect Cloud API key
 
     First create a file named `api-key.yaml` with the following contents:
-
-    ```yaml
+```yaml
     apiVersion: v1
     kind: Secret
     metadata:
@@ -38,40 +35,36 @@ Workers each have a type corresponding to the execution environment to which the
     type: Opaque
     data:
       key:  <base64-encoded-api-key>
-    ```
+```
 
     Replace `<base64-encoded-api-key>` with your Prefect Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
 
     You can use the following command to generate the base64-encoded value:
-
-    ```bash
+```bash
     echo -n "your-prefect-cloud-api-key" | base64
-    ```
+```
 
     Then apply the `api-key.yaml` file to create the Kubernetes secret:
-
-    ```bash
+```bash
     kubectl apply -f api-key.yaml
-    ```
+```
 
     Alternatively, you can create the Kubernetes secret via the cli with the following command. In this case, Kubernetes will take care of base64 encoding the value on your behalf:
-
-    ```bash
+```bash
     kubectl create secret generic prefect-api-key --from-literal=key=pnu_xxxx
-    ```
+```
 
 2. Configure the Prefect worker values
 
     Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
-
-    ```yaml
+```yaml
     worker:
       cloudApiConfig:
         accountId: <target account ID>
         workspaceId: <target workspace ID>
       config:
         workPool: <target work pool name>
-    ```
+```
 
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://app.prefect.cloud/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
@@ -81,8 +74,7 @@ Workers each have a type corresponding to the execution environment to which the
 1. Create a Kubernetes secret for a Prefect Self-managed Cloud API key
 
     First create a file named `api-key.yaml` with the following contents:
-
-    ```yaml
+```yaml
     apiVersion: v1
     kind: Secret
     metadata:
@@ -91,33 +83,29 @@ Workers each have a type corresponding to the execution environment to which the
     type: Opaque
     data:
       key:  <base64-encoded-api-key>
-    ```
+```
 
     Replace `<base64-encoded-api-key>` with your Prefect Self-managed Cloud API key encoded in base64. The helm chart looks for a secret of this name and schema, this can be overridden in the `values.yaml`.
 
     You can use the following command to generate the base64-encoded value:
-
-    ```bash
+```bash
     echo -n "your-prefect-self-managed-cloud-api-key" | base64
-    ```
+```
 
     Then apply the `api-key.yaml` file to create the Kubernetes secret:
-
-    ```bash
+```bash
     kubectl apply -f api-key.yaml
-    ```
+```
 
     Alternatively, you can create the Kubernetes secret via the cli with the following command. In this case, Kubernetes will take care of base64 encoding the value on your behalf:
-
-    ```bash
+```bash
     kubectl create secret generic prefect-api-key --from-literal=key=pnu_xxxx
-    ```
+```
 
 2. Configure the Prefect worker values
 
     Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
-
-    ```yaml
+```yaml
     worker:
       apiConfig: customerManagedCloud
       config:
@@ -126,7 +114,7 @@ Workers each have a type corresponding to the execution environment to which the
         apiUrl: "https://<DNS of Self-managed Cloud API>"
         accountId: <target account ID>
         workspaceId: <target workspace ID>
-    ```
+```
 
     These settings will ensure that the worker connects to the proper account, workspace, and work pool.
     View your Account ID and Workspace ID in your browser URL when logged into Prefect Cloud. For example: `https://self-managed-prefect.company/account/abc-my-account-id-is-here/workspaces/123-my-workspace-id-is-here`
@@ -136,15 +124,14 @@ Workers each have a type corresponding to the execution environment to which the
 1. Configure the Prefect worker values
 
     Create a `values.yaml` file to customize the Prefect worker configuration. Add the following contents to the file:
-
-    ```yaml
+```yaml
     worker:
       apiConfig: selfHostedServer
       config:
         workPool: <target work pool name>
       selfHostedServerApiConfig:
         apiUrl: <dns or ip address of the prefect-server pod here>
-    ```
+```
 
     These settings will ensure the worker connects with the local deployment of Self-hosted Prefect Server.
     If the Self-hosted Prefect Server pod is deployed in the same cluster, you can use the local Kubernetes DNS address to connect to it: `http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api`. If the Self-hosted Prefect Server pod is deployed in a different cluster, set the apiUrl to the fully qualified domain name of the Self-hosted Prefect Server.
@@ -152,21 +139,19 @@ Workers each have a type corresponding to the execution environment to which the
 ### Installing & Verifying Deployment of the Prefect Worker
 
 1. Install the Prefect worker using Helm
-
-    ```bash
+```bash
     helm install prefect-worker prefect/prefect-worker --namespace=prefect -f values.yaml
-    ```
+```
 
 2. Verify the deployment
 
     Check the status of your Prefect worker deployment:
-
-    ```bash
+```bash
     kubectl get pods -n prefect
 
     NAME                              READY   STATUS    RESTARTS       AGE
     prefect-worker-658f89bc49-jglvt   1/1     Running   0              25m
-    ```
+```
 
     You should see the Prefect worker pod running
 
@@ -179,7 +164,6 @@ Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/setting
 Self-hosted Prefect servers can be equipped with a Basic Authentication string for an administrator/password combination. Assuming you are running a Self-hosted Prefect server with basic auth enabled, you can authenticate your worker with the same credentials.
 
 The format of the auth string is `admin:<my-password>` (no brackets).
-
 ```yaml
 worker:
   basicAuth:
@@ -188,11 +172,9 @@ worker:
 ```
 
 Alternatively, you can provide an existing Kubernetes Secret containing the auth string credentials. The secret must contain a key `auth-string` with the value of the auth string.
-
 ```sh
 kubectl create secret generic prefect-basic-auth --from-literal=auth-string='admin:my-password'
 ```
-
 ```yaml
 worker:
   basicAuth:
@@ -203,13 +185,11 @@ worker:
 ### Deploying multiple workers to a single namespace
 
 If you want to run more than one worker in a single Kubernetes namespace, you will need to specify the `fullnameOverride` parameter at install time of one of the workers.
-
 ```yaml
 fullnameOverride: prefect-worker-2
 ```
 
 If you want the workers to share a service account, add the following to your `values.yaml`:
-
 ```yaml
 fullnameOverride: prefect-worker-2
 serviceAccount:
@@ -224,7 +204,6 @@ to create the Kubernetes job that executes your workflow. The base job template 
 `worker.config.baseJobTemplate.configuration`.
 
 1. Define the base job template in a local file. To get a formatted template, run the following command & store locally in `base-job-template.json`:
-
 ```bash
 # you may need to install `prefect-kubernetes` first
 pip install prefect-kubernetes
@@ -237,7 +216,6 @@ prefect work-pool get-default-base-job-template --type kubernetes > base-job-tem
    for more information.
 
 3. Install the chart as you usually would, making sure to use the `--set-file` command to pass in the `base-job-template.json` file as a paramater:
-
 ```bash
 helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file worker.config.baseJobTemplate.configuration=base-job-template.json
 ```
@@ -245,34 +223,35 @@ helm install prefect-worker prefect/prefect-worker -f values.yaml --set-file wor
 #### Modifying the Base Job Template
 
 Modifying the base job template replaces the default configuration entirely.
-Put differently, any provdied configuration is not merged with the default configuration.
+Put differently, any provided configuration is not merged with the default configuration.
 
 For example, if you want to add an image pull secret to the base job template,
 you would modify the `base-job-template.json` file to look like this:
-
-```diff
+```json
 {
  "job_configuration": {
    "job_manifest": {
      "spec": {
        "template": {
          "spec": {
-+          "imagePullSecrets": [
-+            {
-+              "name": "my-pull-secret"
-+            }
-+          ]
+           "imagePullSecrets": [
+             {
+               "name": "my-pull-secret"
+             }
+           ]
          }
        }
      }
    }
- },
+ }
 }
 ```
 
 Here, you add `imagePullSecrets` into your existing configuration. Note that
 the snippet is truncated for brevity. The full configuration should still be
 provided.
+
+For comprehensive examples including environment variables, secret references, resource configurations, and advanced use cases, see the [Prefect base job template documentation](https://docs.prefect.io/v3/how-to-guides/deployment_infra/kubernetes#configure-work-pool-options).
 
 Once applied, you can see the entire base job template in the UI by navigating
 to `Account settings` > `Work Pools` > your work pool > three-dot menu in the
@@ -304,7 +283,6 @@ This chart does not offer a built-in way to assign these roles, as it does not m
 In many cases, these role additions may be entirely infeasible due to overall access limitations. As an alternative, this chart offers a hard-coded override via the `worker.clusterUid` value.
 
 Set this value to a user-provided unique ID - this bypasses the `kube-system` namespace lookup and utilizes your provided value as the cluster ID instead. Be sure to set this value consistently across your Prefect deployments that interact with the same cluster
-
 ```yaml
 worker:
   # -- unique cluster identifier, if none is provided this value will be inferred at time of helm install
