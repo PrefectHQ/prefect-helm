@@ -86,6 +86,11 @@ service:
   port: 80
   # -- Pod expose port
   targetPort: 8000
+  # -- service IP family policy for dual-stack support (SingleStack, PreferDualStack, RequireDualStack)
+  # ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/
+  ipFamilyPolicy: ""
+  # -- list of IP families (e.g. [IPv4], [IPv6], [IPv4, IPv6])
+  ipFamilies: []
   # -- additional custom annotations for exporter service
   annotations: {}
 

@@ -1304,6 +1304,19 @@
           "title": "External Traffic Policy",
           "description": "service external traffic policy"
         },
+        "ipFamilyPolicy": {
+          "type": "string",
+          "title": "IP Family Policy",
+          "description": "service IP family policy for dual-stack support (SingleStack, PreferDualStack, RequireDualStack)"
+        },
+        "ipFamilies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IP Families",
+          "description": "list of IP families (e.g. [IPv4], [IPv6], [IPv4, IPv6])"
+        },
         "annotations": {
           "type": "object",
           "title": "Annotations",

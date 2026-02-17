@@ -21,3 +21,58 @@ tests:
         equal:
           path: spec.ports[0].name
           value: "my-custom-port-name"
+
+  - it: ipFamilyPolicy is not rendered by default
+    asserts:
+      - template: service.yaml
+        isNull:
+          path: spec.ipFamilyPolicy
+
+  - it: ipFamilies is not rendered by default
+    asserts:
+      - template: service.yaml
+        isNull:
+          path: spec.ipFamilies
+
+  - it: ipFamilyPolicy is rendered when set
+    set:
+      service:
+        ipFamilyPolicy: PreferDualStack
+    asserts:
+      - template: service.yaml
+        equal:
+          path: spec.ipFamilyPolicy
+          value: PreferDualStack
+
+  - it: ipFamilies is rendered when set
+    set:
+      service:
+        ipFamilies:
+          - IPv6
+          - IPv4
+    asserts:
+      - template: service.yaml
+        equal:
+          path: spec.ipFamilies
+          value:
+            - IPv6
+            - IPv4
+
+  - it: ipFamilyPolicy and ipFamilies are rendered together
+    set:
+      service:
+        ipFamilyPolicy: PreferDualStack
+        ipFamilies:
+          - IPv6
+          - IPv4
+    asserts:
+      - template: service.yaml
+        equal:
+          path: spec.ipFamilyPolicy
+          value: PreferDualStack
+      - template: service.yaml
+        equal:
+          path: spec.ipFamilies
+          value:
+            - IPv6
+            - IPv4

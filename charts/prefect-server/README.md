@@ -487,6 +487,8 @@ the HorizontalPodAutoscaler.
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
 | service.extraPorts | list | `[]` |  |
+| service.ipFamilies | list | `[]` | list of IP families (e.g. [IPv4], [IPv6], [IPv4, IPv6]) |
+| service.ipFamilyPolicy | string | `""` | service IP family policy for dual-stack support (SingleStack, PreferDualStack, RequireDualStack) ref: https://kubernetes.io/docs/concepts/services-networking/dual-stack/ |
 | service.nodePort | string | `""` | service port if defining service as type nodeport |
 | service.port | int | `4200` | service port |
 | service.portName | string | `"server-svc-port"` | service port name |
