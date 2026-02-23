@@ -362,6 +362,12 @@
               "type": "string",
               "title": "Cloud URL",
               "description": "prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId"
+            },
+            "jobApiKeyPropagation": {
+              "type": "string",
+              "title": "Job API Key Propagation",
+              "description": "Controls how the Prefect API key is propagated to spawned flow run pods. 'secretRef' (default): reference the existing apiKeySecret via valueFrom.secretKeyRef. 'autoSecret': worker creates and manages a temporary K8s Secret per job. 'envVar': inject as a plain PREFECT_API_KEY environment variable.",
+              "enum": ["secretRef", "autoSecret", "envVar"]
             }
           }
         },
@@ -407,6 +413,12 @@
               "type": "string",
               "title": "Self-managed API URL",
               "description": "Self-managed API URL (PREFECT_API_URL)"
+            },
+            "jobApiKeyPropagation": {
+              "type": "string",
+              "title": "Job API Key Propagation",
+              "description": "Controls how the Prefect API key is propagated to spawned flow run pods. 'secretRef' (default): reference the existing apiKeySecret via valueFrom.secretKeyRef. 'autoSecret': worker creates and manages a temporary K8s Secret per job. 'envVar': inject as a plain PREFECT_API_KEY environment variable.",
+              "enum": ["secretRef", "autoSecret", "envVar"]
             }
           }
         },

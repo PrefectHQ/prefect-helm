@@ -20,6 +20,13 @@ rules:
 - apiGroups: ["batch"]
   resources: ["jobs"]
   verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+{{- $cloudAutoSecret := and (eq .Values.worker.apiConfig "cloud") (eq (default "secretRef" .Values.worker.cloudApiConfig.jobApiKeyPropagation) "autoSecret") }}
+{{- $cmcAutoSecret := and (eq .Values.worker.apiConfig "customerManagedCloud") (eq (default "secretRef" .Values.worker.customerManagedCloudApiConfig.jobApiKeyPropagation) "autoSecret") }}
+{{- if or $cloudAutoSecret $cmcAutoSecret }}
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "update", "delete"]
+{{- end }}
 {{- if .Values.role.extraPermissions }}
 {{- include "common.tplvalues.render" (dict "value" .Values.role.extraPermissions "context" $) | nindent 0 }}
 {{- end }}

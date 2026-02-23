@@ -161,6 +161,12 @@ worker:
       # -- prefect API secret key
       key: key
 
+    # -- controls how the Prefect API key is propagated to spawned flow run pods.
+    # -- 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure)
+    # -- 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (requires additional RBAC; see role.extraPermissions)
+    # -- 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure)
+    jobApiKeyPropagation: secretRef
+
     # -- prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId
     cloudUrl: https://api.prefect.cloud/api
 
@@ -177,6 +183,12 @@ worker:
       name: prefect-api-key
       # -- prefect API secret key
       key: key
+
+    # -- controls how the Prefect API key is propagated to spawned flow run pods.
+    # -- 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure)
+    # -- 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (requires additional RBAC; see role.extraPermissions)
+    # -- 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure)
+    jobApiKeyPropagation: secretRef
 
     # -- Cloud API url for PREFECT_CLOUD_API_URL
     # -- This is used in self managed cloud instances to congfigure events and logs over websockets
