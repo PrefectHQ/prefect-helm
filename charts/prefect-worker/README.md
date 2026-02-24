@@ -332,6 +332,7 @@ worker:
 | worker.cloudApiConfig.apiKeySecret.key | string | `"key"` | prefect API secret key |
 | worker.cloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.cloudApiConfig.cloudUrl | string | `"https://api.prefect.cloud/api"` | prefect cloud API url; the full URL is constructed as https://cloudUrl/accounts/accountId/workspaces/workspaceId |
+| worker.cloudApiConfig.jobApiKeyPropagation | string | `"secretRef"` | controls how the Prefect API key is propagated to spawned flow run pods. 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure) 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (RBAC for secrets is granted automatically when this value is set) 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure) |
 | worker.cloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.clusterUid | string | `""` | unique cluster identifier, if none is provided this value will be inferred at time of helm install |
 | worker.command | list | `[]` | Custom container entrypoint |
@@ -358,6 +359,7 @@ worker:
 | worker.customerManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.customerManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.customerManagedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
+| worker.customerManagedCloudApiConfig.jobApiKeyPropagation | string | `"secretRef"` | controls how the Prefect API key is propagated to spawned flow run pods. 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure) 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (RBAC for secrets is granted automatically when this value is set) 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure) |
 | worker.customerManagedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.dnsConfig.nameservers | list | `[]` | optional list of IP addresses that will be used as dns servers for the Pod |
 | worker.dnsConfig.options | list | `[]` | optional list of dns options for the Pod |

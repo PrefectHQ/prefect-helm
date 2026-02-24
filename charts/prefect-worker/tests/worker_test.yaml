@@ -631,6 +631,171 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY")].value
           value: secret-key
 
+  # jobApiKeyPropagation: autoSecret (cloud)
+  - it: Should set create-secret env var for cloud autoSecret mode
+    set:
+      worker:
+        apiConfig: cloud
+        cloudApiConfig:
+          jobApiKeyPropagation: autoSecret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_CREATE_SECRET_FOR_API_KEY")].value
+          value: "true"
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
+
+  # jobApiKeyPropagation: autoSecret (customerManagedCloud)
+  - it: Should set create-secret env var for self-managed autoSecret mode
+    set:
+      worker:
+        apiConfig: customerManagedCloud
+        customerManagedCloudApiConfig:
+          apiUrl: https://my-prefect-cloud.example.com/api
+          accountId: test-account
+          workspaceId: test-workspace
+          jobApiKeyPropagation: autoSecret
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_INTEGRATIONS_KUBERNETES_WORKER_CREATE_SECRET_FOR_API_KEY")].value
+          value: "true"
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
+
+  # jobApiKeyPropagation: envVar (cloud)
+  - it: Should not set any secret env vars for cloud envVar mode
+    set:
+      worker:
+        apiConfig: cloud
+        cloudApiConfig:
+          jobApiKeyPropagation: envVar
+    asserts:
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_CREATE_SECRET_FOR_API_KEY
+
+  # jobApiKeyPropagation: envVar (customerManagedCloud)
+  - it: Should not set any secret env vars for self-managed envVar mode
+    set:
+      worker:
+        apiConfig: customerManagedCloud
+        customerManagedCloudApiConfig:
+          apiUrl: https://my-prefect-cloud.example.com/api
+          accountId: test-account
+          workspaceId: test-workspace
+          jobApiKeyPropagation: envVar
+    asserts:
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_CREATE_SECRET_FOR_API_KEY
+
+  # jobApiKeyPropagation: RBAC (autoSecret adds secrets rule)
+  - it: Should add secrets RBAC rule for cloud autoSecret mode
+    set:
+      worker:
+        apiConfig: cloud
+        cloudApiConfig:
+          jobApiKeyPropagation: autoSecret
+    asserts:
+      - template: role.yaml
+        contains:
+          path: .rules
+          content:
+            apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["get", "list", "create", "update", "delete"]
+
+  - it: Should add secrets RBAC rule for self-managed autoSecret mode
+    set:
+      worker:
+        apiConfig: customerManagedCloud
+        customerManagedCloudApiConfig:
+          apiUrl: https://my-prefect-cloud.example.com/api
+          accountId: test-account
+          workspaceId: test-workspace
+          jobApiKeyPropagation: autoSecret
+    asserts:
+      - template: role.yaml
+        contains:
+          path: .rules
+          content:
+            apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["get", "list", "create", "update", "delete"]
+
+  # jobApiKeyPropagation: RBAC (secretRef and envVar do NOT add secrets rule)
+  - it: Should not add secrets RBAC rule for cloud secretRef mode
+    set:
+      worker:
+        apiConfig: cloud
+        cloudApiConfig:
+          jobApiKeyPropagation: secretRef
+    asserts:
+      - template: role.yaml
+        notContains:
+          path: .rules
+          content:
+            apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["get", "list", "create", "update", "delete"]
+
+  - it: Should not add secrets RBAC rule for cloud envVar mode
+    set:
+      worker:
+        apiConfig: cloud
+        cloudApiConfig:
+          jobApiKeyPropagation: envVar
+    asserts:
+      - template: role.yaml
+        notContains:
+          path: .rules
+          content:
+            apiGroups: [""]
+            resources: ["secrets"]
+            verbs: ["get", "list", "create", "update", "delete"]
+
   - it: Should not set Kubernetes worker dnsPolicy if not provided
     set:
       worker:

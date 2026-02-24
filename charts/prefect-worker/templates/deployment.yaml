@@ -254,15 +254,25 @@ spec:
               value: {{ .Values.worker.customerManagedCloudApiConfig.cloudApiUrl}}
             {{- end }}
             {{- if eq .Values.worker.apiConfig "cloud" }}
+            {{- if eq (default "secretRef" .Values.worker.cloudApiConfig.jobApiKeyPropagation) "secretRef" }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
               value: {{ .Values.worker.cloudApiConfig.apiKeySecret.name }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
               value: {{ .Values.worker.cloudApiConfig.apiKeySecret.key }}
+            {{- else if eq .Values.worker.cloudApiConfig.jobApiKeyPropagation "autoSecret" }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_CREATE_SECRET_FOR_API_KEY
+              value: "true"
+            {{- end }}
             {{- else if eq .Values.worker.apiConfig "customerManagedCloud" }}
+            {{- if eq (default "secretRef" .Values.worker.customerManagedCloudApiConfig.jobApiKeyPropagation) "secretRef" }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_NAME
               value: {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.name }}
             - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_API_KEY_SECRET_KEY
               value: {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.key }}
+            {{- else if eq .Values.worker.customerManagedCloudApiConfig.jobApiKeyPropagation "autoSecret" }}
+            - name: PREFECT_INTEGRATIONS_KUBERNETES_WORKER_CREATE_SECRET_FOR_API_KEY
+              value: "true"
+            {{- end }}
             {{- end }}
             - name: PREFECT_DEBUG_MODE
               value: {{ .Values.worker.image.debug | quote }}
