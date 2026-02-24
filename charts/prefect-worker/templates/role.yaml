@@ -25,7 +25,7 @@ rules:
 {{- if or $cloudAutoSecret $cmcAutoSecret }}
 - apiGroups: [""]
   resources: ["secrets"]
-  verbs: ["get", "create", "update", "delete"]
+  verbs: ["get", "list", "create", "update", "delete"]
 {{- end }}
 {{- if .Values.role.extraPermissions }}
 {{- include "common.tplvalues.render" (dict "value" .Values.role.extraPermissions "context" $) | nindent 0 }}
