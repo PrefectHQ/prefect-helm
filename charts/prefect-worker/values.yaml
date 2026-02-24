@@ -163,7 +163,7 @@ worker:
 
     # -- controls how the Prefect API key is propagated to spawned flow run pods.
     # 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure)
-    # 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (requires additional RBAC; see role.extraPermissions)
+    # 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (RBAC for secrets is granted automatically when this value is set)
     # 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure)
     jobApiKeyPropagation: secretRef
 
@@ -186,7 +186,7 @@ worker:
 
     # -- controls how the Prefect API key is propagated to spawned flow run pods.
     # 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure)
-    # 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (requires additional RBAC; see role.extraPermissions)
+    # 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (RBAC for secrets is granted automatically when this value is set)
     # 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure)
     jobApiKeyPropagation: secretRef
 
