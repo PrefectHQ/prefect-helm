@@ -226,9 +226,15 @@ secret:
 
 ### Database Migrations
 
-The chart automatically handles database migrations during upgrades using a pre-upgrade hook. When you upgrade the chart, it will:
+Database migrations are handled differently depending on your deployment mode.
 
-1. Run `prefect server database upgrade -y` before updating the main deployment
+**Single deployment (default):** Prefect automatically runs database migrations on server startup. No additional configuration is needed because there is only one server process managing the database.
+
+**Separate deployment mode (`backgroundServices.runAsSeparateDeployment: true`):** The chart creates a dedicated Kubernetes Job as a Helm pre-upgrade/post-install hook to run migrations before the deployments start. This prevents multiple server processes (API server and background services) from racing to migrate the database simultaneously. Both deployments set `PREFECT_API_DATABASE_MIGRATE_ON_START=false` so that only the Job handles migrations.
+
+The migration Job will:
+
+1. Run `prefect server database upgrade -y` before updating the main deployments
 2. Ensure your database schema is compatible with the new Prefect version
 3. Block the upgrade if migrations fail
 
@@ -240,13 +246,13 @@ The chart automatically handles database migrations during upgrades using a pre-
 
 #### Migration Configuration
 
-The migration behavior can be customized through the `migrations` section in your values.
+The `migrations` section in your values configures the migration Job. These settings only take effect when `backgroundServices.runAsSeparateDeployment` is `true`.
 
-For example, to disable automatic migrations (not recommended):
+For example, to disable the migration Job (not recommended):
 
 ```yaml
 migrations:
-  # Enable/disable automatic migrations (default: true)
+  # Enable/disable the migration Job (default: true)
   enabled: false
 ```
 
@@ -396,7 +402,7 @@ the HorizontalPodAutoscaler.
 | migrations.affinity | object | `{}` | affinity for migration job pods assignment |
 | migrations.backoffLimit | int | `5` | job backoff limit (number of retries) |
 | migrations.command | string | `"prefect server database upgrade -y\n"` | commands to run for database migrations (default: prefect server database upgrade -y) |
-| migrations.enabled | bool | `true` | enable automatic database migrations during chart upgrades |
+| migrations.enabled | bool | `true` | enable the migration Job during chart upgrades (only applies when backgroundServices.runAsSeparateDeployment is true) |
 | migrations.entrypoint | list | `["/bin/sh","-c"]` | custom container entrypoint for the migration job |
 | migrations.env | list | `[]` | additional environment variables for the migration job |
 | migrations.extraVolumeMounts | list | `[]` | additional volume mounts for the migration job |

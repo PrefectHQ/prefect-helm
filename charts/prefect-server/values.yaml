@@ -221,8 +221,11 @@ server:
   extraArgs: []
 
 ## Database Migration Configuration
+## These settings configure the migration Kubernetes Job that runs during chart upgrades.
+## The Job only runs when backgroundServices.runAsSeparateDeployment is true (and PostgreSQL is used).
+## In single-deployment mode, Prefect handles migrations on server startup automatically.
 migrations:
-  # -- enable automatic database migrations during chart upgrades
+  # -- enable the migration Job during chart upgrades (only applies when backgroundServices.runAsSeparateDeployment is true)
   enabled: true
   # -- commands to run for database migrations (default: prefect server database upgrade -y)
   command: |
