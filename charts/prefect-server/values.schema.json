@@ -1276,6 +1276,10 @@
           "title": "Port",
           "description": "service port"
         },
+        "appProtocol": {
+          "type": "string",
+          "description": "application protocol of the port"
+        },
         "extraPorts": {
           "type": "array",
           "items": {

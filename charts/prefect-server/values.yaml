@@ -451,6 +451,8 @@ service:
   port: 4200
   # -- target port of the server pod; also sets PREFECT_SERVER_API_PORT
   targetPort: 4200
+  # -- application protocol of the port
+  appProtocol: http
   # -- service port if defining service as type nodeport
   nodePort: ""
 
