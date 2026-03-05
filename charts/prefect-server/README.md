@@ -490,6 +490,7 @@ the HorizontalPodAutoscaler.
 | server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |
 | server.updateStrategy | object | `{"type":"RollingUpdate"}` | Specifies the strategy used to replace old Pods by new ones. Type can be "Recreate" or "RollingUpdate". Setting this to "Recreate" is useful when database is on a mounted volume that can only be attached to a single node at a time. |
 | service.annotations | object | `{}` | additional custom annotations for server service |
+| service.appProtocol | string | `"http"` | application protocol of the port |
 | service.clusterIP | string | `""` | service Cluster IP |
 | service.externalTrafficPolicy | string | `"Cluster"` | service external traffic policy |
 | service.extraPorts | list | `[]` |  |
