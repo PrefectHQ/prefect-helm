@@ -237,9 +237,11 @@ migrations:
     requests:
       cpu: 100m
       memory: 128Mi
+      # ephemeral-storage:
     limits:
       cpu: 500m
       memory: 256Mi
+      # ephemeral-storage:
   # -- job security context configuration
   securityContext:
     runAsUser: 1001
@@ -318,10 +320,12 @@ backgroundServices:
     requests:
       cpu: 500m
       memory: 512Mi
+      # ephemeral-storage:
     # -- the requested limits for the background-services container
     limits:
       cpu: "1"
       memory: 1Gi
+      # ephemeral-storage:
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:

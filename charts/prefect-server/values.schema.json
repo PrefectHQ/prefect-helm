@@ -123,6 +123,10 @@
                 "memory": {
                   "type": "string",
                   "description": "Memory request for the migration job"
+                },
+                "ephemeral-storage":  {
+                  "type": "string",
+                  "description": "Ephemeral storage request for the migration job"
                 }
               }
             },
@@ -136,6 +140,10 @@
                 "memory": {
                   "type": "string",
                   "description": "Memory limit for the migration job"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "description": "Ephemeral storage limit for the migration job"
                 }
               }
             }
@@ -819,6 +827,9 @@
                 },
                 "memory": {
                   "type": "string"
+                },
+                "ephemeral-storage": {
+                  "type": "string"
                 }
               }
             },
@@ -830,6 +841,9 @@
                   "type": "string"
                 },
                 "memory": {
+                  "type": "string"
+                },
+                "ephemeral-storage": {
                   "type": "string"
                 }
               }
