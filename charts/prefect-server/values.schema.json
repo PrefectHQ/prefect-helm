@@ -124,7 +124,7 @@
                   "type": "string",
                   "description": "Memory request for the migration job"
                 },
-                "ephemeral-storage":  {
+                "ephemeral-storage": {
                   "type": "string",
                   "description": "Ephemeral storage request for the migration job"
                 }
