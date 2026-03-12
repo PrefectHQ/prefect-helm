@@ -172,9 +172,11 @@ tests:
           requests:
             cpu: 200m
             memory: 256Mi
+            ephemeral-storage: 100Mi
           limits:
             cpu: 1000m
             memory: 512Mi
+            ephemeral-storage: 200Mi
         securityContext:
           runAsUser: 2000
           runAsNonRoot: true
@@ -214,6 +216,26 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].resources.requests.cpu
           value: 200m
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.memory
+          value: 256Mi
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.requests.ephemeral-storage
+          value: 100Mi
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.cpu
+          value: 1000m
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.memory
+          value: 512Mi
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.ephemeral-storage
+          value: 200Mi
       - template: pre-upgrade-hook.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
