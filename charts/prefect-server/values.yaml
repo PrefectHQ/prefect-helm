@@ -427,6 +427,13 @@ backgroundServices:
       # -- use TLS for redis connection
       ssl: false
 
+      # -- name of an existing Kubernetes secret containing the redis password
+      # takes precedence over the password field above
+      existingSecret: ""
+
+      # -- key within the existing secret that contains the redis password
+      existingSecretPasswordKey: "redis-password"
+
 ## Server Service Account configuration
 serviceAccount:
   # -- specifies whether a service account should be created

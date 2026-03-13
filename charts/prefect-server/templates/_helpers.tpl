@@ -63,11 +63,12 @@ Make redis subchart context available as a variable in this block
   value: {{ .Values.backgroundServices.messaging.redis.username | quote }}
 {{- end -}}
 {{- /*
-There are three scenarios for passwords:
+There are four scenarios for passwords:
     1. If the subchart is enabled, reference the secret from the subchart.
        Setting backgroundServices.messaging.redis.password has no effect here.
-    2. If the subchart is not enabled, use the secret defined in the values file. TODO: secret reference
-    3. No password is set, so the environment variable is not defined.
+    2. If an existingSecret is provided, reference that secret with the specified key.
+    3. If the subchart is not enabled, use the password defined in the values file.
+    4. No password is set, so the environment variable is not defined.
 */ -}}
 {{- if and (.Values.redis.enabled) (.Values.backgroundServices.messaging.redis.password | empty) }}
 - name: PREFECT_REDIS_MESSAGING_PASSWORD
@@ -75,6 +76,12 @@ There are three scenarios for passwords:
     secretKeyRef:
       name: {{ include "common.names.fullname" $redis }}
       key: redis-password
+{{- else if not (.Values.backgroundServices.messaging.redis.existingSecret | empty) }}
+- name: PREFECT_REDIS_MESSAGING_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.backgroundServices.messaging.redis.existingSecret }}
+      key: {{ .Values.backgroundServices.messaging.redis.existingSecretPasswordKey | default "redis-password" }}
 {{- else if not (.Values.backgroundServices.messaging.redis.password | empty) }}
 - name: PREFECT_REDIS_MESSAGING_PASSWORD
   value: {{ .Values.backgroundServices.messaging.redis.password | quote }}
