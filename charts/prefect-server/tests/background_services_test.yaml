@@ -647,3 +647,76 @@ tests:
           content:
             name: PREFECT_REDIS_MESSAGING_SSL
             value: "true"
+
+  - it: Should use existingSecret for redis password when provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            existingSecret: my-redis-secret
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: redis-password
+
+  - it: Should use custom existingSecretPasswordKey when provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            existingSecret: my-redis-secret
+            existingSecretPasswordKey: custom-key
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: custom-key
+
+  - it: Should prefer existingSecret over plain text password
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            password: plain-text-password
+            existingSecret: my-redis-secret
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: redis-password
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            value: plain-text-password

@@ -990,6 +990,18 @@
                   "type": "boolean",
                   "title": "SSL",
                   "description": "enable SSL for redis broker connection"
+                },
+                "existingSecret": {
+                  "type": "string",
+                  "title": "Existing Secret",
+                  "description": "name of an existing secret containing the redis password. takes precedence over password",
+                  "optional": true
+                },
+                "existingSecretPasswordKey": {
+                  "type": "string",
+                  "title": "Existing Secret Password Key",
+                  "description": "key within the existing secret that contains the redis password",
+                  "optional": true
                 }
               }
             }
