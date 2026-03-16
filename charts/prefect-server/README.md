@@ -408,6 +408,9 @@ the HorizontalPodAutoscaler.
 | migrations.extraVolumeMounts | list | `[]` | additional volume mounts for the migration job |
 | migrations.extraVolumes | list | `[]` | additional volumes for the migration job |
 | migrations.nodeSelector | object | `{}` | node labels for migration job pods assignment |
+| migrations.podSecurityContext.fsGroup | int | `1001` | set background-services pod's security context fsGroup |
+| migrations.podSecurityContext.runAsNonRoot | bool | `true` | set background-services pod's security context runAsNonRoot |
+| migrations.podSecurityContext.runAsUser | int | `1001` | set background-services pod's security context runAsUser |
 | migrations.resources | object | `{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | job resources configuration |
 | migrations.restartPolicy | string | `"Never"` | job restart policy |
 | migrations.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{},"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1001}` | job security context configuration |

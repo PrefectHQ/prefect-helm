@@ -240,6 +240,14 @@ migrations:
     limits:
       cpu: 500m
       memory: 256Mi
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    # -- set background-services pod's security context runAsUser
+    runAsUser: 1001
+    # -- set background-services pod's security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set background-services pod's security context fsGroup
+    fsGroup: 1001
   # -- job security context configuration
   securityContext:
     runAsUser: 1001
