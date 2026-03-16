@@ -237,9 +237,11 @@ migrations:
     requests:
       cpu: 100m
       memory: 128Mi
+      # ephemeral-storage:
     limits:
       cpu: 500m
       memory: 256Mi
+    # ephemeral-storage:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
     # -- set background-services pod's security context runAsUser
@@ -326,10 +328,12 @@ backgroundServices:
     requests:
       cpu: 500m
       memory: 512Mi
+      # ephemeral-storage:
     # -- the requested limits for the background-services container
     limits:
       cpu: "1"
       memory: 1Gi
+      # ephemeral-storage:
 
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
@@ -430,6 +434,13 @@ backgroundServices:
 
       # -- use TLS for redis connection
       ssl: false
+
+      # -- name of an existing Kubernetes secret containing the redis password
+      # takes precedence over the password field above
+      existingSecret: ""
+
+      # -- key within the existing secret that contains the redis password
+      existingSecretPasswordKey: "redis-password"
 
 ## Server Service Account configuration
 serviceAccount:

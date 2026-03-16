@@ -141,6 +141,21 @@ backgroundServices:
       password: paranoid!
 ```
 
+If you want to reference an existing Kubernetes Secret for the Redis password instead of providing it in plain text, use the `existingSecret` field:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      host: external.redis.host.example.com
+      username: marvin
+      existingSecret: my-redis-secret
+      existingSecretPasswordKey: redis-password  # default key name
+```
+
+The `existingSecretPasswordKey` field defaults to `redis-password` to match the Bitnami Redis chart convention. Set it to a different value if your secret uses a different key.
+
 ## PostgreSQL Configuration
 
 ### Handling Connection Secrets
@@ -320,8 +335,10 @@ the HorizontalPodAutoscaler.
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
 | backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
-| backgroundServices.messaging.redis | object | `{"db":0,"host":"","password":"","port":6379,"ssl":false,"username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
+| backgroundServices.messaging.redis | object | `{"db":0,"existingSecret":"","existingSecretPasswordKey":"redis-password","host":"","password":"","port":6379,"ssl":false,"username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
 | backgroundServices.messaging.redis.db | int | `0` | redis database number |
+| backgroundServices.messaging.redis.existingSecret | string | `""` | name of an existing Kubernetes secret containing the redis password takes precedence over the password field above |
+| backgroundServices.messaging.redis.existingSecretPasswordKey | string | `"redis-password"` | key within the existing secret that contains the redis password |
 | backgroundServices.messaging.redis.host | string | `""` | redis hostname if using the built-in redis subchart, this will be automatically set to the redis subchart's service name |
 | backgroundServices.messaging.redis.password | string | `""` | redis password, leave empty to use default if using the built-in redis subchart, this will be automatically set to the redis subchart's password value |
 | backgroundServices.messaging.redis.port | int | `6379` | redis port |

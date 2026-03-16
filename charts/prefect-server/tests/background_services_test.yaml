@@ -182,9 +182,11 @@ tests:
           requests:
             cpu: 250m
             memory: 256Mi
+            ephemeral-storage: 100Mi
           limits:
             cpu: 500m
             memory: 512Mi
+            ephemeral-storage: 200Mi
     asserts:
       - template: background-services/deployment.yaml
         equal:
@@ -196,12 +198,20 @@ tests:
           value: 256Mi
       - template: background-services/deployment.yaml
         equal:
+          path: .spec.template.spec.containers[0].resources.requests.ephemeral-storage
+          value: 100Mi
+      - template: background-services/deployment.yaml
+        equal:
           path: .spec.template.spec.containers[0].resources.limits.cpu
           value: 500m
       - template: background-services/deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].resources.limits.memory
           value: 512Mi
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].resources.limits.ephemeral-storage
+          value: 200Mi
 
   - it: Should set the correct security context
     asserts:
@@ -637,3 +647,76 @@ tests:
           content:
             name: PREFECT_REDIS_MESSAGING_SSL
             value: "true"
+
+  - it: Should use existingSecret for redis password when provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            existingSecret: my-redis-secret
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: redis-password
+
+  - it: Should use custom existingSecretPasswordKey when provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            existingSecret: my-redis-secret
+            existingSecretPasswordKey: custom-key
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: custom-key
+
+  - it: Should prefer existingSecret over plain text password
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            host: custom-redis-host
+            password: plain-text-password
+            existingSecret: my-redis-secret
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: redis-password
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+            value: plain-text-password

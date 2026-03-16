@@ -140,6 +140,21 @@ backgroundServices:
       password: paranoid!
 ```
 
+If you want to reference an existing Kubernetes Secret for the Redis password instead of providing it in plain text, use the `existingSecret` field:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      host: external.redis.host.example.com
+      username: marvin
+      existingSecret: my-redis-secret
+      existingSecretPasswordKey: redis-password  # default key name
+```
+
+The `existingSecretPasswordKey` field defaults to `redis-password` to match the Bitnami Redis chart convention. Set it to a different value if your secret uses a different key.
+
 ## PostgreSQL Configuration
 
 ### Handling Connection Secrets

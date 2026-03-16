@@ -123,6 +123,10 @@
                 "memory": {
                   "type": "string",
                   "description": "Memory request for the migration job"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "description": "Ephemeral storage request for the migration job"
                 }
               }
             },
@@ -136,6 +140,10 @@
                 "memory": {
                   "type": "string",
                   "description": "Memory limit for the migration job"
+                },
+                "ephemeral-storage": {
+                  "type": "string",
+                  "description": "Ephemeral storage limit for the migration job"
                 }
               }
             }
@@ -827,6 +835,9 @@
                 },
                 "memory": {
                   "type": "string"
+                },
+                "ephemeral-storage": {
+                  "type": "string"
                 }
               }
             },
@@ -838,6 +849,9 @@
                   "type": "string"
                 },
                 "memory": {
+                  "type": "string"
+                },
+                "ephemeral-storage": {
                   "type": "string"
                 }
               }
@@ -984,6 +998,18 @@
                   "type": "boolean",
                   "title": "SSL",
                   "description": "enable SSL for redis broker connection"
+                },
+                "existingSecret": {
+                  "type": "string",
+                  "title": "Existing Secret",
+                  "description": "name of an existing secret containing the redis password. takes precedence over password",
+                  "optional": true
+                },
+                "existingSecretPasswordKey": {
+                  "type": "string",
+                  "title": "Existing Secret Password Key",
+                  "description": "key within the existing secret that contains the redis password",
+                  "optional": true
                 }
               }
             }
