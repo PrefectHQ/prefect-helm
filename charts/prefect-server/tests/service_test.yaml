@@ -76,3 +76,19 @@ tests:
           value:
             - IPv6
             - IPv4
+
+  - it: appProtocol is not rendered by default
+    asserts:
+      - template: service.yaml
+        isNull:
+          path: spec.ports[0].appProtocol
+
+  - it: appProtocol is rendered when set
+    set:
+      service:
+        appProtocol: "http"
+    asserts:
+      - template: service.yaml
+        equal:
+          path: spec.ports[0].appProtocol
+          value: "http"

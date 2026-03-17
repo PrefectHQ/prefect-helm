@@ -1278,7 +1278,8 @@
         },
         "appProtocol": {
           "type": "string",
-          "description": "application protocol of the port"
+          "description": "application protocol of the port",
+          "default": ""
         },
         "extraPorts": {
           "type": "array",
