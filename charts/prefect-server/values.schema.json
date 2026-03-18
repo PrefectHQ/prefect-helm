@@ -149,6 +149,14 @@
             }
           }
         },
+        "podSecurityContext": {
+          "type": "object",
+          "properties": {
+            "runAsUser": { "type": ["integer", "null"] },
+            "runAsNonRoot": { "type": "boolean" },
+            "fsGroup": { "type": ["integer", "null"] }
+          }
+        },
         "securityContext": {
           "type": "object",
           "title": "Security Context",

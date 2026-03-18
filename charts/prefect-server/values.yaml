@@ -241,7 +241,15 @@ migrations:
     limits:
       cpu: 500m
       memory: 256Mi
-      # ephemeral-storage:
+    # ephemeral-storage:
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    # -- set migration job's pod security context runAsUser
+    runAsUser: 1001
+    # -- set migration job's pod security context runAsNonRoot
+    runAsNonRoot: true
+    # -- set migration job's pod security context fsGroup
+    fsGroup: 1001
   # -- job security context configuration
   securityContext:
     runAsUser: 1001

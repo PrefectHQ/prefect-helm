@@ -48,6 +48,8 @@ spec:
             secretKeyRef:
               name: {{ include "server.postgres-string-secret-name" . }}
               key: connection-string
+        - name: HOME
+          value: /home/prefect
         {{- if .Values.global.prefect.env }}
         {{- include "common.tplvalues.render" (dict "value" .Values.global.prefect.env "context" $) | nindent 8 }}
         {{- end }}
@@ -79,5 +81,8 @@ spec:
       {{- range .Values.global.prefect.image.pullSecrets }}
         - name: {{ . }}
       {{- end }}
+      {{- end }}
+      {{- with .Values.migrations.podSecurityContext }}
+      securityContext: {{- . | toYaml | nindent 8 }}
       {{- end }}
 {{- end }}

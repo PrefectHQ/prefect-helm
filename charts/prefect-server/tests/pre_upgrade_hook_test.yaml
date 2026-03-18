@@ -302,3 +302,26 @@ tests:
         equal:
           path: .spec.template.spec.tolerations[0].key
           value: key1
+
+  - it: Should contain HOME env variable for pre-upgrade hook
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: HOME
+            value: /home/prefect
+
+  - it: Should set correct pod security context for pre-upgrade hook
+    set:
+      backgroundServices:
+        runAsSeparateDeployment: true
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        equal:
+          path: .spec.template.spec.securityContext
+          value:
+            runAsUser: 1001
+            fsGroup: 1001
+            runAsNonRoot: true
+
