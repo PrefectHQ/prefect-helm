@@ -21,29 +21,16 @@ Create the name of the service account to associate with the background-services
 {{- end -}}
 
 {{- /*
-    Reusable block for background services environment variables.
+    Shared block for Redis connection environment variables.
+    Used by both the server (for task queue) and background services (for messaging).
 */ -}}
-{{- define "backgroundServices.envVars" -}}
-{{- /*
-Make redis subchart context available as a variable in this block
-*/ -}}
+{{- define "redis.connectionEnvVars" -}}
 {{- $redis := dict
       "Release"      .Release
       "Capabilities" .Capabilities
       "Values"       .Values.redis
       "Chart"        (dict "Name" "redis")
 -}}
-- name: PREFECT_API_DATABASE_MIGRATE_ON_START
-  value: "false"
-- name: PREFECT_MESSAGING_BROKER
-  value: {{ .Values.backgroundServices.messaging.broker }}
-- name: PREFECT_MESSAGING_CACHE
-  value: {{ .Values.backgroundServices.messaging.cache }}
-{{- if eq .Values.backgroundServices.messaging.broker "prefect_redis.messaging" }}
-- name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
-  value: prefect_redis.ordering
-- name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
-  value: prefect_redis.lease_storage
 - name: PREFECT_REDIS_MESSAGING_HOST
 {{- if and (.Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty) }}
   value: {{ printf "%s-headless" (include "common.names.fullname" $redis) }}.{{ .Release.Namespace }}.svc.cluster.local
@@ -86,6 +73,24 @@ There are four scenarios for passwords:
 - name: PREFECT_REDIS_MESSAGING_PASSWORD
   value: {{ .Values.backgroundServices.messaging.redis.password | quote }}
 {{- end }}
+{{- end -}}
+
+{{- /*
+    Reusable block for background services environment variables.
+*/ -}}
+{{- define "backgroundServices.envVars" -}}
+- name: PREFECT_API_DATABASE_MIGRATE_ON_START
+  value: "false"
+- name: PREFECT_MESSAGING_BROKER
+  value: {{ .Values.backgroundServices.messaging.broker }}
+- name: PREFECT_MESSAGING_CACHE
+  value: {{ .Values.backgroundServices.messaging.cache }}
+{{- if eq .Values.backgroundServices.messaging.broker "prefect_redis.messaging" }}
+- name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+  value: prefect_redis.ordering
+- name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
+  value: prefect_redis.lease_storage
+{{ include "redis.connectionEnvVars" . }}
 {{- end }}
 {{- end -}}
 

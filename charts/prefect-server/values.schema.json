@@ -765,6 +765,19 @@
           "type": "array",
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
+        },
+        "taskScheduling": {
+          "type": "object",
+          "title": "Task Scheduling",
+          "description": "task queue backend configuration for the server",
+          "additionalProperties": false,
+          "properties": {
+            "backend": {
+              "type": "string",
+              "title": "Backend",
+              "description": "module path for the task queue backend. Set to 'prefect_redis.task_queue' for distributed queue across server replicas."
+            }
+          }
         }
       }
     },

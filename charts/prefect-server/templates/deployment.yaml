@@ -130,6 +130,11 @@ spec:
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
+            {{- if not (.Values.server.taskScheduling.backend | empty) }}
+            - name: PREFECT_TASK_SCHEDULING_BACKEND
+              value: {{ .Values.server.taskScheduling.backend }}
+            {{- include "redis.connectionEnvVars" . | nindent 12 }}
+            {{- end }}
             {{- if .Values.backgroundServices.runAsSeparateDeployment }}
             {{- include "backgroundServices.envVars" . | nindent 12 }}
             {{- end }}

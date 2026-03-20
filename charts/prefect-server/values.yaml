@@ -78,6 +78,12 @@ server:
   ##   - name: PREFECT_API_ENABLE_HTTP2
   ##     value: false
 
+  # Configuration for the task queue backend used by the server for background tasks
+  taskScheduling:
+    # -- module path for the task queue backend
+    # set to "prefect_redis.task_queue" for distributed queue across server replicas
+    backend: ""
+
   # -- Custom container command arguments
   args: []
 
