@@ -776,6 +776,20 @@
               "type": "string",
               "title": "Backend",
               "description": "module path for the task queue backend. Set to 'prefect_redis.task_queue' for distributed queue across server replicas."
+            },
+            "maxScheduledQueueSize": {
+              "type": "integer",
+              "title": "Max Scheduled Queue Size",
+              "description": "maximum number of scheduled tasks to queue per task key. 0 uses the server default (1000).",
+              "minimum": 0,
+              "default": 0
+            },
+            "maxRetryQueueSize": {
+              "type": "integer",
+              "title": "Max Retry Queue Size",
+              "description": "maximum number of retries to queue per task key. 0 uses the server default (100).",
+              "minimum": 0,
+              "default": 0
             }
           }
         }

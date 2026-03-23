@@ -83,6 +83,10 @@ server:
     # -- module path for the task queue backend
     # set to "prefect_redis.task_queue" for distributed queue across server replicas
     backend: ""
+    # -- maximum number of scheduled tasks to queue per task key (0 = use server default of 1000)
+    maxScheduledQueueSize: 0
+    # -- maximum number of retries to queue per task key (0 = use server default of 100)
+    maxRetryQueueSize: 0
 
   # -- Custom container command arguments
   args: []
