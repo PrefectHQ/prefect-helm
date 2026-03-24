@@ -309,7 +309,7 @@ the HorizontalPodAutoscaler.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.36.0 |
+| https://charts.bitnami.com/bitnami | common | 2.37.0 |
 | https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.4 |
 
@@ -425,9 +425,9 @@ the HorizontalPodAutoscaler.
 | migrations.extraVolumeMounts | list | `[]` | additional volume mounts for the migration job |
 | migrations.extraVolumes | list | `[]` | additional volumes for the migration job |
 | migrations.nodeSelector | object | `{}` | node labels for migration job pods assignment |
-| migrations.podSecurityContext.fsGroup | int | `1001` | set background-services pod's security context fsGroup |
-| migrations.podSecurityContext.runAsNonRoot | bool | `true` | set background-services pod's security context runAsNonRoot |
-| migrations.podSecurityContext.runAsUser | int | `1001` | set background-services pod's security context runAsUser |
+| migrations.podSecurityContext.fsGroup | int | `1001` | set migration job's pod security context fsGroup |
+| migrations.podSecurityContext.runAsNonRoot | bool | `true` | set migration job's pod security context runAsNonRoot |
+| migrations.podSecurityContext.runAsUser | int | `1001` | set migration job's pod security context runAsUser |
 | migrations.resources | object | `{"limits":{"cpu":"500m","memory":"256Mi"},"requests":{"cpu":"100m","memory":"128Mi"}}` | job resources configuration |
 | migrations.restartPolicy | string | `"Never"` | job restart policy |
 | migrations.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{},"readOnlyRootFilesystem":true,"runAsNonRoot":true,"runAsUser":1001}` | job security context configuration |
