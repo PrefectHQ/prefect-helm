@@ -78,6 +78,18 @@ server:
   ##   - name: PREFECT_API_ENABLE_HTTP2
   ##     value: false
 
+  # Configuration for the task queue backend used by the server for background tasks
+  taskScheduling:
+    # -- module path for the task queue backend
+    # set to "prefect_redis.task_queue" for distributed queue across server replicas
+    backend: ""
+    # -- maximum number of scheduled tasks to queue per task key (0 = use server default of 1000)
+    maxScheduledQueueSize: 0
+    # -- maximum number of retries to queue per task key (0 = use server default of 100)
+    maxRetryQueueSize: 0
+    # -- seconds before an in-flight task run is considered stale and re-enqueued (0 = use server default of 30)
+    inflightVisibilityTimeout: 0
+
   # -- Custom container command arguments
   args: []
 

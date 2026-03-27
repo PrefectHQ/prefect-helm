@@ -130,6 +130,23 @@ spec:
             {{- if .Values.server.env }}
             {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 12 }}
             {{- end }}
+            {{- if not (.Values.server.taskScheduling.backend | empty) }}
+            - name: PREFECT_TASK_SCHEDULING_BACKEND
+              value: {{ .Values.server.taskScheduling.backend }}
+            {{- include "redis.connectionEnvVars" . | nindent 12 }}
+            {{- end }}
+            {{- if gt (int .Values.server.taskScheduling.maxScheduledQueueSize) 0 }}
+            - name: PREFECT_SERVER_TASKS_SCHEDULING_MAX_SCHEDULED_QUEUE_SIZE
+              value: {{ .Values.server.taskScheduling.maxScheduledQueueSize | quote }}
+            {{- end }}
+            {{- if gt (int .Values.server.taskScheduling.maxRetryQueueSize) 0 }}
+            - name: PREFECT_SERVER_TASKS_SCHEDULING_MAX_RETRY_QUEUE_SIZE
+              value: {{ .Values.server.taskScheduling.maxRetryQueueSize | quote }}
+            {{- end }}
+            {{- if gt (int .Values.server.taskScheduling.inflightVisibilityTimeout) 0 }}
+            - name: PREFECT_TASK_SCHEDULING_INFLIGHT_VISIBILITY_TIMEOUT
+              value: {{ .Values.server.taskScheduling.inflightVisibilityTimeout | quote }}
+            {{- end }}
             {{- if .Values.backgroundServices.runAsSeparateDeployment }}
             {{- include "backgroundServices.envVars" . | nindent 12 }}
             {{- end }}

@@ -765,6 +765,40 @@
           "type": "array",
           "title": "Extra Container Args",
           "description": "array with extra args for the server container"
+        },
+        "taskScheduling": {
+          "type": "object",
+          "title": "Task Scheduling",
+          "description": "task queue backend configuration for the server",
+          "additionalProperties": false,
+          "properties": {
+            "backend": {
+              "type": "string",
+              "title": "Backend",
+              "description": "module path for the task queue backend. Set to 'prefect_redis.task_queue' for distributed queue across server replicas."
+            },
+            "maxScheduledQueueSize": {
+              "type": "integer",
+              "title": "Max Scheduled Queue Size",
+              "description": "maximum number of scheduled tasks to queue per task key. 0 uses the server default (1000).",
+              "minimum": 0,
+              "default": 0
+            },
+            "maxRetryQueueSize": {
+              "type": "integer",
+              "title": "Max Retry Queue Size",
+              "description": "maximum number of retries to queue per task key. 0 uses the server default (100).",
+              "minimum": 0,
+              "default": 0
+            },
+            "inflightVisibilityTimeout": {
+              "type": "integer",
+              "title": "Inflight Visibility Timeout",
+              "description": "seconds before an in-flight task run is considered stale and re-enqueued. 0 uses the server default (30).",
+              "minimum": 0,
+              "default": 0
+            }
+          }
         }
       }
     },
