@@ -790,6 +790,13 @@
               "description": "maximum number of retries to queue per task key. 0 uses the server default (100).",
               "minimum": 0,
               "default": 0
+            },
+            "inflightVisibilityTimeout": {
+              "type": "integer",
+              "title": "Inflight Visibility Timeout",
+              "description": "seconds before an in-flight task run is considered stale and re-enqueued. 0 uses the server default (30).",
+              "minimum": 0,
+              "default": 0
             }
           }
         }

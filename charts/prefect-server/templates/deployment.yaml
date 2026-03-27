@@ -143,6 +143,10 @@ spec:
             - name: PREFECT_SERVER_TASKS_SCHEDULING_MAX_RETRY_QUEUE_SIZE
               value: {{ .Values.server.taskScheduling.maxRetryQueueSize | quote }}
             {{- end }}
+            {{- if gt (int .Values.server.taskScheduling.inflightVisibilityTimeout) 0 }}
+            - name: PREFECT_TASK_SCHEDULING_INFLIGHT_VISIBILITY_TIMEOUT
+              value: {{ .Values.server.taskScheduling.inflightVisibilityTimeout | quote }}
+            {{- end }}
             {{- if .Values.backgroundServices.runAsSeparateDeployment }}
             {{- include "backgroundServices.envVars" . | nindent 12 }}
             {{- end }}

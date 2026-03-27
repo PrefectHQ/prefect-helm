@@ -87,6 +87,8 @@ server:
     maxScheduledQueueSize: 0
     # -- maximum number of retries to queue per task key (0 = use server default of 100)
     maxRetryQueueSize: 0
+    # -- seconds before an in-flight task run is considered stale and re-enqueued (0 = use server default of 30)
+    inflightVisibilityTimeout: 0
 
   # -- Custom container command arguments
   args: []
