@@ -89,6 +89,10 @@ server:
     maxRetryQueueSize: 0
     # -- seconds before an in-flight task run is considered stale and re-enqueued (0 = use server default of 30)
     inflightVisibilityTimeout: 0
+    # -- milliseconds to block on each XREADGROUP call per task key (0 = use server default of 1000)
+    dequeueBlockMs: 0
+    # -- maximum concurrent blocking dequeue calls to Redis; limits connections held by the task queue subsystem (null = uncapped)
+    dequeueMaxConcurrency: null
 
   # -- Custom container command arguments
   args: []

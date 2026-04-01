@@ -797,6 +797,20 @@
               "description": "seconds before an in-flight task run is considered stale and re-enqueued. 0 uses the server default (30).",
               "minimum": 0,
               "default": 0
+            },
+            "dequeueBlockMs": {
+              "type": "integer",
+              "title": "Dequeue Block Ms",
+              "description": "milliseconds to block on each XREADGROUP call per task key. 0 uses the server default (1000).",
+              "minimum": 0,
+              "default": 0
+            },
+            "dequeueMaxConcurrency": {
+              "type": ["integer", "null"],
+              "title": "Dequeue Max Concurrency",
+              "description": "maximum concurrent blocking dequeue calls to Redis. Limits connections held by the task queue subsystem. null means uncapped.",
+              "minimum": 1,
+              "default": null
             }
           }
         }
