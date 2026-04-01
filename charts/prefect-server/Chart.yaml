@@ -5,11 +5,11 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.37.0
+    version: 2.38.0
   - name: postgresql
     condition: postgresql.enabled
     repository: https://charts.bitnami.com/bitnami
-    version: 12.12.10
+    version: 18.5.14
   - name: redis
     condition: redis.enabled
     repository: https://charts.bitnami.com/bitnami
