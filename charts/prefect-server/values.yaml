@@ -443,7 +443,7 @@ backgroundServices:
       existingSecretPasswordKey: "redis-password"
 
     # Docket configuration for background service coordination
-    # ref: https://docs.prefect.io/v3/advanced/self-hosted#redis-setup
+    # ref: https://docs.prefect.io/v3/advanced/self-hosted#docket-url-for-background-services
     # Docket coordinates background services like the scheduler, late run detection,
     # and automation triggers. By default it uses in-memory storage (memory://),
     # which only works for single-server deployments.
