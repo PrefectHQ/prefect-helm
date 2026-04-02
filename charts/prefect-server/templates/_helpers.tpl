@@ -87,6 +87,23 @@ There are four scenarios for passwords:
   value: {{ .Values.backgroundServices.messaging.redis.password | quote }}
 {{- end }}
 {{- end }}
+{{- /*
+Docket URL for background service coordination (scheduler, late runs, automations).
+Priority:
+    1. existingSecret - reference a Kubernetes secret containing the full URL.
+    2. url - use the plain-text URL from values.
+    3. Not set - Docket defaults to memory:// (single-server only).
+*/ -}}
+{{- if not (.Values.backgroundServices.messaging.docket.existingSecret | empty) }}
+- name: PREFECT_SERVER_DOCKET_URL
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.backgroundServices.messaging.docket.existingSecret }}
+      key: {{ .Values.backgroundServices.messaging.docket.existingSecretKey | default "docket-url" }}
+{{- else if not (.Values.backgroundServices.messaging.docket.url | empty) }}
+- name: PREFECT_SERVER_DOCKET_URL
+  value: {{ .Values.backgroundServices.messaging.docket.url | quote }}
+{{- end }}
 {{- end -}}
 
 {{/* ----- Connection string templates ------ */}}

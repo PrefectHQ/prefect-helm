@@ -442,6 +442,26 @@ backgroundServices:
       # -- key within the existing secret that contains the redis password
       existingSecretPasswordKey: "redis-password"
 
+    # Docket configuration for background service coordination
+    # ref: https://docs.prefect.io/v3/advanced/self-hosted#redis-setup
+    # Docket coordinates background services like the scheduler, late run detection,
+    # and automation triggers. By default it uses in-memory storage (memory://),
+    # which only works for single-server deployments.
+    # For high-availability deployments, configure Docket to use Redis.
+    docket:
+      # -- URL for the Docket scheduler backend
+      # examples: redis://host:6379/0, rediss://host:6379/0 (TLS), redis://user:pass@host:6379/0
+      # leave empty to use the default in-memory backend (memory://)
+      url: ""
+
+      # -- name of an existing Kubernetes secret containing the Docket URL
+      # takes precedence over the url field above
+      # the secret should contain a key with the full Redis URL including any credentials
+      existingSecret: ""
+
+      # -- key within the existing secret that contains the Docket URL
+      existingSecretKey: "docket-url"
+
 ## Server Service Account configuration
 serviceAccount:
   # -- specifies whether a service account should be created

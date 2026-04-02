@@ -335,6 +335,9 @@ the HorizontalPodAutoscaler.
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
 | backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
+| backgroundServices.messaging.docket.existingSecret | string | `""` | name of an existing Kubernetes secret containing the Docket URL takes precedence over the url field above the secret should contain a key with the full Redis URL including any credentials |
+| backgroundServices.messaging.docket.existingSecretKey | string | `"docket-url"` | key within the existing secret that contains the Docket URL |
+| backgroundServices.messaging.docket.url | string | `""` | URL for the Docket scheduler backend examples: redis://host:6379/0, rediss://host:6379/0 (TLS), redis://user:pass@host:6379/0 leave empty to use the default in-memory backend (memory://) |
 | backgroundServices.messaging.redis | object | `{"db":0,"existingSecret":"","existingSecretPasswordKey":"redis-password","host":"","password":"","port":6379,"ssl":false,"username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
 | backgroundServices.messaging.redis.db | int | `0` | redis database number |
 | backgroundServices.messaging.redis.existingSecret | string | `""` | name of an existing Kubernetes secret containing the redis password takes precedence over the password field above |
