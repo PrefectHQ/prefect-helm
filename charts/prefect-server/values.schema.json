@@ -1012,6 +1012,31 @@
                   "optional": true
                 }
               }
+            },
+            "docket": {
+              "type": "object",
+              "title": "Docket settings",
+              "description": "Docket scheduler configuration for background service coordination",
+              "additionalProperties": false,
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "title": "Docket URL",
+                  "description": "URL for the Docket scheduler backend (e.g. redis://host:6379/0). Defaults to memory:// when empty."
+                },
+                "existingSecret": {
+                  "type": "string",
+                  "title": "Existing Secret",
+                  "description": "name of an existing secret containing the Docket URL. Takes precedence over url.",
+                  "optional": true
+                },
+                "existingSecretKey": {
+                  "type": "string",
+                  "title": "Existing Secret Key",
+                  "description": "key within the existing secret that contains the Docket URL",
+                  "optional": true
+                }
+              }
             }
           }
         }
