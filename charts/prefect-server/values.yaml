@@ -449,9 +449,9 @@ backgroundServices:
     # which only works for single-server deployments.
     # For high-availability deployments, configure Docket to use Redis.
     docket:
-      # -- URL for the Docket scheduler backend
-      # examples: redis://host:6379/0, redis://host:6379/0 (TLS), redis://user:pass@host:6379/0
-      # leave empty to use the default in-memory backend (memory://)
+      # -- URL for the Docket scheduler backend.
+      # Examples: redis://host:6379/0, redis://host:6379/0 (TLS), redis://user:pass@host:6379/0.
+      # Leave empty to use the default in-memory backend (memory://).
       url: ""
 
       # -- name of an existing Kubernetes secret containing the Docket URL.
