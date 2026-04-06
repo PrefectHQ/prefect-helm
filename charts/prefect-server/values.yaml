@@ -454,9 +454,9 @@ backgroundServices:
       # leave empty to use the default in-memory backend (memory://)
       url: ""
 
-      # -- name of an existing Kubernetes secret containing the Docket URL
-      # takes precedence over the url field above
-      # the secret should contain a key with the full Redis URL including any credentials
+      # -- name of an existing Kubernetes secret containing the Docket URL.
+      # Takes precedence over the url field above.
+      # The secret should contain a key with the full Redis URL including any credentials.
       existingSecret: ""
 
       # -- key within the existing secret that contains the Docket URL
