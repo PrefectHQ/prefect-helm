@@ -720,3 +720,94 @@ tests:
           content:
             name: PREFECT_REDIS_MESSAGING_PASSWORD
             value: plain-text-password
+
+  - it: Should not set PREFECT_SERVER_DOCKET_URL by default
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    asserts:
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DOCKET_URL
+          any: true
+
+  - it: Should set PREFECT_SERVER_DOCKET_URL when docket.url is provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          docket:
+            url: "redis://redis-host:6379/1"
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DOCKET_URL
+            value: "redis://redis-host:6379/1"
+
+  - it: Should set PREFECT_SERVER_DOCKET_URL from existingSecret
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          docket:
+            existingSecret: my-docket-secret
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DOCKET_URL
+            valueFrom:
+              secretKeyRef:
+                name: my-docket-secret
+                key: docket-url
+
+  - it: Should use custom existingSecretKey for docket URL
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          docket:
+            existingSecret: my-docket-secret
+            existingSecretKey: custom-docket-key
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DOCKET_URL
+            valueFrom:
+              secretKeyRef:
+                name: my-docket-secret
+                key: custom-docket-key
+
+  - it: Should prefer docket existingSecret over plain URL
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          docket:
+            url: "redis://redis-host:6379/1"
+            existingSecret: my-docket-secret
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DOCKET_URL
+            valueFrom:
+              secretKeyRef:
+                name: my-docket-secret
+                key: docket-url
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DOCKET_URL
+            value: "redis://redis-host:6379/1"
