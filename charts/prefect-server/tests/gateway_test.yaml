@@ -185,6 +185,28 @@ tests:
         isKind:
           of: HTTPRoute
 
+  - it: Should create only HTTPRoute when Gateway creation is disabled
+    set:
+      gateway:
+        enabled: true
+        create: false
+        name: "shared-gateway"
+        className: "istio"
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 0
+      - template: httproute.yaml
+        hasDocuments:
+          count: 1
+      - template: httproute.yaml
+        isKind:
+          of: HTTPRoute
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].name
+          value: "shared-gateway"
+
   - it: Should configure HTTPRoute parentRefs with default Gateway name
     set:
       gateway:
