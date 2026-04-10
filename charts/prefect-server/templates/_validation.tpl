@@ -43,8 +43,8 @@
 {{- if and .Values.gateway.enabled .Values.ingress.enabled -}}
   {{- fail "Gateway API and Ingress are mutually exclusive. Only one can be enabled at a time. Please set either gateway.enabled=false or ingress.enabled=false." -}}
 {{- end -}}
-{{- if and .Values.httproute.enabled .Values.ingress.enabled -}}
-  {{- fail "HTTPRoute and Ingress are mutually exclusive. Only one can be enabled at a time. Please set either httproute.enabled=false or ingress.enabled=false." -}}
+{{- if and .Values.httproute.enabled (not .Values.gateway.create) (eq (len .Values.httproute.parentRefs) 0) -}}
+  {{- fail "When httproute.enabled=true and gateway.create=false, at least one entry in httproute.parentRefs is required. Set one or more parentRefs[].name values to attach the HTTPRoute to an existing Gateway." -}}
 {{- end -}}
 {{- if and .Values.gateway.enabled (not .Values.gateway.className) -}}
   {{- fail "gateway.className is required when gateway.enabled=true. Please specify a GatewayClass that exists in your cluster." -}}
