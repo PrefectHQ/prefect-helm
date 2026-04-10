@@ -640,7 +640,7 @@ gateway:
 
 # HTTPRoute Configuration
 httproute:
-  # -- enable HTTPRoute resource (auto-enabled when gateway.enabled=true)
+  # -- enable HTTPRoute resource (mutually exclusive with ingress, auto-enabled when gateway.enabled=true)
   # Can be disabled if you want to create HTTPRoutes manually
   enabled: true
 
