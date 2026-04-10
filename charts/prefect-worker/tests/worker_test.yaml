@@ -1168,3 +1168,35 @@ tests:
         equal:
           path: .metadata.annotations.my-annotation
           value: my-value
+
+  - it: Should render work pool name in deployment --pool arg
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].args[6]
+          value: my-work-pool
+
+  - it: Should render work pool name in initContainer script
+    set:
+      worker:
+        config:
+          baseJobTemplate:
+            configuration: |
+              {}
+    asserts:
+      - template: deployment.yaml
+        matchRegex:
+          path: .spec.template.spec.initContainers[0].args[0]
+          pattern: 'work_pool_name="my-work-pool"'
+
+  - it: Should render baseJobTemplate configuration as JSON in configmap
+    set:
+      worker:
+        config:
+          baseJobTemplate:
+            configuration: |
+              {}
+    asserts:
+      - template: configmap.yaml
+        exists:
+          path: .data["baseJobTemplate.json"]
