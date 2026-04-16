@@ -192,6 +192,10 @@ tests:
         create: false
         name: "shared-gateway"
         className: "istio"
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+            sectionName: https
     asserts:
       - template: gateway.yaml
         hasDocuments:
@@ -440,3 +444,253 @@ tests:
         equal:
           path: metadata.annotations["custom-annotation"]
           value: "custom-value"
+
+  # ---- Gateway creation disabled (gateway.create=false) tests ----
+
+  - it: Should fail validation when gateway.create=false and no parentRefs name is provided
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: ""
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "When httproute.enabled=true and gateway.create=false, at least one entry in httproute.parentRefs is required. Set one or more parentRefs[].name values to attach the HTTPRoute to an existing Gateway."
+
+  - it: Should fail validation when gateway.create=false and parentRefs is empty list
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs: []
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "When httproute.enabled=true and gateway.create=false, at least one entry in httproute.parentRefs is required. Set one or more parentRefs[].name values to attach the HTTPRoute to an existing Gateway."
+
+  - it: Should fail validation when gateway.create=false with ingress also enabled
+    set:
+      gateway:
+        enabled: true
+        create: false
+      ingress:
+        enabled: true
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "Gateway API and Ingress are mutually exclusive. Only one can be enabled at a time. Please set either gateway.enabled=false or ingress.enabled=false."
+
+  - it: Should not require className when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+        className: ""
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 0
+      - template: httproute.yaml
+        hasDocuments:
+          count: 1
+
+  - it: Should not create any resources when gateway.create=false and httproute.enabled=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        enabled: false
+    asserts:
+      - template: gateway.yaml
+        hasDocuments:
+          count: 0
+      - template: httproute.yaml
+        hasDocuments:
+          count: 0
+      - template: httproute-tls-redirect.yaml
+        hasDocuments:
+          count: 0
+
+  - it: Should use explicit parentRefs name over gateway.name when create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+        name: "gateway-name-value"
+      httproute:
+        parentRefs:
+          - name: "explicit-gateway"
+            sectionName: https
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].name
+          value: "explicit-gateway"
+
+  - it: Should use parentRefs namespace for cross-namespace gateway reference
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+            namespace: "gateway-infra"
+            sectionName: https
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].name
+          value: "shared-gateway"
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].namespace
+          value: "gateway-infra"
+
+  - it: Should support multiple parentRefs when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: "gateway-a"
+            sectionName: https
+          - name: "gateway-b"
+            namespace: "other-ns"
+            sectionName: http
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].name
+          value: "gateway-a"
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[1].name
+          value: "gateway-b"
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[1].namespace
+          value: "other-ns"
+
+  - it: Should create TLS redirect HTTPRoute referencing shared gateway when create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+            sectionName: https
+        tls:
+          redirect: true
+    asserts:
+      - template: httproute-tls-redirect.yaml
+        hasDocuments:
+          count: 1
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.parentRefs[0].name
+          value: "shared-gateway"
+      - template: httproute-tls-redirect.yaml
+        equal:
+          path: spec.parentRefs[0].sectionName
+          value: "http"
+
+  - it: Should configure HTTPRoute hostnames when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+            sectionName: https
+        hostnames:
+          - "app.example.com"
+          - "api.example.com"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.hostnames[0]
+          value: "app.example.com"
+      - template: httproute.yaml
+        equal:
+          path: spec.hostnames[1]
+          value: "api.example.com"
+
+  - it: Should configure HTTPRoute backendRefs correctly when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      service:
+        port: 8080
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].backendRefs[0].name
+          value: "prefect-server"
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].backendRefs[0].port
+          value: 8080
+
+  - it: Should use custom path in HTTPRoute when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+        path: "/prefect"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.rules[0].matches[0].path.value
+          value: "/prefect"
+
+  - it: Should set custom HTTPRoute name when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        name: "my-custom-route"
+        parentRefs:
+          - name: "shared-gateway"
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: metadata.name
+          value: "my-custom-route"
+
+  - it: Should use parentRef port when gateway.create=false
+    set:
+      gateway:
+        enabled: true
+        create: false
+      httproute:
+        parentRefs:
+          - name: "shared-gateway"
+            port: 8443
+    asserts:
+      - template: httproute.yaml
+        equal:
+          path: spec.parentRefs[0].port
+          value: 8443
