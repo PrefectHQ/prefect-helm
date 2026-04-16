@@ -445,8 +445,6 @@ tests:
           path: metadata.annotations["custom-annotation"]
           value: "custom-value"
 
-  # ---- Gateway creation disabled (gateway.create=false) tests ----
-
   - it: Should fail validation when gateway.create=false and no parentRefs name is provided
     set:
       gateway:
