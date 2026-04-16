@@ -589,7 +589,9 @@ ingress:
 gateway:
   # -- enable Gateway API resources (mutually exclusive with ingress)
   enabled: false
-
+  # -- whether to create a Gateway resource or just the associated HTTPRoute (if enabled)
+  # Can be disabled if you want to create the Gateway manually (or is already present) and just have the chart create the HTTPRoute with the correct parentRefs
+  create: true
   # -- GatewayClass that will be used to implement the Gateway
   # This must match an existing GatewayClass in your cluster
   className: ""
@@ -640,7 +642,7 @@ gateway:
 
 # HTTPRoute Configuration
 httproute:
-  # -- enable HTTPRoute resource (auto-enabled when gateway.enabled=true)
+  # -- enable HTTPRoute resource (mutually exclusive with ingress, auto-enabled when gateway.enabled=true)
   # Can be disabled if you want to create HTTPRoutes manually
   enabled: true
 

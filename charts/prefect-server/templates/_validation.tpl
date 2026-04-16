@@ -43,10 +43,21 @@
 {{- if and .Values.gateway.enabled .Values.ingress.enabled -}}
   {{- fail "Gateway API and Ingress are mutually exclusive. Only one can be enabled at a time. Please set either gateway.enabled=false or ingress.enabled=false." -}}
 {{- end -}}
-{{- if and .Values.gateway.enabled (not .Values.gateway.className) -}}
-  {{- fail "gateway.className is required when gateway.enabled=true. Please specify a GatewayClass that exists in your cluster." -}}
+{{- if and .Values.httproute.enabled (not .Values.gateway.create) -}}
+  {{- $hasName := false -}}
+  {{- range .Values.httproute.parentRefs -}}
+    {{- if .name -}}
+      {{- $hasName = true -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $hasName -}}
+    {{- fail "When httproute.enabled=true and gateway.create=false, at least one entry in httproute.parentRefs is required. Set one or more parentRefs[].name values to attach the HTTPRoute to an existing Gateway." -}}
+  {{- end -}}
 {{- end -}}
-{{- if and .Values.gateway.enabled (not (include "gateway.apiAvailable" .)) -}}
+{{- if and .Values.gateway.enabled .Values.gateway.create (not .Values.gateway.className) -}}
+  {{- fail "gateway.className is required when gateway.enabled=true and gateway.create=true. Please specify a GatewayClass that exists in your cluster." -}}
+{{- end -}}
+{{- if and .Values.gateway.enabled .Values.gateway.create (not (include "gateway.apiAvailable" .)) -}}
   {{- fail "Gateway API (gateway.networking.k8s.io/v1) is not available in this cluster. Please install Gateway API CRDs or disable gateway.enabled." -}}
 {{- end -}}
 {{- end -}}

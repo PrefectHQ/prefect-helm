@@ -29,7 +29,7 @@ tests:
     asserts:
       - template: NOTES.txt
         failedTemplate:
-          errorMessage: "gateway.className is required when gateway.enabled=true. Please specify a GatewayClass that exists in your cluster."
+          errorMessage: "gateway.className is required when gateway.enabled=true and gateway.create=true. Please specify a GatewayClass that exists in your cluster."
 
   - it: Should succeed when only Gateway is enabled with className
     set:
