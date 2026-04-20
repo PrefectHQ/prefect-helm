@@ -34,8 +34,9 @@
 {{- end -}}
 
 {{- define "prefect-server.validateMessaging" -}}
-{{- if and (.Values.backgroundServices.runAsSeparateDeployment) (and (not .Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty)) -}}
-  {{- fail "You must set redis.enabled=true or provide a redis configuration when backgroundServices.runAsSeparateDeployment=true" -}}
+{{- $needsRedis := or .Values.backgroundServices.runAsSeparateDeployment (not (.Values.server.taskScheduling.backend | empty)) -}}
+{{- if and $needsRedis (and (not .Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty)) -}}
+  {{- fail "You must set redis.enabled=true or provide a redis configuration when backgroundServices.runAsSeparateDeployment=true or server.taskScheduling.backend is set" -}}
 {{- end -}}
 {{- end -}}
 
