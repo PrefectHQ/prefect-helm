@@ -587,7 +587,7 @@
           "type": "object",
           "title": "Pod Security Context",
           "description": "server pod security context",
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "runAsUser": {
               "type": ["integer", "null"],
@@ -652,7 +652,7 @@
           "type": "object",
           "title": "Container Security Context",
           "description": "server container security context",
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "runAsUser": {
               "type": ["integer", "null"],
