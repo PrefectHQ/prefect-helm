@@ -90,7 +90,7 @@ spec:
             - -c
           args:
             - |
-              work_pool_name={{ required "A Work Pool Name is required (worker.config.workPool)" .Values.worker.config.workPool | quote }}
+              work_pool_name={{ include "worker.workPoolName" . | quote }}
 
               # suppress work-pool inspect output, as we're just
               # calling it to check the existence of the work-pool.
@@ -190,7 +190,7 @@ spec:
             - --type
             - {{ .Values.worker.config.type | quote }}
             - --pool
-            - {{ required "A Work Pool Name is required (worker.config.workPool)" .Values.worker.config.workPool | quote }}
+            - {{ include "worker.workPoolName" . | quote }}
             {{- range .Values.worker.config.workQueues }}
             - --work-queue
             - {{ . }}

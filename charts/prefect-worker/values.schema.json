@@ -306,9 +306,9 @@
                   "description": "the name of an existing ConfigMap containing a base job template. NOTE - the key must be 'baseJobTemplate.json'"
                 },
                 "configuration": {
-                  "type": ["string", "null"],
+                  "type": ["string", "null", "object"],
                   "title": "Base Job Template Configuration",
-                  "description": "JSON formatted base job template. If data is provided here, the chart will generate a configmap and mount it to the worker pod"
+                  "description": "Base job template as a JSON string or a YAML dict. If data is provided here, the chart will generate a configmap and mount it to the worker pod"
                 },
                 "name": {
                   "type": ["string", "null"],

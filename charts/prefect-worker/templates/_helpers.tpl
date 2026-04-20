@@ -102,3 +102,19 @@ Determine the name of the ConfigMap for the baseJobTemplate
 {{- else -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+  worker.workPoolName
+    Define the workpool name
+*/}}
+{{- define "worker.workPoolName" -}}
+{{ required "A Work Pool Name is required (worker.config.workPool)" .Values.worker.config.workPool }}
+{{- end }}
+
+{{/*
+  worker.baseJobTemplate
+    Define the baseJobTemplate used by the worker
+*/}}
+{{- define "worker.baseJobTemplate" -}}
+{{ .Values.worker.config.baseJobTemplate.configuration | toJson }}
+{{- end }}
