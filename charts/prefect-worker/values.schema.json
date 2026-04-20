@@ -136,7 +136,7 @@
               "type": "object",
               "title": "Container Security Context",
               "description": "init container security context configuration",
-              "additionalProperties": false,
+              "additionalProperties": true,
               "properties": {
                 "allowPrivilegeEscalation": {
                   "type": "boolean",
@@ -571,7 +571,7 @@
           "type": "object",
           "title": "Pod Security Context",
           "description": "worker pod security context configuration",
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "fsGroup": {
               "type": ["integer", "null"],
@@ -657,7 +657,7 @@
           "type": "object",
           "title": "Container Security Context",
           "description": "worker container security context configuration",
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "allowPrivilegeEscalation": {
               "type": "boolean",

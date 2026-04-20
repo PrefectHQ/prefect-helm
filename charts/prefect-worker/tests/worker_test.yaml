@@ -384,6 +384,61 @@ tests:
         notExists:
           path: .spec.template.spec.containers[0].securityContext.runAsUser
 
+  - it: Should pass arbitrary containerSecurityContext fields through to the manifest
+    set:
+      worker:
+        containerSecurityContext:
+          runAsGroup: 2000
+          procMount: Default
+          seccompProfile:
+            type: RuntimeDefault
+          seLinuxOptions:
+            level: "s0:c123,c456"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.runAsGroup
+          value: 2000
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.procMount
+          value: Default
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.seccompProfile.type
+          value: RuntimeDefault
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.seLinuxOptions.level
+          value: "s0:c123,c456"
+
+  - it: Should pass arbitrary initContainer containerSecurityContext fields through to the manifest
+    set:
+      worker:
+        config:
+          baseJobTemplate:
+            configuration: |
+              {}
+        initContainer:
+          containerSecurityContext:
+            runAsGroup: 2000
+            seccompProfile:
+              type: Localhost
+              localhostProfile: /profiles/restricted.json
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].securityContext.runAsGroup
+          value: 2000
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].securityContext.seccompProfile.type
+          value: Localhost
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].securityContext.seccompProfile.localhostProfile
+          value: /profiles/restricted.json
+
   - it: Should set pod annotations
     set:
       worker:
