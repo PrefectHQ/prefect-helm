@@ -50,14 +50,8 @@ spec:
               key: connection-string
         - name: HOME
           value: /home/prefect
-        {{- if .Values.global.prefect.env }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.global.prefect.env "context" $) | nindent 8 }}
-        {{- end }}
-        {{- if .Values.server.env }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.server.env "context" $) | nindent 8 }}
-        {{- end }}
-        {{- if .Values.migrations.env }}
-        {{- include "common.tplvalues.render" (dict "value" .Values.migrations.env "context" $) | nindent 8 }}
+        {{- with (include "server.migrations.envVars" . | trim) }}
+        {{- . | nindent 8 }}
         {{- end }}
         resources: {{- toYaml .Values.migrations.resources | nindent 10 }}
         securityContext: {{- toYaml .Values.migrations.securityContext | nindent 10 }}

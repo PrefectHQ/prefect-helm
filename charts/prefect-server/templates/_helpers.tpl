@@ -106,6 +106,39 @@ Priority:
 {{- end }}
 {{- end -}}
 
+{{- /*
+    server.migrations.envVars:
+      Merged env vars for the migrations Job, deduplicated by name so the
+      same variable is never emitted twice in the Job spec.
+
+      Precedence (highest wins):
+        1. .Values.migrations.env
+        2. .Values.server.env
+        3. .Values.global.prefect.env
+
+      Iterates highest-precedence first and appends each entry only if its
+      name has not yet been seen, so the emitted list has unique names with
+      the highest-precedence value for each. Order within the output is
+      highest-precedence source first, which is semantically equivalent in
+      Kubernetes (env order does not affect resolution).
+*/ -}}
+{{- define "server.migrations.envVars" -}}
+{{- $sources := list .Values.migrations.env .Values.server.env .Values.global.prefect.env -}}
+{{- $seen := dict -}}
+{{- $merged := list -}}
+{{- range $source := $sources -}}
+  {{- range $entry := $source -}}
+    {{- if not (hasKey $seen $entry.name) -}}
+      {{- $_ := set $seen $entry.name true -}}
+      {{- $merged = append $merged $entry -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if $merged -}}
+{{- include "common.tplvalues.render" (dict "value" $merged "context" $) }}
+{{- end -}}
+{{- end -}}
+
 {{/* ----- Connection string templates ------ */}}
 
 {{/*
