@@ -245,7 +245,7 @@ Database migrations are handled differently depending on your deployment mode.
 
 **Single deployment (default):** Prefect automatically runs database migrations on server startup. No additional configuration is needed because there is only one server process managing the database.
 
-**Separate deployment mode (`backgroundServices.runAsSeparateDeployment: true`):** The chart creates a dedicated Kubernetes Job as a Helm pre-upgrade/post-install hook to run migrations before the deployments start. This prevents multiple server processes (API server and background services) from racing to migrate the database simultaneously. Both deployments set `PREFECT_API_DATABASE_MIGRATE_ON_START=false` so that only the Job handles migrations.
+**Separate deployment mode (`backgroundServices.runAsSeparateDeployment: true`):** The chart creates a dedicated Kubernetes Job as a Helm pre-upgrade/post-install hook to run migrations before the deployments start. This prevents multiple server processes (API server and background services) from racing to migrate the database simultaneously. Both deployments set `PREFECT_SERVER_DATABASE_MIGRATE_ON_START=false` so that only the Job handles migrations.
 
 The migration Job will:
 
@@ -335,9 +335,9 @@ the HorizontalPodAutoscaler.
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
 | backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
-| backgroundServices.messaging.docket.existingSecret | string | `""` | name of an existing Kubernetes secret containing the Docket URL takes precedence over the url field above the secret should contain a key with the full Redis URL including any credentials |
+| backgroundServices.messaging.docket.existingSecret | string | `""` | name of an existing Kubernetes secret containing the Docket URL. Takes precedence over the url field above. The secret should contain a key with the full Redis URL including any credentials. |
 | backgroundServices.messaging.docket.existingSecretKey | string | `"docket-url"` | key within the existing secret that contains the Docket URL |
-| backgroundServices.messaging.docket.url | string | `""` | URL for the Docket scheduler backend examples: redis://host:6379/0, rediss://host:6379/0 (TLS), redis://user:pass@host:6379/0 leave empty to use the default in-memory backend (memory://) |
+| backgroundServices.messaging.docket.url | string | `""` | URL for the Docket scheduler backend. Examples: redis://host:6379/0, redis://host:6379/0 (TLS), redis://user:pass@host:6379/0. Leave empty to use the default in-memory backend (memory://). |
 | backgroundServices.messaging.redis | object | `{"db":0,"existingSecret":"","existingSecretPasswordKey":"redis-password","host":"","password":"","port":6379,"ssl":false,"username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
 | backgroundServices.messaging.redis.db | int | `0` | redis database number |
 | backgroundServices.messaging.redis.existingSecret | string | `""` | name of an existing Kubernetes secret containing the redis password takes precedence over the password field above |
@@ -368,6 +368,7 @@ the HorizontalPodAutoscaler.
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
 | gateway.annotations | object | `{}` | additional annotations for the Gateway resource |
 | gateway.className | string | `""` | GatewayClass that will be used to implement the Gateway This must match an existing GatewayClass in your cluster |
+| gateway.create | bool | `true` | whether to create a Gateway resource or just the associated HTTPRoute (if enabled) Can be disabled if you want to create the Gateway manually (or is already present) and just have the chart create the HTTPRoute with the correct parentRefs |
 | gateway.enabled | bool | `false` | enable Gateway API resources (mutually exclusive with ingress) |
 | gateway.infrastructure | object | `{}` | infrastructure configuration for Gateway ref: https://gateway-api.sigs.k8s.io/guides/infrastructure/ |
 | gateway.labels | object | `{}` | additional labels for the Gateway resource |
@@ -392,7 +393,7 @@ the HorizontalPodAutoscaler.
 | global.prefect.image.pullSecrets | list | `[]` | prefect image pull secrets |
 | global.prefect.image.repository | string | `"prefecthq/prefect"` | prefect image repository |
 | httproute.annotations | object | `{}` | additional annotations for the HTTPRoute resource |
-| httproute.enabled | bool | `true` | enable HTTPRoute resource (auto-enabled when gateway.enabled=true) Can be disabled if you want to create HTTPRoutes manually |
+| httproute.enabled | bool | `true` | enable HTTPRoute resource (mutually exclusive with ingress, auto-enabled when gateway.enabled=true) Can be disabled if you want to create HTTPRoutes manually |
 | httproute.extraRules | list | `[]` | additional HTTPRoute rules (advanced usage) Will be merged with auto-generated rules |
 | httproute.hostnames | list | `[]` | hostnames that this HTTPRoute should match |
 | httproute.labels | object | `{}` | additional labels for the HTTPRoute resource |

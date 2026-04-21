@@ -85,7 +85,7 @@ spec:
               value: {{ .Values.backgroundServices.loggingLevel | quote }}
             - name: PREFECT_UI_ENABLED
               value: 'false'
-            - name: PREFECT_API_DATABASE_CONNECTION_URL
+            - name: PREFECT_SERVER_DATABASE_CONNECTION_URL
               {{- if .Values.sqlite.enabled }}
               value: "sqlite+aiosqlite:////data/prefect.db"
               {{- else }}

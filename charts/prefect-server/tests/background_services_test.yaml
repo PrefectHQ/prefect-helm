@@ -521,7 +521,7 @@ tests:
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
-            name: PREFECT_API_DATABASE_MIGRATE_ON_START
+            name: PREFECT_SERVER_DATABASE_MIGRATE_ON_START
             value: "false"
       - contains:
           path: .spec.template.spec.containers[0].env
@@ -595,7 +595,7 @@ tests:
       - contains:
           path: .spec.template.spec.containers[0].env
           content:
-            name: PREFECT_API_DATABASE_MIGRATE_ON_START
+            name: PREFECT_SERVER_DATABASE_MIGRATE_ON_START
             value: "false"
       - contains:
           path: .spec.template.spec.containers[0].env

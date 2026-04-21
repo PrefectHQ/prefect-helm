@@ -244,7 +244,7 @@ Database migrations are handled differently depending on your deployment mode.
 
 **Single deployment (default):** Prefect automatically runs database migrations on server startup. No additional configuration is needed because there is only one server process managing the database.
 
-**Separate deployment mode (`backgroundServices.runAsSeparateDeployment: true`):** The chart creates a dedicated Kubernetes Job as a Helm pre-upgrade/post-install hook to run migrations before the deployments start. This prevents multiple server processes (API server and background services) from racing to migrate the database simultaneously. Both deployments set `PREFECT_API_DATABASE_MIGRATE_ON_START=false` so that only the Job handles migrations.
+**Separate deployment mode (`backgroundServices.runAsSeparateDeployment: true`):** The chart creates a dedicated Kubernetes Job as a Helm pre-upgrade/post-install hook to run migrations before the deployments start. This prevents multiple server processes (API server and background services) from racing to migrate the database simultaneously. Both deployments set `PREFECT_SERVER_DATABASE_MIGRATE_ON_START=false` so that only the Job handles migrations.
 
 The migration Job will:
 

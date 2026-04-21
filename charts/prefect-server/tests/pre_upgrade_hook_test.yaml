@@ -48,7 +48,7 @@ tests:
                   echo "Starting database migration..."
                   prefect server database upgrade -y
                 env:
-                - name: PREFECT_API_DATABASE_CONNECTION_URL
+                - name: PREFECT_SERVER_DATABASE_CONNECTION_URL
                   valueFrom:
                     secretKeyRef:
                       name: pre-upgrade-hook-test-postgresql-connection
