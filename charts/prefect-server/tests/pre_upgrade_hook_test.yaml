@@ -325,3 +325,139 @@ tests:
             fsGroup: 1001
             runAsNonRoot: true
 
+  - it: migrations.env should override server.env for the same name without producing duplicates
+    set:
+      server:
+        env:
+          - name: PREFECT_API_DATABASE_TIMEOUT
+            value: "30"
+      migrations:
+        env:
+          - name: PREFECT_API_DATABASE_TIMEOUT
+            value: "120"
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_API_DATABASE_TIMEOUT
+            value: "120"
+          count: 1
+      - template: pre-upgrade-hook.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_API_DATABASE_TIMEOUT
+            value: "30"
+
+  - it: migrations.env should override global.prefect.env for the same name without producing duplicates
+    set:
+      global:
+        prefect:
+          env:
+            - name: SHARED_VAR
+              value: from_global
+      migrations:
+        env:
+          - name: SHARED_VAR
+            value: from_migrations
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SHARED_VAR
+            value: from_migrations
+          count: 1
+      - template: pre-upgrade-hook.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SHARED_VAR
+            value: from_global
+
+  - it: migrations.env should win when the same name is set in all three sources
+    set:
+      global:
+        prefect:
+          env:
+            - name: SHARED_VAR
+              value: from_global
+      server:
+        env:
+          - name: SHARED_VAR
+            value: from_server
+      migrations:
+        env:
+          - name: SHARED_VAR
+            value: from_migrations
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SHARED_VAR
+            value: from_migrations
+          count: 1
+
+  - it: server.env should override global.prefect.env for the same name when migrations.env does not define it
+    set:
+      global:
+        prefect:
+          env:
+            - name: SHARED_VAR
+              value: from_global
+      server:
+        env:
+          - name: SHARED_VAR
+            value: from_server
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SHARED_VAR
+            value: from_server
+          count: 1
+      - template: pre-upgrade-hook.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SHARED_VAR
+            value: from_global
+
+  - it: should preserve distinct env vars from all three sources when names do not collide
+    set:
+      global:
+        prefect:
+          env:
+            - name: GLOBAL_ONLY
+              value: g
+      server:
+        env:
+          - name: SERVER_ONLY
+            value: s
+      migrations:
+        env:
+          - name: MIGRATIONS_ONLY
+            value: m
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: GLOBAL_ONLY
+            value: g
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: SERVER_ONLY
+            value: s
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: MIGRATIONS_ONLY
+            value: m
+

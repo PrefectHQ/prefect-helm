@@ -425,7 +425,7 @@ the HorizontalPodAutoscaler.
 | migrations.command | string | `"prefect server database upgrade -y\n"` | commands to run for database migrations (default: prefect server database upgrade -y) |
 | migrations.enabled | bool | `true` | enable the migration Job during chart upgrades (only applies when backgroundServices.runAsSeparateDeployment is true) |
 | migrations.entrypoint | list | `["/bin/sh","-c"]` | custom container entrypoint for the migration job |
-| migrations.env | list | `[]` | additional environment variables for the migration job |
+| migrations.env | list | `[]` | additional environment variables for the migration job; takes precedence over entries of the same name in `global.prefect.env` and `server.env` |
 | migrations.extraVolumeMounts | list | `[]` | additional volume mounts for the migration job |
 | migrations.extraVolumes | list | `[]` | additional volumes for the migration job |
 | migrations.nodeSelector | object | `{}` | node labels for migration job pods assignment |

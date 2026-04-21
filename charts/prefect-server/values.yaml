@@ -263,7 +263,7 @@ migrations:
   backoffLimit: 5
   # -- job restart policy
   restartPolicy: Never
-  # -- additional environment variables for the migration job
+  # -- additional environment variables for the migration job; takes precedence over entries of the same name in `global.prefect.env` and `server.env`
   env: []
   # -- additional volume mounts for the migration job
   extraVolumeMounts: []
