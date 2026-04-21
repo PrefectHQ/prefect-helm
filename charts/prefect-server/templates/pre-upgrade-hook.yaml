@@ -43,7 +43,7 @@ spec:
           echo "Starting database migration..."
           {{- tpl .Values.migrations.command . | nindent 10 }}
         env:
-        - name: PREFECT_API_DATABASE_CONNECTION_URL
+        - name: PREFECT_SERVER_DATABASE_CONNECTION_URL
           valueFrom:
             secretKeyRef:
               name: {{ include "server.postgres-string-secret-name" . }}
