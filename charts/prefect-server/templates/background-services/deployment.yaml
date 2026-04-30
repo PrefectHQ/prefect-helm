@@ -53,6 +53,13 @@ spec:
       {{- if .Values.backgroundServices.priorityClassName }}
       priorityClassName: {{ .Values.backgroundServices.priorityClassName }}
       {{- end }}
+      {{- with .Values.backgroundServices.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ . }}
+      {{- end }}
+      {{- if .Values.backgroundServices.extraInitContainers }}
+      initContainers:
+      {{- include "common.tplvalues.render" (dict "value" .Values.backgroundServices.extraInitContainers "context" $) | nindent 8 }}
+      {{- end }}
       containers:
         - name: prefect-background-services
           image: "{{ .Values.global.prefect.image.repository }}:{{ .Values.global.prefect.image.prefectTag }}"
@@ -119,6 +126,9 @@ spec:
           {{- end }}
           {{- with .Values.backgroundServices.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.backgroundServices.lifecycle }}
+          lifecycle: {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect

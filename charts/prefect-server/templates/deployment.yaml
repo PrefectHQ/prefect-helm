@@ -55,6 +55,13 @@ spec:
       {{- if .Values.server.priorityClassName }}
       priorityClassName: {{ .Values.server.priorityClassName }}
       {{- end }}
+      {{- with .Values.server.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ . }}
+      {{- end }}
+      {{- if .Values.server.extraInitContainers }}
+      initContainers:
+      {{- include "common.tplvalues.render" (dict "value" .Values.server.extraInitContainers "context" $) | nindent 8 }}
+      {{- end }}
       containers:
         - name: prefect-server
           image: "{{ .Values.global.prefect.image.repository }}:{{ .Values.global.prefect.image.prefectTag }}"
@@ -163,6 +170,9 @@ spec:
               path: {{ .Values.server.apiBasePath }}/ready
               port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.readinessProbe.config | nindent 12 }}
+          {{- end }}
+          {{- with .Values.server.lifecycle }}
+          lifecycle: {{- toYaml . | nindent 12 }}
           {{- end }}
           volumeMounts:
             - mountPath: /home/prefect

@@ -330,8 +330,10 @@ the HorizontalPodAutoscaler.
 | backgroundServices.extraContainers | list | `[]` | additional sidecar containers |
 | backgroundServices.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to background-services pod |
 | backgroundServices.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to background-services pod |
+| backgroundServices.extraInitContainers | list | `[]` | additional init containers for the background-services pod |
 | backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
 | backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
+| backgroundServices.lifecycle | object | `{}` | lifecycle hooks for the background-services container |
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
 | backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
@@ -362,6 +364,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended |
+| backgroundServices.terminationGracePeriodSeconds | string | `nil` | duration in seconds the background-services pod needs to terminate gracefully |
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
@@ -482,8 +485,10 @@ the HorizontalPodAutoscaler.
 | server.extraContainers | list | `[]` | additional sidecar containers |
 | server.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to server nodes |
 | server.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to server nodes |
+| server.extraInitContainers | list | `[]` | additional init containers for the server pod |
 | server.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the server pod |
 | server.extraVolumes | list | `[]` | array with extra volumes for the server pod |
+| server.lifecycle | object | `{}` | lifecycle hooks for the server container |
 | server.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | server.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
@@ -509,6 +514,7 @@ the HorizontalPodAutoscaler.
 | server.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the server container |
 | server.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the server container |
 | server.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
+| server.terminationGracePeriodSeconds | string | `nil` | duration in seconds the server pod needs to terminate gracefully |
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
 | server.uiConfig.prefectUiApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; If you want to connect to the UI from somewhere external to the cluster (i.e. via an ingress), you need to set this value to the ingress URL (e.g. http://app.internal.prefect.com/api). You can find additional documentation on this here - https://docs.prefect.io/v3/manage/self-host#ui |
 | server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |

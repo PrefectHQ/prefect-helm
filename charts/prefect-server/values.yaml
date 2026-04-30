@@ -53,6 +53,14 @@ server:
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
 
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+  # -- duration in seconds the server pod needs to terminate gracefully. Increase if Prefect needs more time to drain in-flight requests or close connections to backing services (e.g. Redis, Postgres) before SIGKILL. Leave null to use Kubernetes' default (30s).
+  terminationGracePeriodSeconds: null
+
+  # ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
+  # -- lifecycle hooks for the server container. A common use case is a `preStop` sleep so the kube-proxy/load-balancer endpoints deregister before the server starts shutting down.
+  lifecycle: {}
+
   # ref: https://docs.prefect.io/v3/develop/settings-ref#base-path
   # -- sets PREFECT_SERVER_API_BASE_PATH
   apiBasePath: "/api"
@@ -211,6 +219,10 @@ server:
   # -- additional sidecar containers
   extraContainers: []
 
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
+  # -- additional init containers for the server pod. Set `restartPolicy: Always` on an entry to use the native sidecar pattern (Kubernetes 1.29+), which guarantees the sidecar starts before, and is terminated after, the main container — useful for connection proxies (e.g. redis-iam-proxy, cloud-sql-proxy) so the main container can drain its connections cleanly during shutdown.
+  extraInitContainers: []
+
   # -- array with extra volumes for the server pod
   extraVolumes: []
 
@@ -299,6 +311,14 @@ backgroundServices:
   # -- priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class
   priorityClassName: ""
 
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-termination
+  # -- duration in seconds the background-services pod needs to terminate gracefully. Increase if background services need more time to finish in-flight work or close connections to backing services (e.g. Redis, Postgres) before SIGKILL. Leave null to use Kubernetes' default (30s).
+  terminationGracePeriodSeconds: null
+
+  # ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
+  # -- lifecycle hooks for the background-services container. Useful for adding a `preStop` hook that gives the worker time to wind down before SIGTERM.
+  lifecycle: {}
+
   # ref: https://docs.prefect.io/v3/develop/settings-ref#debug-mode
   # -- sets PREFECT_DEBUG_MODE
   debug: false
@@ -385,6 +405,10 @@ backgroundServices:
 
   # -- additional sidecar containers
   extraContainers: []
+
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/sidecar-containers/
+  # -- additional init containers for the background-services pod. Set `restartPolicy: Always` on an entry to use the native sidecar pattern (Kubernetes 1.29+), which guarantees the sidecar starts before, and is terminated after, the main container — useful for connection proxies (e.g. redis-iam-proxy, cloud-sql-proxy) so background services can drain their connections cleanly during shutdown.
+  extraInitContainers: []
 
   # -- array with extra volumes for the background-services pod
   extraVolumes: []
