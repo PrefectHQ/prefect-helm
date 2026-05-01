@@ -759,7 +759,7 @@
         "extraInitContainers": {
           "type": "array",
           "title": "Extra Init Containers",
-          "description": "additional init containers for the server pod",
+          "description": "additional init containers for the server pod (use `restartPolicy: Always` for native sidecars)",
           "items": {
             "type": "object"
           }
