@@ -808,11 +808,13 @@
         },
         "terminationGracePeriodSeconds": {
           "type": ["integer", "null"],
+          "title": "Termination Grace Period Seconds",
           "description": "duration in seconds the background-services pod needs to terminate gracefully",
           "minimum": 0
         },
         "lifecycle": {
           "type": "object",
+          "title": "Lifecycle",
           "description": "lifecycle hooks for the background-services container"
         },
         "debug": {
