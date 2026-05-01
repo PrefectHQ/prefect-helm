@@ -55,8 +55,8 @@ spec:
       {{- if .Values.server.priorityClassName }}
       priorityClassName: {{ .Values.server.priorityClassName }}
       {{- end }}
-      {{- with .Values.server.terminationGracePeriodSeconds }}
-      terminationGracePeriodSeconds: {{ . }}
+      {{- if not (kindIs "invalid" .Values.server.terminationGracePeriodSeconds) }}
+      terminationGracePeriodSeconds: {{ .Values.server.terminationGracePeriodSeconds }}
       {{- end }}
       {{- if .Values.server.extraInitContainers }}
       initContainers:

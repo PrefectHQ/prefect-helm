@@ -109,6 +109,16 @@ tests:
           path: .spec.template.spec.terminationGracePeriodSeconds
           value: 180
 
+  - it: Should render terminationGracePeriodSeconds when explicitly set to 0
+    set:
+      backgroundServices:
+        terminationGracePeriodSeconds: 0
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.terminationGracePeriodSeconds
+          value: 0
+
   - it: Should not set lifecycle by default
     asserts:
       - template: background-services/deployment.yaml

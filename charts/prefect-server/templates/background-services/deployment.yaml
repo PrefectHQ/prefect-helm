@@ -53,8 +53,8 @@ spec:
       {{- if .Values.backgroundServices.priorityClassName }}
       priorityClassName: {{ .Values.backgroundServices.priorityClassName }}
       {{- end }}
-      {{- with .Values.backgroundServices.terminationGracePeriodSeconds }}
-      terminationGracePeriodSeconds: {{ . }}
+      {{- if not (kindIs "invalid" .Values.backgroundServices.terminationGracePeriodSeconds) }}
+      terminationGracePeriodSeconds: {{ .Values.backgroundServices.terminationGracePeriodSeconds }}
       {{- end }}
       {{- if .Values.backgroundServices.extraInitContainers }}
       initContainers:
