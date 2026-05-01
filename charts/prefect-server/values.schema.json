@@ -307,6 +307,17 @@
           "title": "Priority Class Name",
           "description": "priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class"
         },
+        "terminationGracePeriodSeconds": {
+          "type": ["integer", "null"],
+          "title": "Termination Grace Period Seconds",
+          "description": "duration in seconds the server pod needs to terminate gracefully",
+          "minimum": 0
+        },
+        "lifecycle": {
+          "type": "object",
+          "title": "Lifecycle",
+          "description": "lifecycle hooks for the server container"
+        },
         "apiBasePath": {
           "type": "string",
           "title": "API Base Path",
@@ -745,6 +756,14 @@
             "type": "object"
           }
         },
+        "extraInitContainers": {
+          "type": "array",
+          "title": "Extra Init Containers",
+          "description": "additional init containers for the server pod (use `restartPolicy: Always` for native sidecars)",
+          "items": {
+            "type": "object"
+          }
+        },
         "extraVolumes": {
           "type": "array",
           "title": "Extra Volumes",
@@ -786,6 +805,17 @@
         "priorityClassName": {
           "type": "string",
           "description": "priority class name to use for the background-services pods"
+        },
+        "terminationGracePeriodSeconds": {
+          "type": ["integer", "null"],
+          "title": "Termination Grace Period Seconds",
+          "description": "duration in seconds the background-services pod needs to terminate gracefully",
+          "minimum": 0
+        },
+        "lifecycle": {
+          "type": "object",
+          "title": "Lifecycle",
+          "description": "lifecycle hooks for the background-services container"
         },
         "debug": {
           "type": "boolean",
@@ -920,6 +950,11 @@
         "extraEnvVarsCM": { "type": "string" },
         "extraEnvVarsSecret": { "type": "string" },
         "extraContainers": { "type": "array" },
+        "extraInitContainers": {
+          "type": "array",
+          "description": "additional init containers for the background-services pod (use `restartPolicy: Always` for native sidecars)",
+          "items": { "type": "object" }
+        },
         "extraVolumes": { "type": "array" },
         "extraVolumeMounts": { "type": "array" },
         "serviceAccount": {

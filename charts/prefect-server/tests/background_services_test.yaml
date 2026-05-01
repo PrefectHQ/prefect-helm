@@ -93,6 +93,51 @@ tests:
           path: .spec.template.spec.priorityClassName
           value: high-priority
 
+  - it: Should not set terminationGracePeriodSeconds by default
+    asserts:
+      - template: background-services/deployment.yaml
+        notExists:
+          path: .spec.template.spec.terminationGracePeriodSeconds
+
+  - it: Should set a custom terminationGracePeriodSeconds
+    set:
+      backgroundServices:
+        terminationGracePeriodSeconds: 180
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.terminationGracePeriodSeconds
+          value: 180
+
+  - it: Should render terminationGracePeriodSeconds when explicitly set to 0
+    set:
+      backgroundServices:
+        terminationGracePeriodSeconds: 0
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.terminationGracePeriodSeconds
+          value: 0
+
+  - it: Should not set lifecycle by default
+    asserts:
+      - template: background-services/deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].lifecycle
+
+  - it: Should set a custom lifecycle preStop hook
+    set:
+      backgroundServices:
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh", "-c", "sleep 30"]
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].lifecycle.preStop.exec.command
+          value: ["/bin/sh", "-c", "sleep 30"]
+
   - it: Should set the correct debug mode
     asserts:
       - template: background-services/deployment.yaml
@@ -391,6 +436,29 @@ tests:
         equal:
           path: .spec.template.spec.containers[1].name
           value: sidecar
+
+  - it: Should not set initContainers by default
+    asserts:
+      - template: background-services/deployment.yaml
+        notExists:
+          path: .spec.template.spec.initContainers
+
+  - it: Should set extra init containers as native sidecars
+    set:
+      backgroundServices:
+        extraInitContainers:
+          - name: redis-proxy
+            image: my-redis-proxy:latest
+            restartPolicy: Always
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].name
+          value: redis-proxy
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.initContainers[0].restartPolicy
+          value: Always
 
   - it: Should set extra volumes
     set:
