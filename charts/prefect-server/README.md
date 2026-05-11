@@ -309,7 +309,7 @@ the HorizontalPodAutoscaler.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | common | 2.38.0 |
+| https://charts.bitnami.com/bitnami | common | 2.39.0 |
 | https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.4 |
 
@@ -330,10 +330,10 @@ the HorizontalPodAutoscaler.
 | backgroundServices.extraContainers | list | `[]` | additional sidecar containers |
 | backgroundServices.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to background-services pod |
 | backgroundServices.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to background-services pod |
-| backgroundServices.extraInitContainers | list | `[]` | additional init containers for the background-services pod |
+| backgroundServices.extraInitContainers | list | `[]` | additional init containers for the background-services pod. Set `restartPolicy: Always` on an entry to use the native sidecar pattern (Kubernetes 1.29+), which guarantees the sidecar starts before, and is terminated after, the main container — useful for connection proxies (e.g. redis-iam-proxy, cloud-sql-proxy) so background services can drain their connections cleanly during shutdown. |
 | backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
 | backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
-| backgroundServices.lifecycle | object | `{}` | lifecycle hooks for the background-services container |
+| backgroundServices.lifecycle | object | `{}` | lifecycle hooks for the background-services container. Useful for adding a `preStop` hook that gives the worker time to wind down before SIGTERM. |
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
 | backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
@@ -364,7 +364,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended |
-| backgroundServices.terminationGracePeriodSeconds | string | `nil` | duration in seconds the background-services pod needs to terminate gracefully |
+| backgroundServices.terminationGracePeriodSeconds | string | `nil` | duration in seconds the background-services pod needs to terminate gracefully. Increase if background services need more time to finish in-flight work or close connections to backing services (e.g. Redis, Postgres) before SIGKILL. Leave null to use Kubernetes' default (30s). |
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
@@ -485,10 +485,10 @@ the HorizontalPodAutoscaler.
 | server.extraContainers | list | `[]` | additional sidecar containers |
 | server.extraEnvVarsCM | string | `""` | name of existing ConfigMap containing extra env vars to add to server nodes |
 | server.extraEnvVarsSecret | string | `""` | name of existing Secret containing extra env vars to add to server nodes |
-| server.extraInitContainers | list | `[]` | additional init containers for the server pod |
+| server.extraInitContainers | list | `[]` | additional init containers for the server pod. Set `restartPolicy: Always` on an entry to use the native sidecar pattern (Kubernetes 1.29+), which guarantees the sidecar starts before, and is terminated after, the main container — useful for connection proxies (e.g. redis-iam-proxy, cloud-sql-proxy) so the main container can drain its connections cleanly during shutdown. |
 | server.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the server pod |
 | server.extraVolumes | list | `[]` | array with extra volumes for the server pod |
-| server.lifecycle | object | `{}` | lifecycle hooks for the server container |
+| server.lifecycle | object | `{}` | lifecycle hooks for the server container. A common use case is a `preStop` sleep so the kube-proxy/load-balancer endpoints deregister before the server starts shutting down. |
 | server.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | server.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |
 | server.livenessProbe.config.periodSeconds | int | `10` | The number of seconds to wait between consecutive probes. |
@@ -514,7 +514,7 @@ the HorizontalPodAutoscaler.
 | server.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the server container |
 | server.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the server container |
 | server.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
-| server.terminationGracePeriodSeconds | string | `nil` | duration in seconds the server pod needs to terminate gracefully |
+| server.terminationGracePeriodSeconds | string | `nil` | duration in seconds the server pod needs to terminate gracefully. Increase if Prefect needs more time to drain in-flight requests or close connections to backing services (e.g. Redis, Postgres) before SIGKILL. Leave null to use Kubernetes' default (30s). |
 | server.tolerations | list | `[]` | tolerations for server pods assignment |
 | server.uiConfig.prefectUiApiUrl | string | `"http://localhost:4200/api"` | sets PREFECT_UI_API_URL; If you want to connect to the UI from somewhere external to the cluster (i.e. via an ingress), you need to set this value to the ingress URL (e.g. http://app.internal.prefect.com/api). You can find additional documentation on this here - https://docs.prefect.io/v3/manage/self-host#ui |
 | server.uiConfig.prefectUiStaticDirectory | string | `"/ui_build"` | sets PREFECT_UI_STATIC_DIRECTORY |
