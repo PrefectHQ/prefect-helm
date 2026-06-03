@@ -1,0 +1,51 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+apiVersion: v2
+appVersion: 3.6.0
+dependencies:
+- - name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 2.40.0
+description: A Helm chart to deploy Prometheus Prefect Exporter
+home: https://github.com/PrefectHQ
+keywords:
+- - prometheus-prefect-exporter
+maintainers:
+- - email: jamie@prefect.io
+  name: jamiezieziula
+- - email: jimi@prefect.io
+  name: jimid27
+- - email: edward@prefect.io
+  name: parkedwards
+- - email: mitchell@prefect.io
+  name: mitchnielsen
+name: prometheus-prefect-exporter
+sources:
+- - https://github.com/PrefectHQ/prefect-helm
+type: application
+version: 2026.6.3201638
+
+...
+files:
+  prometheus-prefect-exporter-2026.6.3201638.tgz: sha256:6b4b698688078f854118cf73d512414a585007cded5889c9da68fb18c1d230b9
+
+-----BEGIN PGP SIGNATURE-----
+
+wsG5BAEBCgBtBYJqIIuxCRCNvdpwdMQMakUUAAAAAAAcACBzYWx0QG5vdGF0aW9u
+cy5vcGVucGdwanMub3JnkXi17m3JDoqalM0WmNimdElqn22uC5e7LoXZ9vLAn0AW
+IQQGKqLP77KgLVSXW1KNvdpwdMQMagAAXt0P/jOlozt2ekVBweE4io5hBpPxNKvR
+r76d23ibjxP899xcl/e+j3q4w7+i7HSUGdSxynKq0PeatosS165WEPVJg8+t2lHP
+rM5CnA789Ue2jj/4rlKcx3GmUVhqUC/D0HZY/HME4FjBPU7tsGdApC47m4BAm+m8
+W+DZJqa4OgTFxvNIACTF5X1d1DwlI87KCG6mguLjJQqvC+93su79GJm9c5WUhWCM
+jf+sBgTyk3Om8WjHs2qTlMt+EZcLrPUS4ILzMtnr16DV0S23oOwpceL73gIpNoTd
+psJLjH76xHfL/8GSXry6CS5yLVKZjSprdx6bwgXP/djW6+sE7UTYIc7pboIjlejM
+EV4S0w15gjnvuh9yiHQvnUsphhekYuXyhijhKFqBfG0mlUd0pAE4ZJb2uF2ZG2x9
+yNUyxVYgIMfcvtrpUxJwvuPKKfd+ggWauKvHuFpWaz9Hw1c/1GlKSxNHxZi0qL9L
+90fwVmYstMYCQv0TWDVKfaBh+mdYnHFzdLbilJUADyTxFcHeoIccnlSBlQ/uBQ1m
+NSH6bBsCbpcafMPYfLWXGE+K9ci7SZrY+uE1gVGwWYc+X33SfVw9wItk22MTu4Er
+AHoA3BSeetLS+DbYfta9nR8JG7Sxnf8g5xwya/x1Q0dOaq9wMvCrLj/7sGfKl+ab
+sMiMkFNtUti0OexL
+-----END PGP SIGNATURE-----
