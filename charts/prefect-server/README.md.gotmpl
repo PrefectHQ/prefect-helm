@@ -202,6 +202,24 @@ secret:
   database: mydb
 ```
 
+If your external database credentials are split across Secret keys and values, use the `database` block instead. This is useful for operators that create immutable credential Secrets, such as the Zalando Postgres Operator.
+
+```yaml
+postgresql:
+  enabled: false
+
+database:
+  existingSecret: user.clustername.credentials.postgresql.acid.zalan.do
+  driver: postgresql+asyncpg
+  usernameSecretKey: username
+  passwordSecretKey: password
+  host: postgres.internal.svc.cluster.local
+  port: "5432"
+  name: prefect
+```
+
+When `database.connectionString` or `database.connectionStringSecretKey` is set, that full connection string takes precedence over the component settings.
+
 ### Connecting with SSL configured
 
 1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).

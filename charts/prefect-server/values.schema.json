@@ -1423,6 +1423,31 @@
         }
       }
     },
+    "database": {
+      "type": "object",
+      "properties": {
+        "existingSecret": { "type": "string" },
+        "connectionString": { "type": "string" },
+        "connectionStringSecretKey": { "type": "string" },
+        "driver": { "type": "string" },
+        "driverSecretKey": { "type": "string" },
+        "username": { "type": "string" },
+        "usernameSecretKey": { "type": "string" },
+        "password": { "type": "string" },
+        "passwordSecretKey": { "type": "string" },
+        "host": { "type": "string" },
+        "hostSecretKey": { "type": "string" },
+        "port": {
+          "type": [
+            "integer",
+            "string"
+          ]
+        },
+        "portSecretKey": { "type": "string" },
+        "name": { "type": "string" },
+        "nameSecretKey": { "type": "string" }
+      }
+    },
     "secret": {
       "type": "object",
       "properties": {

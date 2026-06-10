@@ -92,15 +92,7 @@ spec:
               value: {{ .Values.backgroundServices.loggingLevel | quote }}
             - name: PREFECT_UI_ENABLED
               value: 'false'
-            - name: PREFECT_SERVER_DATABASE_CONNECTION_URL
-              {{- if .Values.sqlite.enabled }}
-              value: "sqlite+aiosqlite:////data/prefect.db"
-              {{- else }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "server.postgres-string-secret-name" . }}
-                  key: connection-string
-              {{- end -}}
+            {{- include "server.database-env" . | nindent 12 }}
             {{- if .Values.backgroundServices.runAsSeparateDeployment }}
             {{- include "backgroundServices.envVars" . | nindent 12 }}
             {{- end }}

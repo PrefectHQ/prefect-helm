@@ -203,6 +203,24 @@ secret:
   database: mydb
 ```
 
+If your external database credentials are split across Secret keys and values, use the `database` block instead. This is useful for operators that create immutable credential Secrets, such as the Zalando Postgres Operator.
+
+```yaml
+postgresql:
+  enabled: false
+
+database:
+  existingSecret: user.clustername.credentials.postgresql.acid.zalan.do
+  driver: postgresql+asyncpg
+  usernameSecretKey: username
+  passwordSecretKey: password
+  host: postgres.internal.svc.cluster.local
+  port: "5432"
+  name: prefect
+```
+
+When `database.connectionString` or `database.connectionStringSecretKey` is set, that full connection string takes precedence over the component settings.
+
 ### Connecting with SSL configured
 
 1. Mount the relevant certificate to `/home/prefect/.postgresql` so that it can be found by `asyncpg`. This is the default location postgresql expects per their [documentation](https://www.postgresql.org/docs/current/libpq-ssl.html).
@@ -368,6 +386,21 @@ the HorizontalPodAutoscaler.
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
+| database.connectionString | string | `""` | literal database connection URL. Takes precedence over component settings |
+| database.connectionStringSecretKey | string | `""` | key in `database.existingSecret` containing the full database connection URL |
+| database.driver | string | `"postgresql+asyncpg"` | database driver used when composing a connection URL from components |
+| database.driverSecretKey | string | `""` | key in `database.existingSecret` containing the database driver |
+| database.existingSecret | string | `""` | name of an existing Secret to read database settings from |
+| database.host | string | `""` | database host used when composing a connection URL from components |
+| database.hostSecretKey | string | `""` | key in `database.existingSecret` containing the database host |
+| database.name | string | `""` | database name used when composing a connection URL from components |
+| database.nameSecretKey | string | `""` | key in `database.existingSecret` containing the database name |
+| database.password | string | `""` | database password used when composing a connection URL from components |
+| database.passwordSecretKey | string | `""` | key in `database.existingSecret` containing the database password |
+| database.port | string | `"5432"` | database port used when composing a connection URL from components |
+| database.portSecretKey | string | `""` | key in `database.existingSecret` containing the database port |
+| database.username | string | `""` | database username used when composing a connection URL from components |
+| database.usernameSecretKey | string | `""` | key in `database.existingSecret` containing the database username |
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
 | gateway.annotations | object | `{}` | additional annotations for the Gateway resource |
 | gateway.className | string | `""` | GatewayClass that will be used to implement the Gateway This must match an existing GatewayClass in your cluster |

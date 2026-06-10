@@ -707,6 +707,39 @@ httproute:
     # -- HTTPS port for redirect (defaults to 443)
     redirectPort: 443
 
+# Database configuration
+database:
+  # -- name of an existing Secret to read database settings from
+  existingSecret: ""
+  # -- literal database connection URL. Takes precedence over component settings
+  connectionString: ""
+  # -- key in `database.existingSecret` containing the full database connection URL
+  connectionStringSecretKey: ""
+  # -- database driver used when composing a connection URL from components
+  driver: postgresql+asyncpg
+  # -- key in `database.existingSecret` containing the database driver
+  driverSecretKey: ""
+  # -- database username used when composing a connection URL from components
+  username: ""
+  # -- key in `database.existingSecret` containing the database username
+  usernameSecretKey: ""
+  # -- database password used when composing a connection URL from components
+  password: ""
+  # -- key in `database.existingSecret` containing the database password
+  passwordSecretKey: ""
+  # -- database host used when composing a connection URL from components
+  host: ""
+  # -- key in `database.existingSecret` containing the database host
+  hostSecretKey: ""
+  # -- database port used when composing a connection URL from components
+  port: "5432"
+  # -- key in `database.existingSecret` containing the database port
+  portSecretKey: ""
+  # -- database name used when composing a connection URL from components
+  name: ""
+  # -- key in `database.existingSecret` containing the database name
+  nameSecretKey: ""
+
 # Secret configuration
 secret:
   # -- whether to create a Secret containing the PostgreSQL connection string

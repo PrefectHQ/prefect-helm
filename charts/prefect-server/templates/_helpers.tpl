@@ -246,6 +246,111 @@ Priority:
 {{- end -}}
 {{- end -}}
 
+{{/*
+  server.database-has-component-config:
+    Returns true when the new database component configuration is in use.
+*/}}
+{{- define "server.database-has-component-config" -}}
+{{- $db := .Values.database | default dict -}}
+{{- if or $db.username $db.usernameSecretKey $db.password $db.passwordSecretKey $db.host $db.hostSecretKey $db.name $db.nameSecretKey $db.driverSecretKey $db.portSecretKey -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/*
+  server.database-secret-name:
+    Returns the Secret name for database settings loaded from secret keys.
+*/}}
+{{- define "server.database-secret-name" -}}
+{{- $db := .Values.database | default dict -}}
+{{- $db.existingSecret | required ".Values.database.existingSecret is required when using database secret keys." -}}
+{{- end -}}
+
+{{/*
+  server.database-env-var:
+    Renders one database environment variable from a literal value or a Secret key.
+*/}}
+{{- define "server.database-env-var" -}}
+{{- $ctx := .context -}}
+{{- $name := .name -}}
+{{- $value := .value -}}
+{{- $secretKey := .secretKey -}}
+- name: {{ $name }}
+  {{- if $secretKey }}
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "server.database-secret-name" $ctx }}
+      key: {{ $secretKey }}
+  {{- else }}
+  value: {{ $value | required (printf ".Values.database.%s or .Values.database.%sSecretKey is required." .field .field) | toString | quote }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+  server.database-component-ref:
+    Returns either the literal component value or a Kubernetes env expansion.
+*/}}
+{{- define "server.database-component-ref" -}}
+{{- if .secretKey -}}
+{{- printf "$(%s)" .envName -}}
+{{- else -}}
+{{- .value | required (printf ".Values.database.%s or .Values.database.%sSecretKey is required." .field .field) | toString -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+  server.database-component-env:
+    Renders database component env vars and composes the Prefect connection URL.
+*/}}
+{{- define "server.database-component-env" -}}
+{{- $db := .Values.database | default dict -}}
+{{- $driver := $db.driver | default "postgresql+asyncpg" -}}
+{{- $port := $db.port | default "5432" -}}
+{{- $driverRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_DRIVER" "field" "driver" "value" $driver "secretKey" $db.driverSecretKey) -}}
+{{- $usernameRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_USER" "field" "username" "value" $db.username "secretKey" $db.usernameSecretKey) -}}
+{{- $passwordRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_PASSWORD" "field" "password" "value" $db.password "secretKey" $db.passwordSecretKey) -}}
+{{- $hostRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_HOST" "field" "host" "value" $db.host "secretKey" $db.hostSecretKey) -}}
+{{- $portRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_PORT" "field" "port" "value" $port "secretKey" $db.portSecretKey) -}}
+{{- $nameRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_NAME" "field" "name" "value" $db.name "secretKey" $db.nameSecretKey) -}}
+{{- include "server.database-env-var" (dict "context" . "name" "PREFECT_SERVER_DATABASE_DRIVER" "field" "driver" "value" $driver "secretKey" $db.driverSecretKey) }}
+{{ include "server.database-env-var" (dict "context" . "name" "PREFECT_SERVER_DATABASE_USER" "field" "username" "value" $db.username "secretKey" $db.usernameSecretKey) }}
+{{ include "server.database-env-var" (dict "context" . "name" "PREFECT_SERVER_DATABASE_PASSWORD" "field" "password" "value" $db.password "secretKey" $db.passwordSecretKey) }}
+{{ include "server.database-env-var" (dict "context" . "name" "PREFECT_SERVER_DATABASE_HOST" "field" "host" "value" $db.host "secretKey" $db.hostSecretKey) }}
+{{ include "server.database-env-var" (dict "context" . "name" "PREFECT_SERVER_DATABASE_PORT" "field" "port" "value" $port "secretKey" $db.portSecretKey) }}
+{{ include "server.database-env-var" (dict "context" . "name" "PREFECT_SERVER_DATABASE_NAME" "field" "name" "value" $db.name "secretKey" $db.nameSecretKey) }}
+- name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+  value: {{ printf "%s://%s:%s@%s:%s/%s" $driverRef $usernameRef $passwordRef $hostRef $portRef $nameRef | quote }}
+{{- end -}}
+
+{{/*
+  server.database-env:
+    Renders database env vars for server, background services, and migrations.
+*/}}
+{{- define "server.database-env" -}}
+{{- $db := .Values.database | default dict -}}
+{{- if .Values.sqlite.enabled }}
+- name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+  value: "sqlite+aiosqlite:////data/prefect.db"
+{{- else if $db.connectionString }}
+- name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+  value: {{ $db.connectionString | quote }}
+{{- else if $db.connectionStringSecretKey }}
+- name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "server.database-secret-name" . }}
+      key: {{ $db.connectionStringSecretKey }}
+{{- else if include "server.database-has-component-config" . }}
+{{- include "server.database-component-env" . }}
+{{- else }}
+- name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+  valueFrom:
+    secretKeyRef:
+      name: {{ include "server.postgres-string-secret-name" . }}
+      key: connection-string
+{{- end -}}
+{{- end -}}
+
 {{/* ----- End connection string templates ----- */}}
 
 {{- define "server.uiUrl" -}}
