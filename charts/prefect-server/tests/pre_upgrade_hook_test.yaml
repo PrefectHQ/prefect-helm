@@ -67,6 +67,46 @@ tests:
           apiVersion: batch/v1
           kind: Job
 
+  - it: Should build the database connection URL from mixed values and existing secret keys
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: false
+      externalDatabase:
+        existingSecret: zalando-pg-credentials
+        driver: postgresql+asyncpg
+        usernameSecretKey: username
+        passwordSecretKey: password
+        host: postgres.internal.svc.cluster.local
+        port: "5432"
+        name: prefect
+    asserts:
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: username
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: password
+      - template: pre-upgrade-hook.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+            value: postgresql+asyncpg://$(PREFECT_SERVER_DATABASE_USER):$(PREFECT_SERVER_DATABASE_PASSWORD)@postgres.internal.svc.cluster.local:5432/prefect
+
   - it: Should not create pre-upgrade hook job when migrations are disabled
     set:
       migrations:
@@ -460,4 +500,3 @@ tests:
           content:
             name: MIGRATIONS_ONLY
             value: m
-

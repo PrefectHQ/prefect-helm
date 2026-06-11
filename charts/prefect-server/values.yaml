@@ -707,6 +707,42 @@ httproute:
     # -- HTTPS port for redirect (defaults to 443)
     redirectPort: 443
 
+# External database configuration.
+# Use `postgresql` for the bundled PostgreSQL chart or `sqlite` for the embedded SQLite database.
+# Precedence: sqlite.enabled, externalDatabase.connectionString, externalDatabase.connectionStringSecretKey,
+# externalDatabase component fields/secret keys, then legacy secret/postgresql behavior.
+externalDatabase:
+  # -- name of an existing Secret to read database settings from
+  existingSecret: ""
+  # -- literal database connection URL. Takes precedence over component settings
+  connectionString: ""
+  # -- key in `externalDatabase.existingSecret` containing the full database connection URL
+  connectionStringSecretKey: ""
+  # -- database driver used when composing a connection URL from components
+  driver: postgresql+asyncpg
+  # -- key in `externalDatabase.existingSecret` containing the database driver
+  driverSecretKey: ""
+  # -- database username used when composing a connection URL from components
+  username: ""
+  # -- key in `externalDatabase.existingSecret` containing the database username
+  usernameSecretKey: ""
+  # -- database password used when composing a connection URL from components
+  password: ""
+  # -- key in `externalDatabase.existingSecret` containing the database password
+  passwordSecretKey: ""
+  # -- database host used when composing a connection URL from components
+  host: ""
+  # -- key in `externalDatabase.existingSecret` containing the database host
+  hostSecretKey: ""
+  # -- database port used when composing a connection URL from components
+  port: "5432"
+  # -- key in `externalDatabase.existingSecret` containing the database port
+  portSecretKey: ""
+  # -- database name used when composing a connection URL from components
+  name: ""
+  # -- key in `externalDatabase.existingSecret` containing the database name
+  nameSecretKey: ""
+
 # Secret configuration
 secret:
   # -- whether to create a Secret containing the PostgreSQL connection string
