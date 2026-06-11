@@ -73,7 +73,7 @@ tests:
         enabled: false
       sqlite:
         enabled: false
-      database:
+      externalDatabase:
         existingSecret: zalando-pg-credentials
         driver: postgresql+asyncpg
         usernameSecretKey: username

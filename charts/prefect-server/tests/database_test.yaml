@@ -187,7 +187,7 @@ tests:
         enabled: false
       sqlite:
         enabled: false
-      database:
+      externalDatabase:
         existingSecret: zalando-pg-credentials
         driver: postgresql+asyncpg
         usernameSecretKey: username
@@ -251,7 +251,7 @@ tests:
         enabled: false
       sqlite:
         enabled: false
-      database:
+      externalDatabase:
         connectionString: postgresql+asyncpg://literal:literal@example.com:5432/literal
         existingSecret: zalando-pg-credentials
         usernameSecretKey: username
@@ -282,7 +282,7 @@ tests:
         enabled: false
       sqlite:
         enabled: false
-      database:
+      externalDatabase:
         existingSecret: database-connection
         connectionStringSecretKey: connection-string
         usernameSecretKey: username

@@ -251,7 +251,7 @@ Priority:
     Returns true when the new database component configuration is in use.
 */}}
 {{- define "server.database-has-component-config" -}}
-{{- $db := .Values.database | default dict -}}
+{{- $db := .Values.externalDatabase | default dict -}}
 {{- if or $db.username $db.usernameSecretKey $db.password $db.passwordSecretKey $db.host $db.hostSecretKey $db.name $db.nameSecretKey $db.driverSecretKey $db.portSecretKey -}}
 true
 {{- end -}}
@@ -262,8 +262,8 @@ true
     Returns the Secret name for database settings loaded from secret keys.
 */}}
 {{- define "server.database-secret-name" -}}
-{{- $db := .Values.database | default dict -}}
-{{- $db.existingSecret | required ".Values.database.existingSecret is required when using database secret keys." -}}
+{{- $db := .Values.externalDatabase | default dict -}}
+{{- $db.existingSecret | required ".Values.externalDatabase.existingSecret is required when using database secret keys." -}}
 {{- end -}}
 
 {{/*
@@ -282,7 +282,7 @@ true
       name: {{ include "server.database-secret-name" $ctx }}
       key: {{ $secretKey }}
   {{- else }}
-  value: {{ $value | required (printf ".Values.database.%s or .Values.database.%sSecretKey is required." .field .field) | toString | quote }}
+  value: {{ $value | required (printf ".Values.externalDatabase.%s or .Values.externalDatabase.%sSecretKey is required." .field .field) | toString | quote }}
   {{- end }}
 {{- end -}}
 
@@ -294,7 +294,7 @@ true
 {{- if .secretKey -}}
 {{- printf "$(%s)" .envName -}}
 {{- else -}}
-{{- .value | required (printf ".Values.database.%s or .Values.database.%sSecretKey is required." .field .field) | toString -}}
+{{- .value | required (printf ".Values.externalDatabase.%s or .Values.externalDatabase.%sSecretKey is required." .field .field) | toString -}}
 {{- end -}}
 {{- end -}}
 
@@ -303,7 +303,7 @@ true
     Renders database component env vars and composes the Prefect connection URL.
 */}}
 {{- define "server.database-component-env" -}}
-{{- $db := .Values.database | default dict -}}
+{{- $db := .Values.externalDatabase | default dict -}}
 {{- $driver := $db.driver | default "postgresql+asyncpg" -}}
 {{- $port := $db.port | default "5432" -}}
 {{- $driverRef := include "server.database-component-ref" (dict "envName" "PREFECT_SERVER_DATABASE_DRIVER" "field" "driver" "value" $driver "secretKey" $db.driverSecretKey) -}}
@@ -327,7 +327,7 @@ true
     Renders database env vars for server, background services, and migrations.
 */}}
 {{- define "server.database-env" -}}
-{{- $db := .Values.database | default dict -}}
+{{- $db := .Values.externalDatabase | default dict -}}
 {{- if .Values.sqlite.enabled }}
 - name: PREFECT_SERVER_DATABASE_CONNECTION_URL
   value: "sqlite+aiosqlite:////data/prefect.db"
