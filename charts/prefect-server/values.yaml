@@ -707,7 +707,10 @@ httproute:
     # -- HTTPS port for redirect (defaults to 443)
     redirectPort: 443
 
-# Database configuration
+# Database configuration for external databases only.
+# Use `postgresql` for the bundled PostgreSQL chart or `sqlite` for the embedded SQLite database.
+# Precedence: sqlite.enabled, database.connectionString, database.connectionStringSecretKey,
+# database component fields/secret keys, then legacy secret/postgresql behavior.
 database:
   # -- name of an existing Secret to read database settings from
   existingSecret: ""
