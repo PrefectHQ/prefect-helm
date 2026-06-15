@@ -185,9 +185,7 @@ Two secrets are created when not providing an existing secret name:
 
 If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
 
-The `externalDatabase` block is only for external databases. For databases managed by this chart, continue to configure the bundled PostgreSQL chart with `postgresql` or the embedded SQLite database with `sqlite`.
-
-Database connection configuration is applied in this order:
+The `externalDatabase` block is only for external databases. For databases managed by this chart, continue to configure the bundled PostgreSQL chart with `postgresql` or the embedded SQLite database with `sqlite`. Database connection configuration is applied in this order:
 
 1. `sqlite.enabled=true` uses the embedded SQLite database.
 2. `externalDatabase.connectionString` uses a literal external database connection URL.
