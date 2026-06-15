@@ -398,7 +398,7 @@ the HorizontalPodAutoscaler.
 | commonLabels | object | `{}` | labels to add to all deployed objects |
 | externalDatabase.connectionString | string | `""` | literal database connection URL. Takes precedence over component settings |
 | externalDatabase.connectionStringSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the full database connection URL |
-| externalDatabase.driver | string | `"postgresql+asyncpg"` | database driver used when composing a connection URL from components |
+| externalDatabase.driver | string | `""` | database driver used when composing a connection URL from components (e.g. `postgresql+asyncpg`) |
 | externalDatabase.driverSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database driver |
 | externalDatabase.existingSecret | string | `""` | name of an existing Secret to read database settings from |
 | externalDatabase.host | string | `""` | database host used when composing a connection URL from components |
@@ -407,7 +407,7 @@ the HorizontalPodAutoscaler.
 | externalDatabase.nameSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database name |
 | externalDatabase.password | string | `""` | database password used when composing a connection URL from components |
 | externalDatabase.passwordSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database password |
-| externalDatabase.port | string | `"5432"` | database port used when composing a connection URL from components |
+| externalDatabase.port | string | `""` | database port used when composing a connection URL from components (e.g. `5432`) |
 | externalDatabase.portSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database port |
 | externalDatabase.username | string | `""` | database username used when composing a connection URL from components |
 | externalDatabase.usernameSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database username |

@@ -252,7 +252,7 @@ Priority:
 */}}
 {{- define "server.database-has-component-config" -}}
 {{- $db := .Values.externalDatabase | default dict -}}
-{{- if or $db.username $db.usernameSecretKey $db.password $db.passwordSecretKey $db.host $db.hostSecretKey $db.name $db.nameSecretKey $db.driverSecretKey $db.portSecretKey -}}
+{{- if or $db.driver $db.driverSecretKey $db.username $db.usernameSecretKey $db.password $db.passwordSecretKey $db.host $db.hostSecretKey $db.port $db.portSecretKey $db.name $db.nameSecretKey -}}
 true
 {{- end -}}
 {{- end -}}

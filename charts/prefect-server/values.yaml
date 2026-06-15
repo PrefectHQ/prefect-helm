@@ -718,8 +718,8 @@ externalDatabase:
   connectionString: ""
   # -- key in `externalDatabase.existingSecret` containing the full database connection URL
   connectionStringSecretKey: ""
-  # -- database driver used when composing a connection URL from components
-  driver: postgresql+asyncpg
+  # -- database driver used when composing a connection URL from components (e.g. `postgresql+asyncpg`)
+  driver: ""
   # -- key in `externalDatabase.existingSecret` containing the database driver
   driverSecretKey: ""
   # -- database username used when composing a connection URL from components
@@ -734,8 +734,8 @@ externalDatabase:
   host: ""
   # -- key in `externalDatabase.existingSecret` containing the database host
   hostSecretKey: ""
-  # -- database port used when composing a connection URL from components
-  port: "5432"
+  # -- database port used when composing a connection URL from components (e.g. `5432`)
+  port: ""
   # -- key in `externalDatabase.existingSecret` containing the database port
   portSecretKey: ""
   # -- database name used when composing a connection URL from components
