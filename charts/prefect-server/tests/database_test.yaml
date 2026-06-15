@@ -309,3 +309,136 @@ tests:
               secretKeyRef:
                 name: database-connection
                 key: username
+
+  - it: Should build the database connection URL from all literal component values
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: false
+      externalDatabase:
+        driver: postgresql+asyncpg
+        username: prefect
+        password: prefect-password
+        host: postgres.internal.svc.cluster.local
+        port: 5432
+        name: prefect
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_DRIVER
+            value: postgresql+asyncpg
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_USER
+            value: prefect
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_PASSWORD
+            value: prefect-password
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_HOST
+            value: postgres.internal.svc.cluster.local
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_PORT
+            value: "5432"
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_NAME
+            value: prefect
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+            value: postgresql+asyncpg://prefect:prefect-password@postgres.internal.svc.cluster.local:5432/prefect
+
+  - it: Should build the database connection URL from all existing secret keys
+    set:
+      postgresql:
+        enabled: false
+      sqlite:
+        enabled: false
+      externalDatabase:
+        existingSecret: zalando-pg-credentials
+        driverSecretKey: driver
+        usernameSecretKey: username
+        passwordSecretKey: password
+        hostSecretKey: host
+        portSecretKey: port
+        nameSecretKey: dbname
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_DRIVER
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: driver
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: username
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: password
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_HOST
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: host
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_PORT
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: port
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_NAME
+            valueFrom:
+              secretKeyRef:
+                name: zalando-pg-credentials
+                key: dbname
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_DATABASE_CONNECTION_URL
+            value: $(PREFECT_SERVER_DATABASE_DRIVER)://$(PREFECT_SERVER_DATABASE_USER):$(PREFECT_SERVER_DATABASE_PASSWORD)@$(PREFECT_SERVER_DATABASE_HOST):$(PREFECT_SERVER_DATABASE_PORT)/$(PREFECT_SERVER_DATABASE_NAME)
