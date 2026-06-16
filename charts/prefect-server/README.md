@@ -183,7 +183,15 @@ Two secrets are created when not providing an existing secret name:
 
 #### Using an external instance of PostgreSQL
 
-If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
+If you want to disable the bundled PostgreSQL chart and use an external instance, use the `externalDatabase` block. It is only for external databases; for databases managed by this chart, continue to configure the bundled PostgreSQL chart with `postgresql` or the embedded SQLite database with `sqlite`.
+
+Database connection configuration is applied in this order:
+
+1. `sqlite.enabled=true` uses the embedded SQLite database.
+2. `externalDatabase.connectionString` uses a literal external database connection URL.
+3. `externalDatabase.existingSecret` with `externalDatabase.connectionStringSecretKey` reads a full external database connection URL from an existing Secret.
+4. `externalDatabase` component fields and Secret keys compose an external database connection URL from driver, username, password, host, port, and name.
+5. Existing `secret`/`postgresql` behavior is used when none of the above `externalDatabase` options are set.
 
 ```yaml
 postgresql:
@@ -202,6 +210,24 @@ secret:
   port: 1234
   database: mydb
 ```
+
+If your external database credentials are split across Secret keys and values, use the `externalDatabase` block instead. This is useful for operators that create immutable credential Secrets, such as the Zalando Postgres Operator.
+
+```yaml
+postgresql:
+  enabled: false
+
+externalDatabase:
+  existingSecret: user.clustername.credentials.postgresql.acid.zalan.do
+  driver: postgresql+asyncpg
+  usernameSecretKey: username
+  passwordSecretKey: password
+  host: postgres.internal.svc.cluster.local
+  port: "5432"
+  name: prefect
+```
+
+When `externalDatabase.connectionString` or `externalDatabase.connectionStringSecretKey` is set, that full connection string takes precedence over the component settings.
 
 ### Connecting with SSL configured
 
@@ -368,6 +394,21 @@ the HorizontalPodAutoscaler.
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |
 | commonLabels | object | `{}` | labels to add to all deployed objects |
+| externalDatabase.connectionString | string | `""` | literal database connection URL. Takes precedence over component settings |
+| externalDatabase.connectionStringSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the full database connection URL |
+| externalDatabase.driver | string | `""` | database driver used when composing a connection URL from components (e.g. `postgresql+asyncpg`) |
+| externalDatabase.driverSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database driver |
+| externalDatabase.existingSecret | string | `""` | name of an existing Secret to read database settings from |
+| externalDatabase.host | string | `""` | database host used when composing a connection URL from components |
+| externalDatabase.hostSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database host |
+| externalDatabase.name | string | `""` | database name used when composing a connection URL from components |
+| externalDatabase.nameSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database name |
+| externalDatabase.password | string | `""` | database password used when composing a connection URL from components |
+| externalDatabase.passwordSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database password |
+| externalDatabase.port | string | `""` | database port used when composing a connection URL from components (e.g. `5432`) |
+| externalDatabase.portSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database port |
+| externalDatabase.username | string | `""` | database username used when composing a connection URL from components |
+| externalDatabase.usernameSecretKey | string | `""` | key in `externalDatabase.existingSecret` containing the database username |
 | fullnameOverride | string | `"prefect-server"` | fully override common.names.fullname |
 | gateway.annotations | object | `{}` | additional annotations for the Gateway resource |
 | gateway.className | string | `""` | GatewayClass that will be used to implement the Gateway This must match an existing GatewayClass in your cluster |

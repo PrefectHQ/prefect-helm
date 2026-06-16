@@ -182,7 +182,15 @@ Two secrets are created when not providing an existing secret name:
 
 #### Using an external instance of PostgreSQL
 
-If you want to disable the bundled PostgreSQL chart and use an external instance, provide the following configuration:
+If you want to disable the bundled PostgreSQL chart and use an external instance, use the `externalDatabase` block. It is only for external databases; for databases managed by this chart, continue to configure the bundled PostgreSQL chart with `postgresql` or the embedded SQLite database with `sqlite`.
+
+Database connection configuration is applied in this order:
+
+1. `sqlite.enabled=true` uses the embedded SQLite database.
+2. `externalDatabase.connectionString` uses a literal external database connection URL.
+3. `externalDatabase.existingSecret` with `externalDatabase.connectionStringSecretKey` reads a full external database connection URL from an existing Secret.
+4. `externalDatabase` component fields and Secret keys compose an external database connection URL from driver, username, password, host, port, and name.
+5. Existing `secret`/`postgresql` behavior is used when none of the above `externalDatabase` options are set.
 
 ```yaml
 postgresql:
@@ -201,6 +209,24 @@ secret:
   port: 1234
   database: mydb
 ```
+
+If your external database credentials are split across Secret keys and values, use the `externalDatabase` block instead. This is useful for operators that create immutable credential Secrets, such as the Zalando Postgres Operator.
+
+```yaml
+postgresql:
+  enabled: false
+
+externalDatabase:
+  existingSecret: user.clustername.credentials.postgresql.acid.zalan.do
+  driver: postgresql+asyncpg
+  usernameSecretKey: username
+  passwordSecretKey: password
+  host: postgres.internal.svc.cluster.local
+  port: "5432"
+  name: prefect
+```
+
+When `externalDatabase.connectionString` or `externalDatabase.connectionStringSecretKey` is set, that full connection string takes precedence over the component settings.
 
 ### Connecting with SSL configured
 

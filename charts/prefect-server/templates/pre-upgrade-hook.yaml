@@ -43,11 +43,7 @@ spec:
           echo "Starting database migration..."
           {{- tpl .Values.migrations.command . | nindent 10 }}
         env:
-        - name: PREFECT_SERVER_DATABASE_CONNECTION_URL
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "server.postgres-string-secret-name" . }}
-              key: connection-string
+        {{- include "server.database-env" . | nindent 8 }}
         - name: HOME
           value: /home/prefect
         {{- with (include "server.migrations.envVars" . | trim) }}
