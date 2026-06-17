@@ -93,6 +93,7 @@ basicAuth:
 | basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
 | basicAuth.enabled | bool | `false` | enable basic auth for the exporter, for an administrator/password combination. must be enabled on the server as well |
 | basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
+| commonLabels | object | `{}` | labels to add to all deployed objects |
 | csrfAuth | bool | `false` | Enable CSRF authentication (Only set to true if Prefect Server has CSRF enabled) |
 | env | object | `{}` | Environment variables to configure application |
 | extraEnvVars | list | `[]` | array with extra environment variables to add to exporter deployment pods |

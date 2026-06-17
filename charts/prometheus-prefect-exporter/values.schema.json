@@ -3,6 +3,11 @@
   "type": "object",
   "additionalProperties": true,
   "properties": {
+    "commonLabels": {
+      "type": "object",
+      "title": "Common Labels",
+      "description": "labels to add to all deployed objects"
+    },
     "revisionHistoryLimit": {
       "type": "integer",
       "title": "Revision History Limit",
