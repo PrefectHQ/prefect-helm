@@ -300,3 +300,48 @@ tests:
         equal:
           path: .spec.groups[0].rules[0].alert
           value: PrefectServerDown
+
+  - it: Should configure common labels on templated resources
+    set:
+      autoscaling:
+        enabled: true
+      podDisruptionBudget:
+        maxUnavailable: 1
+      prometheusRule:
+        enabled: true
+        rules: []
+      serviceAccount:
+        create: true
+      serviceMonitor:
+        enabled: true
+      commonLabels:
+        my-label: my-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: hpa.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: pdb.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: prometheusrule.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: service.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: serviceaccount.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value
+      - template: servicemonitor.yaml
+        equal:
+          path: .metadata.labels.my-label
+          value: my-value

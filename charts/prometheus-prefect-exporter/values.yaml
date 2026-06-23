@@ -1,3 +1,6 @@
+# -- labels to add to all deployed objects
+commonLabels: {}
+
 # -- the number of old ReplicaSets to retain to allow rollback
 revisionHistoryLimit: 10
 
