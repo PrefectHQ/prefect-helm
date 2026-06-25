@@ -154,7 +154,49 @@
           "properties": {
             "runAsUser": { "type": ["integer", "null"] },
             "runAsNonRoot": { "type": "boolean" },
-            "fsGroup": { "type": ["integer", "null"] }
+            "fsGroup": { "type": ["integer", "null"] },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the pod",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": ["type"],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["RuntimeDefault", "Unconfined"]
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["Localhost"]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["type", "localhostProfile"]
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
         "securityContext": {
@@ -181,6 +223,48 @@
             "capabilities": {
               "type": "object",
               "description": "capabilities to add or drop"
+            },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the pod",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": ["type"],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["RuntimeDefault", "Unconfined"]
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["Localhost"]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["type", "localhostProfile"]
+                    }
+                  ]
+                }
+              }
             }
           }
         },
@@ -707,6 +791,48 @@
                   }
                 }
               }
+            },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the pod",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": ["type"],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["RuntimeDefault", "Unconfined"]
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["Localhost"]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["type", "localhostProfile"]
+                    }
+                  ]
+                }
+              }
             }
           }
         },
@@ -929,7 +1055,49 @@
           "properties": {
             "runAsUser": { "type": ["integer", "null"] },
             "runAsNonRoot": { "type": "boolean" },
-            "fsGroup": { "type": ["integer", "null"] }
+            "fsGroup": { "type": ["integer", "null"] },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the pod",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": ["type"],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["RuntimeDefault", "Unconfined"]
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["Localhost"]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["type", "localhostProfile"]
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
         "containerSecurityContext": {
@@ -939,7 +1107,49 @@
             "runAsNonRoot": { "type": "boolean" },
             "readOnlyRootFilesystem": { "type": "boolean" },
             "allowPrivilegeEscalation": { "type": "boolean" },
-            "capabilities": { "type": "object" }
+            "capabilities": { "type": "object" },
+            "seccompProfile": {
+              "type": "object",
+              "title": "Seccomp Profile",
+              "description": "Seccomp profile settings for the container",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "enum": ["RuntimeDefault", "Unconfined", "Localhost"]
+                },
+                "localhostProfile": {
+                  "type": "string",
+                  "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
+                  "pattern": "^/.*$"
+                }
+              },
+              "required": ["type"],
+              "dependencies": {
+                "type": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["RuntimeDefault", "Unconfined"]
+                        }
+                      },
+                      "required": ["type"]
+                    },
+                    {
+                      "properties": {
+                        "type": {
+                          "enum": ["Localhost"]
+                        },
+                        "localhostProfile": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["type", "localhostProfile"]
+                    }
+                  ]
+                }
+              }
+            }
           }
         },
         "podLabels": { "type": "object" },
