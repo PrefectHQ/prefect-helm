@@ -167,7 +167,7 @@
                 "localhostProfile": {
                   "type": "string",
                   "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
-                  "pattern": "^/.*$"
+                  "minLength": 1
                 }
               },
               "required": ["type"],
@@ -236,7 +236,7 @@
                 "localhostProfile": {
                   "type": "string",
                   "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
-                  "pattern": "^/.*$"
+                  "minLength": 1
                 }
               },
               "required": ["type"],
@@ -767,7 +767,7 @@
                 "localhostProfile": {
                   "type": "string",
                   "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
-                  "pattern": "^/.*$"
+                  "minLength": 1
                 }
               },
               "required": ["type"],
@@ -860,7 +860,7 @@
                 "localhostProfile": {
                   "type": "string",
                   "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
-                  "pattern": "^/.*$"
+                  "minLength": 1
                 }
               },
               "required": ["type"],
@@ -1124,7 +1124,7 @@
                 "localhostProfile": {
                   "type": "string",
                   "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
-                  "pattern": "^/.*$"
+                  "minLength": 1
                 }
               },
               "required": ["type"],
@@ -1176,7 +1176,7 @@
                 "localhostProfile": {
                   "type": "string",
                   "description": "Path to the seccomp profile on the node. Required when type is 'Localhost'",
-                  "pattern": "^/.*$"
+                  "minLength": 1
                 }
               },
               "required": ["type"],
