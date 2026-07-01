@@ -128,6 +128,8 @@ server:
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
   livenessProbe:
     enabled: false
+    # -- HTTP path for the server liveness probe.
+    path: "{{ .Values.server.apiBasePath }}/health"
     config:
       # -- The number of seconds to wait before starting the first probe.
       initialDelaySeconds: 10
@@ -141,6 +143,8 @@ server:
       successThreshold: 1
   readinessProbe:
     enabled: false
+    # -- HTTP path for the server readiness probe.
+    path: "{{ .Values.server.apiBasePath }}/ready"
     config:
       # -- The number of seconds to wait before starting the first probe.
       initialDelaySeconds: 10

@@ -536,6 +536,7 @@ the HorizontalPodAutoscaler.
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.livenessProbe.enabled | bool | `false` |  |
+| server.livenessProbe.path | string | `"{{ .Values.server.apiBasePath }}/health"` | HTTP path for the server liveness probe. |
 | server.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
@@ -551,6 +552,7 @@ the HorizontalPodAutoscaler.
 | server.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.readinessProbe.enabled | bool | `false` |  |
+| server.readinessProbe.path | string | `"{{ .Values.server.apiBasePath }}/ready"` | HTTP path for the server readiness probe. |
 | server.replicaCount | int | `1` | number of server replicas to deploy, ignored if autoscaling is enabled |
 | server.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the server container |
 | server.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the server container |

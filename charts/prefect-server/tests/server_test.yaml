@@ -321,6 +321,60 @@ tests:
           path: .spec.template.spec.containers[0].resources.limits.ephemeral-storage
           value: 200Mi
 
+  - it: Should set default probe paths when probes are enabled
+    set:
+      server:
+        livenessProbe:
+          enabled: true
+        readinessProbe:
+          enabled: true
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /api/health
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /api/ready
+
+  - it: Should set custom probe paths
+    set:
+      server:
+        livenessProbe:
+          enabled: true
+          path: /api/ready
+        readinessProbe:
+          enabled: true
+          path: /api/health
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /api/ready
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /api/health
+
+  - it: Should template default probe paths with a custom API base path
+    set:
+      server:
+        apiBasePath: /custom-api
+        livenessProbe:
+          enabled: true
+        readinessProbe:
+          enabled: true
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /custom-api/health
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /custom-api/ready
+
   - it: Should set the correct security context
     asserts:
       - template: deployment.yaml
