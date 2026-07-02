@@ -157,7 +157,7 @@ spec:
                   key:  {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.key }}
             {{- end }}
             {{- if .Values.worker.initContainer.extraEnvVars }}
-            {{- include "common.yplvalues.render" (dict "value" .Values.worker.initContainer.extraEnvVars "context" $) | nindent 12 }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.worker.initContainer.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
           {{- with .Values.worker }}
           resources: {{ coalesce .initContainer.resources .resources | toYaml | nindent 12 }}
