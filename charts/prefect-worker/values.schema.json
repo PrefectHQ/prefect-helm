@@ -183,6 +183,15 @@
                 }
               }
             },
+            "extraEnvVars": {
+              "type": "array",
+              "title": "Extra Env Vars",
+              "description": "additional environment variables for the sync-base-job-template initContainer",
+              "default": [],
+              "items": {
+                "type": "object"
+              }
+            },
             "extraContainers": {
               "type": "array",
               "title": "Extra Containers",

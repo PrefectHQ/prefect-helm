@@ -386,6 +386,7 @@ worker:
 | worker.initContainer.containerSecurityContext.runAsNonRoot | bool | `true` | set init containers' security context runAsNonRoot |
 | worker.initContainer.containerSecurityContext.runAsUser | int | `1001` | set init containers' security context runAsUser, set to `null` to unset |
 | worker.initContainer.extraContainers | list | `[]` | additional sidecar containers |
+| worker.initContainer.extraEnvVars | list | `[]` | additional environment variables for the sync-base-job-template initContainer |
 | worker.initContainer.resources | object | `{}` | the resource specifications for the sync-base-job-template initContainer Defaults to the resources defined for the worker container |
 | worker.livenessProbe.config.failureThreshold | int | `3` | The number of consecutive failures allowed before considering the probe as failed. |
 | worker.livenessProbe.config.initialDelaySeconds | int | `10` | The number of seconds to wait before starting the first probe. |

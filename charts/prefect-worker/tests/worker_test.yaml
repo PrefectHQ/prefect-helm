@@ -439,6 +439,25 @@ tests:
           path: .spec.template.spec.initContainers[0].securityContext.seccompProfile.localhostProfile
           value: /profiles/restricted.json
 
+  - it: Should render extraEnv in sync-base-job-template initContainer
+    set:
+      worker:
+        config:
+          baseJobTemplate:
+            configuration: |
+              {}
+        initContainer:
+          extraEnvVars:
+            - name: PREFECT_API_KEY
+              value: my-api-key
+    asserts:
+      - template: deployment.yaml
+        contains:
+          path: .spec.template.spec.initContainers[0].env
+          content:
+            name: PREFECT_API_KEY
+            value: my-api-key
+
   - it: Should set pod annotations
     set:
       worker:
