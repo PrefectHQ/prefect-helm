@@ -52,6 +52,26 @@ server:
     existingSecret: prefect-basic-auth
 ```
 
+### Server Health Probes
+
+The server chart renders liveness and readiness HTTP probes when enabled. Default
+probe paths follow `server.apiBasePath`: liveness uses `/health` and readiness
+uses `/ready` under that base path.
+
+Override `server.livenessProbe.path` or `server.readinessProbe.path` when a
+deployment needs Kubernetes to check a different endpoint. For example, point
+the liveness probe at `/api/ready` if you want sustained database connectivity
+failures to restart the server pod instead of only removing it from service.
+
+```yaml
+server:
+  livenessProbe:
+    enabled: true
+    path: "/api/ready"
+  readinessProbe:
+    enabled: true
+```
+
 ## Background Services Configuration
 
 The Prefect server includes background services related to scheduling and
@@ -536,6 +556,7 @@ the HorizontalPodAutoscaler.
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.livenessProbe.enabled | bool | `false` |  |
+| server.livenessProbe.path | string | `"{{ .Values.server.apiBasePath }}/health"` | HTTP path for the server liveness probe. |
 | server.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
@@ -551,6 +572,7 @@ the HorizontalPodAutoscaler.
 | server.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.readinessProbe.enabled | bool | `false` |  |
+| server.readinessProbe.path | string | `"{{ .Values.server.apiBasePath }}/ready"` | HTTP path for the server readiness probe. |
 | server.replicaCount | int | `1` | number of server replicas to deploy, ignored if autoscaling is enabled |
 | server.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the server container |
 | server.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the server container |

@@ -513,6 +513,11 @@
               "title": "Enabled",
               "description": "enable server liveness probe"
             },
+            "path": {
+              "type": "string",
+              "title": "Path",
+              "description": "HTTP path for the server liveness probe."
+            },
             "config": {
               "type": "object",
               "title": "Liveness Probe",
@@ -558,6 +563,11 @@
               "type": "boolean",
               "title": "Enabled",
               "description": "enable server readiness probe"
+            },
+            "path": {
+              "type": "string",
+              "title": "Path",
+              "description": "HTTP path for the server readiness probe."
             },
             "config": {
               "type": "object",
