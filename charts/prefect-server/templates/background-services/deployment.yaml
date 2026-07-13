@@ -119,15 +119,6 @@ spec:
           {{- with .Values.backgroundServices.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.backgroundServices.startupProbe }}
-          startupProbe: {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.backgroundServices.livenessProbe }}
-          livenessProbe: {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.backgroundServices.readinessProbe }}
-          readinessProbe: {{- toYaml . | nindent 12 }}
-          {{- end }}
           {{- with .Values.backgroundServices.lifecycle }}
           lifecycle: {{- toYaml . | nindent 12 }}
           {{- end }}

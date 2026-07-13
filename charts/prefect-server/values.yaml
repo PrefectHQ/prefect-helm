@@ -371,14 +371,6 @@ backgroundServices:
       memory: 1Gi
       # ephemeral-storage:
 
-  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  # -- startup probe for the background-services container. Prefect background services do not expose a health endpoint, so no probe is configured by default.
-  startupProbe: {}
-  # -- liveness probe for the background-services container. Prefect background services do not expose a health endpoint, so no probe is configured by default.
-  livenessProbe: {}
-  # -- readiness probe for the background-services container. Prefect background services do not expose a health endpoint, so no probe is configured by default.
-  readinessProbe: {}
-
   # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   podSecurityContext:
     # -- set background-services pod's security context runAsUser

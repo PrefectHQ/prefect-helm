@@ -85,10 +85,9 @@ to tune the database connections for each deployment (pool size, timeout, etc.),
 which can help with the database load.
 
 The separate deployment for background services is currently limited to one replica
-because it has not been optimized for running multiple copies. Many background services
-run on a loop between 5 and 60 seconds. Kubernetes restarts the container when its process
-exits. Configure a probe if you also need Kubernetes to detect a process that remains running
-but becomes unhealthy.
+because it has not been optimized for running multiple copies. Additionally, many background
+services run on a loop between 5 and 60 seconds, so if they go down, Kubernetes should bring
+them back up after a health check without much disruption.
 
 Splitting the background services is optional, and is likely not necessary if
 you are not having any issues with your setup.
@@ -114,26 +113,6 @@ This configuration is recommended when:
 - You want to monitor and manage resource usage separately
 
 You can read more about this architecture in the [How to scale self-hosted Prefect](https://docs.prefect.io/v3/advanced/self-hosted) guide.
-
-### Background Health Probes
-
-Prefect background services do not currently expose a health endpoint, so the chart does not configure probes for them by default. If your custom image or command provides a health check, you can supply any Kubernetes probe definition:
-
-```yaml
-backgroundServices:
-  livenessProbe:
-    httpGet:
-      path: /health
-      port: 8080
-    periodSeconds: 10
-  readinessProbe:
-    httpGet:
-      path: /ready
-      port: 8080
-    periodSeconds: 5
-```
-
-The chart accepts `startupProbe`, `livenessProbe`, and `readinessProbe` definitions for the background-services container.
 
 ## Redis Configuration
 
@@ -397,7 +376,6 @@ the HorizontalPodAutoscaler.
 | backgroundServices.extraVolumeMounts | list | `[]` | array with extra volumeMounts for the background-services pod |
 | backgroundServices.extraVolumes | list | `[]` | array with extra volumes for the background-services pod |
 | backgroundServices.lifecycle | object | `{}` | lifecycle hooks for the background-services container. Useful for adding a `preStop` hook that gives the worker time to wind down before SIGTERM. |
-| backgroundServices.livenessProbe | object | `{}` | liveness probe for the background-services container. Prefect background services do not expose a health endpoint, so no probe is configured by default. |
 | backgroundServices.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | backgroundServices.messaging.broker | string | `"prefect_redis.messaging"` | messaging broker class to use for background services |
 | backgroundServices.messaging.cache | string | `"prefect_redis.messaging"` | messaging cache class to use for background services |
@@ -420,7 +398,6 @@ the HorizontalPodAutoscaler.
 | backgroundServices.podSecurityContext.runAsNonRoot | bool | `true` | set background-services pod's security context runAsNonRoot |
 | backgroundServices.podSecurityContext.runAsUser | int | `1001` | set background-services pod's security context runAsUser |
 | backgroundServices.priorityClassName | string | `""` | priority class name to use for the background-services pods; if the priority class is empty or doesn't exist, the background-services pods are scheduled without a priority class |
-| backgroundServices.readinessProbe | object | `{}` | readiness probe for the background-services container. Prefect background services do not expose a health endpoint, so no probe is configured by default. |
 | backgroundServices.replicaCount | int | `1` | number of background-services replicas to deploy |
 | backgroundServices.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the background-services container |
 | backgroundServices.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the background-services container |
@@ -429,7 +406,6 @@ the HorizontalPodAutoscaler.
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended |
-| backgroundServices.startupProbe | object | `{}` | startup probe for the background-services container. Prefect background services do not expose a health endpoint, so no probe is configured by default. |
 | backgroundServices.terminationGracePeriodSeconds | string | `nil` | duration in seconds the background-services pod needs to terminate gracefully. Increase if background services need more time to finish in-flight work or close connections to backing services (e.g. Redis, Postgres) before SIGKILL. Leave null to use Kubernetes' default (30s). |
 | backgroundServices.tolerations | list | `[]` | tolerations for background-services pod assignment |
 | commonAnnotations | object | `{}` | annotations to add to all deployed objects |

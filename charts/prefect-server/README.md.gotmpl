@@ -84,10 +84,9 @@ to tune the database connections for each deployment (pool size, timeout, etc.),
 which can help with the database load.
 
 The separate deployment for background services is currently limited to one replica
-because it has not been optimized for running multiple copies. Many background services
-run on a loop between 5 and 60 seconds. Kubernetes restarts the container when its process
-exits. Configure a probe if you also need Kubernetes to detect a process that remains running
-but becomes unhealthy.
+because it has not been optimized for running multiple copies. Additionally, many background
+services run on a loop between 5 and 60 seconds, so if they go down, Kubernetes should bring
+them back up after a health check without much disruption.
 
 Splitting the background services is optional, and is likely not necessary if
 you are not having any issues with your setup.
@@ -113,26 +112,6 @@ This configuration is recommended when:
 - You want to monitor and manage resource usage separately
 
 You can read more about this architecture in the [How to scale self-hosted Prefect](https://docs.prefect.io/v3/advanced/self-hosted) guide.
-
-### Background Health Probes
-
-Prefect background services do not currently expose a health endpoint, so the chart does not configure probes for them by default. If your custom image or command provides a health check, you can supply any Kubernetes probe definition:
-
-```yaml
-backgroundServices:
-  livenessProbe:
-    httpGet:
-      path: /health
-      port: 8080
-    periodSeconds: 10
-  readinessProbe:
-    httpGet:
-      path: /ready
-      port: 8080
-    periodSeconds: 5
-```
-
-The chart accepts `startupProbe`, `livenessProbe`, and `readinessProbe` definitions for the background-services container.
 
 ## Redis Configuration
 

@@ -934,20 +934,41 @@
             }
           }
         },
-        "startupProbe": {
-          "type": "object",
-          "description": "startup probe for the background-services container",
-          "additionalProperties": true
-        },
         "livenessProbe": {
           "type": "object",
-          "description": "liveness probe for the background-services container",
-          "additionalProperties": true
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
         },
         "readinessProbe": {
           "type": "object",
-          "description": "readiness probe for the background-services container",
-          "additionalProperties": true
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "config": {
+              "type": "object",
+              "properties": {
+                "initialDelaySeconds": { "type": "integer" },
+                "periodSeconds": { "type": "integer" },
+                "timeoutSeconds": { "type": "integer" },
+                "failureThreshold": { "type": "integer" },
+                "successThreshold": { "type": "integer" }
+              }
+            }
+          }
         },
         "podSecurityContext": {
           "type": "object",
