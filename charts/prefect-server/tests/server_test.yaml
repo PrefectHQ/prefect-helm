@@ -321,6 +321,145 @@ tests:
           path: .spec.template.spec.containers[0].resources.limits.ephemeral-storage
           value: 200Mi
 
+  - it: Should enable health probes by default
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].startupProbe.httpGet.path
+          value: /api/health
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].startupProbe.httpGet.port
+          value: 4200
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].startupProbe.failureThreshold
+          value: 30
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /api/health
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet.port
+          value: 4200
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /api/ready
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet.port
+          value: 4200
+
+  - it: Should use the configured API base path and target port for health probes
+    set:
+      server:
+        apiBasePath: /prefect-api
+      service:
+        targetPort: 8080
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].startupProbe.httpGet
+          value:
+            path: /prefect-api/health
+            port: 8080
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet
+          value:
+            path: /prefect-api/health
+            port: 8080
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet
+          value:
+            path: /prefect-api/ready
+            port: 8080
+
+  - it: Should allow health probes to be disabled
+    set:
+      server:
+        startupProbe:
+          enabled: false
+        livenessProbe:
+          enabled: false
+        readinessProbe:
+          enabled: false
+    asserts:
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].startupProbe
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].livenessProbe
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].readinessProbe
+
+  - it: Should render custom health probe timings
+    set:
+      server:
+        startupProbe:
+          config:
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 20
+            successThreshold: 1
+        livenessProbe:
+          config:
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            timeoutSeconds: 4
+            failureThreshold: 5
+            successThreshold: 1
+        readinessProbe:
+          config:
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 4
+            successThreshold: 2
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].startupProbe
+          value:
+            httpGet:
+              path: /api/health
+              port: 4200
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 20
+            successThreshold: 1
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe
+          value:
+            httpGet:
+              path: /api/health
+              port: 4200
+            initialDelaySeconds: 20
+            periodSeconds: 30
+            timeoutSeconds: 4
+            failureThreshold: 5
+            successThreshold: 1
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              path: /api/ready
+              port: 4200
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 4
+            successThreshold: 2
+
   - it: Should set the correct security context
     asserts:
       - template: deployment.yaml

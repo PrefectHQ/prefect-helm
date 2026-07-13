@@ -138,6 +138,60 @@ tests:
           path: .spec.template.spec.containers[0].lifecycle.preStop.exec.command
           value: ["/bin/sh", "-c", "sleep 30"]
 
+  - it: Should not set health probes by default
+    asserts:
+      - template: background-services/deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].startupProbe
+      - template: background-services/deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].livenessProbe
+      - template: background-services/deployment.yaml
+        notExists:
+          path: .spec.template.spec.containers[0].readinessProbe
+
+  - it: Should render custom health probes
+    set:
+      backgroundServices:
+        startupProbe:
+          exec:
+            command: ["/bin/sh", "-c", "test -f /tmp/started"]
+          periodSeconds: 5
+          failureThreshold: 30
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: health
+          periodSeconds: 5
+    asserts:
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].startupProbe
+          value:
+            exec:
+              command: ["/bin/sh", "-c", "test -f /tmp/started"]
+            periodSeconds: 5
+            failureThreshold: 30
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe
+          value:
+            tcpSocket:
+              port: 8080
+            periodSeconds: 10
+      - template: background-services/deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe
+          value:
+            httpGet:
+              path: /ready
+              port: health
+            periodSeconds: 5
+
   - it: Should set the correct debug mode
     asserts:
       - template: background-services/deployment.yaml

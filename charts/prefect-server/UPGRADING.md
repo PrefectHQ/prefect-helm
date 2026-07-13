@@ -1,5 +1,21 @@
 # Upgrade guidelines
 
+## Health probe defaults
+
+The server startup, liveness, and readiness probes are enabled by default. After upgrading, Kubernetes will restart a server container that does not respond to `/api/health` and remove a server pod from service endpoints when `/api/ready` cannot connect to the database.
+
+The configured Prefect image must expose these endpoints. Disable the probes to preserve the previous behavior:
+
+```yaml
+server:
+  startupProbe:
+    enabled: false
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+```
+
 ## Gateway API Support
 
 This release introduces support for [Kubernetes Gateway API](https://gateway-api.sigs.k8s.io/) as an alternative to the traditional Ingress API for exposing the Prefect server. Gateway API is the successor to Ingress and provides more advanced routing capabilities.

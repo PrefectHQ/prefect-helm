@@ -502,6 +502,52 @@
             }
           }
         },
+        "startupProbe": {
+          "type": "object",
+          "title": "Startup Probe",
+          "description": "server startup probe configuration",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "title": "Enabled",
+              "description": "enable server startup probe"
+            },
+            "config": {
+              "type": "object",
+              "title": "Startup Probe",
+              "description": "server startup probe configuration",
+              "additionalProperties": false,
+              "properties": {
+                "initialDelaySeconds": {
+                  "type": "integer",
+                  "title": "Initial Delay Seconds",
+                  "description": "The number of seconds to wait before starting the first probe."
+                },
+                "periodSeconds": {
+                  "type": "integer",
+                  "title": "Period Seconds",
+                  "description": "The number of seconds to wait between consecutive probes."
+                },
+                "timeoutSeconds": {
+                  "type": "integer",
+                  "title": "Timeout Seconds",
+                  "description": "The number of seconds to wait for a probe response before considering it as failed."
+                },
+                "successThreshold": {
+                  "type": "integer",
+                  "title": "Success Threshold",
+                  "description": "The minimum consecutive successes required to consider the probe successful."
+                },
+                "failureThreshold": {
+                  "type": "integer",
+                  "title": "Failure Threshold",
+                  "description": "The number of consecutive failures allowed before considering the probe as failed."
+                }
+              }
+            }
+          }
+        },
         "livenessProbe": {
           "type": "object",
           "title": "Liveness Probe",
@@ -888,41 +934,20 @@
             }
           }
         },
+        "startupProbe": {
+          "type": "object",
+          "description": "startup probe for the background-services container",
+          "additionalProperties": true
+        },
         "livenessProbe": {
           "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "config": {
-              "type": "object",
-              "properties": {
-                "initialDelaySeconds": { "type": "integer" },
-                "periodSeconds": { "type": "integer" },
-                "timeoutSeconds": { "type": "integer" },
-                "failureThreshold": { "type": "integer" },
-                "successThreshold": { "type": "integer" }
-              }
-            }
-          }
+          "description": "liveness probe for the background-services container",
+          "additionalProperties": true
         },
         "readinessProbe": {
           "type": "object",
-          "properties": {
-            "enabled": {
-              "type": "boolean"
-            },
-            "config": {
-              "type": "object",
-              "properties": {
-                "initialDelaySeconds": { "type": "integer" },
-                "periodSeconds": { "type": "integer" },
-                "timeoutSeconds": { "type": "integer" },
-                "failureThreshold": { "type": "integer" },
-                "successThreshold": { "type": "integer" }
-              }
-            }
-          }
+          "description": "readiness probe for the background-services container",
+          "additionalProperties": true
         },
         "podSecurityContext": {
           "type": "object",

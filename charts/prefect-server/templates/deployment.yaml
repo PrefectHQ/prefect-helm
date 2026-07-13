@@ -149,6 +149,13 @@ spec:
           {{- with .Values.server.containerSecurityContext }}
           securityContext: {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.server.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: {{ .Values.server.apiBasePath }}/health
+              port: {{ .Values.service.targetPort }}
+          {{- toYaml .Values.server.startupProbe.config | nindent 12 }}
+          {{- end }}
           {{- if .Values.server.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
