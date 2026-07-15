@@ -338,6 +338,26 @@ tests:
           path: .spec.template.spec.containers[0].readinessProbe.httpGet.path
           value: /api/ready
 
+  - it: Should fall back to default probe paths when paths are absent
+    set:
+      server:
+        apiBasePath: /custom-api
+        livenessProbe:
+          enabled: true
+          path: null
+        readinessProbe:
+          enabled: true
+          path: null
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].livenessProbe.httpGet.path
+          value: /custom-api/health
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].readinessProbe.httpGet.path
+          value: /custom-api/ready
+
   - it: Should set custom probe paths
     set:
       server:
