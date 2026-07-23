@@ -159,14 +159,14 @@ spec:
           {{- if .Values.server.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
-              path: {{ .Values.server.apiBasePath }}/health
+              path: {{ tpl (.Values.server.livenessProbe.path | default (printf "%s/health" .Values.server.apiBasePath)) . | quote }}
               port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.livenessProbe.config | nindent 12 }}
           {{- end }}
           {{- if .Values.server.readinessProbe.enabled }}
           readinessProbe:
             httpGet:
-              path: {{ .Values.server.apiBasePath }}/ready
+              path: {{ tpl (.Values.server.readinessProbe.path | default (printf "%s/ready" .Values.server.apiBasePath)) . | quote }}
               port: {{ .Values.service.targetPort }}
           {{- toYaml .Values.server.readinessProbe.config | nindent 12 }}
           {{- end }}

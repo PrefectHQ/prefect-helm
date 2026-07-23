@@ -54,16 +54,18 @@ server:
 
 ### Health Probes
 
-The server enables startup, liveness, and readiness probes by default. The startup and liveness probes call `/api/health`, which confirms that the HTTP server responds. The readiness probe calls `/api/ready`, which confirms that Prefect can connect to its database. These endpoints do not check Redis connectivity.
+The server enables startup, liveness, and readiness probes by default. Their default paths follow `server.apiBasePath`. The startup and liveness probes call `/health`, which confirms that the HTTP server responds. The readiness probe calls `/ready`, which confirms that Prefect can connect to its database. These endpoints do not check Redis connectivity.
 
-The startup probe allows the server up to five minutes to become healthy with the default settings. Kubernetes waits for it to succeed before running the liveness and readiness probes. You can tune each probe under its `config` key or disable it independently:
+The startup probe allows the server up to five minutes to become healthy with the default settings. Kubernetes waits for it to succeed before running the liveness and readiness probes. You can tune each probe under its `config` key or disable it through `enabled`.
+
+You can also override `server.livenessProbe.path` or `server.readinessProbe.path`. For example, point the liveness probe at `/api/ready` if sustained database connectivity failures should restart the server pod instead of only removing it from service:
 
 ```yaml
 server:
   startupProbe:
     enabled: false
   livenessProbe:
-    enabled: false
+    path: "/api/ready"
   readinessProbe:
     enabled: false
 ```
@@ -552,6 +554,7 @@ the HorizontalPodAutoscaler.
 | server.livenessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.livenessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.livenessProbe.enabled | bool | `true` | enable the server liveness probe |
+| server.livenessProbe.path | string | `"{{ .Values.server.apiBasePath }}/health"` | HTTP path for the server liveness probe. |
 | server.loggingLevel | string | `"WARNING"` | sets PREFECT_LOGGING_SERVER_LEVEL |
 | server.nodeSelector | object | `{}` | node labels for server pods assignment |
 | server.podAnnotations | object | `{}` | extra annotations for server pod |
@@ -567,6 +570,7 @@ the HorizontalPodAutoscaler.
 | server.readinessProbe.config.successThreshold | int | `1` | The minimum consecutive successes required to consider the probe successful. |
 | server.readinessProbe.config.timeoutSeconds | int | `5` | The number of seconds to wait for a probe response before considering it as failed. |
 | server.readinessProbe.enabled | bool | `true` | enable the server readiness probe |
+| server.readinessProbe.path | string | `"{{ .Values.server.apiBasePath }}/ready"` | HTTP path for the server readiness probe. |
 | server.replicaCount | int | `1` | number of server replicas to deploy, ignored if autoscaling is enabled |
 | server.resources.limits | object | `{"cpu":"1","memory":"1Gi"}` | the requested limits for the server container |
 | server.resources.requests | object | `{"cpu":"500m","memory":"512Mi"}` | the requested resources for the server container |

@@ -143,6 +143,8 @@ server:
   livenessProbe:
     # -- enable the server liveness probe
     enabled: true
+    # -- HTTP path for the server liveness probe.
+    path: "{{ .Values.server.apiBasePath }}/health"
     config:
       # -- The number of seconds to wait before starting the first probe.
       initialDelaySeconds: 10
@@ -157,6 +159,8 @@ server:
   readinessProbe:
     # -- enable the server readiness probe
     enabled: true
+    # -- HTTP path for the server readiness probe.
+    path: "{{ .Values.server.apiBasePath }}/ready"
     config:
       # -- The number of seconds to wait before starting the first probe.
       initialDelaySeconds: 10
