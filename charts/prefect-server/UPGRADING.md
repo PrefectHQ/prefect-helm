@@ -4,7 +4,7 @@
 
 The server startup, liveness, and readiness probes are enabled by default. After upgrading, Kubernetes will restart a server container that does not respond to `/api/health` and remove a server pod from service endpoints when `/api/ready` cannot connect to the database.
 
-The configured Prefect image must expose these endpoints. Disable the probes to preserve the previous behavior:
+The configured Prefect image must expose these endpoints without authentication. Prefect 3.1.8 through 3.1.12 protects both endpoints when basic auth is enabled, so Kubernetes probes receive a `401` response. Upgrade Prefect or disable the probes to preserve the previous behavior:
 
 ```yaml
 server:
