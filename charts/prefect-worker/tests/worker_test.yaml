@@ -320,6 +320,8 @@ tests:
           runAsUser: 1002
           fsGroup: 1002
           runAsNonRoot: false
+          seccompProfile:
+            type: RuntimeDefault
     asserts:
       - template: deployment.yaml
         equal:
@@ -333,6 +335,10 @@ tests:
         equal:
           path: .spec.template.spec.securityContext.runAsNonRoot
           value: false
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.seccompProfile.type
+          value: RuntimeDefault
 
   - it: Should set the correct container security context
     set:
@@ -391,7 +397,8 @@ tests:
           runAsGroup: 2000
           procMount: Default
           seccompProfile:
-            type: RuntimeDefault
+            type: Localhost
+            localhostProfile: /profiles/restricted.json
           seLinuxOptions:
             level: "s0:c123,c456"
     asserts:
@@ -406,7 +413,11 @@ tests:
       - template: deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.seccompProfile.type
-          value: RuntimeDefault
+          value: Localhost
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.seccompProfile.localhostProfile
+          value: /profiles/restricted.json
       - template: deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.seLinuxOptions.level

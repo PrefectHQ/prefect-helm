@@ -611,7 +611,8 @@ tests:
           runAsGroup: 2000
           procMount: Default
           seccompProfile:
-            type: RuntimeDefault
+            type: Localhost
+            localhostProfile: /profiles/restricted.json
           seLinuxOptions:
             level: "s0:c123,c456"
     asserts:
@@ -626,7 +627,11 @@ tests:
       - template: deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.seccompProfile.type
-          value: RuntimeDefault
+          value: Localhost
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.seccompProfile.localhostProfile
+          value: /profiles/restricted.json
       - template: deployment.yaml
         equal:
           path: .spec.template.spec.containers[0].securityContext.seLinuxOptions.level
@@ -640,6 +645,8 @@ tests:
           sysctls:
             - name: net.core.somaxconn
               value: "1024"
+          seccompProfile:
+            type: RuntimeDefault
     asserts:
       - template: deployment.yaml
         equal:
@@ -649,6 +656,10 @@ tests:
         equal:
           path: .spec.template.spec.securityContext.sysctls[0].name
           value: net.core.somaxconn
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.securityContext.seccompProfile.type
+          value: RuntimeDefault
 
   - it: Should set pod labels
     set:
