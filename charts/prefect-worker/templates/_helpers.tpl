@@ -10,6 +10,13 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
+Labels used by the PodDisruptionBudget to select a single worker deployment
+*/}}
+{{- define "worker.labels.pdbSelector" -}}
+prefect.io/worker-name: {{ include "common.names.fullname" . }}
+{{- end -}}
+
+{{/*
 Require Prefect Cloud Account ID
 */}}
 {{- define "cloud.requiredConfig.accountId" -}}

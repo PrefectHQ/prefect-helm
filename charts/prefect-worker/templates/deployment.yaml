@@ -30,6 +30,9 @@ spec:
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: worker
         prefect-version: {{ .Chart.AppVersion }}
+        {{- if .Values.worker.podDisruptionBudget }}
+        {{- include "worker.labels.pdbSelector" . | nindent 8 }}
+        {{- end }}
         {{- if .Values.worker.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.worker.podLabels "context" $) | nindent 8 }}
         {{- end }}
