@@ -41,6 +41,9 @@ jobs:
         with:
           node_image: "kindest/node:v${{ matrix.kubernetes }}"
 
+      - name: Create worker namespace
+        run: kubectl create namespace prefect
+
       - name: Install Prefect Server
         run: |
           helm dependency build ./charts/prefect-server/
