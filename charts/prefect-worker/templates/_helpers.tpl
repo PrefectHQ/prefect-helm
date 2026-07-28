@@ -13,7 +13,7 @@ Create the name of the service account to use
 Labels used by the PodDisruptionBudget to select a single worker deployment
 */}}
 {{- define "worker.labels.pdbSelector" -}}
-prefect.io/worker-name: {{ include "common.names.fullname" . }}
+prefect.io/worker-deployment-name: {{ include "common.names.fullname" . }}
 {{- end -}}
 
 {{/*
