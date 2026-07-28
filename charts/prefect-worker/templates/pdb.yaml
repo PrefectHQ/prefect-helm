@@ -17,5 +17,6 @@ spec:
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: worker
+      {{- include "worker.labels.pdbSelector" . | nindent 6 }}
 {{ toYaml .Values.worker.podDisruptionBudget | indent 2 }}
 {{- end }}
