@@ -1162,6 +1162,9 @@ tests:
       - template: pdb.yaml
         hasDocuments:
           count: 0
+      - template: deployment.yaml
+        notExists:
+          path: .spec.template.metadata.labels["prefect.io/worker-deployment-name"]
 
   - it: Should create PDB with maxUnavailable
     set:
@@ -1211,6 +1214,31 @@ tests:
         equal:
           path: .spec.minAvailable
           value: 1
+
+  - it: Should scope PDB to the worker fullname without changing the Deployment selector
+    set:
+      fullnameOverride: custom-prefect-worker
+      worker:
+        podLabels:
+          prefect.io/worker-name: runtime-worker
+        podDisruptionBudget:
+          minAvailable: 1
+    asserts:
+      - template: pdb.yaml
+        equal:
+          path: .spec.selector.matchLabels["prefect.io/worker-deployment-name"]
+          value: custom-prefect-worker
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.labels["prefect.io/worker-deployment-name"]
+          value: custom-prefect-worker
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.labels["prefect.io/worker-name"]
+          value: runtime-worker
+      - template: deployment.yaml
+        notExists:
+          path: .spec.selector.matchLabels["prefect.io/worker-deployment-name"]
 
   - it: Should create PDB with unhealthyPodEvictionPolicy
     set:
