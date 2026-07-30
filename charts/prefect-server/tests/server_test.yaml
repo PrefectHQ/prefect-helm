@@ -218,6 +218,17 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_API_URL")].value
           value: "https://custom-ui-api.example.com"
 
+  - it: Should render templated UI API URL
+    set:
+      server:
+        uiConfig:
+          prefectUiApiUrl: "https://{{ .Release.Name }}.example.com/api"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_API_URL")].value
+          value: "https://server-test.example.com/api"
+
   - it: Should set custom environment variables
     set:
       server:
