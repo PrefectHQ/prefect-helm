@@ -354,7 +354,7 @@ true
 {{/* ----- End connection string templates ----- */}}
 
 {{- define "server.uiUrl" -}}
-  {{- printf "%s" (replace "/api" "" .Values.server.uiConfig.prefectUiApiUrl) -}}
+  {{- printf "%s" (replace "/api" "" (tpl .Values.server.uiConfig.prefectUiApiUrl .)) -}}
 {{- end -}}
 
 {{/* ----- Gateway API Helper Templates ----- */}}

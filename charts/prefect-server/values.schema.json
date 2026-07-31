@@ -348,7 +348,7 @@
             "prefectUiApiUrl": {
               "type": "string",
               "title": "Prefect API URL",
-              "description": "sets PREFECT_UI_API_URL"
+              "description": "sets PREFECT_UI_API_URL; supports Helm template expressions"
             }
           }
         },
