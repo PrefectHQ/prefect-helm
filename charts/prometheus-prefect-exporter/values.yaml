@@ -65,6 +65,9 @@ extraEnvVars: []
 podDisruptionBudget: {}
   # maxUnavailable: 0
 
+# -- extra labels for exporter pod
+podLabels: {}
+
 # -- Pod annotations
 podAnnotations: {}
 

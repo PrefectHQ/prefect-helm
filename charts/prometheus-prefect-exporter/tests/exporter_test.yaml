@@ -197,6 +197,16 @@ tests:
           path: .spec.template.metadata.annotations.custom-annotation
           value: custom-value
 
+  - it: Should set pod labels
+    set:
+      podLabels:
+        custom-label: custom-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.labels.custom-label
+          value: custom-value
+
   - it: Should set the correct service configuration
     asserts:
       - template: service.yaml

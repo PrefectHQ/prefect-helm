@@ -107,6 +107,7 @@ basicAuth:
 | pagination | object | `{"enabled":true,"limit":200}` | Pagination settings. If enabled, the exporter will paginate the API requests to Prefect Server which uses more resources.  Remember to increase the resources for the exporter if enabled. |
 | podAnnotations | object | `{}` | Pod annotations |
 | podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
+| podLabels | object | `{}` | extra labels for exporter pod |
 | podSecurityContext | object | `{}` | To specify security settings for a Pod |
 | prefectApiUrl | string | `"http://prefect-server.prefect.svc.cluster.local:4200/api"` | Prefect API URL to connect to for metrics |
 | prometheusRule.additionalLabels | object | `{}` |  |

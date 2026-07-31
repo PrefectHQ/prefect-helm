@@ -141,6 +141,11 @@
       "title": "Pod Disruption Budget",
       "description": "Pod disruption budget"
     },
+    "podLabels": {
+      "type": "object",
+      "title": "Pod Labels",
+      "description": "extra labels for exporter pod"
+    },
     "podAnnotations": {
       "type": "object",
       "title": "Pod Annotations",
