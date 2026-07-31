@@ -228,6 +228,9 @@ tests:
         equal:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_UI_API_URL")].value
           value: "https://server-test.example.com/api"
+      - template: NOTES.txt
+        matchRegexRaw:
+          pattern: 'Visit https://server-test\.example\.com to use Prefect!'
 
   - it: Should set custom environment variables
     set:
