@@ -199,6 +199,11 @@ server:
     allowPrivilegeEscalation: false
     # -- set server container's security context capabilities
     capabilities: {}
+    # -- set the server container's seccomp profile
+    # For `Localhost`, use a path relative to the kubelet's seccomp profile directory
+    # seccompProfile:
+    #   type: Localhost
+    #   localhostProfile: profiles/restricted.json
 
   # ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
   # -- Specifies the strategy used to replace old Pods by new ones. Type can be "Recreate" or "RollingUpdate".
