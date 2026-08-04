@@ -6,8 +6,6 @@ name: Notify on Failure
     workflows:
       - Release Prefect Server and Worker Helm Charts
       - Release Prometheus Prefect Exporter Helm Chart
-      - Updatecli Major Dependency Updates
-      - Updatecli Minor Dependency Updates
       - Update mise tool versions
     types: [completed]
 
