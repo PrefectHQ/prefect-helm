@@ -2,14 +2,14 @@
 
 ## PostgreSQL subchart 12.x -> 18.x
 
-The bundled Bitnami PostgreSQL subchart was upgraded from `12.12.10` to `18.8.5`. This upgrade is intentionally **non-destructive by default**: the bundled PostgreSQL engine stays on `14.13.0` and no data migration is triggered by a routine `helm upgrade`.
+The bundled Bitnami PostgreSQL subchart was upgraded from `12.12.10` to `18.8.5`. This upgrade is intentionally **non-destructive by default**: the bundled PostgreSQL engine stays on the 14.x line and no data migration is triggered by a routine `helm upgrade`. (The pinned engine image was also moved from `14.13.0` to `14.18.0`, the final pg14 patch release; this is an in-place patch bump and requires no data migration.)
 
 **No action is required for most operators.** If you use an external or managed database (`postgresql.enabled: false` or the `externalDatabase` block), this change does not affect you at all.
 
 ### What changed
 
 - The subchart template machinery, values schema, and security defaults are now current with the 18.x line. The values surface is compatible: the `auth.*`, `architecture`, `primary.initdb`, and `primary.persistence` keys are unchanged.
-- The engine image remains pinned to `docker.io/bitnamilegacy/postgresql:14.13.0`. The 18.x subchart otherwise defaults to `bitnami/postgresql:latest` (engine 17.x), which (a) is no longer freely pullable after the 2025-08-28 Bitnami catalog change and (b) would require a destructive PostgreSQL 15 -> 17 data migration. Pinning to the legacy 14.x image avoids both.
+- The engine image remains pinned to `docker.io/bitnamilegacy/postgresql:14.18.0`. The 18.x subchart otherwise defaults to `bitnami/postgresql:latest` (engine 17.x), which (a) is no longer freely pullable after the 2025-08-28 Bitnami catalog change and (b) would require a destructive PostgreSQL 15 -> 17 data migration. Pinning to the legacy 14.x image avoids both. Note that `bitnamilegacy` is a frozen archive that receives no new builds, so `14.18.0` is the latest pullable pinned pg14 image; a future move to a maintained image source (or an engine upgrade) will be needed.
 
 ### Tightened security context
 
