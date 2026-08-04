@@ -354,7 +354,7 @@ the HorizontalPodAutoscaler.
 | Repository | Name | Version |
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.41.0 |
-| https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
+| https://charts.bitnami.com/bitnami | postgresql | 18.8.5 |
 | https://charts.bitnami.com/bitnami | redis | 22.0.4 |
 
 ## Values
@@ -506,8 +506,9 @@ the HorizontalPodAutoscaler.
 | postgresql.auth.password | string | `"prefect-rocks"` | password for the custom user. Ignored if `auth.existingSecret` with key `password` is provided |
 | postgresql.auth.username | string | `"prefect"` | name for a custom user |
 | postgresql.enabled | bool | `true` | enable use of bitnami/postgresql subchart |
-| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` | Image repository.  Defaults to legacy bitnami repository for postgres 14.13.0 availability. |
-| postgresql.image.tag | string | `"14.13.0"` | Version tag, corresponds to tags at https://hub.docker.com/layers/bitnamilegacy/postgresql/ |
+| postgresql.image.registry | string | `"docker.io"` | Image registry. Docker Hub, where the bitnamilegacy images are published. |
+| postgresql.image.repository | string | `"bitnamilegacy/postgresql"` | Image repository. Pinned to the legacy bitnami repository so the freely-pullable postgres 14.13.0 image is used. The 18.x subchart defaults to bitnami/postgresql:latest (engine 17.x), which is not freely pullable after the 2025-08-28 Bitnami catalog change and would trigger a destructive pg 15->17 engine migration on existing installs. See UPGRADING.md ("PostgreSQL subchart 12.x -> 18.x") for the opt-in engine upgrade path. |
+| postgresql.image.tag | string | `"14.13.0"` | Version tag, corresponds to tags at https://hub.docker.com/r/bitnamilegacy/postgresql/tags |
 | postgresql.primary.initdb.user | string | `"postgres"` | specify the PostgreSQL username to execute the initdb scripts |
 | postgresql.primary.persistence.enabled | bool | `false` | enable PostgreSQL Primary data persistence using PVC |
 | redis.architecture | string | `"standalone"` | Redis architecture Note: Prefect currently only supports standalone Redis deployments. |

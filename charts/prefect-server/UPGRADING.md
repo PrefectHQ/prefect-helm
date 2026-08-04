@@ -1,5 +1,44 @@
 # Upgrade guidelines
 
+## PostgreSQL subchart 12.x -> 18.x
+
+The bundled Bitnami PostgreSQL subchart was upgraded from `12.12.10` to `18.8.5`. This upgrade is intentionally **non-destructive by default**: the bundled PostgreSQL engine stays on `14.13.0` and no data migration is triggered by a routine `helm upgrade`.
+
+**No action is required for most operators.** If you use an external or managed database (`postgresql.enabled: false` or the `externalDatabase` block), this change does not affect you at all.
+
+### What changed
+
+- The subchart template machinery, values schema, and security defaults are now current with the 18.x line. The values surface is compatible: the `auth.*`, `architecture`, `primary.initdb`, and `primary.persistence` keys are unchanged.
+- The engine image remains pinned to `docker.io/bitnamilegacy/postgresql:14.13.0`. The 18.x subchart otherwise defaults to `bitnami/postgresql:latest` (engine 17.x), which (a) is no longer freely pullable after the 2025-08-28 Bitnami catalog change and (b) would require a destructive PostgreSQL 15 -> 17 data migration. Pinning to the legacy 14.x image avoids both.
+
+### Tightened security context
+
+The 18.x StatefulSet ships stricter pod/container `securityContext` defaults than 12.x:
+
+| Setting | 12.x | 18.x |
+| --- | --- | --- |
+| `runAsGroup` | `0` | `1001` |
+| `readOnlyRootFilesystem` | unset | `true` |
+| `privileged` | unset | `false` |
+| `fsGroupChangePolicy` | unset | `Always` |
+
+These are compatible with (and more compliant under) the Kubernetes `restricted` Pod Security Standard. However, if you supply custom `postgresql.primary.containerSecurityContext` overrides, or init scripts that write outside a mounted volume, note that `readOnlyRootFilesystem: true` and the non-root `runAsGroup` may require adjustment.
+
+### Opt-in: upgrading the bundled engine to PostgreSQL 17
+
+The bundled DB is **not intended for production** (see the README). If you nevertheless run on the bundled default and want to move the engine to 17.x, this is a **manual, destructive migration** — PostgreSQL 15 -> 17 is not an in-place data-directory upgrade. Do not simply raise `postgresql.image.tag`; that will leave a pod that refuses to start against an existing 14.x `PGDATA`.
+
+A safe path:
+
+1. Scale down or quiesce the Prefect server so no writes are in flight.
+2. `pg_dump` (or `pg_dumpall`) the existing database from the running 14.x pod.
+3. Remove the old PVC (this is the destructive step; take a backup first).
+4. Set `postgresql.image.repository`/`tag` to the desired 17.x image and re-install.
+5. Restore the dump into the new instance with `pg_restore`/`psql`.
+6. Restart the Prefect server and verify migrations complete.
+
+For any real workload, prefer an external or managed PostgreSQL via the `externalDatabase` block instead of the bundled subchart.
+
 ## Health probe defaults
 
 The server startup, liveness, and readiness probes are enabled by default. After upgrading, Kubernetes will restart a server container that does not respond to `/api/health` and remove a server pod from service endpoints when `/api/ready` cannot connect to the database.

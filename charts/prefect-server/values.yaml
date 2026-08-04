@@ -827,9 +827,15 @@ postgresql:
       enabled: false
 
   image:
-    # -- Image repository.  Defaults to legacy bitnami repository for postgres 14.13.0 availability.
+    # -- Image registry. Docker Hub, where the bitnamilegacy images are published.
+    registry: docker.io
+    # -- Image repository. Pinned to the legacy bitnami repository so the freely-pullable
+    # postgres 14.13.0 image is used. The 18.x subchart defaults to bitnami/postgresql:latest
+    # (engine 17.x), which is not freely pullable after the 2025-08-28 Bitnami catalog change
+    # and would trigger a destructive pg 15->17 engine migration on existing installs.
+    # See UPGRADING.md ("PostgreSQL subchart 12.x -> 18.x") for the opt-in engine upgrade path.
     repository: bitnamilegacy/postgresql
-    # -- Version tag, corresponds to tags at https://hub.docker.com/layers/bitnamilegacy/postgresql/
+    # -- Version tag, corresponds to tags at https://hub.docker.com/r/bitnamilegacy/postgresql/tags
     tag: 14.13.0
 
 # Redis subchart - default overrides
