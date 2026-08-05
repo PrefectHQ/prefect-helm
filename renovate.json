@@ -4,20 +4,6 @@
     "github>PrefectHQ/renovate-config",
     "github>PrefectHQ/renovate-config:helm"
   ],
-  "packageRules": [
-    {
-      "description": "Keep the bitnami common subchart on the 2.x line to match prior tooling constraints.",
-      "matchDatasources": ["helm"],
-      "matchPackageNames": ["common"],
-      "allowedVersions": "<3"
-    },
-    {
-      "description": "Keep the bitnami postgresql subchart on the 12.x line to match prior tooling constraints.",
-      "matchDatasources": ["helm"],
-      "matchPackageNames": ["postgresql"],
-      "allowedVersions": "<13"
-    }
-  ],
   "customManagers": [
     {
       "customType": "regex",
