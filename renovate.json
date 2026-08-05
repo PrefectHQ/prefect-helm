@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>PrefectHQ/renovate-config",
+    "github>PrefectHQ/renovate-config:helm"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track the container image tag pinned inline in the exporter chart values.yaml. The helmv3 manager only sees Chart.yaml subchart dependencies, so image tags pinned in values.yaml need an explicit regex manager to be updated.",
+      "managerFilePatterns": [
+        "/charts/prometheus-prefect-exporter/values\\.yaml$/"
+      ],
+      "matchStrings": [
+        "repository:\\s*(?<depName>\\S+)[\\s\\S]*?tag:\\s*(?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}
