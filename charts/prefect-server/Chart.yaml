@@ -13,7 +13,7 @@ dependencies:
   - name: redis
     condition: redis.enabled
     repository: https://charts.bitnami.com/bitnami
-    version: 22.0.4
+    version: 24.1.8
 description: Prefect server application bundle
 engine: gotpl
 home: https://github.com/PrefectHQ
