@@ -16,5 +16,14 @@
       ],
       "datasourceTemplate": "docker"
     }
+  ],
+  "packageRules": [
+    {
+      "description": "Do not open update PRs for the prometheus-prefect-exporter image. The release workflow pins the chart to the latest exporter tag at build time, and v2/v3 ship breaking metric changes.",
+      "matchPackageNames": [
+        "prefecthq/prometheus-prefect-exporter"
+      ],
+      "enabled": false
+    }
   ]
 }
