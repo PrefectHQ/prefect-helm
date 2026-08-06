@@ -207,6 +207,27 @@ tests:
           path: .spec.template.metadata.labels.custom-label
           value: custom-value
 
+  - it: Should preserve selector labels when pod labels overlap
+    set:
+      podLabels:
+        app.kubernetes.io/name: custom-name
+        app.kubernetes.io/instance: custom-instance
+        custom-label: custom-value
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.selector.matchLabels
+          value:
+            app.kubernetes.io/name: prometheus-prefect-exporter
+            app.kubernetes.io/instance: test
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.metadata.labels
+          value:
+            app.kubernetes.io/name: prometheus-prefect-exporter
+            app.kubernetes.io/instance: test
+            custom-label: custom-value
+
   - it: Should set the correct service configuration
     asserts:
       - template: service.yaml
