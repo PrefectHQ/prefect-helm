@@ -228,6 +228,14 @@ tests:
             app.kubernetes.io/instance: test
             custom-label: custom-value
 
+  - it: Should reject non-string pod labels
+    set:
+      podLabels:
+        cost-center: 123
+    asserts:
+      - failedTemplate:
+          errorPattern: "podLabels.cost-center: Invalid type. Expected: string, given: integer"
+
   - it: Should set the correct service configuration
     asserts:
       - template: service.yaml

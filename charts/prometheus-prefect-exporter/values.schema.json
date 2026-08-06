@@ -144,7 +144,10 @@
     "podLabels": {
       "type": "object",
       "title": "Pod Labels",
-      "description": "extra labels for exporter pod"
+      "description": "extra labels for exporter pod",
+      "additionalProperties": {
+        "type": "string"
+      }
     },
     "podAnnotations": {
       "type": "object",
