@@ -274,6 +274,11 @@ worker:
     allowPrivilegeEscalation: false
     # -- set worker container's security context capabilities
     capabilities: {}
+    # -- set the worker container's seccomp profile
+    # For `Localhost`, use a path relative to the kubelet's seccomp profile directory
+    # seccompProfile:
+    #   type: Localhost
+    #   localhostProfile: profiles/restricted.json
 
   # -- Custom container command arguments
   args: []

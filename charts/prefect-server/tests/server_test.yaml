@@ -594,6 +594,21 @@ tests:
           path: .spec.template.spec.containers[0].securityContext.allowPrivilegeEscalation
           value: true
 
+  - it: Should set a Localhost container seccomp profile
+    set:
+      server:
+        containerSecurityContext:
+          seccompProfile:
+            type: Localhost
+            localhostProfile: profiles/restricted.json
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].securityContext.seccompProfile
+          value:
+            type: Localhost
+            localhostProfile: profiles/restricted.json
+
   - it: Should unset security context
     set:
       server:

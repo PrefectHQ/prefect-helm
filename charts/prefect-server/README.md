@@ -52,6 +52,20 @@ server:
     existingSecret: prefect-basic-auth
 ```
 
+### Container seccomp profile
+
+The chart passes `server.containerSecurityContext` to the server container.
+Set `seccompProfile` there when a policy requires a profile on the container.
+For a `Localhost` profile, set `localhostProfile` to a path relative to the kubelet's seccomp profile directory.
+
+```yaml
+server:
+  containerSecurityContext:
+    seccompProfile:
+      type: Localhost
+      localhostProfile: profiles/restricted.json
+```
+
 ### Health Probes
 
 The server enables startup, liveness, and readiness probes by default. Their default paths follow `server.apiBasePath`. The startup and liveness probes call `/health`, which confirms that the HTTP server responds. The readiness probe calls `/ready`, which confirms that Prefect can connect to its database. These endpoints do not check Redis connectivity.

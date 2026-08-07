@@ -157,6 +157,20 @@ Workers each have a type corresponding to the execution environment to which the
 
 ## Additional Worker Configurations
 
+### Container seccomp profile
+
+The chart passes `worker.containerSecurityContext` to the worker container.
+Set `seccompProfile` there when a policy requires a profile on the container.
+For a `Localhost` profile, set `localhostProfile` to a path relative to the kubelet's seccomp profile directory.
+
+```yaml
+worker:
+  containerSecurityContext:
+    seccompProfile:
+      type: Localhost
+      localhostProfile: profiles/restricted.json
+```
+
 ### Basic Auth
 
 Prefect documentation on [basic auth](https://docs.prefect.io/v3/develop/settings-and-profiles#security-settings)
