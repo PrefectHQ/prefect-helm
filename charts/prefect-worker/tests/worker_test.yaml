@@ -210,6 +210,42 @@ tests:
           path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_API_URL")].value
           value: "https://my-prefect-api.com/api/accounts/my-account-id/workspaces/my-workspace-id"
 
+  - it: Should set the cloud API and UI urls for self-managed cloud
+    set:
+      worker:
+        apiConfig: "customerManagedCloud"
+        customerManagedCloudApiConfig:
+          apiUrl: "https://my-prefect-api.com/api"
+          accountId: "my-account-id"
+          workspaceId: "my-workspace-id"
+          cloudApiUrl: "https://my-prefect-api.com/api"
+          cloudUiUrl: "https://my-prefect-ui.com"
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_CLOUD_API_URL")].value
+          value: "https://my-prefect-api.com/api"
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.containers[0].env[?(@.name == "PREFECT_CLOUD_UI_URL")].value
+          value: "https://my-prefect-ui.com"
+
+  - it: Should not set the cloud UI url for self-managed cloud when it is empty
+    set:
+      worker:
+        apiConfig: "customerManagedCloud"
+        customerManagedCloudApiConfig:
+          apiUrl: "https://my-prefect-api.com/api"
+          accountId: "my-account-id"
+          workspaceId: "my-workspace-id"
+    asserts:
+      - template: deployment.yaml
+        notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_CLOUD_UI_URL
+          any: true
+
   - it: Should set the correct API configuration for self-hosted server
     set:
       worker:
