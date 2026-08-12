@@ -418,6 +418,11 @@
               "title": "Self Managed Cloud API URL",
               "description": "Cloud API url for PREFECT_CLOUD_API_URL. This is used in self managed cloud instances to configure events and logs over websockets"
             },
+            "cloudUiUrl": {
+              "type": "string",
+              "title": "Self Managed Cloud UI URL",
+              "description": "Cloud UI url for PREFECT_CLOUD_UI_URL. Set this when the UI host cannot be inferred from cloudApiUrl, so that UI links in logs and the CLI are correct"
+            },
             "apiUrl": {
               "type": "string",
               "title": "Self-managed API URL",

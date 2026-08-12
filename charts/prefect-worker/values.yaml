@@ -196,6 +196,10 @@ worker:
     # -- This is used in self managed cloud instances to congfigure events and logs over websockets
     cloudApiUrl: ""
 
+    # -- Cloud UI url for PREFECT_CLOUD_UI_URL
+    # -- Set this when the UI host cannot be inferred from cloudApiUrl, so that UI links in logs and the CLI are correct
+    cloudUiUrl: ""
+
   selfHostedServerApiConfig:
     # If the prefect server is located external to this cluster, set a fully qualified domain name as the apiUrl
     # If the prefect server pod is deployed to this cluster, use the cluster DNS endpoint: http://<prefect-server-service-name>.<namespace>.svc.cluster.local:<prefect-server-port>/api

@@ -373,6 +373,7 @@ worker:
 | worker.customerManagedCloudApiConfig.apiKeySecret.name | string | `"prefect-api-key"` | prefect API secret name |
 | worker.customerManagedCloudApiConfig.apiUrl | string | `""` | prefect API url (PREFECT_API_URL) |
 | worker.customerManagedCloudApiConfig.cloudApiUrl | string | `""` | This is used in self managed cloud instances to congfigure events and logs over websockets |
+| worker.customerManagedCloudApiConfig.cloudUiUrl | string | `""` | Set this when the UI host cannot be inferred from cloudApiUrl, so that UI links in logs and the CLI are correct |
 | worker.customerManagedCloudApiConfig.jobApiKeyPropagation | string | `"secretRef"` | controls how the Prefect API key is propagated to spawned flow run pods. 'secretRef' (default): reference the existing apiKeySecret in job pod specs via valueFrom.secretKeyRef (most secure) 'autoSecret': worker creates and manages a temporary K8s Secret per job, referencing it via valueFrom.secretKeyRef (RBAC for secrets is granted automatically when this value is set) 'envVar': inject the API key as a plain PREFECT_API_KEY environment variable in job pod specs (least secure) |
 | worker.customerManagedCloudApiConfig.workspaceId | string | `""` | prefect workspace ID |
 | worker.dnsConfig.nameservers | list | `[]` | optional list of IP addresses that will be used as dns servers for the Pod |

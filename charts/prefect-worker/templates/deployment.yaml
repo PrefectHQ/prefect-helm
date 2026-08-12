@@ -258,6 +258,10 @@ spec:
                   key:  {{ .Values.worker.customerManagedCloudApiConfig.apiKeySecret.key }}
             - name: PREFECT_CLOUD_API_URL
               value: {{ .Values.worker.customerManagedCloudApiConfig.cloudApiUrl}}
+            {{- with .Values.worker.customerManagedCloudApiConfig.cloudUiUrl }}
+            - name: PREFECT_CLOUD_UI_URL
+              value: {{ . }}
+            {{- end }}
             {{- end }}
             {{- if eq .Values.worker.apiConfig "cloud" }}
             {{- if eq (default "secretRef" .Values.worker.cloudApiConfig.jobApiKeyPropagation) "secretRef" }}
