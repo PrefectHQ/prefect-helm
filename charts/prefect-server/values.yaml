@@ -49,6 +49,9 @@ server:
     # -- name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string
     existingSecret: ""
 
+  # -- whether the server pod mounts a service account API token. the server does not call the kubernetes api, so this can be set to false
+  automountServiceAccountToken: true
+
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/#priorityclass
   # -- priority class name to use for the server pods; if the priority class is empty or doesn't exist, the server pods are scheduled without a priority class
   priorityClassName: ""
@@ -449,6 +452,11 @@ backgroundServices:
     name: ""
     # -- additional service account annotations (evaluated as a template)
     annotations: {}
+    # -- whether the created service account allows automounting of its API token
+    automountServiceAccountToken: true
+
+  # -- whether the background services pod mounts a service account API token. background services do not call the kubernetes api, so this can be set to false
+  automountServiceAccountToken: true
 
   # Configuration for background service messaging using Redis
   messaging:
@@ -519,6 +527,8 @@ serviceAccount:
   name: ""
   # -- additional service account annotations (evaluated as a template)
   annotations: {}
+  # -- whether the created service account allows automounting of its API token
+  automountServiceAccountToken: true
 
 ## Service configuration
 service:

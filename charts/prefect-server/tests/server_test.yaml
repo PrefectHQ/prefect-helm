@@ -1044,3 +1044,30 @@ tests:
             - prefect
             - worker
             - start
+
+  - it: Should mount the service account token by default
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.automountServiceAccountToken
+          value: true
+      - template: serviceaccount.yaml
+        equal:
+          path: automountServiceAccountToken
+          value: true
+
+  - it: Should not mount the service account token when disabled
+    set:
+      server:
+        automountServiceAccountToken: false
+      serviceAccount:
+        automountServiceAccountToken: false
+    asserts:
+      - template: deployment.yaml
+        equal:
+          path: .spec.template.spec.automountServiceAccountToken
+          value: false
+      - template: serviceaccount.yaml
+        equal:
+          path: automountServiceAccountToken
+          value: false

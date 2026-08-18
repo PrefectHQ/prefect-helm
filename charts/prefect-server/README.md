@@ -377,6 +377,7 @@ the HorizontalPodAutoscaler.
 |-----|------|---------|-------------|
 | backgroundServices.affinity | object | `{}` | affinity for background-services pod assignment |
 | backgroundServices.args | list | `[]` | Custom container command arguments |
+| backgroundServices.automountServiceAccountToken | bool | `true` | whether the background services pod mounts a service account API token. background services do not call the kubernetes api, so this can be set to false |
 | backgroundServices.command | list | `[]` | Custom container entrypoint |
 | backgroundServices.containerSecurityContext.allowPrivilegeEscalation | bool | `false` | set background-services containers' security context allowPrivilegeEscalation |
 | backgroundServices.containerSecurityContext.capabilities | object | `{}` | set background-services container's security context capabilities |
@@ -420,6 +421,7 @@ the HorizontalPodAutoscaler.
 | backgroundServices.revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | backgroundServices.runAsSeparateDeployment | bool | `false` |  |
 | backgroundServices.serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
+| backgroundServices.serviceAccount.automountServiceAccountToken | bool | `true` | whether the created service account allows automounting of its API token |
 | backgroundServices.serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | backgroundServices.serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template with "-background-services" appended |
 | backgroundServices.terminationGracePeriodSeconds | string | `nil` | duration in seconds the background-services pod needs to terminate gracefully. Increase if background services need more time to finish in-flight work or close connections to backing services (e.g. Redis, Postgres) before SIGKILL. Leave null to use Kubernetes' default (30s). |
@@ -538,6 +540,7 @@ the HorizontalPodAutoscaler.
 | server.affinity | object | `{}` | affinity for server pods assignment |
 | server.apiBasePath | string | `"/api"` | sets PREFECT_SERVER_API_BASE_PATH |
 | server.args | list | `[]` | Custom container command arguments |
+| server.automountServiceAccountToken | bool | `true` | whether the server pod mounts a service account API token. the server does not call the kubernetes api, so this can be set to false |
 | server.autoscaling.enabled | bool | `false` | enable autoscaling for server |
 | server.autoscaling.maxReplicas | int | `100` | maximum number of server replicas |
 | server.autoscaling.minReplicas | int | `1` | minimum number of server replicas |
@@ -613,6 +616,7 @@ the HorizontalPodAutoscaler.
 | service.targetPort | int | `4200` | target port of the server pod; also sets PREFECT_SERVER_API_PORT |
 | service.type | string | `"ClusterIP"` | service type |
 | serviceAccount.annotations | object | `{}` | additional service account annotations (evaluated as a template) |
+| serviceAccount.automountServiceAccountToken | bool | `true` | whether the created service account allows automounting of its API token |
 | serviceAccount.create | bool | `true` | specifies whether a service account should be created |
 | serviceAccount.name | string | `""` | the name of the service account to use. if not set and create is true, a name is generated using the common.names.fullname template |
 | sqlite.enabled | bool | `false` | enable use of the embedded SQLite database |

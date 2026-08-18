@@ -40,6 +40,7 @@ spec:
       {{- end }}
       {{- end }}
       serviceAccountName: {{ template "server.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.server.automountServiceAccountToken }}
       {{- if .Values.server.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.server.affinity "context" $) | nindent 8 }}
       {{- end }}
