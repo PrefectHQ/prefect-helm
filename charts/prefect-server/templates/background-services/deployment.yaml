@@ -38,6 +38,7 @@ spec:
       {{- end }}
       {{- end }}
       serviceAccountName: {{ if .Values.backgroundServices.serviceAccount.create }}{{ template "backgroundServices.serviceAccountName" . }}{{ else if .Values.backgroundServices.serviceAccount.name }}{{ .Values.backgroundServices.serviceAccount.name }}{{ else }}{{ template "server.serviceAccountName" . }}{{ end }}
+      automountServiceAccountToken: {{ .Values.backgroundServices.automountServiceAccountToken }}
       {{- if .Values.backgroundServices.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.backgroundServices.affinity "context" $) | nindent 8 }}
       {{- end }}

@@ -302,6 +302,11 @@
             }
           }
         },
+        "automountServiceAccountToken": {
+          "type": "boolean",
+          "title": "Automount Service Account Token",
+          "description": "mount a service account API token in the server pod"
+        },
         "priorityClassName": {
           "type": "string",
           "title": "Priority Class Name",
@@ -858,6 +863,11 @@
           "description": "number of background-services replicas to deploy",
           "minimum": 1
         },
+        "automountServiceAccountToken": {
+          "type": "boolean",
+          "title": "Automount Service Account Token",
+          "description": "mount a service account API token in the background services pod"
+        },
         "priorityClassName": {
           "type": "string",
           "description": "priority class name to use for the background-services pods"
@@ -1033,6 +1043,11 @@
               "type": "object",
               "title": "Annotations",
               "description": "annotations to add to the background services service account"
+            },
+            "automountServiceAccountToken": {
+              "type": "boolean",
+              "title": "Automount Service Account Token",
+              "description": "allow automounting of the API token on the created service account"
             }
           }
         },
@@ -1373,6 +1388,11 @@
           "type": "object",
           "title": "Annotations",
           "description": "annotations to add to the server service account"
+        },
+        "automountServiceAccountToken": {
+          "type": "boolean",
+          "title": "Automount Service Account Token",
+          "description": "allow automounting of the API token on the created service account"
         }
       }
     },

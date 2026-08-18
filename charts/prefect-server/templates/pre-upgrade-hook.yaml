@@ -29,6 +29,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ include "server.serviceAccountName" . }}
+      automountServiceAccountToken: {{ .Values.server.automountServiceAccountToken }}
       restartPolicy: {{ .Values.migrations.restartPolicy }}
       containers:
       - name: pre-upgrade-migration
