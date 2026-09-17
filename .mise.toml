@@ -1,7 +1,7 @@
 [tools]
 actionlint = "1.7.12"
 github-cli = "2.100.0"
-helm = "4.2"
+helm = "4.3.0"
 helm-ct = "3.14.0"
 helm-docs = '1.14.2'
 pre-commit = "4.6.2"
