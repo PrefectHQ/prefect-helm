@@ -1073,6 +1073,18 @@
               "description": "redis broker settings for background services",
               "additionalProperties": false,
               "properties": {
+                "url": {
+                  "type": "string",
+                  "title": "Redis URL",
+                  "description": "full redis connection URL (e.g. redis://user:pass@host:6379/0). When set, host, port, db, username, password and ssl are ignored. Cannot be combined with existingSecret unless existingSecretUrlKey is set.",
+                  "optional": true
+                },
+                "existingSecretUrlKey": {
+                  "type": "string",
+                  "title": "Existing Secret URL Key",
+                  "description": "key within the existing secret that contains the full redis URL. Requires existingSecret. Takes precedence over url.",
+                  "optional": true
+                },
                 "host": {
                   "type": "string",
                   "title": "Redis hostname",
@@ -1108,7 +1120,7 @@
                 "existingSecret": {
                   "type": "string",
                   "title": "Existing Secret",
-                  "description": "name of an existing secret containing the redis password. takes precedence over password",
+                  "description": "name of an existing secret containing the redis password, or the full redis URL when existingSecretUrlKey is set. The password takes precedence over password and is not used when url is set.",
                   "optional": true
                 },
                 "existingSecretPasswordKey": {

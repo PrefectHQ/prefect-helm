@@ -187,6 +187,33 @@ backgroundServices:
 
 The `existingSecretPasswordKey` field defaults to `redis-password` to match the Bitnami Redis chart convention. Set it to a different value if your secret uses a different key.
 
+#### Using a Redis Connection URL
+
+You can provide the full connection URL in the `url` field instead of the individual fields. The chart passes it to Prefect as `PREFECT_REDIS_MESSAGING_URL`:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      url: rediss://marvin:paranoid!@external.redis.host.example.com:6379/0
+```
+
+Because the URL usually contains credentials, you can read it from an existing Kubernetes Secret instead. Set `existingSecret` to the Secret name and `existingSecretUrlKey` to the key that holds the URL:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      existingSecret: my-redis-secret
+      existingSecretUrlKey: redis-url
+```
+
+When a URL is set, the chart ignores the `host`, `port`, `db`, `username`, `password` and `ssl` fields, and the connection details of the bundled Redis chart. A URL read from a Secret takes precedence over the `url` field.
+
+Prefect does not read the Redis password from a separate setting when a URL is set. If Redis requires a password, including the bundled Redis chart, put the password in the URL. If the username or password contains characters that have a meaning in URLs, such as `/`, `?`, `#`, `@`, `:` or `%`, percent-encode them, for example `/` as `%2F`. This applies to the `url` field and to a URL stored in a Secret. For the same reason, the chart fails the install when `url` and `existingSecret` are set without `existingSecretUrlKey`, because the password in that Secret would not be used.
+
 ## PostgreSQL Configuration
 
 ### Handling Connection Secrets

@@ -188,6 +188,33 @@ backgroundServices:
 
 The `existingSecretPasswordKey` field defaults to `redis-password` to match the Bitnami Redis chart convention. Set it to a different value if your secret uses a different key.
 
+#### Using a Redis Connection URL
+
+You can provide the full connection URL in the `url` field instead of the individual fields. The chart passes it to Prefect as `PREFECT_REDIS_MESSAGING_URL`:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      url: rediss://marvin:paranoid!@external.redis.host.example.com:6379/0
+```
+
+Because the URL usually contains credentials, you can read it from an existing Kubernetes Secret instead. Set `existingSecret` to the Secret name and `existingSecretUrlKey` to the key that holds the URL:
+
+```yaml
+backgroundServices:
+  runAsSeparateDeployment: true
+  messaging:
+    redis:
+      existingSecret: my-redis-secret
+      existingSecretUrlKey: redis-url
+```
+
+When a URL is set, the chart ignores the `host`, `port`, `db`, `username`, `password` and `ssl` fields, and the connection details of the bundled Redis chart. A URL read from a Secret takes precedence over the `url` field.
+
+Prefect does not read the Redis password from a separate setting when a URL is set. If Redis requires a password, including the bundled Redis chart, put the password in the URL. If the username or password contains characters that have a meaning in URLs, such as `/`, `?`, `#`, `@`, `:` or `%`, percent-encode them, for example `/` as `%2F`. This applies to the `url` field and to a URL stored in a Secret. For the same reason, the chart fails the install when `url` and `existingSecret` are set without `existingSecretUrlKey`, because the password in that Secret would not be used.
+
 ## PostgreSQL Configuration
 
 ### Handling Connection Secrets
@@ -399,14 +426,16 @@ the HorizontalPodAutoscaler.
 | backgroundServices.messaging.docket.existingSecret | string | `""` | name of an existing Kubernetes secret containing the Docket URL. Takes precedence over the url field above. The secret should contain a key with the full Redis URL including any credentials. |
 | backgroundServices.messaging.docket.existingSecretKey | string | `"docket-url"` | key within the existing secret that contains the Docket URL |
 | backgroundServices.messaging.docket.url | string | `""` | URL for the Docket scheduler backend. Examples: redis://host:6379/0, redis://host:6379/0 (TLS), redis://user:pass@host:6379/0. Leave empty to use the default in-memory backend (memory://). |
-| backgroundServices.messaging.redis | object | `{"db":0,"existingSecret":"","existingSecretPasswordKey":"redis-password","host":"","password":"","port":6379,"ssl":false,"username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
+| backgroundServices.messaging.redis | object | `{"db":0,"existingSecret":"","existingSecretPasswordKey":"redis-password","existingSecretUrlKey":"","host":"","password":"","port":6379,"ssl":false,"url":"","username":""}` | settings for redis broker/cache change these if not using the built-in redis subchart |
 | backgroundServices.messaging.redis.db | int | `0` | redis database number |
-| backgroundServices.messaging.redis.existingSecret | string | `""` | name of an existing Kubernetes secret containing the redis password takes precedence over the password field above |
+| backgroundServices.messaging.redis.existingSecret | string | `""` | name of an existing Kubernetes secret containing the redis password, or the full redis URL when existingSecretUrlKey is set. the password from the secret takes precedence over the password field above. it is not used when url is set, so combining url with existingSecret requires existingSecretUrlKey. |
 | backgroundServices.messaging.redis.existingSecretPasswordKey | string | `"redis-password"` | key within the existing secret that contains the redis password |
+| backgroundServices.messaging.redis.existingSecretUrlKey | string | `""` | key within existingSecret that contains the full redis URL. requires existingSecret. the URL from the secret takes precedence over the url field. |
 | backgroundServices.messaging.redis.host | string | `""` | redis hostname if using the built-in redis subchart, this will be automatically set to the redis subchart's service name |
 | backgroundServices.messaging.redis.password | string | `""` | redis password, leave empty to use default if using the built-in redis subchart, this will be automatically set to the redis subchart's password value |
 | backgroundServices.messaging.redis.port | int | `6379` | redis port |
 | backgroundServices.messaging.redis.ssl | bool | `false` | use TLS for redis connection |
+| backgroundServices.messaging.redis.url | string | `""` | full redis connection URL, e.g. redis://user:pass@host:6379/0 or rediss://host:6379/0 for TLS. when set, the host, port, db, username, password and ssl fields are ignored, as is the built-in redis subchart's connection. if redis requires a password, include it in the URL, percent-encoding special characters such as / ? # @ : % (e.g. / as %2F). cannot be combined with existingSecret unless existingSecretUrlKey is set. |
 | backgroundServices.messaging.redis.username | string | `""` | redis username, leave empty to use no authentication if using the built-in redis subchart, this will be automatically set to the redis subchart's username value |
 | backgroundServices.nodeSelector | object | `{}` | node labels for background-services pod assignment |
 | backgroundServices.podAnnotations | object | `{}` | extra annotations for background-services pod |

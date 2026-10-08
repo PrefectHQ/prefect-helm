@@ -471,6 +471,17 @@ backgroundServices:
     # -- settings for redis broker/cache
     # change these if not using the built-in redis subchart
     redis:
+      # ref: https://docs.prefect.io/v3/advanced/self-hosted
+      # -- full redis connection URL, e.g. redis://user:pass@host:6379/0 or rediss://host:6379/0 for TLS.
+      # when set, the host, port, db, username, password and ssl fields are ignored, as is the built-in redis subchart's connection.
+      # if redis requires a password, include it in the URL, percent-encoding special characters such as / ? # @ : % (e.g. / as %2F).
+      # cannot be combined with existingSecret unless existingSecretUrlKey is set.
+      url: ""
+
+      # -- key within existingSecret that contains the full redis URL.
+      # requires existingSecret. the URL from the secret takes precedence over the url field.
+      existingSecretUrlKey: ""
+
       # -- redis hostname
       # if using the built-in redis subchart, this will be automatically set to the redis subchart's service name
       host: ""
@@ -492,8 +503,9 @@ backgroundServices:
       # -- use TLS for redis connection
       ssl: false
 
-      # -- name of an existing Kubernetes secret containing the redis password
-      # takes precedence over the password field above
+      # -- name of an existing Kubernetes secret containing the redis password, or the full redis URL when existingSecretUrlKey is set.
+      # the password from the secret takes precedence over the password field above. it is not used when url is set,
+      # so combining url with existingSecret requires existingSecretUrlKey.
       existingSecret: ""
 
       # -- key within the existing secret that contains the redis password

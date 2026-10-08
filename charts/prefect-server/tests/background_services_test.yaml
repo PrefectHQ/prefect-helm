@@ -789,6 +789,236 @@ tests:
             name: PREFECT_REDIS_MESSAGING_PASSWORD
             value: plain-text-password
 
+  - it: Should not set PREFECT_REDIS_MESSAGING_URL by default
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    asserts:
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_URL
+          any: true
+
+  - it: Should set PREFECT_REDIS_MESSAGING_URL and omit discrete redis settings when url is provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            url: "rediss://user:pass@custom-redis-host:6380/2"
+            host: ignored-host
+            username: ignored-user
+            password: ignored-password
+            ssl: true
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_URL
+            value: "rediss://user:pass@custom-redis-host:6380/2"
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_EVENTS_CAUSAL_ORDERING
+            value: prefect_redis.ordering
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
+            value: prefect_redis.lease_storage
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_HOST
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PORT
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_DB
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_USERNAME
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_SSL
+          any: true
+
+  - it: Should prefer url over the redis subchart connection
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            url: "redis://custom-redis-host:6379/0"
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_URL
+            value: "redis://custom-redis-host:6379/0"
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_HOST
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+          any: true
+
+  - it: Should set PREFECT_REDIS_MESSAGING_URL from existingSecret when existingSecretUrlKey is provided
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            existingSecret: my-redis-secret
+            existingSecretUrlKey: redis-url
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_URL
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: redis-url
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_PASSWORD
+          any: true
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_HOST
+          any: true
+
+  - it: Should prefer the existingSecret URL over plain text url
+    templates:
+      - deployment.yaml
+      - background-services/deployment.yaml
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            url: "redis://plain-text-host:6379/0"
+            existingSecret: my-redis-secret
+            existingSecretUrlKey: redis-url
+      redis:
+        enabled: false
+    asserts:
+      - contains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_URL
+            valueFrom:
+              secretKeyRef:
+                name: my-redis-secret
+                key: redis-url
+      - notContains:
+          path: .spec.template.spec.containers[0].env
+          content:
+            name: PREFECT_REDIS_MESSAGING_URL
+            value: "redis://plain-text-host:6379/0"
+
+  - it: Should not fail if redis.enabled is false and a redis url is provided when backgroundServices.runAsSeparateDeployment is true
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            url: "redis://galaxy:6379/0"
+      redis:
+        enabled: false
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
+
+  - it: Should fail if existingSecretUrlKey is set without existingSecret
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            existingSecretUrlKey: redis-url
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "backgroundServices.messaging.redis.existingSecretUrlKey requires backgroundServices.messaging.redis.existingSecret"
+
+  - it: Should not fail if existingSecretUrlKey is set without existingSecret when backgroundServices.runAsSeparateDeployment is false
+    set:
+      backgroundServices:
+        runAsSeparateDeployment: false
+        messaging:
+          redis:
+            existingSecretUrlKey: redis-url
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
+
+  - it: Should fail if url and existingSecret are set without existingSecretUrlKey
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            url: "redis://redis.example:6379/0"
+            existingSecret: my-redis-secret
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorMessage: "backgroundServices.messaging.redis.existingSecret is ignored when url is set without existingSecretUrlKey. Remove existingSecret, or move the URL into the Secret and set existingSecretUrlKey."
+
+  - it: Should not fail if url, existingSecret and existingSecretUrlKey are all set
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            url: "redis://redis.example:6379/0"
+            existingSecret: my-redis-secret
+            existingSecretUrlKey: redis-url
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
+
+  - it: Should not fail if redis.enabled is false and a redis url secret is provided when backgroundServices.runAsSeparateDeployment is true
+    set:
+      backgroundServices:
+        messaging:
+          redis:
+            existingSecret: my-redis-secret
+            existingSecretUrlKey: redis-url
+      redis:
+        enabled: false
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
+
   - it: Should not set PREFECT_SERVER_DOCKET_URL by default
     templates:
       - deployment.yaml

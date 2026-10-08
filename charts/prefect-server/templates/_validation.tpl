@@ -34,7 +34,15 @@
 {{- end -}}
 
 {{- define "prefect-server.validateMessaging" -}}
-{{- if and (.Values.backgroundServices.runAsSeparateDeployment) (and (not .Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty)) -}}
+{{- $redisConfig := .Values.backgroundServices.messaging.redis -}}
+{{- if and (.Values.backgroundServices.runAsSeparateDeployment) (not ($redisConfig.existingSecretUrlKey | empty)) ($redisConfig.existingSecret | empty) -}}
+  {{- fail "backgroundServices.messaging.redis.existingSecretUrlKey requires backgroundServices.messaging.redis.existingSecret" -}}
+{{- end -}}
+{{- if and (.Values.backgroundServices.runAsSeparateDeployment) (not ($redisConfig.url | empty)) (not ($redisConfig.existingSecret | empty)) ($redisConfig.existingSecretUrlKey | empty) -}}
+  {{- fail "backgroundServices.messaging.redis.existingSecret is ignored when url is set without existingSecretUrlKey. Remove existingSecret, or move the URL into the Secret and set existingSecretUrlKey." -}}
+{{- end -}}
+{{- $hasRedisUrl := or (not ($redisConfig.url | empty)) (and (not ($redisConfig.existingSecret | empty)) (not ($redisConfig.existingSecretUrlKey | empty))) -}}
+{{- if and (.Values.backgroundServices.runAsSeparateDeployment) (not .Values.redis.enabled) ($redisConfig.host | empty) (not $hasRedisUrl) -}}
   {{- fail "You must set redis.enabled=true or provide a redis configuration when backgroundServices.runAsSeparateDeployment=true" -}}
 {{- end -}}
 {{- end -}}

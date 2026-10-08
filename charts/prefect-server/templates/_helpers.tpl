@@ -44,6 +44,24 @@ Make redis subchart context available as a variable in this block
   value: prefect_redis.ordering
 - name: PREFECT_SERVER_CONCURRENCY_LEASE_STORAGE
   value: prefect_redis.lease_storage
+{{- /*
+Redis connection. Priority:
+    1. existingSecret + existingSecretUrlKey - reference a Kubernetes secret containing the full URL.
+    2. url - use the plain-text URL from values.
+    3. Discrete host/port/db/username/password/ssl settings, defaulting to the redis subchart.
+Prefect ignores the discrete settings when PREFECT_REDIS_MESSAGING_URL is set and
+logs a warning if they are present, so they are only emitted without a URL.
+*/ -}}
+{{- if and (not (.Values.backgroundServices.messaging.redis.existingSecret | empty)) (not (.Values.backgroundServices.messaging.redis.existingSecretUrlKey | empty)) }}
+- name: PREFECT_REDIS_MESSAGING_URL
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Values.backgroundServices.messaging.redis.existingSecret }}
+      key: {{ .Values.backgroundServices.messaging.redis.existingSecretUrlKey }}
+{{- else if not (.Values.backgroundServices.messaging.redis.url | empty) }}
+- name: PREFECT_REDIS_MESSAGING_URL
+  value: {{ .Values.backgroundServices.messaging.redis.url | quote }}
+{{- else }}
 - name: PREFECT_REDIS_MESSAGING_HOST
 {{- if and (.Values.redis.enabled) (.Values.backgroundServices.messaging.redis.host | empty) }}
   value: {{ printf "%s-headless" (include "common.names.fullname" $redis) }}.{{ .Release.Namespace }}.svc.cluster.local
@@ -85,6 +103,7 @@ There are four scenarios for passwords:
 {{- else if not (.Values.backgroundServices.messaging.redis.password | empty) }}
 - name: PREFECT_REDIS_MESSAGING_PASSWORD
   value: {{ .Values.backgroundServices.messaging.redis.password | quote }}
+{{- end }}
 {{- end }}
 {{- end }}
 {{- /*
