@@ -31,13 +31,13 @@ jobs:
         uses: azure/setup-helm@v5
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.8.0
+        uses: helm/chart-testing-action@v2.9.0
 
       - name: Run chart-testing (lint)
         run: ct lint --config .github/linters/server-ct.yaml
 
       - name: Create kind cluster
-        uses: helm/kind-action@v1.15.0
+        uses: helm/kind-action@v1.15.1
         with:
           node_image: "kindest/node:v${{ matrix.kubernetes }}"
 
