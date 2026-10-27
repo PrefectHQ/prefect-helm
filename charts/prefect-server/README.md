@@ -396,7 +396,7 @@ the HorizontalPodAutoscaler.
 |------------|------|---------|
 | https://charts.bitnami.com/bitnami | common | 2.41.0 |
 | https://charts.bitnami.com/bitnami | postgresql | 12.12.10 |
-| https://charts.bitnami.com/bitnami | redis | 28.3.1 |
+| https://charts.bitnami.com/bitnami | redis | 28.3.9 |
 
 ## Values
 
