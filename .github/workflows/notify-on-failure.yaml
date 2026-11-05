@@ -21,9 +21,11 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
     steps:
       - name: Format date
+        env:
+          RUN_STARTED_AT: ${{ github.event.workflow_run.run_started_at }}
         run: |
-          formatted_date=$(date -d "${{ github.event.workflow_run.run_started_at }}" "+%b %d at %I:%M %p")
-          echo "FORMATTED_DATE=$formatted_date" >> $GITHUB_ENV
+          formatted_date=$(date -d "$RUN_STARTED_AT" "+%b %d at %I:%M %p")
+          echo "FORMATTED_DATE=$formatted_date" >> "$GITHUB_ENV"
 
       - name: Send Slack notification
         uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
