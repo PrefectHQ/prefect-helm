@@ -4,20 +4,22 @@ name: Release Prefect Server and Worker Helm Charts
 "on":
   workflow_dispatch:
 
-permissions:
-  # GitHub considers creating releases and uploading assets as writing contents.
-  contents: write
+permissions: {}
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      # Pushing to gh-pages and creating releases both need write access to contents.
+      contents: write
     outputs:
       releaseVersion: ${{ steps.output_version.outputs.releaseVersion }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
+          persist-credentials: true
 
       # We set the chart release version here - the version schema
       # is a SemVer adherent date-based versioning scheme that looks like:
@@ -54,7 +56,7 @@ jobs:
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Set up Helm
-        uses: azure/setup-helm@v5
+        uses: azure/setup-helm@9bc31f4ebc9c6b171d7bfbaa5d006ae7abdb4310 # v5.0.1
 
       - name: Prepare GPG key for signing
         run: |
