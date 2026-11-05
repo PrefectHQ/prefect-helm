@@ -4,13 +4,14 @@ name: Release Prefect Server and Worker Helm Charts
 "on":
   workflow_dispatch:
 
-permissions:
-  # GitHub considers creating releases and uploading assets as writing contents.
-  contents: write
+permissions: {}
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      # Pushing to gh-pages and creating releases both need write access to contents.
+      contents: write
     outputs:
       releaseVersion: ${{ steps.output_version.outputs.releaseVersion }}
     steps:
