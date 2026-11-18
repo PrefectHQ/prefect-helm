@@ -25,8 +25,14 @@ spec:
     metricRelabelings:
     {{- toYaml .Values.serviceMonitor.metricRelabelings | nindent 4 }}
     {{- end }}
-    {{- if .Values.serviceMonitor.relabelings }}
+    # A stable instance label, and no pod label, keep the counters one series
+    # across pod replacements, so increase() does not lose counts at a restart.
     relabelings:
-    {{- toYaml .Values.serviceMonitor.relabelings | nindent 4 }}
+    - targetLabel: instance
+      replacement: {{ include "common.names.fullname" . }}
+    - action: labeldrop
+      regex: pod
+    {{- with .Values.serviceMonitor.relabelings }}
+    {{- toYaml . | nindent 4 }}
     {{- end }}
 {{- end -}}
