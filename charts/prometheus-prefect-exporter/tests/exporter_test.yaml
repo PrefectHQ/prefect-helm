@@ -234,7 +234,7 @@ tests:
         cost-center: 123
     asserts:
       - failedTemplate:
-          errorPattern: "podLabels.cost-center: Invalid type. Expected: string, given: integer"
+          errorPattern: "podLabels[./]cost-center.*(Expected: string|want string)"
 
   - it: Should set the correct service configuration
     asserts:
