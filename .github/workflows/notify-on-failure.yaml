@@ -32,6 +32,8 @@ jobs:
         with:
           webhook: ${{ secrets.SLACK_WEBHOOK_GHA_JOB_STATUS }}
           webhook-type: incoming-webhook
+          # Fail the run when Slack refuses the post, so a dead webhook shows up.
+          errors: true
           # https://api.slack.com/reference/messaging/attachments
           # toJSON quotes each value: display_title is a commit message or
           # release name, and a bare quote in it would break the payload.
