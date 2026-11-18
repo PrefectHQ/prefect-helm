@@ -116,14 +116,30 @@ tests:
     set:
       replicaCount: 3
     asserts:
-      - template: deployment.yaml
+      - template: NOTES.txt
         failedTemplate:
           errorPattern: "replicaCount is no longer supported"
 
-  - it: Should accept a leftover replica count of one
+  - it: Should refuse a replica count of zero
+    set:
+      replicaCount: 0
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorPattern: "replicaCount is no longer supported"
+
+  - it: Should accept the old values block left over from an earlier chart
     set:
       replicaCount: 1
+      podDisruptionBudget: {}
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
     asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
       - template: deployment.yaml
         equal:
           path: .spec.replicas
@@ -134,11 +150,20 @@ tests:
       autoscaling:
         enabled: true
     asserts:
-      - template: deployment.yaml
+      - template: NOTES.txt
         failedTemplate:
           errorPattern: "autoscaling is no longer supported"
 
-  - it: Should give the ServiceMonitor a stable instance and drop the pod label
+  - it: Should refuse a pod disruption budget
+    set:
+      podDisruptionBudget:
+        maxUnavailable: 0
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorPattern: "podDisruptionBudget is no longer supported"
+
+  - it: Should scrape only ready endpoints, with a stable instance and no pod label
     set:
       serviceMonitor:
         enabled: true
@@ -150,6 +175,12 @@ tests:
         equal:
           path: .spec.endpoints[0].relabelings
           value:
+            - action: keep
+              sourceLabels:
+                - __meta_kubernetes_endpointslice_endpoint_conditions_ready
+                - __meta_kubernetes_endpoint_ready
+              separator: ";"
+              regex: ".*true.*"
             - targetLabel: instance
               replacement: test-prometheus-prefect-exporter
             - action: labeldrop

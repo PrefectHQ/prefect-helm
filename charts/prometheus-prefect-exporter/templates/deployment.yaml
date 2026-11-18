@@ -8,12 +8,6 @@ metadata:
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
-{{- if and (hasKey .Values "replicaCount") (ne (int .Values.replicaCount) 1) }}
-{{- fail "replicaCount is no longer supported: the exporter counts flow runs from the event stream, and each extra replica counts every run again. Remove replicaCount." }}
-{{- end }}
-{{- if (.Values.autoscaling | default dict).enabled }}
-{{- fail "autoscaling is no longer supported: the exporter must run as exactly one replica. Remove autoscaling." }}
-{{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   # Exactly one replica, replaced with Recreate: two exporter pods would each

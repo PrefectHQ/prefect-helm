@@ -46,11 +46,13 @@ Shoutout to @ialejandro for the original work on this chart!
 The exporter counts flow runs from the Prefect event stream, and each exporter pod counts every run
 it receives. The chart therefore runs exactly one pod and replaces it with the `Recreate` strategy, so
 an old and a new pod never run together. It has no autoscaler or pod disruption budget, and it fails
-to render if `replicaCount` is set above 1 or `autoscaling.enabled` is set.
+to render if `replicaCount` is set to anything but 1, if `autoscaling.enabled` is set, or if
+`podDisruptionBudget` is set to a non-empty value.
 
-With `serviceMonitor.enabled`, the ServiceMonitor sets the `instance` label to the release name and
-drops the `pod` label, so a replaced pod continues the same series. Your own `relabelings` run after
-these two.
+With `serviceMonitor.enabled`, the ServiceMonitor scrapes only ready endpoints, sets the `instance`
+label to the release name and drops the `pod` label, so a replaced pod continues the same series and
+a terminating pod is not scraped beside its replacement. Your own `relabelings` run after these
+three rules.
 
 ## Additional Exporter Configurations
 
