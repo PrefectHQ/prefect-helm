@@ -170,7 +170,7 @@ prometheusRule:
   #   labels:
   #     severity: critical
   #   annotations:
-  #     summary: Flow runs of {{ $labels.deployment_name }} {{ $labels.state_name }} (Flow {{ $labels.flow_name }})
+  #     summary: "Flow {{ $labels.flow_name }}: runs {{ $labels.state_name }} (deployment: {{ $labels.deployment_name }})"
   #     description: "Flow runs failed or crashed in the last 5 minutes\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
 
