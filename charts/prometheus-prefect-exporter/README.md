@@ -49,10 +49,10 @@ an old and a new pod never run together. It has no autoscaler or pod disruption 
 to render if `replicaCount` is set to anything but 1, if `autoscaling.enabled` is set, or if
 `podDisruptionBudget` is set to a non-empty value.
 
-With `serviceMonitor.enabled`, the ServiceMonitor scrapes only ready endpoints, sets the `instance`
-label to the release name and drops the `pod` label, so a replaced pod continues the same series and
-a terminating pod is not scraped beside its replacement. Your own `relabelings` run after these
-three rules.
+With `serviceMonitor.enabled`, the ServiceMonitor skips endpoints that are terminating, sets the
+`instance` label to the release name and drops the `pod` label, so a replaced pod continues the same
+series and a pod that is shutting down is not scraped beside its replacement. Your own
+`relabelings` run after these three rules.
 
 ## Additional Exporter Configurations
 

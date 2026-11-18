@@ -27,15 +27,14 @@ spec:
     {{- end }}
     # A stable instance label, and no pod label, keep the counters one series
     # across pod replacements, so increase() does not lose counts at a restart.
-    # Scraping only ready endpoints keeps a terminating pod and its replacement
-    # from writing into that one series; the two labels cover both discovery roles.
+    # Dropping terminating endpoints keeps a pod that is shutting down and its
+    # replacement from writing into that one series. The endpoints role
+    # already omits terminating pods.
     relabelings:
-    - action: keep
+    - action: drop
       sourceLabels:
-      - __meta_kubernetes_endpointslice_endpoint_conditions_ready
-      - __meta_kubernetes_endpoint_ready
-      separator: ";"
-      regex: ".*true.*"
+      - __meta_kubernetes_endpointslice_endpoint_conditions_terminating
+      regex: "true"
     - targetLabel: instance
       replacement: {{ include "common.names.fullname" . }}
     - action: labeldrop

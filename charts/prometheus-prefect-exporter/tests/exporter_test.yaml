@@ -128,6 +128,17 @@ tests:
         failedTemplate:
           errorPattern: "replicaCount is no longer supported"
 
+  - it: Should accept a replica count removed with null
+    set:
+      replicaCount: null
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 1
+
   - it: Should accept the old values block left over from an earlier chart
     set:
       replicaCount: 1
@@ -163,7 +174,7 @@ tests:
         failedTemplate:
           errorPattern: "podDisruptionBudget is no longer supported"
 
-  - it: Should scrape only ready endpoints, with a stable instance and no pod label
+  - it: Should skip terminating endpoints, with a stable instance and no pod label
     set:
       serviceMonitor:
         enabled: true
@@ -175,12 +186,10 @@ tests:
         equal:
           path: .spec.endpoints[0].relabelings
           value:
-            - action: keep
+            - action: drop
               sourceLabels:
-                - __meta_kubernetes_endpointslice_endpoint_conditions_ready
-                - __meta_kubernetes_endpoint_ready
-              separator: ";"
-              regex: ".*true.*"
+                - __meta_kubernetes_endpointslice_endpoint_conditions_terminating
+              regex: "true"
             - targetLabel: instance
               replacement: test-prometheus-prefect-exporter
             - action: labeldrop
