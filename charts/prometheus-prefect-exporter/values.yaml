@@ -4,9 +4,6 @@ commonLabels: {}
 # -- the number of old ReplicaSets to retain to allow rollback
 revisionHistoryLimit: 10
 
-# -- Number of replicas
-replicaCount: 1
-
 # -- Image registry
 image:
   repository: prefecthq/prometheus-prefect-exporter
@@ -60,10 +57,6 @@ env: {}
 
 # -- array with extra environment variables to add to exporter deployment pods
 extraEnvVars: []
-
-# -- Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions
-podDisruptionBudget: {}
-  # maxUnavailable: 0
 
 # -- extra labels for exporter pod
 podLabels: {}
@@ -172,13 +165,13 @@ prometheusRule:
   #     description: "All work queues are paused\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
   # - alert: PrefectFlowRunCrashedOrFailed
-  #   expr: group by (flow_name, flow_run_name, namespace) (count_over_time(prefect_info_flow_runs{state_name=~"Failed|Crashed"}[1m]))
+  #   expr: sum by (flow_name, deployment_name, state_name, namespace) (increase(prefect_flow_runs_terminal_total{state_type=~"FAILED|CRASHED"}[5m])) > 0
   #   for: 0m
   #   labels:
   #     severity: critical
   #   annotations:
-  #     summary: Flow Run {{ $labels.flow_name }} {{ $labels.state_name }} (Flow {{ $labels.flow_name }})
-  #     description: "Flow Run failed or crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  #     summary: "Flow {{ $labels.flow_name }}: runs {{ $labels.state_name }} (deployment: {{ $labels.deployment_name }})"
+  #     description: "Flow runs failed or crashed in the last 5 minutes\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
 
 # -- Enable livenessProbe
@@ -214,14 +207,6 @@ resources: {}
   # requests:
   #   cpu: 100m
   #   memory: 128Mi
-
-# -- Autoscaling with CPU or memory utilization percentage
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 # -- Node labels for pod assignment
 nodeSelector: {}

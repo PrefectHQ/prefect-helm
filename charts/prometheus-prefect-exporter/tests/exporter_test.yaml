@@ -100,21 +100,102 @@ tests:
           path: .spec.revisionHistoryLimit
           value: 5
 
-  - it: Should set the correct replica count
+  - it: Should run exactly one replica with the Recreate strategy
     asserts:
       - template: deployment.yaml
         equal:
           path: .spec.replicas
           value: 1
+      - template: deployment.yaml
+        equal:
+          path: .spec.strategy
+          value:
+            type: Recreate
 
-  - it: Should set a custom replica count
+  - it: Should refuse more than one replica
     set:
       replicaCount: 3
     asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorPattern: "replicaCount is no longer supported"
+
+  - it: Should refuse a replica count of zero
+    set:
+      replicaCount: 0
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorPattern: "replicaCount is no longer supported"
+
+  - it: Should accept a replica count removed with null
+    set:
+      replicaCount: null
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
       - template: deployment.yaml
         equal:
           path: .spec.replicas
-          value: 3
+          value: 1
+
+  - it: Should accept the old values block left over from an earlier chart
+    set:
+      replicaCount: 1
+      podDisruptionBudget: {}
+      autoscaling:
+        enabled: false
+        minReplicas: 1
+        maxReplicas: 100
+        targetCPUUtilizationPercentage: 80
+    asserts:
+      - template: NOTES.txt
+        notFailedTemplate: {}
+      - template: deployment.yaml
+        equal:
+          path: .spec.replicas
+          value: 1
+
+  - it: Should refuse autoscaling
+    set:
+      autoscaling:
+        enabled: true
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorPattern: "autoscaling is no longer supported"
+
+  - it: Should refuse a pod disruption budget
+    set:
+      podDisruptionBudget:
+        maxUnavailable: 0
+    asserts:
+      - template: NOTES.txt
+        failedTemplate:
+          errorPattern: "podDisruptionBudget is no longer supported"
+
+  - it: Should skip terminating endpoints, with a stable instance and no pod label
+    set:
+      serviceMonitor:
+        enabled: true
+        relabelings:
+          - targetLabel: team
+            replacement: data
+    asserts:
+      - template: servicemonitor.yaml
+        equal:
+          path: .spec.endpoints[0].relabelings
+          value:
+            - action: drop
+              sourceLabels:
+                - __meta_kubernetes_endpointslice_endpoint_conditions_terminating
+              regex: "true"
+            - targetLabel: instance
+              replacement: test-prometheus-prefect-exporter
+            - action: labeldrop
+              regex: pod
+            - targetLabel: team
+              replacement: data
 
   - it: Should set the correct Prefect API URL
     set:
@@ -342,10 +423,6 @@ tests:
 
   - it: Should configure common labels on templated resources
     set:
-      autoscaling:
-        enabled: true
-      podDisruptionBudget:
-        maxUnavailable: 1
       prometheusRule:
         enabled: true
         rules: []
@@ -357,14 +434,6 @@ tests:
         my-label: my-value
     asserts:
       - template: deployment.yaml
-        equal:
-          path: .metadata.labels.my-label
-          value: my-value
-      - template: hpa.yaml
-        equal:
-          path: .metadata.labels.my-label
-          value: my-value
-      - template: pdb.yaml
         equal:
           path: .metadata.labels.my-label
           value: my-value

@@ -13,11 +13,6 @@
       "title": "Revision History Limit",
       "description": "the number of old ReplicaSets to retain to allow rollback"
     },
-    "replicaCount": {
-      "type": "integer",
-      "title": "Replica Count",
-      "description": "Number of replicas to deploy"
-    },
     "image": {
       "type": "object",
       "title": "Image",
@@ -135,11 +130,6 @@
       "type": "array",
       "title": "Extra Env Vars",
       "description": "Extra environment variables to add to exporter deployment pods"
-    },
-    "podDisruptionBudget": {
-      "type": "object",
-      "title": "Pod Disruption Budget",
-      "description": "Pod disruption budget"
     },
     "podLabels": {
       "type": "object",
@@ -297,33 +287,6 @@
       "type": "object",
       "title": "Resources",
       "description": "Resources"
-    },
-    "autoscaling": {
-      "type": "object",
-      "title": "Autoscaling",
-      "description": "Autoscaling",
-      "properties": {
-        "enabled": {
-          "type": "boolean",
-          "title": "Enabled",
-          "description": "Enable autoscaling"
-        },
-        "minReplicas": {
-          "type": "integer",
-          "title": "Min Replicas",
-          "description": "Autoscaling min replicas"
-        },
-        "maxReplicas": {
-          "type": "integer",
-          "title": "Max Replicas",
-          "description": "Autoscaling max replicas"
-        },
-        "targetCPUUtilizationPercentage": {
-          "type": "integer",
-          "title": "Target CPU Utilization Percentage",
-          "description": "Autoscaling target CPU utilization percentage"
-        }
-      }
     },
     "nodeSelector": {
       "type": "object",

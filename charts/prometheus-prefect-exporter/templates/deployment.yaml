@@ -10,9 +10,11 @@ metadata:
     {{- end }}
 spec:
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  # Exactly one replica, replaced with Recreate: two exporter pods would each
+  # count every flow run, including during a rolling update.
+  replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       {{- include "common.labels.matchLabels" . | nindent 6 }}

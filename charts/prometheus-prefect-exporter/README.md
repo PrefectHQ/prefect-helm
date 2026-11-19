@@ -41,6 +41,19 @@ Shoutout to @ialejandro for the original work on this chart!
 
     You should see the Prometheus Prefect Exporter pod running
 
+### One replica
+
+The exporter counts flow runs from the Prefect event stream, and each exporter pod counts every run
+it receives. The chart therefore runs exactly one pod and replaces it with the `Recreate` strategy, so
+an old and a new pod never run together. It has no autoscaler or pod disruption budget, and it fails
+to render if `replicaCount` is set to anything but 1, if `autoscaling.enabled` is set, or if
+`podDisruptionBudget` is set to a non-empty value.
+
+With `serviceMonitor.enabled`, the ServiceMonitor skips endpoints that are terminating, sets the
+`instance` label to the release name and drops the `pod` label, so a replaced pod continues the same
+series and a pod that is shutting down is not scraped beside its replacement. Your own
+`relabelings` run after these three rules.
+
 ## Additional Exporter Configurations
 
 ### Basic Auth
@@ -89,7 +102,6 @@ basicAuth:
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for pod assignment |
-| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80}` | Autoscaling with CPU or memory utilization percentage |
 | basicAuth.authString | string | `"admin:pass"` | basic auth credentials in the format admin:<your-password> (no brackets) |
 | basicAuth.enabled | bool | `false` | enable basic auth for the exporter, for an administrator/password combination. must be enabled on the server as well |
 | basicAuth.existingSecret | string | `""` | name of existing secret containing basic auth credentials. takes precedence over authString. must contain a key `auth-string` with the value of the auth string |
@@ -106,7 +118,6 @@ basicAuth:
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | pagination | object | `{"enabled":true,"limit":200}` | Pagination settings. If enabled, the exporter will paginate the API requests to Prefect Server which uses more resources.  Remember to increase the resources for the exporter if enabled. |
 | podAnnotations | object | `{}` | Pod annotations |
-| podDisruptionBudget | object | `{}` | Limits the number of Pods of a replicated application that are down simultaneously from voluntary disruptions |
 | podLabels | object | `{}` | extra labels for exporter pod |
 | podSecurityContext | object | `{}` | To specify security settings for a Pod |
 | prefectApiUrl | string | `"http://prefect-server.prefect.svc.cluster.local:4200/api"` | Prefect API URL to connect to for metrics |
@@ -114,7 +125,6 @@ basicAuth:
 | prometheusRule.enabled | bool | `false` |  |
 | prometheusRule.rules | list | `[]` |  |
 | readinessProbe | bool | `false` | Enable readinessProbe |
-| replicaCount | int | `1` | Number of replicas |
 | resources | object | `{}` | The resources limits and requested |
 | revisionHistoryLimit | int | `10` | the number of old ReplicaSets to retain to allow rollback |
 | securityContext | object | `{}` | Defines privilege and access control settings for a Pod or Container |
